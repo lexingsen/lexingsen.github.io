@@ -173,7 +173,8 @@
 
 <p><font size=5 face=consolas>1.定义字符串一般不使用string,使用bytes来代替string。若定义为string,proto底层还是会把string-&gt;bytes，虽然不会影响结果，但是在一定程度上还是会浪费效率。</font></p>
 <p><font size=5 face=consolas>2.其他的数据类型，基本数据，列表，映射表</font></p>
-<p><font size=5 face=consolas>3.为成员变量设置值<br>test.proto</font></p>
+<p><font size=5 face=consolas>3.为成员变量设置值</font></p>
+<p>test.proto</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">message Error &#123;</span><br><span class="line">	int32 errorCode = <span class="number">1</span>;</span><br><span class="line">	bytes errorMsg = <span class="number">2</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">message User &#123;</span><br><span class="line">	bytes name = <span class="number">1</span>;</span><br><span class="line">	int32 age = <span class="number">2</span>;</span><br><span class="line">	<span class="class"><span class="keyword">enum</span> <span class="title">Sex</span> &#123;</span></span><br><span class="line">		MAN = <span class="number">0</span>;</span><br><span class="line">		WOMAN = <span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	Sex sex = <span class="number">3</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">message GetUserList &#123;</span><br><span class="line">	Error error = <span class="number">1</span>;</span><br><span class="line">	repeated User <span class="built_in">list</span> = <span class="number">2</span>;<span class="comment">// repeated表示列表</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p><font size=5 face=consolas>main.cc</font></p>
@@ -1197,11 +1198,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color5">操作系统</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">操作系统</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
               <li class="article-tag-list-item">
