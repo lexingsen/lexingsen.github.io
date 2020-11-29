@@ -154,198 +154,45 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-break和contiue的区别" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+    <header class="article-header">
+  
   
     <h1 itemprop="name">
       <a class="article-title" href="/2018/01/30/break%E5%92%8Ccontiue%E7%9A%84%E5%8C%BA%E5%88%AB/">break和contiue的区别</a>
     </h1>
   
 
-        
-        <a href="/2018/01/30/break%E5%92%8Ccontiue%E7%9A%84%E5%8C%BA%E5%88%AB/" class="archive-article-date">
+  
+  <a href="/2018/01/30/break%E5%92%8Ccontiue%E7%9A%84%E5%8C%BA%E5%88%AB/" class="archive-article-date">
   	<time datetime="2018-01-30T05:02:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-30</time>
 </a>
-        
-      </header>
-       <!-- 文章访问量 -->
-      
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="1-continue"><a href="#1-continue" class="headerlink" title="1.continue"></a>1.continue</h3><p>continue语句形式如下：</p>
-<p>continue;</p>
-<p>continue语句用于循环结构（包括while(当型循环)、do   while（直到型循环）和 for循环），</p>
-<p>continue作为循环结构中循环体的一部分。在程序执行的过程中，一旦遇到了continue语句，</p>
-<p>立即结束本次循环。跳过循环体中尚未执行的部分，接着进行是否继续循环的条件判断。</p>
-<h3 id="2-break"><a href="#2-break" class="headerlink" title="2.break"></a>2.break</h3><p>break语句的形式如下</p>
-<p>break;</p>
-<p>break语句大多数用于switch…case..。语句的分支语句中，在程序执行的过程中，一旦遇到了</p>
-<p>break语句，立即退出当前的switch语句。</p>
-<p>同时，break语句可以用于循环结构中，作为循环结构中循环体的一部分。在程序执行的过程，</p>
-<p>一旦遇到break语句，立即退出当前的循环体，接着执行循环体之后的语句。</p>
-<p>3.continue和break的区别</p>
-<p>通过对比break和continue语句在循环结构中的使用，不难发现，continue语句只是结束本次</p>
-<p>循环，不在执行循环体continue后边的语句，并不是终止当前循环。而break语句是直接结束</p>
-<p>本次循环。</p>
-<h3 id="下面用一个简单的例子验证一下："><a href="#下面用一个简单的例子验证一下：" class="headerlink" title="下面用一个简单的例子验证一下："></a>下面用一个简单的例子验证一下：</h3><p>1.continue</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># <span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> arr[]=&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;;</span><br><span class="line">	<span class="keyword">int</span> len=<span class="keyword">sizeof</span>(arr)/<span class="keyword">sizeof</span>(arr[<span class="number">0</span>]);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;len;++i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>(arr[i]==<span class="number">4</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">continue</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>,arr[i]);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>运行结果为:<br><img src="./img/1.png"></p>
-<p>2.break</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># <span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> arr[]=&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;;</span><br><span class="line">	<span class="keyword">int</span> len=<span class="keyword">sizeof</span>(arr)/<span class="keyword">sizeof</span>(arr[<span class="number">0</span>]);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;len;++i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>(arr[i]==<span class="number">4</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>,arr[i]);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>运行结果为：</p>
-<p><img src="./img/2.png"></p>
-<p>实际上在continue和break语句在具体程序中的使用，往往可以在较大程度上减少时间复杂度，减小程序运行时间。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/01/30/break%E5%92%8Ccontiue%E7%9A%84%E5%8C%BA%E5%88%AB/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
   
-    <article id="post-震惊！三天打鱼两天筛网这样写" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
     
-      <header class="article-header">
-        
+    
+  
+    
+    
+</header>
+  
+    <header class="article-header">
+  
   
     <h1 itemprop="name">
       <a class="article-title" href="/2018/01/21/%E9%9C%87%E6%83%8A%EF%BC%81%E4%B8%89%E5%A4%A9%E6%89%93%E9%B1%BC%E4%B8%A4%E5%A4%A9%E7%AD%9B%E7%BD%91%E8%BF%99%E6%A0%B7%E5%86%99/">震惊！三天打鱼两天筛网这样写</a>
     </h1>
   
 
-        
-        <a href="/2018/01/21/%E9%9C%87%E6%83%8A%EF%BC%81%E4%B8%89%E5%A4%A9%E6%89%93%E9%B1%BC%E4%B8%A4%E5%A4%A9%E7%AD%9B%E7%BD%91%E8%BF%99%E6%A0%B7%E5%86%99/" class="archive-article-date">
+  
+  <a href="/2018/01/21/%E9%9C%87%E6%83%8A%EF%BC%81%E4%B8%89%E5%A4%A9%E6%89%93%E9%B1%BC%E4%B8%A4%E5%A4%A9%E7%AD%9B%E7%BD%91%E8%BF%99%E6%A0%B7%E5%86%99/" class="archive-article-date">
   	<time datetime="2018-01-21T10:20:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-21</time>
 </a>
-        
-      </header>
-       <!-- 文章访问量 -->
-      
-
+  
     
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>原题目：有一个人从1990年一月一日开始三天打鱼两天晒网，问他今天在干嘛？</p>
-<p>拿到这样的一个题目瞬间会有一点懵，但是仔细分析其中的逻辑关系，可以得到下面的思路。</p>
-<p>首先，从1990年1月1日到今天共计多少天。</p>
-<p>其次，如何得到今天是打渔还是晒网，可以看出三天打鱼两天晒网是一个循环，也就是是说五天为一个周期。</p>
-<p>顺着这样的一个思路，我们开始写代码。</p>
-<p>1.针对一个具体的日期，我们需要知道是何年何月何日。因此，在C语言中的结构题类型就可以满足定义这样一个具体日期。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> </span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">      <span class="keyword">int</span> year;</span><br><span class="line">      <span class="keyword">int</span> month;</span><br><span class="line">      <span class="keyword">int</span> day;</span><br><span class="line">&#125;data;</span><br></pre></td></tr></table></figure>
-<p>2.接着我们要计算1990年1月1日到今天为止总计为多少天。考虑到要计算天数，我们要细化日期的内容。对于年，有平年和闰年之分，平年365天，闰年366天，这都是常识。对于月，定义这样的一个平年通用型的数组比较贴切。</p>
-<p>定义长度为13且Permonth[0]=0,这样下标与月份一致，便于计算。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>  Permonth[<span class="number">13</span>]=&#123;<span class="number">0</span>,<span class="number">31</span>,<span class="number">28</span>,<span class="number">31</span>,<span class="number">30</span>,<span class="number">31</span>,<span class="number">30</span>,<span class="number">31</span>,<span class="number">31</span>,<span class="number">30</span>,<span class="number">31</span>,<span class="number">30</span>,<span class="number">31</span>&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>如果今年刚好不是闰年，我们只要计算出这个月前今年的总天数加上这个月的天数就可以了。但是如果是闰年我们还需要继续划分，如果是二月前，同上。如果月份大于三，我们还是需要在二月天数的基础上增加一。即Permonth[2]+=1;</p>
-<p>3.二步骤虽然略麻烦一点，但为三步骤提供了思路。C语言就是函数（function）构成的，一个大的功能往往也可以分解为多个子功能去合作完成，也正所谓模块化程序设计。这样，首先我们写一个判断平闰年的函数，在这样的一个题目里，它得到两次使用。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">is_leapyear</span><span class="params">(<span class="keyword">int</span> year)</span></span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">    <span class="keyword">if</span>(year&lt;<span class="number">0</span>)</span><br><span class="line">   &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;输入错误!&quot;</span>);</span><br><span class="line">   &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">   &#123;</span><br><span class="line">         <span class="keyword">if</span>(year%<span class="number">4</span>==<span class="number">0</span>&amp;&amp;year%<span class="number">100</span>!=<span class="number">0</span>||year%<span class="number">400</span>==<span class="number">0</span>)<span class="comment">//判断为闰年核心</span></span><br><span class="line">         &#123;</span><br><span class="line">               <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">         &#125;</span><br><span class="line">         <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">               <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>接下来我们写总天数的函数</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">countday</span><span class="params">(date *p,<span class="keyword">int</span> *sum)</span><span class="comment">//传入结构题的地址，并传入保存总天数值的地址</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> permonth[<span class="number">13</span>]=&#123;<span class="number">0</span>,<span class="number">31</span>,<span class="number">28</span>,<span class="number">31</span>,<span class="number">30</span>,<span class="number">31</span>,<span class="number">30</span>,<span class="number">31</span>,<span class="number">31</span>,<span class="number">30</span>,<span class="number">31</span>,<span class="number">30</span>,<span class="number">31</span>&#125;;</span><br><span class="line">	<span class="keyword">int</span> totalday=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> year=<span class="number">1990</span>;year&lt;p-&gt;year;++year)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>(is_leapyear(p-&gt;year))</span><br><span class="line">		&#123;</span><br><span class="line">			totalday+=<span class="number">366</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		&#123;</span><br><span class="line">			totalday+=<span class="number">365</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(is_leapyear(p-&gt;year))</span><br><span class="line">	&#123;</span><br><span class="line">		permonth[<span class="number">2</span>]+=<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;p-&gt;month;++i)</span><br><span class="line">	&#123;</span><br><span class="line">		totalday+=permonth[i];</span><br><span class="line">	&#125;</span><br><span class="line">	totalday+=p-&gt;day;</span><br><span class="line">	*sum=totalday;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>到此为止，我们就把从1990年1月1日到今天的总天数计算出来了。<br>4.总天数计算出来后，因为三天打渔两天晒网，五天即一个循环，所以总天数对5取模。结果为4和0时，即为晒网。结果为1，2，3时，即为打渔。<br>5.考虑程序的冗余性，输入的具体日期完全可能出现意料之外的情况，因此也需要考虑在内。</p>
-<p>最后，附上源代码。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta"># <span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> </span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">int</span> year;</span><br><span class="line">	<span class="keyword">int</span> day;</span><br><span class="line">	<span class="keyword">int</span> month;</span><br><span class="line">&#125;date;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">init_date</span><span class="params">(date *p)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	p-&gt;day=<span class="number">0</span>;</span><br><span class="line">	p-&gt;month=<span class="number">0</span>;</span><br><span class="line">	p-&gt;year=<span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">is_leapyear</span><span class="params">(<span class="keyword">int</span> year)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(year%<span class="number">4</span>==<span class="number">0</span>&amp;&amp;year%<span class="number">100</span>!=<span class="number">0</span>||year%<span class="number">400</span>==<span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">countday</span><span class="params">(date *p,<span class="keyword">int</span> *sum)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> permonth[<span class="number">13</span>]=&#123;<span class="number">0</span>,<span class="number">31</span>,<span class="number">28</span>,<span class="number">31</span>,<span class="number">30</span>,<span class="number">31</span>,<span class="number">30</span>,<span class="number">31</span>,<span class="number">31</span>,<span class="number">30</span>,<span class="number">31</span>,<span class="number">30</span>,<span class="number">31</span>&#125;;</span><br><span class="line">	<span class="keyword">int</span> totalday=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> year=<span class="number">1990</span>;year&lt;p-&gt;year;++year)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>(is_leapyear(p-&gt;year))</span><br><span class="line">		&#123;</span><br><span class="line">			totalday+=<span class="number">366</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		&#123;</span><br><span class="line">			totalday+=<span class="number">365</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(is_leapyear(p-&gt;year))</span><br><span class="line">	&#123;</span><br><span class="line">		permonth[<span class="number">2</span>]+=<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;p-&gt;month;++i)</span><br><span class="line">	&#123;</span><br><span class="line">		totalday+=permonth[i];</span><br><span class="line">	&#125;</span><br><span class="line">	totalday+=p-&gt;day;</span><br><span class="line">	*sum=totalday;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	date l;</span><br><span class="line">	init_date(&amp;l);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;请输入今天是几年几月几日：\n&quot;</span>);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d%d%d&quot;</span>,&amp;l.year,&amp;l.month,&amp;l.day);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">	<span class="keyword">int</span> s;                        <span class="comment">//用来接收总天数</span></span><br><span class="line">	countday(&amp;l,&amp;s);</span><br><span class="line">	<span class="keyword">if</span>(s%<span class="number">5</span>==<span class="number">4</span>||s%<span class="number">5</span>==<span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;今天晒网！&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;今天打渔！&quot;</span>); </span><br><span class="line">	&#125; 	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">C++</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/01/21/%E9%9C%87%E6%83%8A%EF%BC%81%E4%B8%89%E5%A4%A9%E6%89%93%E9%B1%BC%E4%B8%A4%E5%A4%A9%E7%AD%9B%E7%BD%91%E8%BF%99%E6%A0%B7%E5%86%99/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
+    
+  
+    
+    
+</header>
   
   
 
