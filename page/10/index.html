@@ -174,6 +174,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
+      
+      
         <a id="more"></a>
 
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">struct node &#123;</span><br><span class="line">	int val;</span><br><span class="line">	node *left, *right;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">bool isSame(node *a, node *b) &#123;</span><br><span class="line">	if (!a  &amp;&amp; !b) return true;</span><br><span class="line">	if ((!a &amp;&amp; b) ||  (!b &amp;&amp; a)) return false;</span><br><span class="line">	if (a-&gt;val &#x3D;&#x3D; b-&gt;val) </span><br><span class="line">		return isSame(a-&gt;left, b-&gt;left) &amp;&amp; isSame(a-&gt;right, b-&gt;right);</span><br><span class="line">	else return false;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -248,6 +250,8 @@
       </header>
     
     <div class="article-entry" itemprop="articleBody">
+      
+      
       
         <a id="more"></a>
 
@@ -324,6 +328,8 @@
       </header>
     
     <div class="article-entry" itemprop="articleBody">
+      
+      
       
         <a id="more"></a>
 
@@ -403,6 +409,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
+      
+      
         <a id="more"></a>
 
 <p><font size=5 face=consolas>完全二叉树的定义（王道）：设一棵高度为h,有n个节点的二叉树，当且仅当其中每一个节点都与高度为h的满二叉树编号为1~n的节点一一对应时，称为完全二叉树。下文称呼完全二叉树为CBT。</p>
@@ -480,6 +488,8 @@
       </header>
     
     <div class="article-entry" itemprop="articleBody">
+      
+      
       
         <a id="more"></a>
 
@@ -571,6 +581,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
+      
+      
         <a id="more"></a>
 
 <p><font size=5 face="consolas">平衡二叉树的递归定义:<br>(1)空树。<br>(2)他的左子树和右子树都是平衡二叉树，并且左子树和右子树的高度差的绝对值不会超过1(&lt;=1)。</p>
@@ -649,6 +661,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
+      
+      
         <a id="more"></a>
 
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;bits&#x2F;stdc++.h&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;节点类</span><br><span class="line">struct node &#123;</span><br><span class="line">	int val;</span><br><span class="line">	node *next;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">bool isSorted(node *head) &#123;</span><br><span class="line">	&#x2F;&#x2F;如果单链表为空 或者只有一个节点 如需要进行判断，直接返回为true</span><br><span class="line">	if (!head || !head-&gt;next) return 1;</span><br><span class="line">	node *p &#x3D; head-&gt;next; &#x2F;&#x2F;p指向单链表中的第一个节点</span><br><span class="line">	for (node *t&#x3D;p; t-&gt;next; t&#x3D;t-&gt;next) </span><br><span class="line">		if (t-&gt;val &gt; t-&gt;next-&gt;val) return false;</span><br><span class="line">	return true;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -723,6 +737,8 @@
       </header>
     
     <div class="article-entry" itemprop="articleBody">
+      
+      
       
         <a id="more"></a>
 
@@ -799,6 +815,8 @@
       </header>
     
     <div class="article-entry" itemprop="articleBody">
+      
+      
       
         <a id="more"></a>
 
@@ -880,6 +898,8 @@
       </header>
     
     <div class="article-entry" itemprop="articleBody">
+      
+      
       
         <a id="more"></a>
 

@@ -176,6 +176,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
+      
+      
         <a id="more"></a>
 
 <p><font size=5 face="consolas">问题描述，现在给定一个闭区间数组，求区间[l,r]的数据元素之和，询问m次，要求线性时间复杂度O(n)。</font><br><font size=5 face="consolas"><br>比较常规的思路是使用循环遍历相加，但是一次循环的时间复杂度为O(n),m次询问最终的时间复杂度为O(n*m),显然是不满足要求的。我们可以采用空间换时间的策略，设置一个前缀和数组d,数组中任意位置i表示的是d[i] = a[1] + a[2] + … + a[i],经过这样的预处理，询问任意位置的前缀和的时间复杂度变为O(1),经过m次询问，时间复杂度为O(m)，符合要求。</font></p>

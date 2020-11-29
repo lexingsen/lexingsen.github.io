@@ -185,6 +185,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
+      
+      
         <a id="more"></a>
 
 <p><font size=5 face="Courier New" color=blue>一.简单介绍什么是core文件以及他的作用</font><br><font size=4 face="Courier New">在linux编写的C/C++可执行程序往往会出现如下图的错误，一个<font color=red>core dumped</font>。由于刚开始对linux的认识不足，就忽略了这样一个重要的调试信息。<br><img src="https://img-blog.csdnimg.cn/20190113202529396.png" alt="core dumped"><br>随着学习的深入，其实core文件在linux下是一种ELF格式的文件，有关于什么是ELF格式大家可以自行查阅相关的内容。<br><img src="https://img-blog.csdnimg.cn/20190113202828274.png" alt="在这里插入图片描述"><br>实际上core文件就是可执行文件执行时的映像，也可以叫做内存的快照。保存下来可执行程序在执行过程的点点滴滴。除了内存信息之外，还有些关键的程序运行状态也会同时dump下来，例如寄存器信息（包括程序指针、栈指针等）、内存管理信息、其他处理器和操作系统状态和信息。core文件对于程序员诊断和调试程序是非常有帮助的，因为对于有些程序错误是很难重现的，例如指针异常，而core文件可以再现程序出错时的情景。结合gdb的调试命令可以对core文件进行调试。</p>

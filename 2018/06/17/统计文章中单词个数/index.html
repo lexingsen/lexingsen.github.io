@@ -176,6 +176,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
+      
+      
         <a id="more"></a>
 
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">#include&lt;assert.h&gt;</span><br><span class="line"></span><br><span class="line">int fun(const char* str)</span><br><span class="line">&#123;	</span><br><span class="line">	assert(str !&#x3D; NULL);</span><br><span class="line">	const char* p &#x3D; str;</span><br><span class="line">	int count &#x3D; 0;&#x2F;&#x2F;计数器</span><br><span class="line">	while(*p !&#x3D; &#39;\0&#39;)</span><br><span class="line">	&#123;</span><br><span class="line">		if(*p !&#x3D; &#39; &#39; &amp;&amp; (*(p+1) &#x3D;&#x3D; &#39; &#39; || *(p+1) &#x3D;&#x3D; &#39;\0&#39;))</span><br><span class="line">		&#123;</span><br><span class="line">			count ++;</span><br><span class="line">		&#125;</span><br><span class="line">		p++;</span><br><span class="line">	&#125;</span><br><span class="line">	retrun count;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>

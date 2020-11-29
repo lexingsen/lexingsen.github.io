@@ -176,6 +176,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
+      
+      
         <a id="more"></a>
 
 <p><font size=5 face=consonlas>为了解决顺序队列假溢出的问题，提出了循环队列。使得内存的利用率得到了很大的提升。但是在判断循环队列空和满这两种状态任然存在问题，因为对于一个循环队列，不做任何判空和判满的机制。判空和判满的条件都是：q-&gt;rear == q-&gt;front。带来的问题就是当出现上述条件时不能区分循环队列到底是空还是满，因此为了解决上述问题。人们提出以下两种方案来解决：<br><font color=blue>（1）牺牲一个位置用作判断的条件</p>

@@ -176,6 +176,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
+      
+      
         <a id="more"></a>
 
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">void floyd() &#123;</span><br><span class="line">	for (int k&#x3D;1; k&lt;&#x3D;n; ++k) &#123;</span><br><span class="line">		for (int i&#x3D;1; i&lt;&#x3D;n; ++i) &#123;</span><br><span class="line">			for (int j&#x3D;1; j&lt;&#x3D;n; ++j) &#123;</span><br><span class="line">				if (i &#x3D;&#x3D; j || i &#x3D;&#x3D; k || j &#x3D;&#x3D; k) continue; &#x2F;&#x2F;避免不必要的判断 提高程序效率</span><br><span class="line">				else g[i][j] &#x3D; min(g[i][j], g[i][k]+g[k][j]);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>

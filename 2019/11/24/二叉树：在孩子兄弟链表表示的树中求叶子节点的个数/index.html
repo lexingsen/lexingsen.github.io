@@ -176,6 +176,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
+      
+      
         <a id="more"></a>
 
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">typedef struct CSNode &#123;</span><br><span class="line">  int val;</span><br><span class="line">  CSNode *firstchild, *nextsibling;</span><br><span class="line">&#125; CSNode, *CSTree;</span><br><span class="line"></span><br><span class="line">int dfs(CSTree *root) &#123;</span><br><span class="line">  if (!root) return 0;</span><br><span class="line">  else if (!root-&gt;firstchild) return 1;</span><br><span class="line">  else &#123;</span><br><span class="line">    int left  &#x3D;  dfs(root-&gt;firstchild);</span><br><span class="line">    int right &#x3D; dfs(root-&gt;nextsibling);</span><br><span class="line">    return left + right;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>

@@ -174,6 +174,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
+      
+      
         <a id="more"></a>
 
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">#define N 3</span><br><span class="line"></span><br><span class="line">void fun(int arr[][N],int m)</span><br><span class="line">&#123;</span><br><span class="line">	for(int i &#x3D; 0;i &lt; N;++i)</span><br><span class="line">	&#123;</span><br><span class="line">		for(int j &#x3D; 0;j &lt;&#x3D; i;++j)</span><br><span class="line">		&#123;</span><br><span class="line">			arr[j][i] *&#x3D; m;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void show(int arr[][N],int len)</span><br><span class="line">&#123;</span><br><span class="line">	for(int i &#x3D; 0;i &lt; len;++i)</span><br><span class="line">	&#123;</span><br><span class="line">		for(int j &#x3D; 0;j &lt; len;++j)</span><br><span class="line">		&#123;</span><br><span class="line">			printf(&quot;%d &quot;,arr[i][j]);</span><br><span class="line">			if(j &#x3D;&#x3D; len-1)</span><br><span class="line">			&#123;</span><br><span class="line">				printf(&quot;\n&quot;);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	int arr[][N] &#x3D; &#123;&#123;1,2,3&#125;,&#123;4,5,6&#125;,&#123;7,8,9&#125;&#125;;</span><br><span class="line">	int len &#x3D; sizeof(arr)&#x2F;sizeof(arr[0]);</span><br><span class="line">	show(arr,len);</span><br><span class="line">	fun(arr,2);&#x2F;&#x2F;乘以2</span><br><span class="line">	show(arr,len);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -247,6 +249,8 @@
       </header>
     
     <div class="article-entry" itemprop="articleBody">
+      
+      
       
         <a id="more"></a>
 
@@ -322,6 +326,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
+      
+      
         <a id="more"></a>
 
 <p>位运算和移位运算作为计算机的基本运算之一，其都是对二进制位进行操作。掌握它是非常有必要的。位运算包括<font color=red>与、或、非和异或。</font><br>下面是一些位运算的练习题：</p>
@@ -385,6 +391,8 @@
       </header>
     
     <div class="article-entry" itemprop="articleBody">
+      
+      
       
         <a id="more"></a>
 
@@ -453,6 +461,8 @@
       </header>
     
     <div class="article-entry" itemprop="articleBody">
+      
+      
       
         <a id="more"></a>
 
@@ -531,6 +541,8 @@
       </header>
     
     <div class="article-entry" itemprop="articleBody">
+      
+      
       
         <a id="more"></a>
 
@@ -640,6 +652,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
+      
+      
         <a id="more"></a>
 
 <p>**何为匹配? **就是在一个串中寻找是否和有何目标串相同的真字串。</p>
@@ -720,6 +734,8 @@
       </header>
     
     <div class="article-entry" itemprop="articleBody">
+      
+      
       
         <a id="more"></a>
 
@@ -805,6 +821,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
+      
+      
         <a id="more"></a>
 
 <p>参考：王道《计算机网络复习指导》<br><strong>UDP协议的特点：</strong><br>（1）UDP无需建立连接。因此UDP不会引入建立连接的时延。试想如果DNS运行在TCP之上而不是UDP，则DNS的速度会满很多。HTTP使用TCP而不是UDP，是因为基于文本数据的Web网页来说，可靠性是至关重要的。<br><strong>什么是DNS？</strong> DNS（Domain Name System，域名系统），万维网上作为<strong>域名</strong>和<strong>IP地址</strong>相互映射的一个<strong>分布式数据库</strong>，能够使用户更方便的访问互联网，而不用去记住能够被机器直接读取的IP数串。通过域名，最终得到该域名对应的IP地址的过程叫做域名解析（或主机名解析）。</p>
@@ -876,6 +894,8 @@
       </header>
     
     <div class="article-entry" itemprop="articleBody">
+      
+      
       
         <a id="more"></a>
 

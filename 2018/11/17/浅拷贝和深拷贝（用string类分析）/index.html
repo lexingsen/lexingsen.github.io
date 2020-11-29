@@ -181,6 +181,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
+      
+      
         <a id="more"></a>
 
 <p><font size=4 face="Courier New">区分什么是<font color=red>初始化</font>和<font color=red>赋值</font>。</font><br><font size=4 face="Courier New">对于一个类来讲，如果用一个已经存在的对象去构造一个新对象，这个过程就是初始化的过程。如果用一个已经存在的对象去给另一个已经存在的对象赋值，这就是赋值的过程。<br><font size=4 face="Courier New">在初始化和赋值的过程中，假设类涉及到<font color=blue>堆内存</font>,如果采用编译器系统默认给定的<font color=red>拷贝构造函数</font>和<font color=red>赋值运算符的重载函数</font>进行对象之间的初始化过程和赋值过程，轻则发生浅拷贝，重则内存泄漏，这样的程序都是有问题的。下面分析为什么在使用默认的拷贝构造函数时会出现<font color=blue>浅拷贝问题。</font></p>

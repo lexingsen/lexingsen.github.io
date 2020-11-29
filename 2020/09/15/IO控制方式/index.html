@@ -177,6 +177,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
+      
+      
         <a id="more"></a>
 
 <p><strong>程序直接控制方式</strong><br>cpu干预程度：非常的频繁，IO操作开始前，完成后均需要cpu介入，并且在等待IO完成的过程中cpu需要不断的介入进行轮询检查，实际上是忙轮询，极大的浪费了cpu的资源，本质原因还是IO设备与cpu速度差异造成的矛盾，其次的原因是没有中断机制，IO设备无法向cpu报告自己的状态<br>数据流向: 读  IO设备-&gt;cpu-&gt;内存   写   内存-&gt;cpu-&gt;IO设备<br>传输单位: 一个字<br>缺点：cpu与IO设备只能串行工作，忙等IO完成，极大的浪费cpu资源，cpu利用率很低。<br>优点：简单易于实现。</p>

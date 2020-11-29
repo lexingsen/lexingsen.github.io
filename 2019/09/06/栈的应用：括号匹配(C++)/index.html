@@ -176,6 +176,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
+      
+      
         <a id="more"></a>
 
 <p><font size=5 face=consonlas>一.要点<font><br><font size=4 face=consonlas>（1）利用栈先进后出的特点，当遇到左括号”[“,”{“,””(“时，直接入栈。<br>（2）当遇到右括号”)”,”}”,”]”时，如果此时空的，那么成对的括号一定不能进行匹配，直接返回false即可。<br>（3）可以出栈的情况，当栈顶的左括号与当前的右括号匹配时，出栈。<br>（4）遍历过程中出现的其他情况都是错误的。比如栈顶为左括号，当前遍历到也是左括号。<br>（5）当遍历完成时，如果栈不空，说明还有未进行匹配的左括号，也就意味括号匹配失败，直接返回false即可。<br><font size=5 face=consonlas>二.代码实现<font></p>

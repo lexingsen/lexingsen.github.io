@@ -174,6 +174,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
+      
+      
         <a id="more"></a>
 
 <p>fork函数调用会创建子进程，子进程的地址空间是在调用fork时父进程地址空间的拷贝。因为子进程地址空间跟父进程一样，所以调用fork时，子进程继承了父进程中的所有互斥锁、读写锁和条件变量（包括它们的状态）。<br>    但在多线程环境中，调用fork时，子进程中只有一个线程存在，这个线程是调用fork函数的那个线程，其他线程都没有被拷贝。<br>    根据上述两点，子进程中的锁可能被不存在的线程所拥有，这样子进程将没法获取或释放这些锁。针对这个问题有一个解决办法，即在调用fork之前，线程先获取进程中所有锁，在调用fork后分别在父子进程中释放这些锁，从而可以重新利用这些资源。因为fork之前，当前线程拥有所有的锁，所以fork之后，当前线程继续存在，子进程可以安全的释放这些锁。<br>    当然，在调用fork后，子进程马上调用exec，就无需考虑这些问题了，因为子进程地址空间被完全更换了。<br>    函数pthread_atfork专门用来解决这种问题：<br>    int pthread_atfork ( void (*prepare)(void), void (*parent)(void), void (*child)(void) );<br>    pthread_atfork安装一些在fork调用时的回调函数。prepare函数将在fork创建子进程之前被调用，通常可以用来获取进程中的所有锁；parent在fork创建子进程后返回前在父进程中被调用，可以用来释放父进程中的锁；child在fork创建子进程后fork返回前在子进程中被调用，可以用来释放子进程中的锁。给这三个参数传递NULL，表示不调用该函数。<br>    可以调用pthread_atfork多次注册多组回调函数，这时，回调函数调用的顺序规定如下：<br>      ①prepare函数调用顺序与它们的注册顺序相反；<br>      ②parent和child函数的调用顺序与注册顺序相同。</p>
@@ -248,6 +250,8 @@
       </header>
     
     <div class="article-entry" itemprop="articleBody">
+      
+      
       
         <a id="more"></a>
 
@@ -343,6 +347,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
+      
+      
         <a id="more"></a>
 
 <p><strong>题目描述：</strong>编写一个函数，输入是一个无符号整数，返回的是它所有 位1 的个数（也被称为汉明重量）。</p>
@@ -424,6 +430,8 @@
       </header>
     
     <div class="article-entry" itemprop="articleBody">
+      
+      
       
         <a id="more"></a>
 
@@ -539,6 +547,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
+      
+      
         <a id="more"></a>
 
 <p>直接上代码</p>
@@ -613,6 +623,8 @@
       </header>
     
     <div class="article-entry" itemprop="articleBody">
+      
+      
       
         <a id="more"></a>
 
@@ -690,6 +702,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
+      
+      
         <a id="more"></a>
 
 <p>今天在写<code>strlen</code>函数的递归实现，当执行以下代码时，会出现段错误。</p>
@@ -761,6 +775,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
+      
+      
         <a id="more"></a>
 
 <p><strong>函数原型</strong></p>
@@ -827,6 +843,8 @@
       </header>
     
     <div class="article-entry" itemprop="articleBody">
+      
+      
       
         <a id="more"></a>
 
@@ -903,6 +921,8 @@
       </header>
     
     <div class="article-entry" itemprop="articleBody">
+      
+      
       
         <a id="more"></a>
 

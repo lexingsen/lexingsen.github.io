@@ -174,6 +174,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
+      
+      
         <a id="more"></a>
 
 <p><font size=5 face=consolas>正序输出</font></p>
@@ -264,6 +266,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
+      
+      
         <a id="more"></a>
 
 <p><font size=5 face=consolas>串的模式匹配：暴力算法，时间复杂度为O(n)。</font></p>
@@ -352,6 +356,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
+      
+      
         <a id="more"></a>
 
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">TreeNode</span> &#123;</span></span><br><span class="line">  <span class="keyword">int</span> val;</span><br><span class="line">  TreeNode *left, *right;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfsGetDepth</span><span class="params">(TreeNode *root, <span class="keyword">int</span> &amp;x)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!root) <span class="keyword">return</span>;</span><br><span class="line">  <span class="built_in">queue</span>&lt;TreeNode*&gt; q;</span><br><span class="line">  q.push(root);</span><br><span class="line">  <span class="keyword">while</span> (!q.empty()) &#123;</span><br><span class="line">    <span class="keyword">int</span> n = q.size();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;n; ++i) &#123;</span><br><span class="line">      <span class="keyword">auto</span> f=q.front();q.pop();</span><br><span class="line">      <span class="keyword">if</span> (f-&gt;left) q.push(f-&gt;left);</span><br><span class="line">      <span class="keyword">if</span> (f-&gt;right) q.push(f-&gt;right);</span><br><span class="line">    &#125;</span><br><span class="line">    x ++;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -438,6 +444,8 @@
       </header>
     
     <div class="article-entry" itemprop="articleBody">
+      
+      
       
         <a id="more"></a>
 
@@ -527,6 +535,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
+      
+      
         <a id="more"></a>
 
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="built_in">string</span> <span class="title">longestPalindrome</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (s.size()==<span class="number">1</span> || !s.size()) <span class="keyword">return</span> s;</span><br><span class="line">		<span class="keyword">if</span> (s.size()==<span class="number">2</span> &amp;&amp; s[<span class="number">0</span>]==s[<span class="number">1</span>]) <span class="keyword">return</span> s;</span><br><span class="line">		<span class="keyword">int</span> n = s.siz();</span><br><span class="line">		<span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">bool</span>&gt;&gt; <span class="title">f</span><span class="params">(n, <span class="built_in">vector</span>&lt;<span class="keyword">bool</span>&gt;(n))</span></span>;</span><br><span class="line">		<span class="comment">// 记录子串的起始索引和长度</span></span><br><span class="line">		<span class="keyword">int</span> start=<span class="number">0</span>,len=<span class="number">1</span>;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;n; ++i) &#123;</span><br><span class="line">			f[i][i] = <span class="number">1</span>;<span class="comment">// 所有长度为1的子串均为一个回文串</span></span><br><span class="line">			<span class="keyword">if</span> (i+<span class="number">1</span>&lt;n &amp;&amp; s[i]==s[i+<span class="number">1</span>]) &#123;</span><br><span class="line">				start = i;</span><br><span class="line">				len = <span class="number">2</span>;</span><br><span class="line">				<span class="comment">// 长度为2的回文串</span></span><br><span class="line">				f[i][i+<span class="number">1</span>] = <span class="number">1</span>;		</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;                     </span><br><span class="line">		<span class="comment">// 枚举长度L [3,n]  </span></span><br><span class="line">		<span class="comment">// 枚举左右端点 i   right=i+L-1  right-i+1==L</span></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> L=<span class="number">3</span>; i&lt;=n; ++L) &#123;</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i+L<span class="number">-1</span>&lt;n; ++i) &#123;</span><br><span class="line">				<span class="keyword">int</span> j = i+L<span class="number">-1</span>;</span><br><span class="line">				<span class="comment">// 左右端点处字符相等并且子区间是一个回文串，则可以扩充</span></span><br><span class="line">				<span class="keyword">if</span> (s[i]==s[j] &amp;&amp; f[i+<span class="number">1</span>][j<span class="number">-1</span>]) &#123;</span><br><span class="line">					f[i][j] = <span class="number">1</span>;</span><br><span class="line">					start = i;</span><br><span class="line">					len = L;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> s.substr(start, len);		                                                                                                                                                                                                                                                                                                                           </span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
@@ -613,6 +623,8 @@
       </header>
     
     <div class="article-entry" itemprop="articleBody">
+      
+      
       
         <a id="more"></a>
 
@@ -706,6 +718,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
+      
+      
         <a id="more"></a>
 
 <p><font size=5 f face=consolas>1.for(表达式1;表达式2;表达式3）</font><br><img src="https://img-blog.csdnimg.cn/20201025161957387.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
@@ -794,6 +808,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
+      
+      
         <a id="more"></a>
 
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> val;</span><br><span class="line">	node *left, *right;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 返回值判断二叉树中是否含有x</span></span><br><span class="line"><span class="comment">// 含有x并且在子树中 则当前节点是一个祖先</span></span><br><span class="line"><span class="comment">// 含有x但是就是当前节点的值 则直接返回到上一层调用</span></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">ancestor</span><span class="params">(node *root, <span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (!root) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	<span class="keyword">if</span> (root-&gt;val == x) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	<span class="keyword">if</span> ((root-&gt;left &amp;&amp; root-&gt;left-&gt;val == x) || (root-&gt;right &amp;&amp; root-&gt;right-&gt;val == x)) &#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; root-&gt;val &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
@@ -881,6 +897,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
+      
+      
         <a id="more"></a>
 
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> val;</span><br><span class="line">	node *left, *right;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function">node *<span class="title">lca</span><span class="params">(node *root, node *p, node *q)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (!root || root==q || root==q) <span class="keyword">return</span> root;</span><br><span class="line">	<span class="keyword">auto</span> left = lca(root-&gt;left, p, q);</span><br><span class="line">	<span class="keyword">auto</span> right = lca(root-&gt;right, p, q);</span><br><span class="line">	<span class="keyword">if</span> (!left) <span class="keyword">return</span> right;</span><br><span class="line">	<span class="keyword">if</span> (!right) <span class="keyword">return</span> left;</span><br><span class="line">	<span class="keyword">return</span> root;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
@@ -967,6 +985,8 @@
       </header>
     
     <div class="article-entry" itemprop="articleBody">
+      
+      
       
         <a id="more"></a>
 

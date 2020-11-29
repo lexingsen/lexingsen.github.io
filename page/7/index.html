@@ -174,6 +174,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
+      
+      
         <a id="more"></a>
 
 <p><font size=5 face="consolas">1.普通new<br><font color="red">形式：int* p = new int;</font><br>此时不能通过p是否为nullptr来判断内存是否开辟成功，而是需要通过bad_alloc来捕获异常。</font></p>
@@ -251,6 +253,8 @@
       </header>
     
     <div class="article-entry" itemprop="articleBody">
+      
+      
       
         <a id="more"></a>
 
@@ -331,6 +335,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
+      
+      
         <a id="more"></a>
 
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">void floyd() &#123;</span><br><span class="line">	for (int k&#x3D;1; k&lt;&#x3D;n; ++k) &#123;</span><br><span class="line">		for (int i&#x3D;1; i&lt;&#x3D;n; ++i) &#123;</span><br><span class="line">			for (int j&#x3D;1; j&lt;&#x3D;n; ++j) &#123;</span><br><span class="line">				if (i &#x3D;&#x3D; j || i &#x3D;&#x3D; k || j &#x3D;&#x3D; k) continue; &#x2F;&#x2F;避免不必要的判断 提高程序效率</span><br><span class="line">				else g[i][j] &#x3D; min(g[i][j], g[i][k]+g[k][j]);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -405,6 +411,8 @@
       </header>
     
     <div class="article-entry" itemprop="articleBody">
+      
+      
       
         <a id="more"></a>
 
@@ -486,6 +494,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
+      
+      
         <a id="more"></a>
 
 <p><font size=5 face=consolas>1.顺序查找中的哨兵：通过引入哨兵，可以必满很多不必要的语句，从而提高程序效率。</p>
@@ -562,6 +572,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
+      
+      
         <a id="more"></a>
 
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">typedef struct CSNode &#123;</span><br><span class="line">  int val;</span><br><span class="line">  CSNode *firstchild, *nextsibling;</span><br><span class="line">&#125; CSNode, *CSTree;</span><br><span class="line"></span><br><span class="line">int dfs(CSTree *root) &#123;</span><br><span class="line">  if (!root) return 0;</span><br><span class="line">  else if (!root-&gt;firstchild) return 1;</span><br><span class="line">  else &#123;</span><br><span class="line">    int left  &#x3D;  dfs(root-&gt;firstchild);</span><br><span class="line">    int right &#x3D; dfs(root-&gt;nextsibling);</span><br><span class="line">    return left + right;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -636,6 +648,8 @@
       </header>
     
     <div class="article-entry" itemprop="articleBody">
+      
+      
       
         <a id="more"></a>
 
@@ -721,6 +735,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
+      
+      
         <a id="more"></a>
 
 <p><font size=5 face="consolas">问题描述，现在给定一个闭区间数组，求区间[l,r]的数据元素之和，询问m次，要求线性时间复杂度O(n)。</font><br><font size=5 face="consolas"><br>比较常规的思路是使用循环遍历相加，但是一次循环的时间复杂度为O(n),m次询问最终的时间复杂度为O(n*m),显然是不满足要求的。我们可以采用空间换时间的策略，设置一个前缀和数组d,数组中任意位置i表示的是d[i] = a[1] + a[2] + … + a[i],经过这样的预处理，询问任意位置的前缀和的时间复杂度变为O(1),经过m次询问，时间复杂度为O(m)，符合要求。</font></p>
@@ -798,6 +814,8 @@
       </header>
     
     <div class="article-entry" itemprop="articleBody">
+      
+      
       
         <a id="more"></a>
 
@@ -877,6 +895,8 @@
       </header>
     
     <div class="article-entry" itemprop="articleBody">
+      
+      
       
         <a id="more"></a>
 

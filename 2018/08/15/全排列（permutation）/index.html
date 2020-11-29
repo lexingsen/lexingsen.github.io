@@ -180,6 +180,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
+      
+      
         <a id="more"></a>
 
 <p><font size =4.5 face="Courier New">显然，对于具有n个元素的集合R,R={r1,r2,r3…rn},其排列方式有n!种。<br>如：R = {1,2,3}，其全排列如下：<font color=red><br>1，2，3<br>1，3，2<br>2，1，3<br>2，3，1<br>3，1，2<br>3，2，1</font><br><img src="https://img-blog.csdn.net/20180815223153757?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>从上边的排列中可以看出规律，以集合中某一元素作为第一个数字，集合当中的其余数字做全排列。而其余数字组成的集合可以看作是子集合，子集合中的第一个元素作为第一个数字，子集合当中的其余数字做全排列。可以看出，这是一个递归过程。有了上面的思想，可以容易的写出一个递归算法解决全排列的问题。<br> <strong>代码实现：</strong> </p>

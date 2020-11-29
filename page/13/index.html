@@ -174,6 +174,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
+      
+      
         <a id="more"></a>
 
 <p><font size=5 face=Consolas>基数排序是基于<font color=red>分配和收集</font>来进行的，而通常内部排序是基于比较进行的，这一点需要注意。基数排序里涉及到多次的除法和模运算，因此基数排序是的执行时间较长。这里使用STL中的queue来作为桶，不需要单独去实现队列。</font></p>
@@ -250,6 +252,8 @@
       </header>
     
     <div class="article-entry" itemprop="articleBody">
+      
+      
       
         <a id="more"></a>
 
@@ -339,6 +343,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
+      
+      
         <a id="more"></a>
 
 <p><font size=5 face=Consolas>插入类排序包括直接插入排序，折半插入排序以及希尔排序。<br>插入排序默认第一个位置（下标为0）的元素是有序的，需要将在[2…..n-1]这个区间中剩下的n-1个元素在有序的位置区间寻找一个合适的位置进行插入。</font></p>
@@ -426,6 +432,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
+      
+      
         <a id="more"></a>
 
 <p><font size=5 face="Consolas">在一些考试题中以及笔试面试的过程中，在需要使用stack和queue的时候，可能被要求不能使用STL中相关的库函数，也就意味着我们需要使用纯C进行编程。但是如果在考试中或者笔试面试中，为了要使用栈和队列，而去写一个完整的数据结构是比较大费周章，况且在时间上也不一定允许，因此，使用数组来模拟栈和队列的实现是一种明智的选择，原因有两个：</font><font size=5 face="Consolas" color="blue"><br>一、使用数组模拟队列和栈可以简化编程的复杂度，节省时间，比如在dfs()和bfs()可以花更多的时间来思考这两个逻辑的实现。<br>二、使用数组模拟的栈和队列在效率上比标准库的容器类高很多,可以使得程序执行的速度更快。</font></p>
@@ -511,6 +519,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
+      
+      
         <a id="more"></a>
 
 <p><font size=5 face="Consolas">1.叶子节点和度为二节点个数之间的关系从两方面考虑。</font><br><font size=4 face="Consolas">（1）节点个数：在二叉树中，由度为0，1，2三种节点组成，因此其总的节点个数:<code>n=n0+n1+n2</code>。</font><br><font size=4 face="Consolas">（2）从分支考虑，n个节点中除了根节点没有前驱节点，其他节点有且仅有一个前驱节点。因此构成了n-1条边，这n-1条边是由度为0，1，2的节点扩散出来的，同时它们的扩散的边也为0，1，2，因此可以得到第二个方程:<code>n-1 = 0*n0 + 1*n1 + 2*n2</code></font></p>
@@ -590,6 +600,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
+      
+      
         <a id="more"></a>
 
 <p><font face="Consolas" size=5 color=blue>思路：<br>1.由于题目未给定数字的长度，因此需要字符串模拟来表示大整数，用C/C++基本类型是表示不出来的，我试过long long过了大概50个样例，就溢出了。<br>2.模拟大数相加，在本题中，就是一个大数加1。</font><br><font face="Consolas" size=4>AC代码（C++）：</font></p>
@@ -665,6 +677,8 @@
       </header>
     
     <div class="article-entry" itemprop="articleBody">
+      
+      
       
         <a id="more"></a>
 
@@ -742,6 +756,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
+      
+      
         <a id="more"></a>
 
 <p><font face="Consolas" size=6>AC代码（C++）：</font></p>
@@ -818,6 +834,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
+      
+      
         <a id="more"></a>
 
 <p><font face="Consolas" size=6>AC代码（C++）：</font><br><font face="Consolas" size=5>简单的一维dp，可以用递推的方式或记忆化搜索的方式。</font><br><font face="Consolas" size=5>本题本质是求fibonacci数列的第n项：</font></p>
@@ -893,6 +911,8 @@
       </header>
     
     <div class="article-entry" itemprop="articleBody">
+      
+      
       
         <a id="more"></a>
 

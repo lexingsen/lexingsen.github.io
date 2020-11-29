@@ -179,6 +179,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
+      
+      
         <a id="more"></a>
 
 <p><font size=5 face="Courier New" color=black>软链接-符号链接：相当于windows的快捷方式。</font><br><font size = 4 face="Courier New" color=black>创建命令:<br><font size=5 face="Courier New" color=black><code>ln s 文件名 软链接的名字</code>   ln-<font color=red>link</font>  s-<font color=red>soft<br>特点：</font><br>1.在linux中，软链接文件的颜色为浅蓝色。<br>2.软链接的大小为原文件的文件名大小，即路径长度。<br>3.软链接仅可在当前路径下使用，即和原文件在同一目录下。创建时最好给出原文件的绝对路径。<br>4.目录也可创建软链接，方法同上。</font><br><img src="https://img-blog.csdnimg.cn/20181124200740835.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><font size=5 face="Courier New" color=black>如上述的图片中，在这样形式的创建方式下如果将同一级目录下的软链接移动到其他目录下（与原文件不在同一个目录下），软链接会发生失效。<br><img src="https://img-blog.csdnimg.cn/2018112420094795.png" alt="在这里插入图片描述"><br><font size=5 face="Courier New" color=black>所以，这样的创建方式是有一定缺陷的，最好的创建方式，是给出整个原文件的<font color=red>绝对路径</font>，而不是相对路径，这样就不会发生失效，即使软链接和原文件不在同一级目录下。此外，如果原文件被删除，那么软链接也会发生失效，毕竟它只是一个快捷方式而已。</font></p>

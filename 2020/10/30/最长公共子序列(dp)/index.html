@@ -177,6 +177,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
+      
+      
         <a id="more"></a>
 
 <p><font size=4 face=consolas>f[i][j]表示所有在第一个序列中前i个字母出现并且在第二个序列中前j个字母出现的子序列。</font><br><font size=4 face=consolas>初始化：第一行，第一列f[i][0]和f[0][j]均为0</font><br><font size=4 face=consolas>状态转移：<br>（1）当前a[i]==b[j], f[i][j] = f[i-1][j-1]+1;<br>（2）a[i]!=b[j]，f[i][j] = max(f[i-1][j], f[i][j-1]);</font><br><font size=4 face=consolas></font></p>
