@@ -156,29 +156,193 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-数据结构：树相关的一些知识点（考研）" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       数据结构：树相关的一些知识点（考研）
     </h1>
   
 
-  
-  <a href="/2019/07/21/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%9A%E6%A0%91%E7%9B%B8%E5%85%B3%E7%9A%84%E4%B8%80%E4%BA%9B%E7%9F%A5%E8%AF%86%E7%82%B9%EF%BC%88%E8%80%83%E7%A0%94%EF%BC%89/" class="archive-article-date">
+        
+        <a href="/2019/07/21/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%9A%E6%A0%91%E7%9B%B8%E5%85%B3%E7%9A%84%E4%B8%80%E4%BA%9B%E7%9F%A5%E8%AF%86%E7%82%B9%EF%BC%88%E8%80%83%E7%A0%94%EF%BC%89/" class="archive-article-date">
   	<time datetime="2019-07-20T16:00:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-21</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face="Consolas">1.叶子节点和度为二节点个数之间的关系从两方面考虑。</font><br><font size=4 face="Consolas">（1）节点个数：在二叉树中，由度为0，1，2三种节点组成，因此其总的节点个数:<code>n=n0+n1+n2</code>。</font><br><font size=4 face="Consolas">（2）从分支考虑，n个节点中除了根节点没有前驱节点，其他节点有且仅有一个前驱节点。因此构成了n-1条边，这n-1条边是由度为0，1，2的节点扩散出来的，同时它们的扩散的边也为0，1，2，因此可以得到第二个方程:<code>n-1 = 0*n0 + 1*n1 + 2*n2</code></font></p>
+<p><font size=5 face="Consolas">2.树中节点总的个数等于所有节点的度加1。</font><br><font size=4 face="Consolas">可以这样理解，在树中，除了根节点之外，其余节点(n-1个)有且仅有一个前驱节点，也构成了n-1条边。考察树中每一个节点的度数之和，正是这n-1条边。因此n-1=树中所有节点的度之和，立即推n=所有节点度之和+1。</font></p>
+<p><font size=5 face="Consolas">3.度为m的树中在第k层最大节点个数为m^(k-1)</font><br><font size=4 face="Consolas"></p>
+<p><font size=5 face="Consolas">4.高度为h的m叉树至多有(m^h-1)/(m-1)个节点。换句话说，就是高度为h的m叉满树节点个数为多少。</font><br><font size=4 face="Consolas">其实就是求解等比数列的前n项和<code>1, m, m^2, m^3,...,m^h-1</code></font></p>
+<p><font size=5 face="Consolas">5.具有n个节点的m叉树的最小高度为：ceil(logm[n*(m-1) + 1])，最大高度为n-m+1。</font></p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/数据结构//" class="article-tag-list-link color5">数据结构</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2019/07/21/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%9A%E6%A0%91%E7%9B%B8%E5%85%B3%E7%9A%84%E4%B8%80%E4%BA%9B%E7%9F%A5%E8%AF%86%E7%82%B9%EF%BC%88%E8%80%83%E7%A0%94%EF%BC%89/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2019/08/12/%E4%BD%BF%E7%94%A8%E6%95%B0%E7%BB%84%E6%A8%A1%E6%8B%9F%E9%98%9F%E5%88%97%E3%80%81%E5%BE%AA%E7%8E%AF%E9%98%9F%E5%88%97%E5%92%8C%E6%A0%88/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          使用数组模拟队列、循环队列和栈
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/06/06/LeetCode%2066.%E5%8A%A0%E4%B8%80%EF%BC%88C++%20%E5%A4%A7%E6%95%B0%E7%9B%B8%E5%8A%A0%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">LeetCode 66.加一（C++ 大数相加）</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>

@@ -156,29 +156,196 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-Codeup墓地 谁是你的潜在朋友" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       Codeup墓地 谁是你的潜在朋友
     </h1>
   
 
-  
-  <a href="/2018/08/16/Codeup%E5%A2%93%E5%9C%B0%20%E8%B0%81%E6%98%AF%E4%BD%A0%E7%9A%84%E6%BD%9C%E5%9C%A8%E6%9C%8B%E5%8F%8B/" class="archive-article-date">
+        
+        <a href="/2018/08/16/Codeup%E5%A2%93%E5%9C%B0%20%E8%B0%81%E6%98%AF%E4%BD%A0%E7%9A%84%E6%BD%9C%E5%9C%A8%E6%9C%8B%E5%8F%8B/" class="archive-article-date">
   	<time datetime="2018-08-16T05:18:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-16</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=6 face="Courier New" >问题描述：</font><br><font size=4 face="Courier New">   “臭味相投”——这是我们描述朋友时喜欢用的词汇。两个人是朋友通常意味着他们存在着许多共同的兴趣。然而作为一个宅男，你发现自己与他人相互了解的机会 并不太多。幸运的是，你意外得到了一份北大图书馆的图书借阅记录，于是你挑灯熬夜地编程，想从中发现潜在的朋友。<br>    首先你对借阅记录进行了一番整理，把N个读者依次编号为1,2,…,N，把M本书依次编号为1,2,…,M。同时，按照“臭味相投”的原则，和你喜欢读同一本书的人，就是你的潜在朋友。你现在的任务是从这份借阅记录中计算出每个人有几个潜在朋友。</font></p>
+<p><font size=6 face="Courier New">输入</font><br><font size=4 face="Courier New"> 每个案例第一行两个整数N,M，2 &lt;= N ，M&lt;= 200。接下来有N行，第i(i = 1,2,…,N)行每一行有一个数，表示读者i-1最喜欢的图书的编号P(1&lt;=P&lt;=M)</font></p>
+<p><font size=6 face="Courier New">输出</font><br><font size=4 face="Courier New">每个案例包括N行，每行一个数，第i行的数表示读者i有几个潜在朋友。如果i和任何人都没有共同喜欢的书，则输出“BeiJu”（即悲剧，^ ^）</font></p>
+<p><font size=6 face="Courier New">样例输入</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">4 5</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">2</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
+
+<p><font size=6 face="Courier New">样例输出</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1</span><br><span class="line">BeiJu</span><br><span class="line">1</span><br><span class="line">BeiJu</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;cstdio&gt;</span><br><span class="line">#define maxn 201</span><br><span class="line">int main()&#123;</span><br><span class="line">	int n,m,P;</span><br><span class="line">	int reader[maxn];</span><br><span class="line">	while(scanf(&quot;%d %d&quot;,&amp;n,&amp;m)!&#x3D;EOF)&#123;</span><br><span class="line">		int booksum[maxn] &#x3D; &#123;0&#125;; </span><br><span class="line">		for(int i&#x3D;0;i&lt;n;++i)&#123;</span><br><span class="line">			scanf(&quot;%d&quot;,&amp;P);</span><br><span class="line">			reader[i] &#x3D; P;</span><br><span class="line">			booksum[P]++;</span><br><span class="line">		&#125;</span><br><span class="line">		for(int i&#x3D;0;i&lt;n;++i)&#123;</span><br><span class="line">			int sum &#x3D; booksum[reader[i]]-1;</span><br><span class="line">			if(sum!&#x3D;0)&#123;</span><br><span class="line">				printf(&quot;%d&quot;,sum);</span><br><span class="line">			&#125;</span><br><span class="line">			else&#123;</span><br><span class="line">				printf(&quot;BeiJu\n&quot;);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; </span><br><span class="line">	&#125;	</span><br><span class="line">	return 0;	 </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/算法基础//" class="article-tag-list-link color5">算法基础</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2018/08/16/Codeup%E5%A2%93%E5%9C%B0%20%E8%B0%81%E6%98%AF%E4%BD%A0%E7%9A%84%E6%BD%9C%E5%9C%A8%E6%9C%8B%E5%8F%8B/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2018/08/21/Debug%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Debug常用命令
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/08/16/Hash%E5%88%9D%E6%AD%A5(%E7%A9%BA%E9%97%B4%E6%8D%A2%E6%97%B6%E9%97%B4%E7%9A%84%E7%AD%96%E7%95%A5)/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Hash初步(空间换时间的策略)</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>

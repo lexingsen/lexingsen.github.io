@@ -163,29 +163,228 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-线程的概念及linux下线程库相关函数的使用" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       线程的概念及linux下线程库相关函数的使用
     </h1>
   
 
-  
-  <a href="/2018/04/14/%E7%BA%BF%E7%A8%8B%E7%9A%84%E6%A6%82%E5%BF%B5%E5%8F%8Alinux%E4%B8%8B%E7%BA%BF%E7%A8%8B%E5%BA%93%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8/" class="archive-article-date">
+        
+        <a href="/2018/04/14/%E7%BA%BF%E7%A8%8B%E7%9A%84%E6%A6%82%E5%BF%B5%E5%8F%8Alinux%E4%B8%8B%E7%BA%BF%E7%A8%8B%E5%BA%93%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8/" class="archive-article-date">
   	<time datetime="2018-04-14T14:10:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-14</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><strong>1.线程的概念</strong><br>在linux操作系统下，线程的本质任然是进程。是轻量级的进程（light weight process）简称LWP，但线程与进程还是有很多的区别。</p>
+<p><strong>1.1为什么要引入线程，线程相对于进程优势在哪里？</strong><br>历史回顾：在20世纪90年代，由于多处理系统的迅速发展。提出了比进程更小且能够独立运行的单位——线程，以提高系统内程序并发执行的程度，改善操作系统的性能。</p>
+<p>创建进程时，需要为其分配资源，并建立进程控制块pcb；撤销进程时，系统需要回收分配给进程的资源以及释放进程控制块，而当切换进程时，需要保护当前进程的上下文，并为切换的进程提供cpu执行环境。<strong>实际操作系统的开销比较大。</strong><br>        正是由于在进程切换时，操作系统的开销比较大。在操作系统中所设置的进程数量不能过多，否则在一定程度上降低了操作系统的并发程度。</p>
+<p><strong>引入线程的目的有二：</strong><br>(1).以较低的开销来提高操作系统的并发程度。<br>(2).简化进程间通讯。</p>
+<p><strong>2.线程与进程的对比</strong></p>
+<p><strong>2.1线程</strong><br>可在cpu上运行的基本执行单位。<br>进程内的一个代码片段可以被创建为一个线程。<br>线程状态：运行、就绪和等待。<br>线程操作：创建、撤销、等待和唤醒等。<br>进程依旧是资源分配的最小单位。<br>线程自己不用有系统资源，通过进程申请资源。</p>
+<p><strong>2.2进程</strong><br>重型线程。<br>只有一个主线程。<br>单线程的模型。</p>
+<p><strong>对比图</strong><br><img src="https://img-blog.csdn.net/20180414203246533?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<p><strong>2.3线程结构</strong><br>指令和数据来源于进程。<br>各类资源来源于进程。<br>相对于进程的进程控制块线程有<strong>线程控制块</strong>：包含栈空间、寄存器集、程序计数器和线程的ID。</p>
+<p><strong>3.线程的优点及缺点</strong><br>优点：1.提高程序的并发程度   2.系统开销小   3.数据共享，通信方便。<br>缺点：1.库函数，不稳定  2.调试编写困难，gdb不支持调试。  3.对信号支持不好</p>
+<p><strong>4.linux线程库中相关函数的使用。</strong></p>
+<p>头文件：<code>#include&lt;pthread.h&gt;</code></p>
+<p><strong>4.1创建线程</strong><br><strong>函数原型：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int  pthread_create(pthread_t *thread, const pthread_attr_t *attr,void* (*start_routine)(void *), void *arg))</span><br></pre></td></tr></table></figure>
+<p><strong>功能：</strong>创建一个线程。</p>
+<p><strong>返回值：</strong>成功创建返回值为0，错误返回错误号。<strong>注意：</strong>由于创建线程函数是一个库函数，不是系统调用函数。所以其错误信息不能用perror()进行打印，采用<code>strerror(错误号)</code>可以将错误信息打印出来。其中<code>strerror</code>函数是包含<code>#include&lt;string.h&gt;</code>之中的一个库函数。</p>
+<p><strong>参数：</strong><br>参数1：是一个传出参数，用于保存成功创建线程之后对应的线程id。<br>参数2：表示线程的属性，通常默认传NULL，如果想使用具体的属性也可以修改具体的参数。<br>参数3：函数指针，一个指向函数的指针。指向创建线程所执行函数的入口地址，函数执行完毕，则线程结束。<br>参数4：线程主函数执行期间所使用的参数。<br>下面举例使用以上函数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">#include&lt;string.h&gt;</span><br><span class="line">#include&lt;pthread.h&gt;</span><br><span class="line">#include&lt;sys&#x2F;types.h&gt;</span><br><span class="line"></span><br><span class="line">void* my_fun(void *arg)</span><br><span class="line">&#123;</span><br><span class="line">	int i &#x3D; 0;</span><br><span class="line">	for(;i &lt; 5;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;child pthread %d\n&quot;,i);</span><br><span class="line">	&#125;</span><br><span class="line">	return NULL;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	pthread_t pthid;&#x2F;&#x2F;传出参数，保存创建成功后的线程id</span><br><span class="line">	int res &#x3D; pthread_create(&amp;pthid,NULL,my_fun,NULL);</span><br><span class="line">	&#x2F;&#x2F;参数2默认为NULL，指的是线程的属性</span><br><span class="line">	&#x2F;&#x2F;函数指针，指向创建出线程的主函数</span><br><span class="line">	&#x2F;&#x2F;线程主函数的参数，就是void* my_fun(void *arg)中的void *arg</span><br><span class="line">	if(res !&#x3D; 0)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;%s\n&quot;,strerror(res));&#x2F;&#x2F;打印错误信息</span><br><span class="line">	&#125;</span><br><span class="line">	int i &#x3D; 0；</span><br><span class="line">	for(;i&lt; 5;++i)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;parent pthread %d\n&quot;,i);</span><br><span class="line">	&#125;</span><br><span class="line">	&#x2F;&#x2F;由于程序执行的速度非常快，子线程还没来得及执行。进程已经结束</span><br><span class="line">	&#x2F;&#x2F;主线程睡眠两秒，使得子线程可以执行完毕</span><br><span class="line">	sleep(2);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>4.2获取线程id</strong><br><strong>函数原型：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pthred_t pthread_self(void);</span><br></pre></td></tr></table></figure>
+<p><strong>功能：获取当前线程的id。</strong><br><strong>参数：</strong>无参。</p>
+<p><strong>返回值：</strong>返回值为一个无符号长整型。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#define  pthread_t unsigned long int</span><br></pre></td></tr></table></figure>
+<p>说明：线程id是在一个进程中的内部标识，但不同进程中的线程id可能相同。、<br>举例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">#include&lt;string.h&gt;</span><br><span class="line">#include&lt;sys&#x2F;types.h&gt;</span><br><span class="line">#include&lt;pthread.h&gt;</span><br><span class="line"></span><br><span class="line">void* fun(void *arg)</span><br><span class="line">&#123;</span><br><span class="line">	printf(&quot;子线程id:%lu\n&quot;,pthread_self());</span><br><span class="line">	return NULL;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	pthread_t pthid;</span><br><span class="line">	int res &#x3D; pthread_create(&amp;pthid,NULL,fun,NULL);</span><br><span class="line">	if(res !&#x3D; 0)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;%s\n&quot;,strerror(res));</span><br><span class="line">	&#125;</span><br><span class="line">	printf(&quot;主线程id:%lu\n&quot;,pthread_self());</span><br><span class="line">	sleep(1);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdn.net/20180414211641914?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><strong>注意：</strong>在使用gcc进行编译的时候需要加库名，否则会出先链接错误。因为线程库头文件仅仅包含了函数的声明，函数的实现在哪里编译器是不知道。如果不加库名，会出现如下的链接错误。<br><img src="https://img-blog.csdn.net/20180414211957850?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<p><strong>4.3单个线程退出</strong></p>
+<p><strong>函数原型：</strong> <code>void pthread_exit(void *retval)</code><br>参数：retval表示线程的退出状态，通常穿NULL。当要求传出具体的退出状态时，可以使用retval。</p>
+<p>当使用<code>exit</code>函数退出线程时，存在的问题是如果当前还有线程没有执行相应的任务，但是由于进程的退出，强制使得线程被迫退出。因为线程依赖与进程这是非常危险的退出方式，因此提出来了单线程的退出。不会影响到其他线程的撤销以及进程的撤销。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">#include&lt;string.h&gt;</span><br><span class="line">#include&lt;sys&#x2F;types.h&gt;</span><br><span class="line">#include&lt;pthread.h&gt;</span><br><span class="line"></span><br><span class="line">void* fun(void *arg)</span><br><span class="line">&#123;</span><br><span class="line">	int i &#x3D; 0;</span><br><span class="line">	for(;i &lt; 3;++i)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;child pthread i &#x3D; %d\n&quot;,i);</span><br><span class="line">	&#125;</span><br><span class="line">	return NULL;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	pthread_t pthid;</span><br><span class="line">	int res &#x3D; pthread_create(&amp;pthid,NULL,fun,NULL);</span><br><span class="line">	if(res !&#x3D; 0)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;%s\n&quot;,strerror(res));</span><br><span class="line">	&#125;</span><br><span class="line">	int i &#x3D; 0;</span><br><span class="line">	for(i &#x3D; 0;i &lt; 5;++i)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;parent pthread i &#x3D; %d\n&quot;,i);</span><br><span class="line">	&#125;</span><br><span class="line">	&#x2F;&#x2F;sleep(1);&#x2F;&#x2F;若不加sleep(1)时，由于主线程执行的太快。</span><br><span class="line">	&#x2F;&#x2F;子线程还没来得及执行，进程结束子线程被迫结束</span><br><span class="line">	pthread_exit(NULL);&#x2F;&#x2F;退出当前的线程，并没结束整个进程。</span><br><span class="line">	&#x2F;&#x2F;只有当进程中所有线程执行完毕后，进程才会结束</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>没有添加单线程退出函数的结果：<br><img src="https://img-blog.csdn.net/20180414213550982?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>和我们预期的结果是一致的。</p>
+<p>添加单线程退出函数的执行结果：<br><img src="https://img-blog.csdn.net/20180414220717777?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<p>可见，单线程退出函数确实起到了作用。</p>
+<p><strong>4.4阻塞等待线程退出，回收线程的资源。</strong><br><strong>函数原型：</strong><code>int pthread_join(pthread_t thread, void **retval)</code></p>
+<p><strong>参数：</strong> pthread为线程id，retval为线程的状态。可以与<code>pthread_exit()</code>结合使用。</p>
+<p>调用该函数的线程将挂起等待，为阻塞的状态。直到id为thread的线程终止。thread线程以不同的方法终止，通过pthread_join得到的终止状态是不同的，总结如下：<br>1.如果thread线程通过return返回，retval所指向的单元里存放的是thread线程函数的返回值。<br>2.如果thread线程被别的线程调用pthread_cancel异常终止掉，retval所指向的单元里存放的是常数PTHREAD_CANCELED。<br>3.如果thread线程是自己调用pthread_exit终止的，retval所指向的单元存放的是传给pthread_exit的参数。<br>4.如果对thread线程的终止状态不感兴趣，可以传NULL给retval参数。<br>举例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">#include&lt;string.h&gt;</span><br><span class="line">#include&lt;sys&#x2F;types.h&gt;</span><br><span class="line">#include&lt;pthread.h&gt;</span><br><span class="line">#include&lt;assert.h&gt;</span><br><span class="line"></span><br><span class="line">void* myfun(void *arg)</span><br><span class="line">&#123;</span><br><span class="line">	printf(&quot;child pthread id &#x3D; %lu\n&quot;,pthread_self());</span><br><span class="line">	char *str &#x3D; &quot;子线程的退出状态！\n&quot;</span><br><span class="line">	pthread_exit(str);</span><br><span class="line">	return NULL;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">	pthread_t pthid;</span><br><span class="line">	int res &#x3D; pthread_create(&amp;pthid,NULL,myfun,NULL);</span><br><span class="line">	assert(res &#x3D;&#x3D; 0);</span><br><span class="line">	char *str &#x3D; NULL;</span><br><span class="line">	pthread_join(pthid,&amp;str);</span><br><span class="line">	printf(&quot;parent pthread id &#x3D; %lu\n&quot;,pthread_self());</span><br><span class="line">	printf(&quot;%s\n&quot;,str);</span><br><span class="line">	return 0；</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行的结果如下：<br><img src="https://img-blog.csdn.net/20180414220239257?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>主线程阻塞，等待子线程退出。获取子线程的退出状态并输出。</p>
+<p>以上即线程的相关概念以及Linux系统下线程库相关重要的函数具体应用，大家也可以自行举例，验证函数。进一步的去理解线程的真正意义以及如何使用线程相关的开发。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/linux//" class="article-tag-list-link color1">linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2018/04/14/%E7%BA%BF%E7%A8%8B%E7%9A%84%E6%A6%82%E5%BF%B5%E5%8F%8Alinux%E4%B8%8B%E7%BA%BF%E7%A8%8B%E5%BA%93%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2018/04/14/%E6%B1%82%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%95%B0%E4%B8%AD%E4%B8%80%E7%9A%84%E4%B8%AA%E6%95%B0%E7%9A%84%E4%B8%89%E7%A7%8D%E6%96%B9%E6%B3%95/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          求二进制数中一的个数的三种方法
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/04/11/%E6%97%A0%E5%A4%B4%E8%8A%82%E7%82%B9%E5%8D%95%E9%93%BE%E8%A1%A8%E7%9A%84%E6%93%8D%E4%BD%9C/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">无头节点单链表的操作</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>

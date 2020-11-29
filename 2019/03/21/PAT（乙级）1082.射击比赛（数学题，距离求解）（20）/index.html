@@ -156,29 +156,196 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-PAT（乙级）1082.射击比赛（数学题，距离求解）（20）" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       PAT（乙级）1082.射击比赛（数学题，距离求解）（20）
     </h1>
   
 
-  
-  <a href="/2019/03/21/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891082.%E5%B0%84%E5%87%BB%E6%AF%94%E8%B5%9B%EF%BC%88%E6%95%B0%E5%AD%A6%E9%A2%98%EF%BC%8C%E8%B7%9D%E7%A6%BB%E6%B1%82%E8%A7%A3%EF%BC%89%EF%BC%8820%EF%BC%89/" class="archive-article-date">
+        
+        <a href="/2019/03/21/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891082.%E5%B0%84%E5%87%BB%E6%AF%94%E8%B5%9B%EF%BC%88%E6%95%B0%E5%AD%A6%E9%A2%98%EF%BC%8C%E8%B7%9D%E7%A6%BB%E6%B1%82%E8%A7%A3%EF%BC%89%EF%BC%8820%EF%BC%89/" class="archive-article-date">
   	<time datetime="2019-03-21T11:35:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-21</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face="Courier New">1082.射击比赛</font></p>
+<p><font size=4 face="Courier New">本题目给出的射击比赛的规则非常简单，谁打的弹洞距离靶心最近，谁就是冠军；谁差得最远，谁就是菜鸟。本题给出一系列弹洞的平面坐标(x,y)，请你编写程序找出冠军和菜鸟。我们假设靶心在原点(0,0)。</p>
+<p><font size=5 face="Courier New" color=red>输入格式：</font><br><font size=4 face="Courier New">输入在第一行中给出一个正整数 N（≤ 10 000）。随后 N 行，每行按下列格式给出：<br><code>D x y</code><br>其中 <code>ID </code>是运动员的编号（由 4 位数字组成）；<code>x </code>和 <code>y</code> 是其打出的弹洞的平面坐标(x,y)，均为整数，且 0 ≤ |<code>x</code>|, |<code>y</code>| ≤ 100。题目保证每个运动员的编号不重复，且每人只打 1 枪。</p>
+<p><font size=5 face="Courier New" color=red>输出格式：</font><br><font size=4 face="Courier New">输出冠军和菜鸟的编号，中间空 1 格。题目保证他们是唯一的。</p>
+<p><font size=6 face="Courier New" color=blue>题目分析：距离求解+排序</font></p>
+<p><font size=4 face="Courier New">代码实现：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;cstdio&gt;</span><br><span class="line">#include &lt;cmath&gt;</span><br><span class="line">#include &lt;string&gt;</span><br><span class="line">#include &lt;vector&gt;</span><br><span class="line">#include &lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">struct Person&#123;</span><br><span class="line">    string name;</span><br><span class="line">    double distance;</span><br><span class="line"></span><br><span class="line">    Person(string name, double distance)&#123;</span><br><span class="line">        this-&gt;name &#x3D; name;</span><br><span class="line">        this-&gt;distance &#x3D; distance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">double dis(int x, int y)&#123;</span><br><span class="line">    double d &#x3D; sqrt(x*x+y*y);</span><br><span class="line">    return d;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">vector&lt;Person&gt; vec;</span><br><span class="line"></span><br><span class="line">bool cmp(Person a, Person b)&#123;</span><br><span class="line">    return a.distance &lt;  b.distance;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">   &#x2F;&#x2F; freopen(&quot;in.txt&quot;, &quot;r&quot;, stdin);</span><br><span class="line">    int n, x, y;</span><br><span class="line">    scanf(&quot;%d&quot;, &amp;n);</span><br><span class="line">    string name;</span><br><span class="line">    for(int i&#x3D;0; i&lt;n; ++i)&#123;</span><br><span class="line">        cin&gt;&gt;name&gt;&gt;x&gt;&gt;y;</span><br><span class="line">        vec.push_back(Person(name, dis(x,y)));</span><br><span class="line">    &#125;</span><br><span class="line">    sort(vec.begin(), vec.end(), cmp);</span><br><span class="line"></span><br><span class="line">    printf(&quot;%s %s\n&quot;, vec[0].name.c_str(), vec[vec.size()-1].name.c_str());</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/PAT乙级题解//" class="article-tag-list-link color3">PAT乙级题解</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2019/03/21/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891082.%E5%B0%84%E5%87%BB%E6%AF%94%E8%B5%9B%EF%BC%88%E6%95%B0%E5%AD%A6%E9%A2%98%EF%BC%8C%E8%B7%9D%E7%A6%BB%E6%B1%82%E8%A7%A3%EF%BC%89%EF%BC%8820%EF%BC%89/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2019/03/21/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891083.%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8%E7%9B%B8%E7%AD%89%E7%9A%84%E5%B7%AE%EF%BC%8820%EF%BC%89/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          PAT（乙级）1083.是否存在相等的差（20）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/03/11/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8Fmerge%E5%87%BD%E6%95%B0%E7%9A%84%E4%B8%A4%E7%A7%8D%E5%86%99%E6%B3%95/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">归并排序merge函数的两种写法</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>

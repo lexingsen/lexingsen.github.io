@@ -163,29 +163,209 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-linux系统调用函数  lstat--获取文件属性" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       linux系统调用函数  lstat--获取文件属性
     </h1>
   
 
-  
-  <a href="/2018/05/13/linux%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%87%BD%E6%95%B0%20%20lstat--%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6%E5%B1%9E%E6%80%A7/" class="archive-article-date">
+        
+        <a href="/2018/05/13/linux%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%87%BD%E6%95%B0%20%20lstat--%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6%E5%B1%9E%E6%80%A7/" class="archive-article-date">
   	<time datetime="2018-05-13T01:03:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-13</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+
+<p>所需头文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;unistd.h&gt;</span><br><span class="line">#include&lt;sys&#x2F;stat.h&gt;</span><br><span class="line">#include&lt;sys&#x2F;types.h&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>函数功能：</strong>用来获取linux操作系统下文件的属性。<br><strong>函数原型：</strong> <code>int stat(const char *pathname,struct stat *buf);</code></p>
+<p><strong>参数：</strong>第一个参数为传入参数，<code>pathname</code>为文件的<strong>绝对路径</strong>或<strong>相对路径</strong>。第二参数为传出参数，一个<code>struct stat</code>类型的结构体指针。传出参数可以采用下边两种方法，定义结构体变量<strong>struct stat st</strong>,或定义结构体指针变量*<em>strut stat <em>st = &amp;st</em></em>(注意这里一定要进行初始化，说明其为一块有效的内存空间)，相对而言，使用结构体变量更为方便。</p>
+<p>注意，在linux操作系统下，一切皆文件。文件共有七种类型，分别是普通文件、目录文件、管道文件、可执行文件、压缩文件、设备文件（字符、管道和块）和其他文件。</p>
+<p>下面介绍一下<code>struct stat</code>结构体：</p>
+<p><img src="https://img-blog.csdn.net/20180512214612954?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">struct stat &#123;</span><br><span class="line">    dev_t     st_dev;      文件的设备编号</span><br><span class="line">    ino_t     st_ino;      节点</span><br><span class="line">    mode_t    st_mode;     文件的类型和权限</span><br><span class="line">    nlink_t   st_nlink;    连到该文件的硬链接数目，刚建立的文件值为1</span><br><span class="line">    uid_t     st_uid;      用户ID</span><br><span class="line">    gid_t     st_gid;      组ID</span><br><span class="line">    dev_t     st_rdev;     设备类型）若此文件为设备文件，则为其设备编号</span><br><span class="line">    off_t     st_size;     文件字节数（文件大小）</span><br><span class="line">    blksize_t st_blksize;  块大小（文件I&#x2F;O缓冲区的大小）</span><br><span class="line">    blkcnt_t  st_blocks;   块数</span><br><span class="line">    time_t    st_atime;    最后一次访问时间</span><br><span class="line">    time_t    st_mtime;    最后一次修改时间</span><br><span class="line">    time_t    st_ctime;    最后一次改变时间（指属性）</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>下面举例使用stat函数获取文件的属性：<br>在linux的shell解释器中，输入这样的命令stat + 文件名即可获取文件的属性。如：<br><img src="https://img-blog.csdn.net/20180512215736360?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>那么如何在函数中获取文件属性并将其打印出来呢？下面应用stat函数获取main.c文件的属性。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;unistd.h&gt;</span><br><span class="line">#include&lt;sys&#x2F;types.h&gt;</span><br><span class="line">#include&lt;sys&#x2F;stat.h&gt;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	struct stat st;&#x2F;&#x2F;定义结构体变量，保存所获取的文件属性</span><br><span class="line">	int res &#x3D; stat(&quot;&#x2F;home&#x2F;lsc&#x2F;Desktop&#x2F;linux&#x2F;k0512&#x2F;test&#x2F;main.c&quot;，&amp;st);</span><br><span class="line">	if(res &#x3D;&#x3D; -1)&#x2F;&#x2F;获取文件属性失败，errno设置为合适的值</span><br><span class="line">	&#123;</span><br><span class="line">		perror(&quot;stat fail&quot;);</span><br><span class="line">		exit(1);</span><br><span class="line">	&#125;</span><br><span class="line">	printf(&quot;大小:%d    &quot;,st.st_size);</span><br><span class="line">	printf(&quot;设备:%d    &quot;,st.st_dev);</span><br><span class="line">	printf(&quot;块:%d   &quot;,st_st_blocks);</span><br><span class="line">	printf(&quot;Inode:%d   &quot;,st.st_ino);</span><br><span class="line">	printf(&quot;硬链接:%d   &quot;,st.st_nlink);</span><br><span class="line">	printf(&quot;uid:%d   &quot;,st.st_uid);</span><br><span class="line">	printf(&quot;gid:%   &quot;,st.st_gid);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行结果：<br>和我们用<code>stat + 文件名</code>命令获取到文件的属性信息是一致的。<br><img src="https://img-blog.csdn.net/20180513080918557?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<p>大家可能注意到，在代码中并为涉及输出st_mode属性相关的信息。<br><strong>重点：</strong>下面着重深入的研究一下st_mode这属性，可以通过它来获取文件的文件类型以及权限。</p>
+<p><code>mode_t st_mode</code>是一个16位的short类型，对应16个标志位，其组成如下：</p>
+<p><img src="https://img-blog.csdn.net/20180513082612758?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>而其，通常情况下特殊权限位不使用。<br>那么如何取出对应的位置的位获取相关的信息呢，Linux系统调用给我们提供了一系列的宏，可以查看man文档 <code>man 2 stat</code>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">S_IFMT     0170000   &#x2F;&#x2F;掩码，过滤st_mode中除文件类型以外的信息</span><br><span class="line">S_IFSOCK   0140000   &#x2F;&#x2F;套接字</span><br><span class="line">S_IFLNK    0120000   &#x2F;&#x2F;符号链接(软链接)</span><br><span class="line">S_IFREG    0100000   &#x2F;&#x2F;普通文件</span><br><span class="line">S_IFBLK    0060000   &#x2F;&#x2F;块设备</span><br><span class="line">S_IFDIR    0040000   &#x2F;&#x2F;目录文件</span><br><span class="line">S_IFCHR    0020000   &#x2F;&#x2F;字符设备</span><br><span class="line">S_IFIFO    0010000   &#x2F;&#x2F;管道</span><br><span class="line">S_ISUID    0004000   &#x2F;&#x2F;设置用户ID</span><br><span class="line">S_ISGID    0002000   &#x2F;&#x2F;设置组ID</span><br><span class="line">S_ISVTX    0001000   &#x2F;&#x2F;粘住位</span><br><span class="line">S_IRWXU    00700     &#x2F;&#x2F;掩码，过滤st_mode除文件所有者权限以外的信息</span><br><span class="line">S_IRUSR    00400     &#x2F;&#x2F;用户读权限</span><br><span class="line">S_IWUSR    00200     &#x2F;&#x2F;用户写权限</span><br><span class="line">S_IXUSR    00100     &#x2F;&#x2F;用户执行权限</span><br><span class="line">S_IRWXG    00070     &#x2F;&#x2F;掩码，过滤st_mode除所属组权限以外的信息</span><br><span class="line">S_IRGRP    00040     &#x2F;&#x2F;读权限</span><br><span class="line">S_IWGRP    00020     &#x2F;&#x2F;写权限</span><br><span class="line">S_IXGRP    00010     &#x2F;&#x2F;执行权限</span><br><span class="line">S_IRWXO    00007     &#x2F;&#x2F;掩码，过滤st_mode除其他人权限以外的信息</span><br><span class="line">S_IROTH    00004     &#x2F;&#x2F;读权限</span><br><span class="line">S_IWOTH    00002     &#x2F;&#x2F;写权限</span><br><span class="line">S_IXOTH    00001     &#x2F;&#x2F;执行权限</span><br></pre></td></tr></table></figure>
+<p>下面举一个简单例子，验证一个文件是否为普通文件。<br>在当前目录下有一个普通文件：<br><img src="https://img-blog.csdn.net/20180513084728740?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">#include&lt;stdlib.h&gt;</span><br><span class="line">#include&lt;unistd.h&gt;</span><br><span class="line">#incude&lt;sys&#x2F;stat.h&gt;</span><br><span class="line">#include&lt;sys&#x2F;types.h&gt;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	struct stat st;</span><br><span class="line">	int res &#x3D; stat(&quot;.&#x2F;test.c&quot;,&amp;st);</span><br><span class="line">	if(-1 &#x3D;&#x3D; res)</span><br><span class="line">	&#123;</span><br><span class="line">		perror(&quot;stat fail&quot;);</span><br><span class="line">		exit(1);</span><br><span class="line">	&#125;</span><br><span class="line">	if((st.st_mode &amp; S_IFMT) &#x3D;&#x3D; S_IFREG)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;regular file\n&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdn.net/2018051309015446?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<p>相信完全理解了系统调用函数stat之后，实现一个<code>ls -l</code>的命令也会变得简单，大家可以试试。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/linux//" class="article-tag-list-link color1">linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2018/05/13/linux%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%87%BD%E6%95%B0%20%20lstat--%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6%E5%B1%9E%E6%80%A7/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2018/05/14/TCP%E5%8D%8F%E8%AE%AE%E7%9A%84%E7%89%B9%E7%82%B9%E5%8F%8ATCP%E5%A4%B4%E9%83%A8%E7%BB%93%E6%9E%84%E4%BF%A1%E6%81%AF/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          TCP协议的特点及TCP头部结构信息
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/05/12/C%E5%92%8CC++%E4%B8%AD%E7%BB%8Fconst%E4%BF%AE%E9%A5%B0%E7%9A%84%E5%B8%B8%E9%87%8F%E3%80%81%E5%B8%B8%E5%8F%98%E9%87%8F%E5%92%8C%E6%99%AE%E9%80%9A%E5%8F%98%E9%87%8F%E7%9A%84%E5%8C%BA%E5%88%AB/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">C和C++中经const修饰的常量、常变量和普通变量的区别</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>

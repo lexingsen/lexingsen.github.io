@@ -156,29 +156,196 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-冒泡排序和简单选择排序的算法实现及优化" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       冒泡排序和简单选择排序的算法实现及优化
     </h1>
   
 
-  
-  <a href="/2018/04/07/%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F%E5%92%8C%E7%AE%80%E5%8D%95%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F%E7%9A%84%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0%E5%8F%8A%E4%BC%98%E5%8C%96/" class="archive-article-date">
+        
+        <a href="/2018/04/07/%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F%E5%92%8C%E7%AE%80%E5%8D%95%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F%E7%9A%84%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0%E5%8F%8A%E4%BC%98%E5%8C%96/" class="archive-article-date">
   	<time datetime="2018-04-07T08:30:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-07</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><strong>一.在排序算法中使用到的结构与函数</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">int arr[] &#x3D; &#123;50,60,90,10,30,40,20,70,80&#125;;</span><br><span class="line">int len &#x3D; sizeof(arr)&#x2F;sizeof(arr[0]);</span><br><span class="line">&#x2F;&#x2F;由于数组作为形参会退化为指针，所以在函数中计算不出数组的长度。</span><br><span class="line">&#x2F;&#x2F;因此数组的长度应在主函数中求出，并传入到函数当中以便使用。</span><br><span class="line">函数</span><br><span class="line"></span><br><span class="line">void swap(int *arr,int i,int j)</span><br><span class="line">&#123;</span><br><span class="line">	int temp &#x3D; arr[i];</span><br><span class="line">	arr[i] &#x3D; arr[j];</span><br><span class="line">	arr[j] &#x3D; temp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>二.冒泡排序</strong></p>
+<p>冒泡排序作为最基础的排序算法，其核心就是通过两两相邻的同类型数据进行比较，进行交换。一组数据经过一次比较之后，就可以最大或最小的元素放在<br>尾部，现实生活中很形象的例子就是冒泡，其名称也因此而来。<br>下面实现冒泡排序算法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">void BubbleSort(int *arr,int len)</span><br><span class="line">&#123;</span><br><span class="line">	for(int i &#x3D; 0;i &lt; len - 1;++i)</span><br><span class="line">	&#123;</span><br><span class="line">		for(int j &#x3D; 0;j &lt; len - 1 -i;++j)</span><br><span class="line">		&#123;</span><br><span class="line">			if(arr[j] &gt; arr[j+1])</span><br><span class="line">			&#123;</span><br><span class="line">				swap(arr,j,j+1);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上述的算法虽然可以成功的解决一组数据排列的问题，但是涉及到一个具体的算法时，我们就必须从两方面考虑其性能及<strong>空间复杂度</strong>和<strong>时间复杂度</strong>。</p>
+<p>由于计算机硬件发展迅速，硬件价格也随之迅速降低。在实际使用算法时，往往通过牺牲空间复杂度来获取较低的时间复杂度，这样的做法其实也是合理的。</p>
+<p>针对时间复杂度，对冒泡排序算法进行优化。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">int arr[] &#x3D; &#123;11,22,33,44,55,66,77,88,99&#125;;</span><br><span class="line">&#x2F;&#x2F;要求对arr数组中的数字进行升序排序，可以发现，进过一趟比较。数组中的数字顺序已完成排序</span><br><span class="line">&#x2F;&#x2F;但是在算法中还依此进行了七趟没有必要的比较</span><br><span class="line">第一趟 int arr[] &#x3D; &#123;11,22,33,44,55,66,77,88,99&#125;; </span><br><span class="line">第二趟 int arr[] &#x3D; &#123;11,22,33,44,55,66,77,88,99&#125;; </span><br><span class="line">第三趟 int arr[] &#x3D; &#123;11,22,33,44,55,66,77,88,99&#125;; </span><br><span class="line">第四趟 int arr[] &#x3D; &#123;11,22,33,44,55,66,77,88,99&#125;; </span><br><span class="line">第五趟 int arr[] &#x3D; &#123;11,22,33,44,55,66,77,88,99&#125;; </span><br><span class="line">第六趟 int arr[] &#x3D; &#123;11,22,33,44,55,66,77,88,99&#125;; </span><br><span class="line">第七趟 int arr[] &#x3D; &#123;11,22,33,44,55,66,77,88,99&#125;; </span><br><span class="line">第八趟 int arr[] &#x3D; &#123;11,22,33,44,55,66,77,88,99&#125;;</span><br><span class="line">&#x2F;&#x2F;可见，这样的算法在时间复杂度上的浪费非常大 </span><br></pre></td></tr></table></figure>
+<p>当然上述的例子，是非常极端的。但是在实际的排序问题中也不乏数据几个或多个相邻的数据已经有序，因此针对已经有序的序列，就不需要进行排序。减少浪费不必要的时间。</p>
+<p><strong>优化后的冒泡排序</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">void BubbleSort(int *arr,int len)</span><br><span class="line">&#123;</span><br><span class="line">	bool flag;&#x2F;&#x2F;设置标识位，用于判断相邻两数据之间是否有序</span><br><span class="line">	for(int i &#x3D; 0;i &lt; len - 1;++i)</span><br><span class="line">	&#123;</span><br><span class="line">		flag &#x3D; true;&#x2F;&#x2F;flag设置为flase,假设已经有序</span><br><span class="line">		for(int j &#x3D; 0;j &lt; len - 1 - i;++j)</span><br><span class="line">		&#123;</span><br><span class="line">			if(arr[j] &gt; arr[j+1])</span><br><span class="line">			&#123;</span><br><span class="line">				flag &#x3D;  false;&#x2F;&#x2F;进入此分支，证明无序</span><br><span class="line">				swap(arr,j,j+1);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		if(flag &#x3D;&#x3D; true)</span><br><span class="line">		&#123;</span><br><span class="line">			break;&#x2F;&#x2F;证明此时数组中数据已经完成排序</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>三.简单选择排序</strong><br>思路：简单选择排序算法就是通过n-i次关键字间比较，从n-1-i个记录中选择出关键字最小的的，并和第i个（0≤i≤n-i）个记录进行交换。<br>简单选择排序算法的实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">void SelectSort(int *arr,int len)</span><br><span class="line">&#123;</span><br><span class="line">	for(int i &#x3D; 0;i &lt; len;++i)</span><br><span class="line">	&#123;</span><br><span class="line">		for(j &#x3D; i+1;j &lt; len;++j)</span><br><span class="line">		&#123;</span><br><span class="line">			if(arr[i] &gt; arr[j])</span><br><span class="line">			&#123;</span><br><span class="line">				swap(arr,i,j);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但实际上上述已经实现的简单选择排序也不满足算法在时间复杂度上的要求，其实优化的目的与冒泡排序相同，都是避免出现在已经有序的序列中进行排序，所以其优化的思路与冒泡排序的优化方式一致。<br><strong>优化的简单排序算法</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">void  SelectSort(int *arr,int len)</span><br><span class="line">&#123;</span><br><span class="line">	bool flag;</span><br><span class="line">	for(int i &#x3D; 0;i &lt; len;++i)</span><br><span class="line">	&#123;</span><br><span class="line">		flag &#x3D; true;</span><br><span class="line">		for(int j &#x3D; 0;j &lt; len;++j)</span><br><span class="line">		&#123;</span><br><span class="line">			if(arr[i] &lt; arr[j])</span><br><span class="line">			&#123;</span><br><span class="line">				flag &#x3D; true;</span><br><span class="line">				swap(arr,i,j);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		if(flag &#x3D;&#x3D; true)</span><br><span class="line">		&#123;</span><br><span class="line">			break;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上述的标志位法还可以用到许多的实际例子中，如求素数个数问题等。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2018/04/07/%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F%E5%92%8C%E7%AE%80%E5%8D%95%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F%E7%9A%84%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0%E5%8F%8A%E4%BC%98%E5%8C%96/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2018/04/07/%E4%BA%8C%E7%BB%B4%E6%95%B0%E7%BB%84%E7%9A%84%E5%9C%B0%E5%9D%80%EF%BC%88%E8%A1%8C%E5%9C%B0%E5%9D%80%EF%BC%8C%E5%85%B7%E4%BD%93%E5%85%83%E7%B4%A0%E5%9C%B0%E5%9D%80%EF%BC%89/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          二维数组的地址（行地址，具体元素地址）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/04/05/const%E4%BF%AE%E9%A5%B0%E7%AC%A6%E7%9A%84%E4%BD%BF%E7%94%A8%EF%BC%88%E4%BF%AE%E9%A5%B0%E7%BB%93%E6%9E%84%E4%BD%93%E6%8C%87%E9%92%88%EF%BC%8C%E5%BC%95%E7%94%A8%E5%A4%96%E9%83%A8%E7%9A%84const%20%E5%8F%98%E9%87%8F%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">const修饰符的使用（修饰结构体指针，引用外部的const 变量）</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>

@@ -156,29 +156,198 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-PAT（甲级）1025.PAT Ranking（25）" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       PAT（甲级）1025.PAT Ranking（25）
     </h1>
   
 
-  
-  <a href="/2019/04/07/PAT%EF%BC%88%E7%94%B2%E7%BA%A7%EF%BC%891025.PAT%20Ranking%EF%BC%8825%EF%BC%89/" class="archive-article-date">
+        
+        <a href="/2019/04/07/PAT%EF%BC%88%E7%94%B2%E7%BA%A7%EF%BC%891025.PAT%20Ranking%EF%BC%8825%EF%BC%89/" class="archive-article-date">
   	<time datetime="2019-04-07T01:24:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-07</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face="Consolas">PAT 1025.PAT Ranking（25）</font><br><font size=4 face="Consolas">Programming Ability Test (PAT) is organized by the College of Computer Science and Technology of Zhejiang University. Each test is supposed to run simultaneously in several places, and the ranklists will be merged immediately after the test. Now it is your job to write a program to correctly merge all the ranklists and generate the final rank.<br><font size=4 face="Consolas"><br><font size=5 face="Consolas" color=red>输入格式：</font><br><font size=4 face="Consolas">Each input file contains one test case. For each case, the first line contains a positive number N (≤100), the number of test locations. Then N ranklists follow, each starts with a line containing a positive integer K (≤300), the number of testees, and then K lines containing the registration number (a 13-digit number) and the total score of each testee. All the numbers in a line are separated by a space.</p>
+<p><font size=5 face="Consolas" color=red>输出格式：</font><br><font size=4 face="Consolas">For each test case, first print in one line the total number of testees. Then print the final ranklist in the following format:<br><code>registration_number final_rank location_number local_rank</code><br>The locations are numbered from 1 to N. The output must be sorted in nondecreasing order of the final ranks. The testees with the same score must have the same rank, and the output must be sorted in nondecreasing order of their registration numbers.</p>
+<p><font size=5 face="Courier New" color=red>输入样例：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">2</span><br><span class="line">5</span><br><span class="line">1234567890001 95</span><br><span class="line">1234567890005 100</span><br><span class="line">1234567890003 95</span><br><span class="line">1234567890002 77</span><br><span class="line">1234567890004 85</span><br><span class="line">4</span><br><span class="line">1234567890013 65</span><br><span class="line">1234567890011 25</span><br><span class="line">1234567890014 100</span><br><span class="line">1234567890012 85</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier New" color=red>输出样例：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">9</span><br><span class="line">1234567890005 1 1 1</span><br><span class="line">1234567890014 1 2 1</span><br><span class="line">1234567890001 3 1 2</span><br><span class="line">1234567890003 3 1 2</span><br><span class="line">1234567890004 5 1 4</span><br><span class="line">1234567890012 5 2 2</span><br><span class="line">1234567890002 7 1 5</span><br><span class="line">1234567890013 8 2 3</span><br><span class="line">1234567890011 9 2 4</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Consolas" color=blue>题目分析：分组排名，整体排名。</font></p>
+<p><font size=5 color=red>注意：由于不知道题目会输入多少个组，每一个组是一个vector<people>对象，因此可以开辟110个vector<people>数组。相当于一个二维数组。首先进行各组的组内排名，都排完之后将所有组同学合并到同一个vector<stu>中，进行最后一次排名，然后一次输出即可。</p>
+<p><font size=5 face="Consolas" color=black>AC代码：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;algorithm&gt;</span><br><span class="line">#include &lt;vector&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">const int maxn &#x3D; 110;</span><br><span class="line"></span><br><span class="line">struct people&#123;</span><br><span class="line">    string name;</span><br><span class="line">    int score;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">struct stu&#123;</span><br><span class="line">    string name;</span><br><span class="line">    int group;</span><br><span class="line">    int score;</span><br><span class="line">    int groupRank;</span><br><span class="line"></span><br><span class="line">    stu(string name, int group, int score, int groupRank)&#123;</span><br><span class="line">        this-&gt;name &#x3D; name;</span><br><span class="line">        this-&gt;group &#x3D; group;</span><br><span class="line">        this-&gt;score &#x3D; score;</span><br><span class="line">        this-&gt;groupRank &#x3D; groupRank;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">vector&lt;people&gt; arr[maxn];</span><br><span class="line">vector&lt;stu&gt; v;</span><br><span class="line"></span><br><span class="line">bool cmp(people a, people b)&#123;</span><br><span class="line">    if(a.score !&#x3D; b.score)return a.score &gt; b.score;</span><br><span class="line">    else return a.name &lt; b.name;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bool cmp1(stu a, stu b)&#123;</span><br><span class="line">    if(a.score !&#x3D; b.score)return a.score &gt; b.score;</span><br><span class="line">    else return a.name &lt; b.name;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    int n, m;</span><br><span class="line">    scanf(&quot;%d&quot;, &amp;n);</span><br><span class="line">    for(int i&#x3D;0; i&lt;n; ++i)&#123;</span><br><span class="line">        scanf(&quot;%d&quot;, &amp;m);</span><br><span class="line">        people p;</span><br><span class="line">        string name;</span><br><span class="line">        int score;</span><br><span class="line">        for(int j&#x3D;0; j&lt;m; ++j)&#123;</span><br><span class="line">            cin&gt;&gt;name;</span><br><span class="line">            scanf(&quot;%d&quot;, &amp;score);</span><br><span class="line">            p.name &#x3D; name;</span><br><span class="line">            p.score &#x3D; score;</span><br><span class="line">            arr[i].push_back(p);</span><br><span class="line">        &#125;</span><br><span class="line">        sort(arr[i].begin(), arr[i].end(), cmp);</span><br><span class="line">        int rank &#x3D; 0, pre&#x3D;-1;</span><br><span class="line">        for(int k&#x3D;0; k&lt;arr[i].size(); ++k)&#123;</span><br><span class="line">            if(arr[i][k].score !&#x3D; pre)rank &#x3D; k+1;</span><br><span class="line">            pre &#x3D; arr[i][k].score;</span><br><span class="line">            v.push_back(stu(arr[i][k].name, i+1, arr[i][k].score, rank));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    int cnt &#x3D; 0;</span><br><span class="line">    for(int i&#x3D;0; i&lt;n; ++i)&#123;</span><br><span class="line">        cnt +&#x3D; arr[i].size();</span><br><span class="line">    &#125;</span><br><span class="line">    printf(&quot;%d\n&quot;, cnt);</span><br><span class="line">    sort(v.begin(), v.end(), cmp1);</span><br><span class="line">    int rank&#x3D;0,pre&#x3D;-1;</span><br><span class="line">    for(int i&#x3D;0; i&lt;v.size(); ++i)&#123;</span><br><span class="line">        if(v[i].score!&#x3D;pre)rank &#x3D; i+1;</span><br><span class="line">        pre &#x3D; v[i].score;</span><br><span class="line">        printf(&quot;%s %d %d %d\n&quot;, v[i].name.c_str(), rank, v[i].group, v[i].groupRank);</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/PAT甲级题解//" class="article-tag-list-link color3">PAT甲级题解</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2019/04/07/PAT%EF%BC%88%E7%94%B2%E7%BA%A7%EF%BC%891025.PAT%20Ranking%EF%BC%8825%EF%BC%89/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2019/04/07/PAT%EF%BC%88%E7%94%B2%E7%BA%A7%EF%BC%891051.LCA%20in%20a%20Binary%20Tree%EF%BC%8830%EF%BC%89/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          PAT（甲级）1051.LCA in a Binary Tree（30）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/04/07/PAT%EF%BC%88%E7%94%B2%E7%BA%A7%EF%BC%891138.Postorder%20Traversal%EF%BC%8825%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">PAT（甲级）1138.Postorder Traversal（25）</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>

@@ -156,29 +156,199 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-PAT（甲级）1121.Damn Single（25）" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       PAT（甲级）1121.Damn Single（25）
     </h1>
   
 
-  
-  <a href="/2019/04/06/PAT%EF%BC%88%E7%94%B2%E7%BA%A7%EF%BC%891121.Damn%20Single%EF%BC%8825%EF%BC%89/" class="archive-article-date">
+        
+        <a href="/2019/04/06/PAT%EF%BC%88%E7%94%B2%E7%BA%A7%EF%BC%891121.Damn%20Single%EF%BC%8825%EF%BC%89/" class="archive-article-date">
   	<time datetime="2019-04-06T06:05:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-06</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face="Consolas">PAT 1121.Damn Single（25分）</font></p>
+<p><font size=4 face="Consolas">“Damn Single (单身狗)” is the Chinese nickname for someone who is being single. You are supposed to find those who are alone in a big party, so they can be taken care of.<br><font size=4 face="Consolas"><br><font size=5 face="Consolas" color=red>输入格式：</font><br><font size=4 face="Consolas">Each input file contains one test case. For each case, the first line gives a positive integer N (≤ 50,000), the total number of couples. Then N lines of the couples follow, each gives a couple of ID’s which are 5-digit numbers (i.e. from 00000 to 99999). After the list of couples, there is a positive integer M (≤ 10,000) followed by M ID’s of the party guests. The numbers are separated by spaces. It is guaranteed that nobody is having bigamous marriage (重婚) or dangling with more than one companion.</p>
+<p><font size=5 face="Consolas" color=red>输出格式：</font><br><font size=4 face="Consolas">First print in a line the total number of lonely guests. Then in the next line, print their ID’s in increasing order. The numbers must be separated by exactly 1 space, and there must be no extra space at the end of the line.</p>
+<p><font size=5 face="Consolas" color=red>输入样例：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">3</span><br><span class="line">11111 22222</span><br><span class="line">33333 44444</span><br><span class="line">55555 66666</span><br><span class="line">7</span><br><span class="line">55555 44444 10000 88888 22222 11111 23333</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Consolas" color=red>输出样例：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">5</span><br><span class="line">10000 23333 44444 55555 88888</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Consolas" color=blue>题目分析：乙级1065的一个题目，具体分析请看<a target="_blank" rel="noopener" href="https://blog.csdn.net/ASJBFJSB/article/details/88854798">乙级1065</a></font></p>
+<p><font size=5 color=red>注意：输出格式为%05d，否则测试点3会出错。</p>
+<p><font size=5 face="Consolas" color=black>AC代码：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;unordered_map&gt;</span><br><span class="line">#include &lt;vector&gt;</span><br><span class="line">#include &lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">const int maxn &#x3D; 100000;</span><br><span class="line"></span><br><span class="line">bool is_appear[maxn] &#x3D; &#123;false&#125;;</span><br><span class="line"></span><br><span class="line">vector&lt;int&gt;v;</span><br><span class="line">unordered_map&lt;int, int&gt; mp;</span><br><span class="line">int main()&#123;</span><br><span class="line">    &#x2F;&#x2F;freopen(&quot;in.txt&quot;, &quot;r&quot;, stdin);</span><br><span class="line">    int n, a, b;</span><br><span class="line">    scanf(&quot;%d&quot;, &amp;n);</span><br><span class="line">    for(int i&#x3D;0; i&lt;n; ++i)&#123;</span><br><span class="line">        scanf(&quot;%d%d&quot;, &amp;a, &amp;b);</span><br><span class="line">        mp.insert(make_pair(a, b));</span><br><span class="line">    &#125;</span><br><span class="line">    int m, tmp;</span><br><span class="line">    scanf(&quot;%d&quot;, &amp;m);</span><br><span class="line">    for(int i&#x3D;0; i&lt;m; ++i)&#123;</span><br><span class="line">        scanf(&quot;%d&quot;, &amp;tmp);</span><br><span class="line">        is_appear[tmp] &#x3D; true;</span><br><span class="line">    &#125;</span><br><span class="line">    for(auto it&#x3D;mp.begin(); it!&#x3D;mp.end(); ++it)&#123;</span><br><span class="line">        if(is_appear[it-&gt;first] &amp;&amp; is_appear[it-&gt;second])&#123;</span><br><span class="line">            is_appear[it-&gt;first] &#x3D; is_appear[it-&gt;second] &#x3D; false;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    for(int i&#x3D;0; i&lt;maxn; ++i)&#123;</span><br><span class="line">        if(is_appear[i])</span><br><span class="line">            v.push_back(i);</span><br><span class="line">    &#125;</span><br><span class="line">    sort(v.begin(), v.end());</span><br><span class="line">    for(int i&#x3D;0; i&lt;v.size(); ++i)&#123;</span><br><span class="line">        printf(&quot;%05d&quot;, v[i]);</span><br><span class="line">        if(i!&#x3D;v.size()-1)printf(&quot; &quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/PAT甲级题解//" class="article-tag-list-link color3">PAT甲级题解</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2019/04/06/PAT%EF%BC%88%E7%94%B2%E7%BA%A7%EF%BC%891121.Damn%20Single%EF%BC%8825%EF%BC%89/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2019/04/06/git%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93%E7%9A%84%E4%BD%BF%E7%94%A8%E6%B5%81%E7%A8%8B/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          git本地仓库的使用流程
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/04/06/PAT%EF%BC%88%E7%94%B2%E7%BA%A7%EF%BC%891050.String%20Subtraction%EF%BC%8820%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">PAT（甲级）1050.String Subtraction（20）</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>

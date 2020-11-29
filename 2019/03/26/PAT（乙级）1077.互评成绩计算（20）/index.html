@@ -156,29 +156,199 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-PAT（乙级）1077.互评成绩计算（20）" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       PAT（乙级）1077.互评成绩计算（20）
     </h1>
   
 
-  
-  <a href="/2019/03/26/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891077.%E4%BA%92%E8%AF%84%E6%88%90%E7%BB%A9%E8%AE%A1%E7%AE%97%EF%BC%8820%EF%BC%89/" class="archive-article-date">
+        
+        <a href="/2019/03/26/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891077.%E4%BA%92%E8%AF%84%E6%88%90%E7%BB%A9%E8%AE%A1%E7%AE%97%EF%BC%8820%EF%BC%89/" class="archive-article-date">
   	<time datetime="2019-03-26T12:45:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-26</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face="Courier New">1077.互评成绩计算（20）</font></p>
+<p><font size=4 face="Courier New">在浙大的计算机专业课中，经常有互评分组报告这个环节。一个组上台介绍自己的工作，其他组在台下为其表现评分。最后这个组的互评成绩是这样计算的：所有其他组的评分中，去掉一个最高分和一个最低分，剩下的分数取平均分记为 <code>G1</code>；老师给这个组的评分记为<code> G​2</code>。该组得分为<code> (G1 +G​2 )/2</code>，最后结果四舍五入后保留整数分。本题就要求你写个程序帮助老师计算每个组的互评成绩</p>
+<p><font size=5 face="Courier New" color=red>输入格式：</font><br><font size=4 face="Courier New">输入第一行给出两个正整数 N（&gt; 3）和 M，分别是分组数和满分，均不超过 100。随后 N 行，每行给出该组得到的 N 个分数（均保证为整型范围内的整数），其中第 1 个是老师给出的评分，后面 N−1 个是其他组给的评分。合法的输入应该是 [0,M] 区间内的整数，若不在合法区间内，则该分数须被忽略。题目保证老师的评分都是合法的，并且每个组至少会有 3 个来自同学的合法评分。</p>
+<p><font size=5 face="Courier New" color=red>输出格式：</font><br><font size=4 face="Courier New">为每个组输出其最终得分。每个得分占一行。</p>
+<p><font size=5 face="Courier New" color=red>输入样例：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">6 50</span><br><span class="line">42 49 49 35 38 41</span><br><span class="line">36 51 50 28 -1 30</span><br><span class="line">40 36 41 33 47 49</span><br><span class="line">30 250 -25 27 45 31</span><br><span class="line">48 0 0 50 50 1234</span><br><span class="line">43 41 36 29 42 29</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier New" color=red>输出样例：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">42</span><br><span class="line">33</span><br><span class="line">41</span><br><span class="line">31</span><br><span class="line">37</span><br><span class="line">39</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier New" color=blue>题目分析：简单模拟+四舍五入操作。</font></p>
+<p><font size=5 face="Courier New">AC代码：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;vector&gt;</span><br><span class="line">#include &lt;algorithm&gt;</span><br><span class="line">#include &lt;numeric&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">vector&lt;int&gt; vec;</span><br><span class="line">int main()&#123;</span><br><span class="line">    int n, m, tmp;</span><br><span class="line">    double g1, g2;</span><br><span class="line">    scanf(&quot;%d%d&quot;, &amp;n, &amp;m);</span><br><span class="line">    for(int i&#x3D;0; i&lt;n; ++i)&#123;</span><br><span class="line">        for(int j&#x3D;0; j&lt;n; ++j)&#123;</span><br><span class="line">            scanf(&quot;%d&quot;, &amp;tmp);</span><br><span class="line">            if(j&#x3D;&#x3D;0)g2 &#x3D; tmp;</span><br><span class="line">            else&#123;</span><br><span class="line">                if(tmp&gt;&#x3D;0 &amp;&amp; tmp&lt;&#x3D;m)&#123;</span><br><span class="line">                    vec.push_back(tmp);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        auto max_it &#x3D; max_element(vec.begin(), vec.end());</span><br><span class="line">        auto min_it &#x3D; min_element(vec.begin(), vec.end());</span><br><span class="line">        double sum &#x3D; accumulate(vec.begin(), vec.end(), 0);</span><br><span class="line"></span><br><span class="line">        g1 &#x3D; (sum - *max_it - *min_it) * 1.0 &#x2F; (vec.size() - 2);</span><br><span class="line">        int ans &#x3D; (int)(((g1+g2)&#x2F;2.0)+0.5);</span><br><span class="line">        cout&lt;&lt;ans&lt;&lt;endl;</span><br><span class="line">        vec.clear();</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/PAT乙级题解//" class="article-tag-list-link color3">PAT乙级题解</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2019/03/26/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891077.%E4%BA%92%E8%AF%84%E6%88%90%E7%BB%A9%E8%AE%A1%E7%AE%97%EF%BC%8820%EF%BC%89/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2019/03/26/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891031.%E6%9F%A5%E9%AA%8C%E8%BA%AB%E4%BB%BD%E8%AF%81%EF%BC%8815%EF%BC%89/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          PAT（乙级）1031.查验身份证（15）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/03/26/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891036.%E8%B7%9F%E5%A5%A5%E5%B7%B4%E9%A9%AC%E4%B8%80%E8%B5%B7%E7%BC%96%E7%A8%8B%EF%BC%8815%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">PAT（乙级）1036.跟奥巴马一起编程（15）</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>

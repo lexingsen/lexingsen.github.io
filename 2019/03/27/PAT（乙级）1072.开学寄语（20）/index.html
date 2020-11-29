@@ -158,29 +158,200 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-PAT（乙级）1072.开学寄语（20）" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       PAT（乙级）1072.开学寄语（20）
     </h1>
   
 
-  
-  <a href="/2019/03/27/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891072.%E5%BC%80%E5%AD%A6%E5%AF%84%E8%AF%AD%EF%BC%8820%EF%BC%89/" class="archive-article-date">
+        
+        <a href="/2019/03/27/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891072.%E5%BC%80%E5%AD%A6%E5%AF%84%E8%AF%AD%EF%BC%8820%EF%BC%89/" class="archive-article-date">
   	<time datetime="2019-03-27T01:16:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-27</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face="Courier New">PAT 1072.开学寄语（20）</font></p>
+<p><font size=4 face="Courier New">下图是上海某校的新学期开学寄语：天将降大任于斯人也，必先删其微博，卸其 QQ，封其电脑，夺其手机，收其 ipad，断其 wifi，使其百无聊赖，然后，净面、理发、整衣，然后思过、读书、锻炼、明智、开悟、精进。而后必成大器也！<br><img src="https://img-blog.csdnimg.cn/20190327091156262.JPG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>本题要求你写个程序帮助这所学校的老师检查所有学生的物品，以助其成大器。</p>
+<p><font size=5 face="Courier New" color=red>输入格式：</font><br><font size=4 face="Courier New">输入第一行给出两个正整数 N（≤ 1000）和 M（≤ 6），分别是学生人数和需要被查缴的物品种类数。第二行给出 M 个需要被查缴的物品编号，其中编号为 4 位数字。随后 N 行，每行给出一位学生的姓名缩写（由 1-4 个大写英文字母组成）、个人物品数量 K（0 ≤ K ≤ 10）、以及 K 个物品的编号。</p>
+<p><font size=5 face="Courier New" color=red>输出格式：</font><br><font size=4 face="Courier New">顺次检查每个学生携带的物品，如果有需要被查缴的物品存在，则按以下格式输出该生的信息和其需要被查缴的物品的信息（注意行末不得有多余空格）：<br><code>姓名缩写: 物品编号1 物品编号2 ……</code><br>最后一行输出存在问题的学生的总人数和被查缴物品的总数。</p>
+<p><font size=5 face="Courier New" color=red>输入样例：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">4 2</span><br><span class="line">2333 6666</span><br><span class="line">CYLL 3 1234 2345 3456</span><br><span class="line">U 4 9966 6666 8888 6666</span><br><span class="line">GG 2 2333 7777</span><br><span class="line">JJ 3 0012 6666 2333</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier New" color=red>输出样例：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">U: 6666 6666</span><br><span class="line">GG: 2333</span><br><span class="line">JJ: 6666 2333</span><br><span class="line">3 5</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier New" color=blue>题目分析：数组hash的应用，使用一个bool数组标记要被收缴物品的编号，在处理每一位同学的物品时，只需要查看对应下标所对应的数组值是否为true，总体来讲是一个常规的简单题。</font></p>
+<p><font size=5 face="Courier New" color=red>注意：编号的输出格式为”%04d”,我第一次按照”%d”输出的就有一个测试点没通过。</p>
+<p><font size=5 face="Courier New">AC代码：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;vector&gt;</span><br><span class="line">#include &lt;string&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">const int max_n &#x3D; 10010;</span><br><span class="line">bool is_appear[max_n] &#x3D; &#123;false&#125;;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    int n, m, good;</span><br><span class="line">    scanf(&quot;%d%d&quot;, &amp;n, &amp;m);</span><br><span class="line">    for(int i&#x3D;0; i&lt;m; ++i)&#123;</span><br><span class="line">        scanf(&quot;%d&quot;, &amp;good);</span><br><span class="line">        is_appear[good] &#x3D; true;</span><br><span class="line">    &#125;</span><br><span class="line">    int num, peo_sum&#x3D;0, goods_sum&#x3D;0;</span><br><span class="line">    string name, record;</span><br><span class="line">    vector&lt;int&gt; v;</span><br><span class="line">    for(int i&#x3D;0; i&lt;n; ++i)&#123;</span><br><span class="line">        bool flag &#x3D; false;</span><br><span class="line">        cin&gt;&gt;name&gt;&gt;num;</span><br><span class="line">        for(int j&#x3D;0; j&lt;num; ++j)&#123;</span><br><span class="line">            scanf(&quot;%d&quot;, &amp;good);</span><br><span class="line">            if(is_appear[good]&#x3D;&#x3D;true)&#123;</span><br><span class="line">                record &#x3D; name;</span><br><span class="line">                flag &#x3D; true;</span><br><span class="line">                goods_sum ++;</span><br><span class="line">                v.push_back(good);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        if(flag)&#123;</span><br><span class="line">            peo_sum ++;</span><br><span class="line">            cout&lt;&lt;record&lt;&lt;&quot;: &quot;;</span><br><span class="line">            for(int i&#x3D;0; i&lt;v.size(); ++i)&#123;</span><br><span class="line">                printf(&quot;%04d&quot;, v[i]);&#x2F;&#x2F;输出格式%04d</span><br><span class="line">                if(i!&#x3D;v.size()-1)&#123;</span><br><span class="line">                    printf(&quot; &quot;);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            printf(&quot;\n&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        v.clear();</span><br><span class="line">    &#125;</span><br><span class="line">    printf(&quot;%d %d\n&quot;, peo_sum, goods_sum);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/PAT乙级题解//" class="article-tag-list-link color3">PAT乙级题解</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2019/03/27/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891072.%E5%BC%80%E5%AD%A6%E5%AF%84%E8%AF%AD%EF%BC%8820%EF%BC%89/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2019/03/27/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891057.%E6%95%B0%E9%9B%B6%E5%A3%B9%EF%BC%8820%EF%BC%89/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          PAT（乙级）1057.数零壹（20）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/03/26/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891064.%E6%9C%8B%E5%8F%8B%E6%95%B0%EF%BC%8820%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">PAT（乙级）1064.朋友数（20）</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>

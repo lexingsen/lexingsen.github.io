@@ -162,29 +162,272 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-c和c++的区别 （一）函数默认值、内联函数、函数的重载和c!c++之间的相互调用" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       c和c++的区别 （一）函数默认值、内联函数、函数的重载和c/c++之间的相互调用
     </h1>
   
 
-  
-  <a href="/2018/06/24/c%E5%92%8Cc++%E7%9A%84%E5%8C%BA%E5%88%AB%20%EF%BC%88%E4%B8%80%EF%BC%89%E5%87%BD%E6%95%B0%E9%BB%98%E8%AE%A4%E5%80%BC%E3%80%81%E5%86%85%E8%81%94%E5%87%BD%E6%95%B0%E3%80%81%E5%87%BD%E6%95%B0%E7%9A%84%E9%87%8D%E8%BD%BD%E5%92%8Cc!c++%E4%B9%8B%E9%97%B4%E7%9A%84%E7%9B%B8%E4%BA%92%E8%B0%83%E7%94%A8/" class="archive-article-date">
+        
+        <a href="/2018/06/24/c%E5%92%8Cc++%E7%9A%84%E5%8C%BA%E5%88%AB%20%EF%BC%88%E4%B8%80%EF%BC%89%E5%87%BD%E6%95%B0%E9%BB%98%E8%AE%A4%E5%80%BC%E3%80%81%E5%86%85%E8%81%94%E5%87%BD%E6%95%B0%E3%80%81%E5%87%BD%E6%95%B0%E7%9A%84%E9%87%8D%E8%BD%BD%E5%92%8Cc!c++%E4%B9%8B%E9%97%B4%E7%9A%84%E7%9B%B8%E4%BA%92%E8%B0%83%E7%94%A8/" class="archive-article-date">
   	<time datetime="2018-06-24T03:30:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-24</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=6><strong>一.函数默认值</strong></font><br><font color=blue size=5>c++支持给函数的形式参数进行默认初始化，其规则为从右向左依此初始化。</font></p>
+<p>还有以下需要注意的几点：<br>1.定义处可以不给出形参的默认值，在声明处可以给出形参的默认值。<br>2.声明处形参默认值给出要符合以上规则。<br>3.不能重复给形参默认值进行初始化，即一个形式参数只能初始化一次。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;以下的两组声明是正确的</span><br><span class="line">int sum(int a,int b&#x3D;10);</span><br><span class="line">int sum(int a&#x3D;10,int b);&#x2F;&#x2F;由于上一个声明已经将b初始化为10，所以符合从右向左依此初始化的规则</span><br><span class="line"></span><br><span class="line">int sum(int a&#x3D;10,int b);&#x2F;&#x2F;错误，不符合规则</span><br></pre></td></tr></table></figure>
+
+
+<p><font size=5 color=red>函数默认值存在的意义是什么？对比无默认值和带默认值在汇编上的区别</font><br><font size=5 color=blue>不带默认值测试代码：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int sum(int a,int b)</span><br><span class="line">&#123;</span><br><span class="line">	return a+b;</span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	int a &#x3D; 10;</span><br><span class="line">	int b &#x3D; 30;</span><br><span class="line">	sum(a,b);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=5>我们都知道如果调用不带默认值的sum函数的第一步是压实参</font><br><font size=5 color=red><br>mov  eax,dword ptr[ebp-8]<br>push eax</font><font size=5 color=green><br>mov ecx,dword ptr[ebp-4]<br>push ecx<br>call sum<br>add esp,8    回退形参内存<br><font size=5 color=blue>带默认值测试代码：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int sum(int a,int b&#x3D;20)</span><br><span class="line">&#123;</span><br><span class="line">	return a+b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int  main()</span><br><span class="line">&#123;</span><br><span class="line">	int a &#x3D; 10;</span><br><span class="line">	sum(a);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<font size=5 color=red>
+push 14h</font><font color=green size=5>
+mov ecx,dword ptr[ebp-4]
+push ecx
+call sum
+add esp,4
+</font>
+<font size=5>结论：对比两者在汇编上的区别，对有函数默认值的函数在汇编语言表现为<font size=5 color=red>减少一个mov的指令周期</font>看似比较短，但如果在一个大型项目中上万次调用这样的带有默认值的函数，其优势就体现出来了，大量减少了代码的执行时间，使得代码的效率提高。这就是函数默认值存在的意义！</font>
+
+<p><font size=6><strong>二.内联函数</strong></font></p>
+<p><font size=5>1.<font color=red>内联函数</font>是在调用点，将函数的代码全部展开，并且这个过程是在编译阶段进行的。</font></p>
+<p><font size=5>2.内联函数只在编译器的<font color=red>release</font>版本下起作用，而<font color=red>debug</font>版本无效，还是会有函数栈帧的开辟和回退。其目的是<font color=blue>方便程序员调试</font>。</font><br><font size=5><br>3.内联函数实际上<font color=red>只是程序员对编译器的一种建议</font>，其建立的基础是当<font color=red>调用函数函数的开销</font> &gt; <font color=red>执行函数的开销</font>时，处理成内联函数是更加高效。但实际上如<font color=green>递归函数</font>是不可能被处理成内联函数的。因为递归函数调用的次数只有在执行完毕才能确定，而内联函数的处理实在编译阶段根据上述规则进行处理的。而递归函数没有给编译器提供这样的规则。<br></font></font></p>
+<font size=5>
+内联函数和宏函数的区别？
+内联函数和static函数的区别？</font>
+
+<p><font size=5 color=red>从三个角度分析</font></p>
+<table><tbody>
+<tr>
+    <th>函数类型</th>
+    <th>作用域</th>
+    <th>符号的产生</th>
+    <th>栈帧的开辟和回退</th>
+</tr>
+<tr>
+<th>内联函数</th>
+<th>当前文件可见</th>
+<th>不产生符号</th>
+<th>没有标准的栈帧开辟和回退</th>
+</tr>
+<tr>
+<th>static函数</th>
+<th>当前文件可见</th>
+<th>产生<font color=red>local</font>的符号，链接器不做处理</th>
+<th>有</th>
+</tr>
+<tr>
+<th>宏函数</th>
+<th>当前文件可见</th>
+<th>不产生符号</th>
+<th>无</th>
+</tr>
+<tr>
+<th>普通函数</th>
+<th>示具体作用域</th>
+<th>产生global的符号，链接器进行处理</th>
+<th>有</th>
+</tr>
+</table>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">static void print()</span><br><span class="line">&#123;</span><br><span class="line">	cout&lt;&lt;&quot;hello&quot;&lt;&lt;endl;</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">int sum(int a,int b)</span><br><span class="line">&#123;</span><br><span class="line">	return a+b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<font size=5>使用`objdump -t test.o`查看上述代码产生的符号：
+![这里写图片描述](https://img-blog.csdn.net/20180624102006234?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
+可以看到static函数和普通函数生成的符号分别为local属性和global属性的。
+
+<p><font size=6><strong>三.函数的重载</strong></font></p>
+<p><font size=5>在C语言中，符号的生成仅仅由函数名称决定。我们都知道，如果在同一个项目如果两个函数的函数名称相同，那么编译器在<font color=green>链接</font>会报错。如在a.c和b.c中实现如下的两个同名的函数：<br><img src="https://img-blog.csdn.net/20180624102733474?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><font color=red>但是在c++中却支持这样的机制。为什么不会报出链接错误呢？</font></font><br><font size=5><br>在一个项目，有许多源文件。每个源文件独立的进行编译，生成符号。链接的核心就是符号的重定位，即在符号 引用的地方找到符号定义的地方，这时候发现符号相同，因此产生了链接错误。而在c++当同名称函数产生的符号也是不相同的。</font><br><font size=5 color=green><br>c++函数符号的生成：函数名+参数列表(参数个数+参数类型+参数顺序)<br></font><br><font size=5>下面验证一下在c++中重载函数产生的符号:<font><br><img src="https://img-blog.csdn.net/20180624105320439?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>使用<code>objdump -t test.o</code>查看生成的符号表<br><img src="https://img-blog.csdn.net/20180624105549769?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>可以看到在c++中符号的组成是由函数名称和参数列表共同决定的。</p>
+<p><font size=6 color=red>函数参数被cosnt修饰能否构成重载？<font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">void fun(int a)&#123;;&#125;</span><br><span class="line">void fun(const int)&#123;;&#125;</span><br><span class="line">int main()&#123;return 0;&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdn.net/20180803230540360?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>不能构成重载</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">void fun(int *a)&#123;;&#125;</span><br><span class="line">void fun1(const int* a)&#123;cout&lt;&lt;&quot;fun(const int* a)&quot;&lt;&lt;endl;&#125;</span><br><span class="line">void fun1(int* const a)&#123;cout&lt;&lt;&quot;fun(int* const a)&quot;&lt;&lt;endl;&#125;</span><br><span class="line">int main()&#123;</span><br><span class="line">	int a&#x3D;10;</span><br><span class="line">	const int *p &#x3D; &amp;a;</span><br><span class="line">	int* const q&#x3D;&amp;a;</span><br><span class="line">	fun(p);</span><br><span class="line">	fun(q);</span><br><span class="line">return 0;&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdn.net/20180803231647946?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><font size=5 color=green><br>因此，可以得出构成重载的条件：<br>1.函数名称相同。<br>2.参数列表不同。<br>3.不能以返回值不同作为判断重载的条件，因为返回值类型符符号的生成无关。<br>4.对实参的值是否有影响，如被const/volatile修饰的*（指针）/&amp;（引用）可以作为函数重载的前提条件。</font></p>
+<p><font size=6 color=red>最重要的一点，构成重载的函数必须在同一作用域！</font></p>
+<p><font size=6><strong>四.c和c++之间相互调用</strong></font><br><font size=5><br>在实际的应用当中，有时候会发生这样的事情,c程序可能需要调用一些优秀的c++程序的接口，而在c++程序中也可能需要调用优秀的c程序接口，这样就需要提供这样相互调用机制。</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">extern &quot;C&quot; &#x2F;&#x2F;告诉编译器里边的符号是按照c规则生成</span><br><span class="line">&#123;	</span><br><span class="line">	;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=5>前面已经谈到，由于c和c++生成符号的规则不相同。如果一致，才能调用。举两个例子，谈谈其用法。</font></p>
+<p><font size=5 color=blue>（1）c++程序调用c程序</font><br><font size=5>两个源文件分别为main.cpp和sum.c，其中sum.c中包括sum函数的实现，而在main.cpp调用它</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int sum(int a,int b);&#x2F;&#x2F;在main.cpp生成的符号为 sum_int_int    而在sum.c中生成sum</span><br><span class="line">这样必然导致链接错误，找不到sum_int_int</span><br><span class="line"></span><br><span class="line">extern &quot;C&quot;</span><br><span class="line">&#123;</span><br><span class="line">	int sum(int a,int b);&#x2F;&#x2F;在main.cpp生成的符号为sum和在sum.c中生成的符号sum一致</span><br><span class="line">	&#x2F;&#x2F;这样链接进行符号重定位的时候，在符号引用的地方找到符号定义的地方，不会报出链接</span><br><span class="line">	&#x2F;&#x2F;错误</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><font size=5 color=blue>（2）c程序调用c++程序</font><font size=5><br>由于没有extern “c++”这样的机制，实际上c程序调用c++程序相对还是比较麻烦的，需要在c++源文件在每一个可能被c程序调用的函数外加extern “C”以生成c程序可以识别的符号。</font><br><code>test.cpp</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">extern &quot;C&quot;</span><br><span class="line">&#123;</span><br><span class="line">	int sum(int a,int b)&#x2F;&#x2F;生成的符号为sum，而不是sum_int_int</span><br><span class="line">	&#123;</span><br><span class="line">		return a+b;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>main.c</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">int sum(int a,int b);&#x2F;&#x2F;sum函数声明，生成的符号为sum</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	sum(a,b);&#x2F;&#x2F;调用</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<font size=5>
+可见，上述的处理不会引起链接错误。但由于其实际应用非常麻烦，现在大多采用的是动态链接库和静态链接库。
+<font size=5>
+综上：c++程序调用c程序相对简单，而c程序调用c++程序相对复杂。
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/c-c//" class="article-tag-list-link color1">c/c++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2018/06/24/c%E5%92%8Cc++%E7%9A%84%E5%8C%BA%E5%88%AB%20%EF%BC%88%E4%B8%80%EF%BC%89%E5%87%BD%E6%95%B0%E9%BB%98%E8%AE%A4%E5%80%BC%E3%80%81%E5%86%85%E8%81%94%E5%87%BD%E6%95%B0%E3%80%81%E5%87%BD%E6%95%B0%E7%9A%84%E9%87%8D%E8%BD%BD%E5%92%8Cc!c++%E4%B9%8B%E9%97%B4%E7%9A%84%E7%9B%B8%E4%BA%92%E8%B0%83%E7%94%A8/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2018/07/01/%E5%BA%93%E5%87%BD%E6%95%B0%E5%92%8C%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E7%9A%84%E5%8C%BA%E5%88%AB%E5%92%8C%E8%81%94%E7%B3%BB/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          库函数和系统调用的区别和联系
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/06/19/%E5%B0%86N%E9%98%B6%E4%BA%8C%E7%BB%B4%E6%95%B0%E7%BB%84%E7%9A%84%E5%8F%B3%E4%B8%8A%E4%B8%89%E8%A7%92%E9%83%A8%E5%88%86%E7%9A%84%E6%95%B0%E5%AD%97%E4%B9%98%E4%BB%A5m(%E6%95%B4%E6%95%B0)/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">将N阶二维数组的右上三角部分的数字乘以m(整数)</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>

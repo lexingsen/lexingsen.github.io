@@ -156,29 +156,225 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-库函数和系统调用的区别和联系" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       库函数和系统调用的区别和联系
     </h1>
   
 
-  
-  <a href="/2018/07/01/%E5%BA%93%E5%87%BD%E6%95%B0%E5%92%8C%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E7%9A%84%E5%8C%BA%E5%88%AB%E5%92%8C%E8%81%94%E7%B3%BB/" class="archive-article-date">
+        
+        <a href="/2018/07/01/%E5%BA%93%E5%87%BD%E6%95%B0%E5%92%8C%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E7%9A%84%E5%8C%BA%E5%88%AB%E5%92%8C%E8%81%94%E7%B3%BB/" class="archive-article-date">
   	<time datetime="2018-07-01T00:48:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-01</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=6 color=red>一、库函数和系统调用概念</font></p>
+<p><font size=5>库函数：库函数是语言或应用程序的一部分，可以运行在用户空间中。<br>系统调用：又称广义指令，它是由操作系统向程序提供的程序接口，而非直接向用户提供，用户只能通过程序间接的使用这些接口。</p>
+<p><font size=4.5>1.在概念对比中，可以直观的感触到<font color=red>系统调用</font>是依赖于操作系统的，由于其依赖于平台，所以系统调用的<font color=red>平台移植性</font>较差。<br>2.而函数库，是将一些已经编写好函数进过封装，存放到函数库（静态库或动态库）中，是具有特定功能函数的集合。 通过库文件向程序员提供相关的函数，以便于调用。程序员不需要关心平台的差异性，如linux或windows,由库对不同平台差异屏蔽。</font></p>
+<font size=6 color=red>
+二、库函数和系统调用在不同方面的对比。</font>
+<table>
+<tr>
+<th><font size=4 face="宋体">对比</font></th>
+<th><font size=4 face="宋体">库函数</font></th>
+<th><font size=4 face="宋体">系统调用</font></th>
+</tr>
+
+<tr>
+<th><font size=4 face="宋体">移植性</font></th>
+<th><font size=4 color=red face="宋体">平台移植性好</font></th>
+<th><font size=4 face="宋体">依赖于内核，不保证移植性</font></th>
+</tr>
+
+<tr>
+<th><font size=4 face="宋体">执行区域</font></th>
+<th><font size=4 face="宋体">用户空间</font></th>
+<th><font size=4 face="宋体">内核空间</font></th>
+</tr>
+
+<tr>
+<th><font size=4 face="宋体">开销</font></th>
+<th><font size=4 face="宋体">属于过程调用，开销小</font></th>
+<th><font size=4 face="宋体">需要中断，在用户空间和内核空间进行切换开销大</font></th>
+</tr>
+
+<tr>
+<th><font size=4 face="宋体">数量</font></th>
+<th><font size=4 face="宋体">库函数数量较多</font></th>
+<th><font size=4 face="宋体">系统调用较少</font></th>
+</tr>
+
+<tr>
+<th><font size=4 face="宋体">运行时间</font></th>
+<th><font size=4 face="宋体">属于用户时间</font></th>
+<th><font size=4 face="宋体">属于系统时间</font></th>
+</tr>
+</table>
+
+<p><font size=5>关于系统调用的几点说明：</font></p>
+<p><font size=5 color=blue>1、系统调用的目的：为了是系统更加稳定安全，防止小白用户、恶意用户进行非法的越权操作。</font></p>
+<p><font size=5 color=blue>2、从用户态切换到内核态必须要通过”中断”，只要发生中断，就需要对中断进行处理，也不然会切换到内核点。</p>
+<p><font size=6 color=red>三、总结</font></p>
+<p><font size=5>库函数是语言或应用程序的一部分，可以运行在用户空间中。而系统调用是操作系统的一部分，是内核提供给用户的程序接口，运行在内核空间中，而且许多的库函数都会使用系统调用实现功能，如在linux下C中的fopen、fclose、fwrite等文件操作函数其底层就是通过open、close、write等系统调用是实现的。没有使用系统调用的库函数，执行效率通常比系统调用高。因为使用系统调用时，需要通过中断进行上下文的切换以及由用户态向内核态的转移。<br></font></p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2018/07/01/%E5%BA%93%E5%87%BD%E6%95%B0%E5%92%8C%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E7%9A%84%E5%8C%BA%E5%88%AB%E5%92%8C%E8%81%94%E7%B3%BB/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2018/07/03/%E8%BF%9B%E7%A8%8B%E7%8A%B6%E6%80%81%E7%9A%84%E6%A6%82%E5%BF%B5%E5%8F%8A%E7%8A%B6%E6%80%81%E8%BD%AC%E6%8D%A2%E5%9B%BE/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          进程状态的概念及状态转换图
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/06/24/c%E5%92%8Cc++%E7%9A%84%E5%8C%BA%E5%88%AB%20%EF%BC%88%E4%B8%80%EF%BC%89%E5%87%BD%E6%95%B0%E9%BB%98%E8%AE%A4%E5%80%BC%E3%80%81%E5%86%85%E8%81%94%E5%87%BD%E6%95%B0%E3%80%81%E5%87%BD%E6%95%B0%E7%9A%84%E9%87%8D%E8%BD%BD%E5%92%8Cc!c++%E4%B9%8B%E9%97%B4%E7%9A%84%E7%9B%B8%E4%BA%92%E8%B0%83%E7%94%A8/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">c和c++的区别 （一）函数默认值、内联函数、函数的重载和c/c++之间的相互调用</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>

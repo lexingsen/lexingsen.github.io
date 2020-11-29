@@ -159,29 +159,212 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-C++11新特性--智能指针" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       C++11新特性--智能指针
     </h1>
   
 
-  
-  <a href="/2018/12/02/C++11%E6%96%B0%E7%89%B9%E6%80%A7--%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/" class="archive-article-date">
+        
+        <a href="/2018/12/02/C++11%E6%96%B0%E7%89%B9%E6%80%A7--%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/" class="archive-article-date">
   	<time datetime="2018-12-02T04:10:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-02</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face="Courier New" color=red>为什么会有智能指针？？？</font></p>
+<p><font size=5 face="Courier New">C++程序员在编写代码的过程往往都会涉及到<font color=blue>堆内存</font>的开辟和释放，使用new和delete关键字。特别是内存的释放是通过程序员手动完成的，而不像栈内存只要生存周期结束即可由系统自动回收。所在在实际的编码中，如果忘记手动释放内存或因其他一些细节原因而未进行堆内存的释放，最终导致产生大量的内存释放，造成资源浪费。</p>
+<p><font size=5 face="Courier New" color=red>一些特殊的情况导致堆内存没有机会得到释放</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">int main()&#123;</span><br><span class="line">	int* p &#x3D; new int;</span><br><span class="line">	if(条件表达式)&#123;</span><br><span class="line">		return 0;</span><br><span class="line">	&#125;</span><br><span class="line">	delete p;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier New">一般将堆内存的释放安排到程序的末尾，但是像上述例子，如果程序当中一些逻辑语句满足是就退出程序，最终导致堆内存资源未得到释放。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">void fun(int* p)&#123;</span><br><span class="line">	delete p;</span><br><span class="line">	p &#x3D; NULL;</span><br><span class="line">&#125;</span><br><span class="line">int main()&#123;</span><br><span class="line">	int* p &#x3D; new int;</span><br><span class="line">	fun(p);</span><br><span class="line">	delete p;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier New">在上述代码中，在fun函数中已经将指针p所指向的堆内存进行释放，当fun函数调用完毕后，再次执行<font color=red>delete p</font>，此时程序会崩溃，因为p已经为NULL，指向虚拟地址空间的(void*)0是不允许被访问的内存区域，而现在要对他进行释放，显然是错误的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">int Div(int a,int b)&#123;</span><br><span class="line">	if(b&#x3D;&#x3D;0)&#123;</span><br><span class="line">		throw &quot;div by zero condition!&quot;;</span><br><span class="line">	&#125;</span><br><span class="line">	return a&#x2F;b;</span><br><span class="line">&#125;</span><br><span class="line">int main()&#123;</span><br><span class="line">	int *p &#x3D; new int;</span><br><span class="line">	try&#123;</span><br><span class="line">		Div(10,0);</span><br><span class="line">	&#125;</span><br><span class="line">	catch(const char* meg)&#123;</span><br><span class="line">		cerr&lt;&lt;msg&lt;&lt;endl;</span><br><span class="line">	&#125;</span><br><span class="line">	delete p;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier New">在上述的代码中，由于在try块中捕获到了异常，直接执行catch中的语句，而未进行堆内存的释放，最终也导致了内存泄漏。</p>
+<p><font size=5 face="Courier New" color=red>综上的三个例子，对于C++使用堆内存资源并造成内存泄漏的几率还是非常大的，即使你非常小心仔细的处理每一个可能会被泄漏的堆内存，也难免会出现一些问题。这无疑要求C++程序员对于对内存的使用要求之高，而<font color=blue>智能指针</font>的诞生解放了C++程序员对于堆内存的管理。</font></p>
+<p><font size=6 face="Courier New" color=black>智能指针</font></p>
+<p><font size=5 face="Courier New">智能指针是一个类，它将<font color=red>裸指针(带*的指针)</font>进行了封装，实现的指针的自动释放，它的高明之处就在于程序员只需要一次性的设计出一个具有良好功能的智能指针类，用它实例化出来的对象会自动对对象内存的堆资源进行管理，而不需要程序员去干涉，它自己就可以很好的完成对堆内存的管理。</p>
+<p><font size=5 face="Courier New" color=red>使用智能指针的前提是利用了当栈对象的生存周期结束时，会自动调用析构函数，来进行对对象的销毁。RAII技术。智能指针不能再堆上创建。</font></p>
+<p><font size=5 face="Courier New" color=red>设计智能指针的类模板</font><br><font size=4 face="Courier New">需要解决的问题：<br>（1）指针可以做的事情，智能指针也必须可以做。需要对<code>*</code>，<code>-&gt;</code>运算符进行重载。<br>（2）<code>*</code>运算符需返回引用，因为<code>*</code>可以连续使用。<br>（3）<code>*</code>和<code>-&gt;</code>的重载函数是没有形式参数的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">template &lt;typename T&gt;</span><br><span class="line">class SmartPtr&#123;</span><br><span class="line">public:</span><br><span class="line">	SmartPtr(T* ptr&#x3D;NULL):_ptr(ptr)&#123;&#125;</span><br><span class="line">	~SmartPtr()&#123;delete _ptr;_ptr&#x3D;NULL;&#125;</span><br><span class="line">	T&amp; operator*()&#123;</span><br><span class="line">		return *_ptr;</span><br><span class="line">	&#125;</span><br><span class="line">	const T&amp; operator*() const&#123;</span><br><span class="line">		return *_ptr;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	T* operator-&gt;()&#123;</span><br><span class="line">		return _ptr;</span><br><span class="line">	&#125;</span><br><span class="line">	const T* operator-&gt;()const&#123;</span><br><span class="line">		return _ptr;</span><br><span class="line">	&#125;	</span><br><span class="line">private:</span><br><span class="line">	T* _ptr;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">	SmartPtr&lt;int&gt; p(new int);</span><br><span class="line">	*p &#x3D; 20;</span><br><span class="line">	cout&lt;&lt;&quot;*p&#x3D;&quot;&lt;&lt;*p&lt;&lt;endl;	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/20181202102040487.png" alt="在这里插入图片描述"><br><font size=5 face="Courier New" color=red>智能指针的浅拷贝问题</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">int main()&#123;</span><br><span class="line">	SmartPtr&lt;int&gt; p(new int);</span><br><span class="line">	*p &#x3D; 20;</span><br><span class="line">	SmartPtr&lt;int&gt; p1(p);</span><br><span class="line">	&#x2F;&#x2F;程序意图使得p和p1指向同一块堆内存 new int</span><br><span class="line">	cout&lt;&lt;&quot;*p&#x3D;&quot;&lt;&lt;*p&lt;&lt;endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier New">然而执行结果出错，在linux直接检测出来了内存泄漏</font><br><img src="https://img-blog.csdnimg.cn/20181202102620551.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><font size=5 face="Courier New" color=red>错误的原因</font><br><font size=5 face="Courier New">两个智能指针对象中的_ptr指向了堆内存的同一块内存区域，但是p1对象析构时释放了该堆内存，而对象p析构时又对堆内存进行进行了释放。然而此时堆内存已经由上一个对象p1进行了释放，所以导致出错。</p>
+<p><font size=5 face="Courier New" color=red>解决智能指针浅拷贝的问题</font><br><font size=5 face="Courier New"><font color=blue>引用计数：引用计数实际上就是为了解决这种浅拷贝问题诞生，每当对资源（堆内存）引用一次就对计数器+1，每当删除一次，就对计数器-1,直到当资源的引用计数为0时，就证明没有对象对它进行引用了，此时调用析构函数对资源进行释放。</font></p>
+<p><font size=5 face="Courier New" color=red>管理资源的引用计数</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;资源的引用计数表</span><br><span class="line">calss resCountMap&#123;</span><br><span class="line">public:</span><br><span class="line">	&#x2F;&#x2F;增加资源的引用计数</span><br><span class="line">	void addRef(void* ptr)&#123;</span><br><span class="line">		_resCntMap[ptr] +&#x3D; 1;&#x2F;&#x2F;要考虑线程安全  加锁</span><br><span class="line">	&#125;</span><br><span class="line">	&#x2F;&#x2F;减少资源的引用计数</span><br><span class="line">	void delRef(void* ptr)&#123;</span><br><span class="line">		&#x2F;&#x2F;要考虑线程安全  加锁</span><br><span class="line">		if(_resCntMap[ptr]&#x3D;&#x3D;0)</span><br><span class="line">			_resCntMap.erase(ptr);</span><br><span class="line">		else</span><br><span class="line">			_resCntMap[ptr] -&#x3D; 1;</span><br><span class="line">	&#125;</span><br><span class="line">	&#x2F;&#x2F;获取资源的引用计数</span><br><span class="line">	int getRef(void* ptr)&#123;</span><br><span class="line">		return _resCntMap[ptr];</span><br><span class="line">	&#125;</span><br><span class="line">private:</span><br><span class="line">	map&lt;void*,int&gt; _resCntMap;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier New" color=red>具有引用计数的智能指针</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">template &lt;typename T&gt;</span><br><span class="line">class SmatPtr&#123;</span><br><span class="line">public:</span><br><span class="line">	SmatPtr(T* ptr&#x3D;NULL):_ptr(ptr)&#123;</span><br><span class="line">		if(_ptr!&#x3D;NULL)&#123;</span><br><span class="line">			addRef();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	~SmartPtr()&#123;</span><br><span class="line">		delRef();</span><br><span class="line">		if(getRef()&#x3D;&#x3D;0)&#123;</span><br><span class="line">			delete _ptr;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	SmartPtr(const SmartPtr&lt;T&gt;&amp; src):_ptr(src._ptr)&#123;</span><br><span class="line">		if(_ptr!&#x3D;NULL)&#123;</span><br><span class="line">			addRef();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	SmartPtr&lt;T&gt;&amp; operator&#x3D;(const SmartPtr&lt;T&gt;&amp; src)&#123;</span><br><span class="line">		if(&amp;src&#x3D;&#x3D;this)</span><br><span class="line">			return *this;</span><br><span class="line">		delRef();&#x2F;&#x2F;将引用计数-1，因为当前智能指针要去引用其他资源</span><br><span class="line">		if(getRef()&#x3D;&#x3D;0)&#123;</span><br><span class="line">			delete this-&gt;_ptr;</span><br><span class="line">		&#125;</span><br><span class="line">		_ptr &#x3D; src._ptr;</span><br><span class="line">		if(_ptr!&#x3D;NULL)</span><br><span class="line">			addRef();</span><br><span class="line">		return *this;</span><br><span class="line">	&#125;</span><br><span class="line">	T&amp; operator*()&#123;</span><br><span class="line">		return *_ptr;</span><br><span class="line">	&#125;</span><br><span class="line">	const T&amp; operator*() const&#123;</span><br><span class="line">		return *_ptr;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	T* operator-&gt;()&#123;</span><br><span class="line">		return _ptr;</span><br><span class="line">	&#125;</span><br><span class="line">	const T* operator-&gt;()const&#123;</span><br><span class="line">		return _ptr;</span><br><span class="line">	&#125;	</span><br><span class="line"></span><br><span class="line">	void addRef()&#123;_countMap.add(_ptr);&#125;</span><br><span class="line">	void delRef()&#123;_countMap.delRef(_ptr);&#125;</span><br><span class="line">	int getRef()&#123;return _countMap.getRef(_ptr);&#125;</span><br><span class="line">private:</span><br><span class="line">	T* _ptr;</span><br><span class="line">	static resCountMap _countMap;&#x2F;&#x2F;是所有智能指针对象公有的，设置为static</span><br><span class="line">&#125;;</span><br><span class="line">&#x2F;&#x2F;在类外进行静态成员函数的初始化</span><br><span class="line">template &lt;typename T&gt;</span><br><span class="line">resCountMap SmatPtr&lt;T&gt;::_countMap；</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/c-c//" class="article-tag-list-link color1">c/c++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2018/12/02/C++11%E6%96%B0%E7%89%B9%E6%80%A7--%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2018/12/27/linux%E4%B8%8B%E6%A3%80%E6%B5%8B%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          linux下检测内存泄漏
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/11/29/C!S%E6%A8%A1%E5%BC%8F%E4%B8%8B---%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%BC%96%E7%A8%8B/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">C/S模式下---多线程编程</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>

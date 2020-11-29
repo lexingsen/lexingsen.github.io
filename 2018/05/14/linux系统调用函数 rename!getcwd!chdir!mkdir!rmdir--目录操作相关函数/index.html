@@ -159,29 +159,202 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-linux系统调用函数 rename!getcwd!chdir!mkdir!rmdir--目录操作相关函数" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       linux系统调用函数 rename/getcwd/chdir/mkdir/rmdir--目录操作相关函数
     </h1>
   
 
-  
-  <a href="/2018/05/14/linux%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%87%BD%E6%95%B0%20rename!getcwd!chdir!mkdir!rmdir--%E7%9B%AE%E5%BD%95%E6%93%8D%E4%BD%9C%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0/" class="archive-article-date">
+        
+        <a href="/2018/05/14/linux%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%87%BD%E6%95%B0%20rename!getcwd!chdir!mkdir!rmdir--%E7%9B%AE%E5%BD%95%E6%93%8D%E4%BD%9C%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0/" class="archive-article-date">
   	<time datetime="2018-05-14T10:33:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-14</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><strong>1.文件重命名</strong><br>在linux的shell解释器中输入<code>mv 原文件名 新文件名</code>即可进行重命名，实际上C库函数提供了具有相同功能的系统调用函数<code>rename</code>。</p>
+<p>所需头文件：<code>#include&lt;stdio.h&gt;</code><br>函数原型： <code>int rename(const char *oldpath,const char *newpath)</code><br>参数：  oldpath原文件名,newpath为新文件名。<br>返回值：成功返回0，失败返回-1，同时errno被设置为合适的值。</p>
+<p>该函数用法比较简单，不做实例验证，大家可以自行验证。</p>
+<p><strong>2.修改当前进行（应用程序）的路径  cd。</strong><br>所需头文件： <code>#include&lt;unistd.h&gt;</code><br>函数原型： <code>int chdir(const char *path)</code><br>参数： path即为要切换的路径。<br>返回值： 成功返回0，失败返回-1,同时errno会被设置为合适的值。</p>
+<p><strong>3.获取当前进程的工作目录 pwd</strong><br>函数原型：<code>char* getcwd(char *buf,size_t size)</code><br>参数：buf,缓冲区，存储当前的工作目录。size，缓冲区的大小。<br>返回值：成功返回当前的工作目录，失败返回<code>NULL</code>。</p>
+<p>实例验证：<br>（1）输入<code>pwd</code>获取当前工作目录。<br><img src="https://img-blog.csdn.net/20180514181213102?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>（2）函数验证</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">#unclude&lt;sys&#x2F;types.h&gt;</span><br><span class="line">#include&lt;unistd.h&gt;</span><br><span class="line">#include&lt;stdlib.h&gt;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	char buff[128] &#x3D; &#123;0&#125;;</span><br><span class="line">	char* s &#x3D; getcwd(buff,sizeof(buff));</span><br><span class="line">	if(NULL &#x3D;&#x3D; s)</span><br><span class="line">	&#123;</span><br><span class="line">		perror(&quot;getcwd&quot;);</span><br><span class="line">		exit(1);</span><br><span class="line">	&#125;</span><br><span class="line">	printf(&quot;%s\n&quot;,buff);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdn.net/20180514182224623?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>观察上图结果和我们用<code>pwd</code>获取到的当前工作目录是一致的。</p>
+<p><strong>4.创建目录 mkdir</strong><br>所需头文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;sys&#x2F;stat.h&gt;</span><br><span class="line">#include&lt;sys&#x2F;types.h&gt;</span><br></pre></td></tr></table></figure>
+<p>函数原型：<code>int mkdir(const char *pathname,mode_t mode)</code><br>参数：pathname为目录名   mode是目录权限，是一个八进制的数字，实际权限：<code>mode &amp; ~umask</code><br>返回值：成功返回0，失败返回-1，同时errno会被设置成一个合适的值。</p>
+<p><strong>5.删除一个空目录 rmdir</strong><br>所需头文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;unistd&gt;</span><br></pre></td></tr></table></figure>
+<p>函数原型：<code>int rmdir(const char* pathname)</code><br>参数：空目录的名字。<br>返回值：成功返回0，失败返回-1，同时errno会被设置为一个合适的值。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/linux//" class="article-tag-list-link color1">linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2018/05/14/linux%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%87%BD%E6%95%B0%20rename!getcwd!chdir!mkdir!rmdir--%E7%9B%AE%E5%BD%95%E6%93%8D%E4%BD%9C%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2018/05/14/opendir!readdir!closedir%20%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          opendir/readdir/closedir 目录遍历相关函数
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/05/14/linux%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%87%BD%E6%95%B0%20chmod!chown!truncate--%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E5%B1%9E%E6%80%A7/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">linux系统调用函数 chmod/chown/truncate--修改文件属性</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>

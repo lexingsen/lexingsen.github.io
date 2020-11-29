@@ -154,205 +154,795 @@
           <div id="js-content" class="content-ll">
             
   
-    <header class="article-header">
-  
+    <article id="post-栈的应用：进制转换" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2019/09/06/%E6%A0%88%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%9A%E8%BF%9B%E5%88%B6%E8%BD%AC%E6%8D%A2/">栈的应用：进制转换</a>
     </h1>
   
 
-  
-  <a href="/2019/09/06/%E6%A0%88%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%9A%E8%BF%9B%E5%88%B6%E8%BD%AC%E6%8D%A2/" class="archive-article-date">
+        
+        <a href="/2019/09/06/%E6%A0%88%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%9A%E8%BF%9B%E5%88%B6%E8%BD%AC%E6%8D%A2/" class="archive-article-date">
   	<time datetime="2019-09-06T06:15:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-06</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face=consolas>代码实现：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;map&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">#define N 100</span><br><span class="line">#define type int</span><br><span class="line"></span><br><span class="line">type st[N];</span><br><span class="line">int top &#x3D; -1;</span><br><span class="line">bool isEmpty() &#123;</span><br><span class="line">	return top &#x3D;&#x3D; -1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bool isFull() &#123;</span><br><span class="line">	return top &#x3D;&#x3D; N - 1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void push(int x) &#123;</span><br><span class="line">	if (!isFull()) st[++ top] &#x3D; x;</span><br><span class="line">	else cout &lt;&lt; &quot;full&quot; &lt;&lt; endl; </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void pop() &#123;</span><br><span class="line">	if (!isEmpty()) -- top;</span><br><span class="line">	else cout &lt;&lt; &quot;empty&quot; &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int peek() &#123;</span><br><span class="line">	if (!isEmpty()) return st[top];</span><br><span class="line">	cout &lt;&lt; &quot;empty&quot; &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line">map&lt;int, char&gt; mp&#123; &#123;10,&#39;A&#39;&#125;,&#123;11,&#39;B&#39;&#125;,&#123;12,&#39;C&#39;&#125;,&#123;13,&#39;D&#39;&#125;,&#123;14,&#39;E&#39;&#125;,&#123;15,&#39;F&#39;&#125; &#125;; </span><br><span class="line">void conversion(int x, int base) &#123;</span><br><span class="line">	while (x) &#123;</span><br><span class="line">		push(x % base);</span><br><span class="line">		x &#x2F;&#x3D; base;</span><br><span class="line">	&#125; </span><br><span class="line">	while (!isEmpty()) &#123;</span><br><span class="line">		int res &#x3D; peek();pop();</span><br><span class="line">		if (res &gt;&#x3D; 10) cout &lt;&lt; mp[res] &lt;&lt; &quot; &quot;;</span><br><span class="line">		else cout &lt;&lt; res &lt;&lt; &quot; &quot;; </span><br><span class="line">	&#125;</span><br><span class="line">	cout &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">	int a &#x3D; 1000;</span><br><span class="line">	conversion(a, 16);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/数据结构//" class="article-tag-list-link color5">数据结构</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/09/06/%E6%A0%88%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%9A%E8%BF%9B%E5%88%B6%E8%BD%AC%E6%8D%A2/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-栈的应用：括号匹配(C++)" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2019/09/06/%E6%A0%88%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%9A%E6%8B%AC%E5%8F%B7%E5%8C%B9%E9%85%8D(C++)/">栈的应用：括号匹配(C++)</a>
     </h1>
   
 
-  
-  <a href="/2019/09/06/%E6%A0%88%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%9A%E6%8B%AC%E5%8F%B7%E5%8C%B9%E9%85%8D(C++)/" class="archive-article-date">
+        
+        <a href="/2019/09/06/%E6%A0%88%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%9A%E6%8B%AC%E5%8F%B7%E5%8C%B9%E9%85%8D(C++)/" class="archive-article-date">
   	<time datetime="2019-09-06T05:34:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-06</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face=consonlas>一.要点<font><br><font size=4 face=consonlas>（1）利用栈先进后出的特点，当遇到左括号”[“,”{“,””(“时，直接入栈。<br>（2）当遇到右括号”)”,”}”,”]”时，如果此时空的，那么成对的括号一定不能进行匹配，直接返回false即可。<br>（3）可以出栈的情况，当栈顶的左括号与当前的右括号匹配时，出栈。<br>（4）遍历过程中出现的其他情况都是错误的。比如栈顶为左括号，当前遍历到也是左括号。<br>（5）当遍历完成时，如果栈不空，说明还有未进行匹配的左括号，也就意味括号匹配失败，直接返回false即可。<br><font size=5 face=consonlas>二.代码实现<font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;stack&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">bool isValid(string s) &#123;</span><br><span class="line">    stack&lt;char&gt; st;</span><br><span class="line">    for (auto x : s) &#123;</span><br><span class="line">        if (x &#x3D;&#x3D; &#39;[&#39; || x &#x3D;&#x3D; &#39;(&#39; || x &#x3D;&#x3D; &#39;&#123;&#39;)</span><br><span class="line">            st.push(x);</span><br><span class="line">        else if (st.empty())</span><br><span class="line">            return false; </span><br><span class="line">        else if ( (st.top() &#x3D;&#x3D; &#39;(&#39; &amp;&amp; x &#x3D;&#x3D; &#39;)&#39;) || (st.top () &#x3D;&#x3D; &#39;[&#39; &amp;&amp; x &#x3D;&#x3D; &#39;]&#39;) || (st.top() &#x3D;&#x3D; &#39;&#123;&#39; &amp;&amp; x &#x3D;&#x3D; &#39;&#125;&#39;) )</span><br><span class="line">            st.pop();</span><br><span class="line">        else</span><br><span class="line">            return false;</span><br><span class="line">    &#125;</span><br><span class="line">    return st.empty();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">    string s;</span><br><span class="line">    cin &gt;&gt; s;</span><br><span class="line">    cout &lt;&lt; isValid(s) &lt;&lt; endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/数据结构//" class="article-tag-list-link color5">数据结构</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/09/06/%E6%A0%88%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%9A%E6%8B%AC%E5%8F%B7%E5%8C%B9%E9%85%8D(C++)/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-中缀表达式转后缀表达式以及计算后缀表达式的值(C++)" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2019/09/06/%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%BD%AC%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%BB%A5%E5%8F%8A%E8%AE%A1%E7%AE%97%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E5%80%BC(C++)/">中缀表达式转后缀表达式以及计算后缀表达式的值(C++)</a>
     </h1>
   
 
-  
-  <a href="/2019/09/06/%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%BD%AC%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%BB%A5%E5%8F%8A%E8%AE%A1%E7%AE%97%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E5%80%BC(C++)/" class="archive-article-date">
+        
+        <a href="/2019/09/06/%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%BD%AC%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%BB%A5%E5%8F%8A%E8%AE%A1%E7%AE%97%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E5%80%BC(C++)/" class="archive-article-date">
   	<time datetime="2019-09-06T01:05:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-06</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face="Consolas">1.中缀转后缀的要点</font><br><font size=4 face="Consolas">(1)遇到数字需要直接输出，但是有时数字可能不只是一个个位数，因此需要遍历表达式，获取该值。<br>(2)如果运算符栈为空，如果遇到运算符，直接入栈。<br>(3)如果遇到”(“，直接入栈。<br>(4)如果遇到”)”，连续出栈，一直到栈顶元素是”(“，然后出栈”(“。<br>(5)如果遇到运算符且运算符栈不为空，此时需要比较当前运算符和栈顶运算符的优先级。<font color=blue>分两种情况：1.当前运算符优先级大于栈顶运算符优先级，直接入栈。2.当前运算符优先小于栈顶运算符优先级，需要一直出栈，直到栈顶运算符优先小于当前运算符，将当前运算符入栈。</font></p>
+<p><font size=5 face="Consolas">2.代码实现</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;vector&gt;</span><br><span class="line">#include &lt;stack&gt;</span><br><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;algorithm&gt;</span><br><span class="line">#include &lt;sstream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">#define ERROR 0x3f3f</span><br><span class="line"></span><br><span class="line">string cto_string(char c) &#123;</span><br><span class="line">	stringstream stream;</span><br><span class="line">	stream &lt;&lt; c;</span><br><span class="line">	return stream.str();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int cmp(char a, char b) &#123;</span><br><span class="line">	if (a&#x3D;&#x3D;&#39;+&#39;) &#123;</span><br><span class="line">		if (b &#x3D;&#x3D; &#39;-&#39; || b &#x3D;&#x3D; &#39;+&#39;) return 0;</span><br><span class="line">		else if (b &#x3D;&#x3D; &#39;*&#39; || b &#x3D;&#x3D; &#39;&#x2F;&#39;) return -1;</span><br><span class="line">		else if (b &#x3D;&#x3D; &#39;(&#39;) return 1; </span><br><span class="line">	&#125; else if (a &#x3D;&#x3D; &#39;-&#39;) &#123;</span><br><span class="line">		if (b &#x3D;&#x3D; &#39;-&#39; || b &#x3D;&#x3D; &#39;+&#39;) return 0;</span><br><span class="line">		else if (b &#x3D;&#x3D; &#39;*&#39; || b &#x3D;&#x3D; &#39;&#x2F;&#39;) return -1;</span><br><span class="line">		else if (b &#x3D;&#x3D; &#39;(&#39;) return 1; </span><br><span class="line">	&#125; else if (a &#x3D;&#x3D; &#39;*&#39;) &#123;</span><br><span class="line">		if (b &#x3D;&#x3D; &#39;*&#39; || b &#x3D;&#x3D; &#39;&#x2F;&#39;) return 0;</span><br><span class="line">		else if(b &#x3D;&#x3D; &#39;+&#39; || b &#x3D;&#x3D; &#39;-&#39; || b &#x3D;&#x3D; &#39;(&#39;) return 1;</span><br><span class="line">	&#125; else if (a &#x3D;&#x3D; &#39;&#x2F;&#39;) &#123;</span><br><span class="line">		if (b &#x3D;&#x3D; &#39;*&#39; || b &#x3D;&#x3D; &#39;&#x2F;&#39;) return 0;</span><br><span class="line">		else if(b &#x3D;&#x3D; &#39;+&#39; || b &#x3D;&#x3D; &#39;-&#39; || b &#x3D;&#x3D; &#39;(&#39;) return 1;</span><br><span class="line">	&#125; else &#123;</span><br><span class="line">		cout &lt;&lt; &quot;invalid sign&quot; &lt;&lt; endl; </span><br><span class="line">		return ERROR;</span><br><span class="line">	&#125;</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">vector&lt;string&gt; res;</span><br><span class="line">vector&lt;string&gt; InfixToSuffix(string infix) &#123;</span><br><span class="line">	stack&lt;char&gt; st;</span><br><span class="line">	int i &#x3D; 0;</span><br><span class="line">	while (i &lt; infix.length()) &#123;</span><br><span class="line">		if (infix[i] &#x3D;&#x3D; &#39;(&#39;) &#123;</span><br><span class="line">			st.push(infix[i]);</span><br><span class="line">			i ++;</span><br><span class="line">		&#125; else if (infix[i] &#x3D;&#x3D; &#39;)&#39;) &#123;</span><br><span class="line">			while (!st.empty()) &#123;</span><br><span class="line">				char op &#x3D; st.top();st.pop();</span><br><span class="line">				if (op &#x3D;&#x3D; &#39;(&#39;) break;</span><br><span class="line">				else res.push_back(cto_string(op));</span><br><span class="line">				i ++;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; else if (isdigit(infix[i])) &#123;</span><br><span class="line">			int n &#x3D; infix[i ++] - &#39;0&#39;;</span><br><span class="line">			while (i &lt; infix.length() &amp;&amp; isdigit(infix[i])) &#123;</span><br><span class="line">				n &#x3D; n * 10 + (infix[i ++] - &#39;0&#39;); </span><br><span class="line">			&#125;</span><br><span class="line">			res.push_back(to_string(n));</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			if (st.empty()) st.push(infix[i]);</span><br><span class="line">			else &#123;</span><br><span class="line">				if (cmp(infix[i], st.top()) &gt; 0) st.push(infix[i]);</span><br><span class="line">				else if (cmp(infix[i], st.top()) &lt;&#x3D; 0) &#123;</span><br><span class="line">					while (!st.empty()) &#123;</span><br><span class="line">						char op &#x3D; st.top();st.pop();</span><br><span class="line">						res.push_back(cto_string(op));</span><br><span class="line">						if (cmp(infix[i], op) &gt; 0) break;</span><br><span class="line">					&#125;</span><br><span class="line">					st.push(infix[i]); </span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			i ++;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	while (!st.empty()) &#123;</span><br><span class="line">		res.push_back(cto_string(st.top())); st.pop();</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	return res;</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;计算后缀表达式的值 </span><br><span class="line">int calculate(vector&lt;string&gt;&amp; a) &#123;</span><br><span class="line">    stack&lt;int&gt; st;</span><br><span class="line">    for (auto x : a) &#123;</span><br><span class="line">        if (x &#x3D;&#x3D; &quot;+&quot;) &#123;</span><br><span class="line">            int a &#x3D; st.top();st.pop();</span><br><span class="line">            int b &#x3D; st.top();st.pop();</span><br><span class="line">            st.push(b + a);</span><br><span class="line">        &#125;</span><br><span class="line">        else if (x &#x3D;&#x3D; &quot;-&quot;) &#123;</span><br><span class="line">            int a &#x3D; st.top();st.pop();</span><br><span class="line">            int b &#x3D; st.top();st.pop();</span><br><span class="line">        	st.push(b - a);</span><br><span class="line">        &#125;</span><br><span class="line">        else if (x &#x3D;&#x3D; &quot;*&quot;) &#123;</span><br><span class="line">            int a &#x3D; st.top();st.pop();</span><br><span class="line">            int b &#x3D; st.top();st.pop();</span><br><span class="line">            st.push(b * a);</span><br><span class="line">        &#125;</span><br><span class="line">        else if (x &#x3D;&#x3D; &quot;&#x2F;&quot;) &#123;</span><br><span class="line">            int a &#x3D; st.top();st.pop();</span><br><span class="line">            int b &#x3D; st.top();st.pop();</span><br><span class="line">            st.push(b &#x2F; a);</span><br><span class="line">        &#125; </span><br><span class="line">        else &#123;</span><br><span class="line">            st.push(stoi(x));</span><br><span class="line">        &#125;</span><br><span class="line">            </span><br><span class="line">	&#125;</span><br><span class="line">    return st.top();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void print(string a) &#123;cout &lt;&lt; a &lt;&lt; &quot; &quot;;&#125;</span><br><span class="line">    </span><br><span class="line">int main() &#123;;</span><br><span class="line">	string s;</span><br><span class="line">	cin &gt;&gt; s;</span><br><span class="line">	vector&lt;string&gt; t &#x3D; InfixToSuffix(s);</span><br><span class="line">	for_each(t.begin(), t.end(), print);cout &lt;&lt; endl;</span><br><span class="line">	int ans &#x3D; calculate(t);</span><br><span class="line">	cout &lt;&lt; ans &lt;&lt; endl;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/数据结构//" class="article-tag-list-link color5">数据结构</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/09/06/%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%BD%AC%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%BB%A5%E5%8F%8A%E8%AE%A1%E7%AE%97%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E5%80%BC(C++)/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-推导B树的最大高度和最小高度得出B树的高度范围" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2019/08/28/%E6%8E%A8%E5%AF%BCB%E6%A0%91%E7%9A%84%E6%9C%80%E5%A4%A7%E9%AB%98%E5%BA%A6%E5%92%8C%E6%9C%80%E5%B0%8F%E9%AB%98%E5%BA%A6%E5%BE%97%E5%87%BAB%E6%A0%91%E7%9A%84%E9%AB%98%E5%BA%A6%E8%8C%83%E5%9B%B4/">推导B树的最大高度和最小高度得出B树的高度范围</a>
     </h1>
   
 
-  
-  <a href="/2019/08/28/%E6%8E%A8%E5%AF%BCB%E6%A0%91%E7%9A%84%E6%9C%80%E5%A4%A7%E9%AB%98%E5%BA%A6%E5%92%8C%E6%9C%80%E5%B0%8F%E9%AB%98%E5%BA%A6%E5%BE%97%E5%87%BAB%E6%A0%91%E7%9A%84%E9%AB%98%E5%BA%A6%E8%8C%83%E5%9B%B4/" class="archive-article-date">
+        
+        <a href="/2019/08/28/%E6%8E%A8%E5%AF%BCB%E6%A0%91%E7%9A%84%E6%9C%80%E5%A4%A7%E9%AB%98%E5%BA%A6%E5%92%8C%E6%9C%80%E5%B0%8F%E9%AB%98%E5%BA%A6%E5%BE%97%E5%87%BAB%E6%A0%91%E7%9A%84%E9%AB%98%E5%BA%A6%E8%8C%83%E5%9B%B4/" class="archive-article-date">
   	<time datetime="2019-08-28T03:17:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-28</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 color=black font=Consolas>前提条件：n&gt;=1，则对于任意一棵包含n个关键字、高度为h、阶数为m的B树。</p>
+<p><font size=5 color=red font=Consolas>一、最小高度：</font></p>
+<p><font size=5 font=Consolas>对于任意树类型的数据结构，如果其每层节点能够分布的足够满，其高度也会随之变得足够的低。基于这个思路，对于B树无外乎也是一种树，B树的关键字数以及儿子节点个数满足这样的条件(ceil代表向上取整)：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;根节点   </span><br><span class="line">儿子节点个数[2, m]</span><br><span class="line">关键字个数[1, m-1]</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;非根节点</span><br><span class="line">儿子节点个数[ceil(m&#x2F;2), m]</span><br><span class="line">关键字个数[ceil(m&#x2F;2)-1, m-1]</span><br></pre></td></tr></table></figure>
+<p><font size=5 font=Consolas>为了使得B树高度最低，也就是每层的节点数达到最大，看如下的计算过程：<img src="https://img-blog.csdnimg.cn/20190828105300505.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><font size=5 color=red font=Consolas>二、最大高度：</font></p>
+<p><font size=5 font=Consolas>要使得B树的高度达到最大，也就意味着在每个节点中，关键字的个数达到最小，这样在容纳相同个数的关键字的B树中，其高度可以达到最大。<br><img src="https://img-blog.csdnimg.cn/20190828110215266.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><font size=5 font=Consolas>有了上边我们对最小关键字大小把控，下面来推到B树的最大高度：<br><img src="https://img-blog.csdnimg.cn/20190829093343110.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><font size=6 color=black font=Consolas>总结： </p>
+<p><font size=5 font=Consolas>由一和二可知，通过寻找B树的两种极限的存在，推出B树的高度范围为：<code>logm(n+1)&lt;= h &lt;=log(ceil(m/2)) (n+1)/2 + 1</code></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/数据结构//" class="article-tag-list-link color5">数据结构</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/08/28/%E6%8E%A8%E5%AF%BCB%E6%A0%91%E7%9A%84%E6%9C%80%E5%A4%A7%E9%AB%98%E5%BA%A6%E5%92%8C%E6%9C%80%E5%B0%8F%E9%AB%98%E5%BA%A6%E5%BE%97%E5%87%BAB%E6%A0%91%E7%9A%84%E9%AB%98%E5%BA%A6%E8%8C%83%E5%9B%B4/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-最短路径：dijkstra算法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2019/08/24/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84%EF%BC%9Adijkstra%E7%AE%97%E6%B3%95/">最短路径：dijkstra算法</a>
     </h1>
   
 
-  
-  <a href="/2019/08/24/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84%EF%BC%9Adijkstra%E7%AE%97%E6%B3%95/" class="archive-article-date">
+        
+        <a href="/2019/08/24/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84%EF%BC%9Adijkstra%E7%AE%97%E6%B3%95/" class="archive-article-date">
   	<time datetime="2019-08-24T14:34:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-24</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">#define N 510</span><br><span class="line">#define INF 0x3f3f3f3</span><br><span class="line"></span><br><span class="line">int g[N][N];</span><br><span class="line">int dist[N];</span><br><span class="line">bool st[N];</span><br><span class="line">int n, m;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;返回值为1到n的路径长度</span><br><span class="line">int dijkstra() &#123;</span><br><span class="line">	memset(dist, INF, sizeof dist);</span><br><span class="line">	dist[1] &#x3D; 0;&#x2F;&#x2F;初始路径长度为0     自己到自己</span><br><span class="line">	for(int i&#x3D;0; i&lt;n; ++i) &#123;</span><br><span class="line">		int t &#x3D; -1;</span><br><span class="line">		for(int j&#x3D;1; j&lt;&#x3D;n; ++j) &#123;</span><br><span class="line">			if(!st[j] &amp;&amp; (t&#x3D;&#x3D;-1 || dist[j] &lt; dist[t]) t &#x3D; j;</span><br><span class="line">		&#125;</span><br><span class="line">		st[t] &#x3D; 1;</span><br><span class="line">		&#x2F;&#x2F;松弛操作</span><br><span class="line">		for(int j&#x3D;1; j&lt;&#x3D;n; ++j) dist[j] &#x3D; min(dist[j], dist[t] +g[t][j]);</span><br><span class="line">	&#125;</span><br><span class="line">	if(dist[n] &#x3D;&#x3D; INF) return -1;</span><br><span class="line">	else return dist[n];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; m;</span><br><span class="line">    for(int i&#x3D;1; i&lt;&#x3D;n; ++i) &#123;</span><br><span class="line">        for(int j&#x3D;1; j&lt;&#x3D;n; ++j) &#123;</span><br><span class="line">            if(i &#x3D;&#x3D; j) g[i][j] &#x3D; 0;</span><br><span class="line">            else g[i][j] &#x3D; INF;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    while(m --) &#123;</span><br><span class="line">        int a, b, c;</span><br><span class="line">        cin &gt;&gt; a &gt;&gt; b &gt;&gt; c;</span><br><span class="line">        g[a][b] &#x3D; min(g[a][b], c);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    cout &lt;&lt; dijkstra() &lt;&lt; endl;</span><br><span class="line">    </span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/数据结构-图论//" class="article-tag-list-link color3">数据结构 图论</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/08/24/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84%EF%BC%9Adijkstra%E7%AE%97%E6%B3%95/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-共享栈的实现&amp;两个栈实现一个队列&amp;两个队列实现一个栈" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2019/08/24/%E5%85%B1%E4%BA%AB%E6%A0%88%E7%9A%84%E5%AE%9E%E7%8E%B0&%E4%B8%A4%E4%B8%AA%E6%A0%88%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E9%98%9F%E5%88%97&%E4%B8%A4%E4%B8%AA%E9%98%9F%E5%88%97%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E6%A0%88/">共享栈的实现&amp;两个栈实现一个队列&amp;两个队列实现一个栈</a>
     </h1>
   
 
-  
-  <a href="/2019/08/24/%E5%85%B1%E4%BA%AB%E6%A0%88%E7%9A%84%E5%AE%9E%E7%8E%B0&%E4%B8%A4%E4%B8%AA%E6%A0%88%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E9%98%9F%E5%88%97&%E4%B8%A4%E4%B8%AA%E9%98%9F%E5%88%97%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E6%A0%88/" class="archive-article-date">
+        
+        <a href="/2019/08/24/%E5%85%B1%E4%BA%AB%E6%A0%88%E7%9A%84%E5%AE%9E%E7%8E%B0&%E4%B8%A4%E4%B8%AA%E6%A0%88%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E9%98%9F%E5%88%97&%E4%B8%A4%E4%B8%AA%E9%98%9F%E5%88%97%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E6%A0%88/" class="archive-article-date">
   	<time datetime="2019-08-24T06:21:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-24</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face=Consolas>1.共享栈的实现 </font><br><font size=4 face=Consolas color=red>共享栈能够更加有效的节省内存空间，其实现比较简单，就是再同一个数组上存放两个栈，这就需要两个栈顶指针来标记。</font><br><font size=4 face=Consolas>判断栈满, 一般当两个栈顶指针相距为1时，就认为共享栈此时已经满了，其实就是牺牲了一个存储空间用来判断满。</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;cassert&gt;</span><br><span class="line">using namespace stdl</span><br><span class="line"></span><br><span class="line">#define N 100     &#x2F;&#x2F;共享栈数组的大小</span><br><span class="line">int s[N];</span><br><span class="line">int top1 &#x3D; -1;&#x2F;&#x2F;左栈栈顶指针初始化为-1  是一个无效索引</span><br><span class="line">int top2 &#x3D; N;&#x2F;&#x2F;右栈栈顶指针初始化为N，同样也是一个无效的索引</span><br><span class="line">&#x2F;&#x2F;无论是左边的栈顶指针还是右边在栈顶指针其范围都是在[0...N-1]这个闭区间中，因此他</span><br><span class="line">俩的初始值选择-1和N是合适的</span><br><span class="line"></span><br><span class="line">bool isFull() &#123;return top2 - top1 &#x3D;&#x3D; 1;&#125;</span><br><span class="line">&#x2F;&#x2F;idx表示向哪个栈入栈    idx&#x3D;&#x3D;1 表示左栈    idx&#x3D;&#x3D;2表示右栈       </span><br><span class="line">&#x2F;&#x2F;在下边top()和pop()实现的中，idx的含义和此处相同</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void push(int x, int idx) &#123;</span><br><span class="line">	if(isFull()) &#123;</span><br><span class="line">		cout &lt;&lt; &quot;full!&quot; &lt;&lt; endl; </span><br><span class="line">	&#125;</span><br><span class="line">	assert(idx &#x3D;&#x3D; 1 || idx &#x3D;&#x3D; 2);</span><br><span class="line">	if(idx &#x3D;&#x3D; 1) &#123;</span><br><span class="line">		s[++ top1] &#x3D; x;</span><br><span class="line">	&#125;</span><br><span class="line">	else if(idx &#x3D;&#x3D; 2) &#123;</span><br><span class="line">		s[-- top2] &#x3D; x;</span><br><span class="line">	&#125;</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">void pop(int idx) &#123;</span><br><span class="line">    if(idx &#x3D;&#x3D; 1) &#123;</span><br><span class="line">        if(top1&#x3D;&#x3D;-1) &#123;</span><br><span class="line">            cout &lt;&lt; &quot;empty! can&#39;t pop!&quot; &lt;&lt; endl;</span><br><span class="line">        &#125;</span><br><span class="line">        -- top1;</span><br><span class="line">    &#125;else if(idx &#x3D;&#x3D; 2) &#123;</span><br><span class="line">        if(top2 &#x3D;&#x3D; N) &#123;</span><br><span class="line">            cout &lt;&lt; &quot;empty! can&#39;t pop!&quot; &lt;&lt; endl;</span><br><span class="line">        &#125;</span><br><span class="line">        ++ top2;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int top(int idx) &#123;</span><br><span class="line">    if(idx &#x3D;&#x3D; 1) &#123;</span><br><span class="line">        if(top1 &#x3D;&#x3D; -1) &#123;</span><br><span class="line">            cout &lt;&lt; &quot;empty!&quot; &lt;&lt; endl;</span><br><span class="line">            return -1;</span><br><span class="line">        &#125;</span><br><span class="line">        return s[top1];</span><br><span class="line">    &#125;</span><br><span class="line">    else if(idx &#x3D;&#x3D; 2) &#123;</span><br><span class="line">        if(top2 &#x3D;&#x3D; N) &#123;</span><br><span class="line">            cout &lt;&lt; &quot;empty!&quot; &lt;&lt; endl;</span><br><span class="line">            return -1;</span><br><span class="line">        &#125;</span><br><span class="line">        return s[top2];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><font size=5 face=Consolas>2.两个栈实现一个队列 </font><br><font size=4 face=Consolas>一个栈用来存储数据，另外一个栈作为辅助。<br>front();//存放数据的栈先转换到辅助栈中，刚好就是给数据栈的顺序逆置了，这个时候获取辅助栈的栈顶元素，即为队头元素<br>pop();//方法同上，只需要将辅助栈进行pop()，即是完成对队列的pop()<br>empty();//只需要判断数据栈是否为空，就能说明队列是否为空，因此只需要调用数据栈的empty()函数即可<br><font color=red>这里需要一个重要的辅助函数，其功能就是将a栈的数据转化到b栈，元素的顺序关系刚好是逆置的，如下图所示：<br><img src="https://img-blog.csdnimg.cn/20190824170014570.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><font size=4 face=Consolas color=red>具体实现：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">#include  &lt;stack&gt;</span><br><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">class Queue&#123;</span><br><span class="line">private:</span><br><span class="line">	stack&lt;int&gt; data, aux;</span><br><span class="line">public:</span><br><span class="line">	void push(int x) &#123;data.push(x);&#125;</span><br><span class="line">	int front() &#123;</span><br><span class="line">		inverse(data, aux);</span><br><span class="line">		int res &#x3D; aux.top();</span><br><span class="line">		inverse(aux, data);</span><br><span class="line">		return res;</span><br><span class="line">	&#125;</span><br><span class="line">	void pop() &#123;</span><br><span class="line">		inverse(data, aux);</span><br><span class="line">		aux.pop();</span><br><span class="line">		inverse(aux, data);</span><br><span class="line">	&#125;</span><br><span class="line">	bool empty() &#123;return data.empty();&#125;</span><br><span class="line">	&#x2F;&#x2F;最重要的一个方法</span><br><span class="line">	&#x2F;&#x2F;将a栈中数据转到b栈中   数据元素的顺序刚好发生了改变</span><br><span class="line">	void inverse(stack&lt;int&gt; &amp;a, stack&lt;int&gt; &amp;b) &#123;</span><br><span class="line">		while(!a.empty()) &#123;</span><br><span class="line">			b.push(a.top());a.pop();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">    int a[] &#x3D; &#123;1,2,3,4,5&#125;;</span><br><span class="line">    int n &#x3D; sizeof a&#x2F;sizeof(int);</span><br><span class="line">    Queue q;</span><br><span class="line">    for(int i&#x3D;0; i&lt;n; ++i) q.push(a[i]);</span><br><span class="line"></span><br><span class="line">    while(!q.empty()) &#123;</span><br><span class="line">        cout &lt;&lt; q.front() &lt;&lt; &quot; &quot;;q.pop();</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=4 face=Consolas color=red>执行结果：</font><br><img src="https://img-blog.csdnimg.cn/20190824170659721.png" alt="在这里插入图片描述"></p>
+<p><font size=5 face=Consolas>3.两个队列实现一个栈 </font><br><font size=4 face=Consolas>由于栈先进后出的特性，用队列来实现栈时，当我们需要对这个封装的栈进行pop()和top()操作时，<font color=red>一定是对最后一个进队列的元素进行操作，一种是出栈即为队列的pop()，另外一种是获取栈顶元素即为队列front()</font>，基于这个特点我们很好写top()和pop()操作。</p>
+<p><font size=4 face=Consolas color=red>具体实现：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;queue&gt;</span><br><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">class Stack&#123;</span><br><span class="line">private:</span><br><span class="line">    queue&lt;int&gt; data, aux;&#x2F;&#x2F;aux队列用来保存在data队列中除了最后一个元素外的其他所有元素</span><br><span class="line">public:</span><br><span class="line">    void push(int x) &#123;data.push(x);&#125;</span><br><span class="line"></span><br><span class="line">    void pop() &#123;</span><br><span class="line">        while(data.size() &gt; 1) &#123;</span><br><span class="line">            aux.push(data.front()); data.pop();</span><br><span class="line">        &#125;</span><br><span class="line">        data.pop();</span><br><span class="line">        while(!aux.empty()) &#123;</span><br><span class="line">            data.push(aux.front()); aux.pop();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    int top() &#123;</span><br><span class="line">        while(data.size() &gt; 1) &#123;</span><br><span class="line">            aux.push(data.front());data.pop();</span><br><span class="line">        &#125;</span><br><span class="line">        int res &#x3D; data.front();</span><br><span class="line">        aux.push(data.front()); data.pop();</span><br><span class="line">        while(!aux.empty()) &#123;</span><br><span class="line">            data.push(aux.front()); aux.pop();</span><br><span class="line">        &#125;</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    bool empty() &#123;return data.empty();&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">    int a[] &#x3D; &#123;1,2,3,4,5&#125;;</span><br><span class="line">    int n &#x3D; sizeof a&#x2F;sizeof(int);</span><br><span class="line"></span><br><span class="line">    Stack s;</span><br><span class="line">    for(int i&#x3D;0; i&lt;n; ++i) s.push(a[i]);</span><br><span class="line">    while(!s.empty()) &#123;</span><br><span class="line">         cout &lt;&lt; s.top() &lt;&lt; &quot; &quot;; s.pop();</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=4 face=Consolas color=red>执行结果：</font><br><img src="https://img-blog.csdnimg.cn/20190824174425718.png" alt="在这里插入图片描述"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/数据结构//" class="article-tag-list-link color5">数据结构</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/08/24/%E5%85%B1%E4%BA%AB%E6%A0%88%E7%9A%84%E5%AE%9E%E7%8E%B0&%E4%B8%A4%E4%B8%AA%E6%A0%88%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E9%98%9F%E5%88%97&%E4%B8%A4%E4%B8%AA%E9%98%9F%E5%88%97%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E6%A0%88/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-拓扑排序" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2019/08/24/%E6%8B%93%E6%89%91%E6%8E%92%E5%BA%8F/">拓扑排序</a>
     </h1>
   
 
-  
-  <a href="/2019/08/24/%E6%8B%93%E6%89%91%E6%8E%92%E5%BA%8F/" class="archive-article-date">
+        
+        <a href="/2019/08/24/%E6%8B%93%E6%89%91%E6%8E%92%E5%BA%8F/" class="archive-article-date">
   	<time datetime="2019-08-24T02:33:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-24</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p>AcWing848.有向图的拓扑序列</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;cstring&gt;</span><br><span class="line">#include &lt;vector&gt;</span><br><span class="line">#include &lt;queue&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">const int N&#x3D;1e5+10;</span><br><span class="line"></span><br><span class="line">int n, m;</span><br><span class="line">vector&lt;int&gt; G[N];</span><br><span class="line">int indegree[N];</span><br><span class="line"></span><br><span class="line">vector&lt;int&gt; ans;</span><br><span class="line"></span><br><span class="line">bool topSort() &#123;</span><br><span class="line">    int cnt &#x3D; 0;</span><br><span class="line">    queue&lt;int&gt; q;</span><br><span class="line">    for(int i&#x3D;1; i&lt;&#x3D;n; ++i) &#123;</span><br><span class="line">        if(indegree[i] &#x3D;&#x3D; 0) &#123;</span><br><span class="line">            q.push(i);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    while(!q.empty()) &#123;</span><br><span class="line">        int u &#x3D; q.front();q.pop();</span><br><span class="line">        ans.push_back(u);</span><br><span class="line">        for(int i&#x3D;0; i&lt;G[u].size(); ++i) &#123;</span><br><span class="line">            int v &#x3D; G[u][i];</span><br><span class="line">            indegree[v] --;</span><br><span class="line">            if(indegree[v] &#x3D;&#x3D; 0) q.push(v);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        G[u].clear();</span><br><span class="line">        cnt ++;</span><br><span class="line">    &#125;</span><br><span class="line">    return cnt &#x3D;&#x3D; n;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">    memset(indegree, 0, sizeof indegree);</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; m;</span><br><span class="line"></span><br><span class="line">    while(m --) &#123;</span><br><span class="line">        int a,b;</span><br><span class="line">        cin &gt;&gt; a &gt;&gt; b;</span><br><span class="line">        G[a].push_back(b);</span><br><span class="line">        indegree[b] ++;</span><br><span class="line">    &#125;</span><br><span class="line">    if(!topSort())cout &lt;&lt; -1 &lt;&lt; endl;</span><br><span class="line">    else&#123;</span><br><span class="line">        for(int i&#x3D;0; i&lt;ans.size(); ++i) &#123;</span><br><span class="line">            cout &lt;&lt; ans[i];</span><br><span class="line">            if(i!&#x3D;ans.size()-1) cout &lt;&lt; &quot; &quot;;</span><br><span class="line">        &#125;</span><br><span class="line">        cout &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/数据结构-图论//" class="article-tag-list-link color3">数据结构 图论</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/08/24/%E6%8B%93%E6%89%91%E6%8E%92%E5%BA%8F/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-数据结构：归并排序（自顶向下和自底向上）递归和非递归" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2019/08/23/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%9A%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F%EF%BC%88%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E5%92%8C%E8%87%AA%E5%BA%95%E5%90%91%E4%B8%8A%EF%BC%89%E9%80%92%E5%BD%92%E5%92%8C%E9%9D%9E%E9%80%92%E5%BD%92/">数据结构：归并排序（自顶向下和自底向上）递归和非递归</a>
     </h1>
   
 
-  
-  <a href="/2019/08/23/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%9A%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F%EF%BC%88%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E5%92%8C%E8%87%AA%E5%BA%95%E5%90%91%E4%B8%8A%EF%BC%89%E9%80%92%E5%BD%92%E5%92%8C%E9%9D%9E%E9%80%92%E5%BD%92/" class="archive-article-date">
+        
+        <a href="/2019/08/23/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%9A%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F%EF%BC%88%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E5%92%8C%E8%87%AA%E5%BA%95%E5%90%91%E4%B8%8A%EF%BC%89%E9%80%92%E5%BD%92%E5%92%8C%E9%9D%9E%E9%80%92%E5%BD%92/" class="archive-article-date">
   	<time datetime="2019-08-23T01:42:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-23</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face=Consolas>1.自顶向下</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;合并两个有序数组的操作</span><br><span class="line">&#x2F;&#x2F;索引m是第二区间的左边界</span><br><span class="line">void merge(int *a, int l, int m, int r) &#123;</span><br><span class="line">	int LEFT_SZIE  &#x3D; m - l;</span><br><span class="line">	int RIGHT_SIZE &#x3D; r - m + 1;</span><br><span class="line">	int *left  &#x3D; new int[LEFT_SIZE];</span><br><span class="line">	int *right &#x3D; new int[RIGHT_SIZE];</span><br><span class="line">	for(int i&#x3D;l; i&lt;m; ++i) left[i-l] &#x3D; a[i];</span><br><span class="line">	for(int i&#x3D;m; i&lt;&#x3D;r; ++i) right[i-m] &#x3D; a[i];</span><br><span class="line">	int i&#x3D;0, j&#x3D;0, k&#x3D;l;</span><br><span class="line">	while(i &lt; LEFT_SZIE &amp;&amp; j &lt; RIGHT_SIZE) &#123;</span><br><span class="line">		if(left[i] &lt; right[j]) a[k ++] &#x3D; left[i ++];</span><br><span class="line">		ekse a[k ++] &#x3D; right[j ++];</span><br><span class="line">	&#125;</span><br><span class="line">	while(i &lt; LEFT_SIZE)  a[k ++] &#x3D; left[i ++];</span><br><span class="line">	while(j &lt; RIGHT_SIZE) a[k ++] &#x3D; right[j ++];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	delete[] left;</span><br><span class="line">	delete[] right;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void _mergeSort(int *a, int l, int r) &#123;</span><br><span class="line">	if(l &gt;&#x3D; r) return;</span><br><span class="line">	int m &#x3D; (r - l) &#x2F; 2 + l;</span><br><span class="line">	_mergeSort(a, l, m);</span><br><span class="line">	_mergeSort(a, m+1, r);</span><br><span class="line">	merge(a, l, m+1, r);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void mergeSort(int *a, int n) &#123;</span><br><span class="line">	_mergeSort(a, 0, n-1);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">    int a[] &#x3D; &#123;4, 1, 8, 0, 3, 5, 7, 6, 2&#125;;</span><br><span class="line">    int n &#x3D; sizeof a&#x2F;sizeof(int);</span><br><span class="line"></span><br><span class="line">    cout &lt;&lt; n &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">    mergeSort(a, n);</span><br><span class="line">    for_each(a, a+n, [](int a) &#123;cout &lt;&lt; a &lt;&lt; &quot; &quot;;&#125;); cout &lt;&lt; endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=5 face=Consolas>2.自底向上</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;merge操作和上边是一样的</span><br><span class="line">&#x2F;&#x2F;这种实现方式参考算法四的实现</span><br><span class="line">void _mergeSortBU(int *a, int n) &#123;</span><br><span class="line">	for(int sz&#x3D;1; sz&lt;n; sz+&#x3D;sz) </span><br><span class="line">		&#x2F;&#x2F;对a[i...i+sz-1]和a[i+sz....i+2*sz-1]进行归并</span><br><span class="line">        &#x2F;*(1)为了保证由两个归并段i+sz &lt; n</span><br><span class="line">          (2)为了保证不越界 min(i+2*sz-1, n-1)*&#x2F;</span><br><span class="line">		for(int i&#x3D;0; i+sz&lt;n; i+&#x3D;sz+sz) </span><br><span class="line">			merge(a, i, i+sz, min(i+sz+sz-1, n-1));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void mergeSortBU(int *a, int n) &#123;</span><br><span class="line">	_mergeSortBU(a, n);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">    int a[] &#x3D; &#123;4, 1, 8, 0, 3, 5, 7, 6, 2&#125;;</span><br><span class="line">    int n &#x3D; sizeof a&#x2F;sizeof(int);</span><br><span class="line"></span><br><span class="line">    cout &lt;&lt; n &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">    mergeSortBU(a, n);</span><br><span class="line">    for_each(a, a+n, [](int a) &#123;cout &lt;&lt; a &lt;&lt; &quot; &quot;;&#125;); cout &lt;&lt; endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/数据结构//" class="article-tag-list-link color5">数据结构</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/08/23/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%9A%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F%EF%BC%88%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E5%92%8C%E8%87%AA%E5%BA%95%E5%90%91%E4%B8%8A%EF%BC%89%E9%80%92%E5%BD%92%E5%92%8C%E9%9D%9E%E9%80%92%E5%BD%92/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-数据结构：快速排序的两种常见的partition操作以及非递归形式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2019/08/23/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%9A%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F%E7%9A%84%E4%B8%A4%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84partition%E6%93%8D%E4%BD%9C%E4%BB%A5%E5%8F%8A%E9%9D%9E%E9%80%92%E5%BD%92%E5%BD%A2%E5%BC%8F/">数据结构：快速排序的两种常见的partition操作以及非递归形式</a>
     </h1>
   
 
-  
-  <a href="/2019/08/23/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%9A%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F%E7%9A%84%E4%B8%A4%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84partition%E6%93%8D%E4%BD%9C%E4%BB%A5%E5%8F%8A%E9%9D%9E%E9%80%92%E5%BD%92%E5%BD%A2%E5%BC%8F/" class="archive-article-date">
+        
+        <a href="/2019/08/23/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%9A%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F%E7%9A%84%E4%B8%A4%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84partition%E6%93%8D%E4%BD%9C%E4%BB%A5%E5%8F%8A%E9%9D%9E%E9%80%92%E5%BD%92%E5%BD%A2%E5%BC%8F/" class="archive-article-date">
   	<time datetime="2019-08-23T00:37:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-23</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face=Consolas color=red>1.递归形式</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int partition(int *a, int l, int r) &#123;</span><br><span class="line">	swap(a[l], a[rand() % (r-l+1) + l]);</span><br><span class="line">	int j &#x3D; l;</span><br><span class="line">	int e &#x3D; a[l];</span><br><span class="line">	for(int i&#x3D;l+1; i&lt;&#x3D;r; ++i) &#123;</span><br><span class="line">		if(a[i] &lt; e) &#123;</span><br><span class="line">			swap(a[j+1], a[i]);</span><br><span class="line">			j ++;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	swap(a[j], a[l]);</span><br><span class="line">	return j;</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">int partition1(int *a, int l, int r) &#123;</span><br><span class="line">		swap(a[l], a[rand() % (r-l+1) + l]);</span><br><span class="line">		int e &#x3D; a[l];</span><br><span class="line">		while(l &lt; r) &#123;</span><br><span class="line">			while(l &lt; r &amp;&amp; a[r] &gt; e) r --;</span><br><span class="line">			a[l] &#x3D; a[r];</span><br><span class="line">			while(l &lt;r &amp;&amp; a[l] &lt;&#x3D; e) l ++;</span><br><span class="line">			a[r] &#x3D; a[l];</span><br><span class="line">		&#125;</span><br><span class="line">		a[l] &#x3D; e;</span><br><span class="line">		return l;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void _quickSort(int *a, int l, int r) &#123;</span><br><span class="line">	jf(l &gt;&#x3D; r) return ;</span><br><span class="line">	int p &#x3D; partition(a, l, r);</span><br><span class="line">	_quickSort(a, l, p-1);</span><br><span class="line">	_quickSort(a, p+1, r);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;统一接口</span><br><span class="line">void quickSort(int *a, int n) &#123;</span><br><span class="line">	_quickSort(a, 0, n-1);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">	int a[] &#x3D; &#123;4, 0, 9, 7, 1, 2, 3, 6, 8, 2&#125;;</span><br><span class="line">	int n &#x3D; sizeof a&#x2F;sizeof(int);</span><br><span class="line">	quickSort(a, n);</span><br><span class="line">	for_each(a, a+n, [](int a) &#123;cout &lt;&lt; a &lt;&lt; &quot; &quot; ;&#125;);cout &lt;&lt; endl;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><font size=5 face=Consolas color=red>2.非递归形式</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;划分操作和上边一样</span><br><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;algorithm&gt;</span><br><span class="line">#include &lt;stack&gt; &#x2F;&#x2F;非递归需要使用栈来保存区间端点的索引</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">void _quickSort(int *a, int l, int r) &#123;</span><br><span class="line">	stack&lt;int&gt; st;</span><br><span class="line">	st.push(l);</span><br><span class="line">	st.push(r).</span><br><span class="line">	while(!st.empty()) &#123;</span><br><span class="line">		int right &#x3D; st.top(); st.pop();</span><br><span class="line">		int left  &#x3D; st.top(); st.pop();</span><br><span class="line">		&#x2F;&#x2F;进行一次划分</span><br><span class="line">		int  p &#x3D; partition(a, left, right);</span><br><span class="line">		&#x2F;&#x2F;说明左区间还未划分</span><br><span class="line">		if(left &lt; p-1) &#123;</span><br><span class="line">			q.push(left);</span><br><span class="line">			q.push(p-1);</span><br><span class="line">		&#125;</span><br><span class="line">		&#x2F;&#x2F;说明右区间还未划分</span><br><span class="line">		if(p+1 &lt; right) &#123;</span><br><span class="line">			q.push(p+1);</span><br><span class="line">			q.push(right);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void quickSort(int *a, int l, int r) &#123;</span><br><span class="line">	_quickSort(a, 0, n-1);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">	int a[] &#x3D; &#123;4, 0, 9, 7, 1, 2, 3, 6, 8, 2&#125;;</span><br><span class="line">	int n &#x3D; sizeof a&#x2F;sizeof(int);</span><br><span class="line">	quickSort(a, n);</span><br><span class="line">	for_each(a, a+n, [](int a) &#123;cout &lt;&lt; a &lt;&lt; &quot; &quot; ;&#125;);cout &lt;&lt; endl;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/08/23/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%9A%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F%E7%9A%84%E4%B8%A4%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84partition%E6%93%8D%E4%BD%9C%E4%BB%A5%E5%8F%8A%E9%9D%9E%E9%80%92%E5%BD%92%E5%BD%A2%E5%BC%8F/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-数据结构：最小生成树算法模板prim和kruskal（考研）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2019/08/22/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%9A%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91%E7%AE%97%E6%B3%95%E6%A8%A1%E6%9D%BFprim%E5%92%8Ckruskal%EF%BC%88%E8%80%83%E7%A0%94%EF%BC%89/">数据结构：最小生成树算法模板prim和kruskal（考研）</a>
     </h1>
   
 
-  
-  <a href="/2019/08/22/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%9A%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91%E7%AE%97%E6%B3%95%E6%A8%A1%E6%9D%BFprim%E5%92%8Ckruskal%EF%BC%88%E8%80%83%E7%A0%94%EF%BC%89/" class="archive-article-date">
+        
+        <a href="/2019/08/22/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%9A%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91%E7%AE%97%E6%B3%95%E6%A8%A1%E6%9D%BFprim%E5%92%8Ckruskal%EF%BC%88%E8%80%83%E7%A0%94%EF%BC%89/" class="archive-article-date">
   	<time datetime="2019-08-22T09:34:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-22</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    
-    
-</header>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face=Consonlas>1.prim</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;cstring&gt;</span><br><span class="line">#include &lt;algorihtm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">const int N&#x3D;510;</span><br><span class="line">const int INF&#x3D;0x3f3f3f3f;</span><br><span class="line">int dist[N];&#x2F;&#x2F;保存距离</span><br><span class="line">bool st[N];&#x2F;&#x2F;标记点是否已经被访问过</span><br><span class="line">int g[N][N];&#x2F;&#x2F;邻接矩阵存储图</span><br><span class="line"></span><br><span class="line">int n, m;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;返回值为最小生成树的权值</span><br><span class="line">int prim() &#123; </span><br><span class="line">	memset(dist, INF, sizeof(dist));</span><br><span class="line">	int res &#x3D; 0;</span><br><span class="line">	for(int i&#x3D;0; i&lt;n; ++i) &#123;</span><br><span class="line">		int t &#x3D; -1;</span><br><span class="line">		&#x2F;&#x2F;寻找当前权值最小的边    并将其所连接的边并入的MST中</span><br><span class="line">		for(int j&#x3D;1; j&lt;&#x3D;n; ++j) &#123;</span><br><span class="line">			&#x2F;&#x2F;这里包含了两种情况   </span><br><span class="line">			&#x2F;&#x2F;（1）初始状态t&#x3D;&#x3D;-1  （2）其他边的权值更小并且所连接的点没有被访问过  </span><br><span class="line">			if(!st[j] &amp;&amp; (t&#x3D;&#x3D;-1  || dist[j] &lt; dist[t]) </span><br><span class="line">				t &#x3D; j;</span><br><span class="line">		&#125;</span><br><span class="line">		if(i &amp;&amp; dist[t]&#x3D;&#x3D;INF) return INF;</span><br><span class="line">		if(i) res +&#x3D; dist[t];&#x2F;&#x2F; 因为t&#x3D;&#x3D;0的时候res&#x3D;0 不需要你进行相加</span><br><span class="line">		st[t] &#x3D; true;&#x2F;&#x2F;标记访问过了</span><br><span class="line"></span><br><span class="line">		&#x2F;&#x2F;以t顶点作为媒介  更新侯选边的权值</span><br><span class="line">		for(int j&#x3D;1; j&lt;&#x3D;n; ++j) dist[j] &#x3D; min(dist[j], g[t][j]);</span><br><span class="line">	&#125;</span><br><span class="line">	return res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=5 face=Consonlas>2.kruskal</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">const int N&#x3D;510;</span><br><span class="line">const int M&#x3D;1000;</span><br><span class="line">const int INF&#x3D;0x3f3f3f3f;</span><br><span class="line"></span><br><span class="line">int father[N];</span><br><span class="line"></span><br><span class="line">int find(int x) &#123;</span><br><span class="line">	int a &#x3D; x;</span><br><span class="line">	while(x !&#x3D; father[x]) x &#x3D; father[x];</span><br><span class="line">	while(a !&#x3D; father[a]) &#123;</span><br><span class="line">		int z &#x3D; a;</span><br><span class="line">		father[z] &#x3D; x;</span><br><span class="line">		a &#x3D; father[a];</span><br><span class="line">	&#125;</span><br><span class="line">	return x;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void Union(int a, int b) &#123;</span><br><span class="line">	int fa &#x3D; find(a);</span><br><span class="line">	int fb &#x3D; find(b);</span><br><span class="line">	if(fa !&#x3D; fb) father[fa] &#x3D; fb;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;边类</span><br><span class="line">struct Edge&#123;</span><br><span class="line">	int a, b;</span><br><span class="line">	int weight;</span><br><span class="line">&#125;edges[M];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;返回值为MST的权值</span><br><span class="line">int kruskal() &#123;</span><br><span class="line">	int res &#x3D; 0;</span><br><span class="line">	int cnt &#x3D; 0;</span><br><span class="line">	sort(edges, edges+m, [](const Edge &amp;a, const Edge&amp; b) &#123;return a.weight &lt; b.weight;&#125;);</span><br><span class="line">	for(int i&#x3D;1; i&lt;&#x3D;n; ++i) father[i] &#x3D; i;&#x2F;&#x2F;初始化并查集数组</span><br><span class="line">	</span><br><span class="line">	&#x2F;&#x2F;遍历边集   已经按照权值由小到大排好序了</span><br><span class="line">	for(int i&#x3D;0; i&lt;m; ++i) &#123;</span><br><span class="line">		int a &#x3D; edges[i].a;</span><br><span class="line">		int b &#x3D; edges[i].b;</span><br><span class="line">		</span><br><span class="line">		&#x2F;&#x2F;为了保证添加进去edges[i]这条边后不形成回路</span><br><span class="line">		&#x2F;&#x2F;所以首先要判断这条边的两个顶点是否在 不同的连通分量中</span><br><span class="line">		if(find(a) !&#x3D; find(b)) &#123;</span><br><span class="line">			&#x2F;&#x2F;证明两个顶点在不同的连通分量中</span><br><span class="line">			res +&#x3D; edges[i].weight;</span><br><span class="line">			Union(a, b);</span><br><span class="line">			cnt ++;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	&#x2F;&#x2F;如果最后得到的MST的边数 小于 n-1 证明不是最小生成树</span><br><span class="line">	if(cnt &lt; n-1) return INF;</span><br><span class="line">	return res;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/数据结构-图论//" class="article-tag-list-link color3">数据结构 图论</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/08/22/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%9A%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91%E7%AE%97%E6%B3%95%E6%A8%A1%E6%9D%BFprim%E5%92%8Ckruskal%EF%BC%88%E8%80%83%E7%A0%94%EF%BC%89/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
   
     <nav id="page-nav">

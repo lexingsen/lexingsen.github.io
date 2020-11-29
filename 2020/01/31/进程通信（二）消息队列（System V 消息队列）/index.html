@@ -160,29 +160,221 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-进程通信（二）消息队列（System V 消息队列）" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       进程通信（二）消息队列（System V 消息队列）
     </h1>
   
 
-  
-  <a href="/2020/01/31/%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1%EF%BC%88%E4%BA%8C%EF%BC%89%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%EF%BC%88System%20V%20%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%EF%BC%89/" class="archive-article-date">
+        
+        <a href="/2020/01/31/%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1%EF%BC%88%E4%BA%8C%EF%BC%89%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%EF%BC%88System%20V%20%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%EF%BC%89/" class="archive-article-date">
   	<time datetime="2020-01-31T06:41:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-31</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face=consolas>一、System V 消息队列简介</font></p>
+<p><font size=4 face=consolas><font color=red>消息队列：</font>消息队列的本质是由Linux内核创建用于存放消息的链表，并且其功能是用来存放消息的，所以又称之为消息队列。<br>在Linux的不同进程中，包括有血缘的进程和无血缘的进程，都可以通过Linux消息队列API所得到的消息队列唯一标识符对消息队列进行操作。</font></p>
+<p><font size=5 face=consolas>二、分析消息队列的数据结构</font></p>
+<p><font size=4 face=consolas>Linux为了维护消息队列，为消息队列创建了数据结构，接下来我们来分析一下消息队列的结构以及消息队列节点的结构。</p>
+<p><font size=5 face=consolas>消息队列的结构:</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">struct msqid_ds &#123;</span><br><span class="line">	struct ipc_perm msg_perm;   &#x2F;&#x2F;消息队列的读写权限和所有者</span><br><span class="line">	struct msg *msg_first;		&#x2F;&#x2F;指向消息队列链表中的第一个节点</span><br><span class="line">	struct msg *msg_last;		&#x2F;&#x2F;指向消息队列链表中的最后一个节点</span><br><span class="line">	long msg_stime;	            &#x2F;&#x2F;最近一次从消息队列中取出消息的时间</span><br><span class="line">	long msg_rtime;	            &#x2F;&#x2F;最近一次从消息队列中放入消息的时间</span><br><span class="line">	long msg_ctime;	            &#x2F;&#x2F;最近一次修改消息队列的时间</span><br><span class="line">	unsigned long  msg_lcbytes;	&#x2F;* Reuse junk fields for 32 bit *&#x2F;</span><br><span class="line">	unsigned long  msg_lqbytes;	&#x2F;* ditto *&#x2F;</span><br><span class="line">	unsigned short msg_cbytes;      &#x2F;&#x2F;保存着队列总共占用内存的字节数</span><br><span class="line">	unsigned short msg_qnum; 		&#x2F;&#x2F;当前消息队列中消息的个数</span><br><span class="line">	unsigned short msg_qbytes;	    &#x2F;&#x2F;队列所占用内存的最大字节数。</span><br><span class="line">	int msg_lspid;  &#x2F;&#x2F;最近一次向消息队列发送消息进程的pid</span><br><span class="line">	int msg_lrpid;	&#x2F;&#x2F;最近一次从消息队列接受消息进程的pid</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><font size=5 face=consolas>消息队列节点的结构：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">struct msg &#123;</span><br><span class="line">	struct msg *msg_next; &#x2F;&#x2F;指向消息队列中下一个消息的指针</span><br><span class="line">	long msg_type;&#x2F;&#x2F;消息的类型</span><br><span class="line">	char *msg_spot; &#x2F;&#x2F;消息内容在内存中的地址</span><br><span class="line">	time_t msg_stime; </span><br><span class="line">	short msg_ts;  &#x2F;&#x2F;消息内容的长度</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><font size=5 face=consolas>struct ipc_perm msg_perm的结构：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">struct ipc_perm</span><br><span class="line">&#123;</span><br><span class="line">	__kernel_key_t	key;			&#x2F;&#x2F;消息队列的key值</span><br><span class="line">	__kernel_uid_t	uid;			&#x2F;&#x2F;当前这一刻正在使用消息队列的用户</span><br><span class="line">	__kernel_gid_t	gid;			&#x2F;&#x2F;正在使用的用户所在的用户组</span><br><span class="line">	__kernel_uid_t	cuid;		    &#x2F;&#x2F;创建消息队列的用户</span><br><span class="line">	__kernel_gid_t	cgid;		    &#x2F;&#x2F;创建消息队列用户所在的用户组</span><br><span class="line">	__kernel_mode_t	mode;           &#x2F;&#x2F;读写权限</span><br><span class="line">	unsigned short	seq;			&#x2F;&#x2F;序列号，保证消息队列ID不会被</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><font size=4 face=consolas>由上边的几个关于消息队列的结构体，我们可以大致画出消息队列的样子：<br><img src="https://img-blog.csdnimg.cn/20200131115157732.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>由上图可以直观的感受到Linux内核所设计消息队列的大致模样，这对于我们理解消息队列Linux API有着至关重要的作用。</font></p>
+<p><font size=5 face=consolas>三、消息队列API分析</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">msgget函数</span><br><span class="line">1.int msgget(key_t key, int oflag);</span><br><span class="line">返回值：唯一的标识符</span><br><span class="line">关于参数key和参数oflag,请看下图，参考与《Unix网络编程2.进程通信》</span><br><span class="line">key值的指定：</span><br><span class="line">(1)指定为IPC_PRIVATE，每次调用msgget都会创建一个新的消息队列，这样的开销比较大，一般情况下，</span><br><span class="line">只需要一个消息队列即可，因此此方法不建议使用。</span><br><span class="line">(2)指定一个(key_t)value,这个value只要未使用即可，可以通过ipcs -q命令查看已有消息队列的key值，</span><br><span class="line">以避免重复使用。</span><br><span class="line">(3)使用ftok生成key。</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">frok函数简介</span><br><span class="line">#include &lt;sys&#x2F;types.h&gt;</span><br><span class="line">#include &lt;sys&#x2F;ipc.h&gt;</span><br><span class="line">key_t frok(const char  *filename, int id);</span><br><span class="line">函数功能：ftok通过一个路径名和一个整型值，就可以返回一个唯一对应的key值。</span><br><span class="line">只要路径名和整形数不变，key就不变。</span><br><span class="line">filename+value(int) -&gt; key</span><br><span class="line"></span><br><span class="line">由于ftok只会使用整型数id的低八位，所以在使用时指定一个ascii码即可。</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/20200131130358971.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20200131120548168.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">msgsnd函数</span><br><span class="line">2.int msgsnd(int msqid, const void *ptr, size_t length, int flag);</span><br><span class="line">参数msqid是由msgget返回的消息队列的唯一标识符</span><br><span class="line">const void* ptr是一个消息包的指针，消息包可以：</span><br><span class="line">struct msgbuf&#123;</span><br><span class="line">	long mtype;&#x2F;&#x2F;消息类型必须大于0</span><br><span class="line">	char mtext[1];&#x2F;&#x2F;1个字节肯定是不够用的，因此可以自定义消息包</span><br><span class="line">&#125;;</span><br><span class="line">length:消息内容的大小</span><br><span class="line">flag:</span><br><span class="line">（1）0：阻塞发送消息，如果没有发送成功时，该函数会一直阻塞，直到发送成功。</span><br><span class="line">（2）IPC_NOWAIT：非阻塞的方式发送消息，无论是否发送成功，函数都会返回，即使</span><br><span class="line">发送不成功，函数也会返回。</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">msgrcv函数</span><br><span class="line">3.ssize_t msgrcv(int msqid, void *ptr, size_t length, long type, int flag);</span><br><span class="line">参数ptr: 指定接受消息存放的位置。</span><br><span class="line">参数length:指定了由ptr指向的缓冲区中数据部分的大小，这是该函数能返回的最大数据量，该长度不包含整型类型字段。</span><br><span class="line">参数type:指定希望从所给定的队列中读出什么样的消息。</span><br><span class="line">参数flag:指定所请求类型的消息不在指定的队列中应该作何处理。</span><br><span class="line">（1）0：阻塞接受消息</span><br><span class="line">（2）IPC_NOWAIT:非阻塞接受消息，没有消息时，不阻塞。</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">msgctl</span><br><span class="line">4.int msgctl(int msqid, int cmd, struct msqid_ds* buff);</span><br><span class="line">msgctl接口可以使得进程在msqid所标识的消息队列上进行各种控制操作。</span><br><span class="line">msgctl的三个命令cmd参数：</span><br><span class="line">（1）IPC_RMID：从系统中删除由msqid指定的消息队列。此时第三个参数缺省省略，这个命令可以理解为删除消息队列。</span><br><span class="line">（2）IPC_SET，给所指定的消息队列设置其msqid_ds结构体的以下4个成员：msg_perm.uid, msg_perm.gid,msg_perm.mode和msg_gbytes。此时需要自己创建msqid_ds结构体并初始化然后传入。</span><br><span class="line">（3）IPC_STAT，此时buff作为传出参数可以获取消息队列消息头中msg_perm结构体的在内核中的内容。</span><br></pre></td></tr></table></figure>
+
+<p><font size=5 face=consolas>四、代码实战</font></p>
+<p><font size=4 face=consolas color=red>（1）有血缘关系的进程间通信</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;unistd.h&gt;</span><br><span class="line">#include &lt;string.h&gt;</span><br><span class="line">#include &lt;sys&#x2F;ipc.h&gt;</span><br><span class="line">#include &lt;sys&#x2F;msg.h&gt;</span><br><span class="line">#include &lt;sys&#x2F;types.h&gt;</span><br><span class="line">#include &lt;assert.h&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">typedef struct msgbuf &#123;</span><br><span class="line">  long mtype;</span><br><span class="line">  char mtext[128];</span><br><span class="line">&#125; MSG;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">  int msgid &#x3D; msgget((key_t)1235, 0664|IPC_CREAT);</span><br><span class="line">  assert(msgid !&#x3D; -1);</span><br><span class="line">  pid_t pid &#x3D; fork();</span><br><span class="line">  assert(pid !&#x3D; -1);</span><br><span class="line">  if (pid &gt; 0) &#123;</span><br><span class="line">    MSG msg;</span><br><span class="line">    memset(&amp;msg, 0, sizeof(msg));</span><br><span class="line">    msg.mtype &#x3D; 100;</span><br><span class="line">    strcpy(msg.mtext, &quot;hello&quot;);</span><br><span class="line">    msgsnd(msgid, &amp;msg, strlen(msg.mtext), 0);</span><br><span class="line">  &#125; else if (pid &#x3D;&#x3D; 0) &#123;</span><br><span class="line">    MSG msg;</span><br><span class="line">    memset(&amp;msg, 0, sizeof(msg));</span><br><span class="line">    msgrcv(msgid, &amp;msg, 127, 100, 0);</span><br><span class="line">    printf(&quot;msg.mtype: %ld\n&quot;, msg.mtype);</span><br><span class="line">    printf(&quot;msg.mtext: %s\n&quot;, msg.mtext);</span><br><span class="line">  &#125;</span><br><span class="line">  return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><font size=4 face=consolas color=red>（2）无血缘关系的进程间通信</font><br><font size=4 face=consolas>msg_send.c</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;stdlib.h&gt;</span><br><span class="line">#include &lt;unistd.h&gt;</span><br><span class="line">#include &lt;string.h&gt;</span><br><span class="line">#include &lt;assert.h&gt;</span><br><span class="line">#include &lt;sys&#x2F;msg.h&gt;</span><br><span class="line"></span><br><span class="line">typedef struct msgdata&#123;</span><br><span class="line">  long mtype; &#x2F;&#x2F;消息类型</span><br><span class="line">  char mtext[128];</span><br><span class="line">&#125; MSG;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">  int id &#x3D; msgget((key_t)1234, IPC_CREAT | 0664);</span><br><span class="line">  assert(id !&#x3D; -1);</span><br><span class="line"></span><br><span class="line">  MSG msg;</span><br><span class="line">  memset(&amp;msg, 0, sizeof(msg));</span><br><span class="line">  msg.mtype &#x3D; 100;</span><br><span class="line">  strcpy(msg.mtext, &quot;hello world&quot;);</span><br><span class="line">  msgsnd(id, &amp;msg, strlen(msg.mtext), 0);</span><br><span class="line"> </span><br><span class="line">  memset(&amp;msg, 0, sizeof(msg));</span><br><span class="line">  msg.mtype &#x3D; 200;</span><br><span class="line">  strcpy(msg.mtext, &quot;ni hao, shi jian&quot;);</span><br><span class="line">  msgsnd(id, &amp;msg, strlen(msg.mtext), 0);</span><br><span class="line">  return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p><font size=4 face=consolas>msg_send.c</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;assert.h&gt;</span><br><span class="line">#include &lt;unistd.h&gt;</span><br><span class="line">#include &lt;sys&#x2F;msg.h&gt;</span><br><span class="line">#include &lt;string.h&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">typedef struct msgdata&#123;</span><br><span class="line">  long mtype;</span><br><span class="line">  char mtext[128];</span><br><span class="line">&#125;MSG;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">  int id &#x3D; msgget((key_t)1234, 0664|IPC_CREAT);</span><br><span class="line">  assert(id !&#x3D; -1);</span><br><span class="line"></span><br><span class="line">  MSG msg;</span><br><span class="line">  memset(&amp;msg, 0, sizeof(msg));</span><br><span class="line"></span><br><span class="line">  msgrcv(id, &amp;msg, 127, 200, 0);</span><br><span class="line">  printf(&quot;msg.mtype: %ld\n&quot;, msg.mtype);</span><br><span class="line">  printf(&quot;msg.mtext: %s\n&quot;, msg.mtext);</span><br><span class="line">  return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=4 face=consolas color=red>（3）删除消息队列内核对象</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">使用msgctl来删除消息队列内核对象</span><br><span class="line"></span><br><span class="line">void msgRemove(int msgid) &#123;</span><br><span class="line">	int res &#x3D; msgctl(msgid, IPC_RMID, NULL);</span><br><span class="line">	if (res &#x3D;&#x3D; -1) return -1;</span><br><span class="line">	else return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/linux-操作系统//" class="article-tag-list-link color1">linux 操作系统</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2020/01/31/%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1%EF%BC%88%E4%BA%8C%EF%BC%89%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%EF%BC%88System%20V%20%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%EF%BC%89/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2020/01/31/Linux-ipcs%E5%91%BD%E4%BB%A4,%E6%9F%A5%E7%9C%8Bos%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1%E7%9A%84%E5%86%85%E6%A0%B8%E5%AF%B9%E8%B1%A1%E4%BF%A1%E6%81%AF/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Linux-ipcs命令，查看os进程通信的内核对象信息
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/01/25/C++%E4%B8%AD%E7%9A%84new%E6%9C%89%E5%87%A0%E7%A7%8D%EF%BC%9F/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">C++中的new有几种？</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>

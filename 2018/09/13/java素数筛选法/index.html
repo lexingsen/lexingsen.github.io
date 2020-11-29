@@ -158,29 +158,197 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-java素数筛选法" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       java素数筛选法
     </h1>
   
 
-  
-  <a href="/2018/09/13/java%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/" class="archive-article-date">
+        
+        <a href="/2018/09/13/java%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/" class="archive-article-date">
   	<time datetime="2018-09-13T09:30:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-13</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 color=red face="Courier New">判断是否为素数</font><br><font size=4.5>对于一个任意一个正整数，如果它只能被自身或1整除，称其为素数，否则为合数。1比较特殊，既不是质数也不是合数。</p>
+<p><font size=4.5 >基于素数的定义，很快就可以直观的想到代码，对于任意一个正整数，只需要在（1，n）也就是[2,n-1]之间进行遍历，如果n可以被区间中的任何一个数字整除，它就不是质数。否则，如果对整个区间遍历完毕，还未找到一个数字可以整除n，那么这个数字就是质数。</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public Test&#123;</span><br><span class="line">	&#x2F;&#x2F;类方法</span><br><span class="line">	public static bool isPrime(int n)&#123;</span><br><span class="line">		for(int i&#x3D;2;i&lt;&#x3D;n-1;++i)&#123;</span><br><span class="line">			if(n%i&#x3D;&#x3D;0)&#123;</span><br><span class="line">				return false;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		return true;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=4.5 color=red face="Courier New">算法时间复杂度分析：</font><font size=4.5 face="Courier New">对于上边穷举遍历暴力的方法，判断一个正整数是否为素数。所需的时间复杂度是O(n),然而在实际应用中，判断某一个数字是否为为素数只是整个程序当中的一小部分，这样的时间复杂度相对而言还是比较高的。</font><br><font size=4.5 color=red face="Courier New">下面将一种时间复杂度为O(n^(1/2))时间复杂的判断素数的算法。</font></p>
+<p><font size=4.5 face="Courier New">数学背景：对于任意一个正整数N,可以将其分解为两个因数。特殊情况下N^(1/2)相等，即N=N^(1/2)*N^(1/2)。此外若存在两个因数，则其中一个必然大于N^(1/2)，而另外一个必然小于N^(1/2)。<font size=4.5 color=red>因此，只需要在区间[2,N^(1/2)]区间遍历即可，若在此区间存在一个正整数使得N被整除，则其为合数<font color=blue>（此时这个因数小于N^(1/2)，而另外一个因数必然大于N^(1/2)）</font>，否则其为质数。进过这样的 处理可以显著的降低判断是否为质数算法的时间复杂度，达到O(n^(1/2))。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public Test&#123;</span><br><span class="line">		public static bool isPrime(int n)&#123;</span><br><span class="line">		for(int i&#x3D;2;i&lt;&#x3D;Math.sqrt(n*1.0);++i)&#123;</span><br><span class="line">			if(n%i &#x3D;&#x3D; 0)&#123;</span><br><span class="line">				return false;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		return true;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=5 color=red face="Courier New">素数筛选法：</font><font size=4.5>从小到大遍历每一个数字，将其倍数筛去，剩下的即为素数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">class Test&#123;</span><br><span class="line">	private boolean[] p;&#x2F;&#x2F;用于标记对应下标的数字是否为素数</span><br><span class="line">	private int[] prime;</span><br><span class="line">	private int len&#x3D;0;</span><br><span class="line">	</span><br><span class="line">	&#x2F;&#x2F;构造方法</span><br><span class="line">	Test(int n)&#123;</span><br><span class="line">		p &#x3D; new boolean[n];</span><br><span class="line">		prime &#x3D; new int[n];</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	public void prime(int n)&#123;</span><br><span class="line">		for(int i&#x3D;2;i&lt;n;++i)&#123;</span><br><span class="line">			if(p[i]&#x3D;&#x3D;false)&#123;</span><br><span class="line">				prime[len++] &#x3D; i;&#x2F;&#x2F;false表示对应下标为素数</span><br><span class="line">				&#x2F;&#x2F;进行筛选</span><br><span class="line">				for(int j&#x3D;i+i;j&lt;n;j+&#x3D;i)&#123;</span><br><span class="line">					p[j] &#x3D; true;&#x2F;&#x2F;标记不是素数</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; </span><br><span class="line">	</span><br><span class="line">	public void show(int n)&#123;</span><br><span class="line">		for(int i&#x3D;0;i&lt;n;++i)&#123;</span><br><span class="line">			System.out.print(prime[i]+&quot; &quot;);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Main&#123;</span><br><span class="line">	public static void main(String[] args)&#123;</span><br><span class="line">		Test t &#x3D; new Test(100);</span><br><span class="line">		t.prime(100);</span><br><span class="line">		t.show(100);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=4.5 color=red>输出100范围内的素数：</font><br><img src="https://img-blog.csdn.net/20180913172942945?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/java//" class="article-tag-list-link color5">java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2018/09/13/java%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2018/09/17/java%E4%B8%AD%E7%9A%84%E5%BC%82%E5%B8%B8/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          java中的异常
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/09/11/java%E4%B8%ADCompareable%E6%8E%A5%E5%8F%A3%E6%80%9D%E8%80%83/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">java中Compareable接口思考</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>

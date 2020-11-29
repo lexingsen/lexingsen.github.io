@@ -162,29 +162,206 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-带右值引用的拷贝构造函数和运算符重载函数" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       带右值引用的拷贝构造函数和运算符重载函数
     </h1>
   
 
-  
-  <a href="/2020/11/22/%E5%B8%A6%E5%8F%B3%E5%80%BC%E5%BC%95%E7%94%A8%E7%9A%84%E6%8B%B7%E8%B4%9D%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD%E5%87%BD%E6%95%B0/" class="archive-article-date">
+        
+        <a href="/2020/11/22/%E5%B8%A6%E5%8F%B3%E5%80%BC%E5%BC%95%E7%94%A8%E7%9A%84%E6%8B%B7%E8%B4%9D%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD%E5%87%BD%E6%95%B0/" class="archive-article-date">
   	<time datetime="2020-11-21T17:54:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-22</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face=consolas>考虑一个占用堆资源类对象的拷贝构造和赋值运算符重载函数，当我们用一个临时对象去拷贝构造一个新对象或者赋值给一个已经存在的对象时，会出现一下的问题：如string类</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyString</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="keyword">char</span> *mptr;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	MyString(<span class="keyword">const</span> <span class="keyword">char</span> *src = <span class="literal">nullptr</span>) &#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;MyString(const char*)&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		<span class="keyword">if</span> (src != <span class="literal">nullptr</span>) &#123;</span><br><span class="line">			mptr = <span class="keyword">new</span> <span class="keyword">char</span>[<span class="built_in">strlen</span>(src) + <span class="number">1</span>];</span><br><span class="line">			<span class="built_in">strcpy</span>(mptr, src);</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			mptr = <span class="keyword">new</span> <span class="keyword">char</span>[<span class="number">1</span>];</span><br><span class="line">			*mptr = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	MyString(<span class="keyword">const</span> MyString&amp; src) &#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;MyString(const MyString&amp;)&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		mptr = <span class="keyword">new</span> <span class="keyword">char</span>[<span class="built_in">strlen</span>(src.mptr) + <span class="number">1</span>];</span><br><span class="line">		<span class="built_in">strcpy</span>(mptr, src.mptr);</span><br><span class="line">	&#125;</span><br><span class="line">		</span><br><span class="line">	MyString&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> MyString&amp; src) &#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;operator=(const MyString&amp;)&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		<span class="keyword">if</span> (<span class="keyword">this</span> == &amp;src) &#123;</span><br><span class="line">			<span class="keyword">return</span>  *<span class="keyword">this</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">delete</span>[] mptr;</span><br><span class="line">		mptr = <span class="keyword">new</span> <span class="keyword">char</span>[<span class="built_in">strlen</span>(src.mptr) + <span class="number">1</span>];</span><br><span class="line">		<span class="built_in">strcpy</span>(mptr, src.mptr);</span><br><span class="line">		<span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	~MyString() &#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;~MyString()&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		<span class="keyword">delete</span>[] mptr;</span><br><span class="line">		mptr = <span class="literal">nullptr</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">const</span> <span class="keyword">char</span>* <span class="title">c_str</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> mptr;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function">MyString <span class="title">getString</span><span class="params">(MyString &amp;s)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">const</span> <span class="keyword">char</span>* t = s.c_str();</span><br><span class="line">	<span class="function">MyString <span class="title">res</span><span class="params">(t)</span></span>;</span><br><span class="line">	<span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="function">MyString <span class="title">s1</span><span class="params">(<span class="string">&quot;aaaaaaaaaaaaaaaaaaaaaaaaaaa&quot;</span>)</span></span>;</span><br><span class="line">	MyString s2;</span><br><span class="line">	s2 = getString(s1);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=5 face=consolas color=red>1.当我们用临时对象去拷贝构造一个新对象时。<br>MyString res = MyString(“aaaa”);<br><img src="https://img-blog.csdnimg.cn/20201122013211769.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br>显然，这样做很不合理，很浪费！！！你临时对象用完就析构了，还不如直接给我新对象用，避免开辟新空间，避免拷贝！！！<br><img src="https://img-blog.csdnimg.cn/20201122013323579.png#pic_center" alt="在这里插入图片描述"><br></font><br><font size=5 face=consolas>到这里就引出了第一个主题，带右值引用的拷贝构造函数。因为临时对象是右值。临时对象用完就要析构的，那就把临时对象占用的资源直接给新对象就好了。这样做一方面避免了在原来拷贝构造函数需要首先申请空间，然后进行拷贝的麻烦。另一方面避免临时对象析构时还有释放堆资源的麻烦，一举两得！！！</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">MyString(MyString &amp;&amp;src) &#123;</span><br><span class="line">	mptr = src.mptr;</span><br><span class="line">	src.mptr = <span class="literal">nullptr</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=5 face=consolas color=red>2.当我们用临时对象去赋值一个已经存在的对象时。这里指的对象都是持有堆资源的对象。</font><br><font size=5 face=consolas>首先，被赋值的对象要释放自己占用的堆资源，然后申请一个和临时对象指向堆资源一摸一样大小的空间，之后将临时对象指向堆空间的内容拷贝到自己的堆空间中。</font><br><font size=5 face=consolas color=red>这里同样存在着上边的问题，我临时对象给你赋值完我就析构了，堆资源也在析构函数中被释放了，但是你被赋值的对象还得申请空间，还得拷贝，你直接用临时对象的那块堆资源不就好了。<br><img src="https://img-blog.csdnimg.cn/20201122014506719.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br></font><br>问题就处在临时对象赋值完就析构了，与其白白浪费，不如拿来直接使用，有点“偷”的感觉！！！<br><img src="https://img-blog.csdnimg.cn/20201122014948899.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">MyString&amp; opeator=(MyString &amp;&amp;s) &#123;</span><br><span class="line">	<span class="keyword">if</span> (<span class="keyword">this</span> == &amp;s) &#123;</span><br><span class="line">		<span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">delete</span>[] mptr;</span><br><span class="line">	mptr = s.mptr;</span><br><span class="line">	s.mptr = <span class="literal">nullptr</span>;</span><br><span class="line">	<span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=4 face=consolas>结论：<br>至此，通过一个例子我们总结出了带右值引用的拷贝构造函数和运算符重载函数所带来效率的提升，以及为什么可以这样处理的原因。在实际开发中，当出现一定要用临时对象作为返回值，要用临时来进行赋值时，我们可以为其类实现带右值引用的拷贝构造函数和运算符重载函数，在程序的效率上会得到很大的提升。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">c++ c++11</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/c-c//" class="article-tag-list-link color1">c/c++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2020/11/22/%E5%B8%A6%E5%8F%B3%E5%80%BC%E5%BC%95%E7%94%A8%E7%9A%84%E6%8B%B7%E8%B4%9D%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD%E5%87%BD%E6%95%B0/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2020/11/22/C++11-forward&move&%E5%BC%95%E7%94%A8%E6%8A%98%E5%8F%A0/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          C++11-forward&amp;move&amp;引用折叠
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/11/21/%E9%9D%A2%E8%AF%9522.%E6%A0%88%E7%9A%84%E5%8E%8B%E5%85%A5%E3%80%81%E5%BC%B9%E5%87%BA/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">面试22.栈的压入、弹出</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>

@@ -160,29 +160,210 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-Linux 信号量实现同步，实现互斥" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       Linux 信号量实现同步，实现互斥
     </h1>
   
 
-  
-  <a href="/2020/09/12/Linux%20%E4%BF%A1%E5%8F%B7%E9%87%8F%E5%AE%9E%E7%8E%B0%E5%90%8C%E6%AD%A5%EF%BC%8C%E5%AE%9E%E7%8E%B0%E4%BA%92%E6%96%A5/" class="archive-article-date">
+        
+        <a href="/2020/09/12/Linux%20%E4%BF%A1%E5%8F%B7%E9%87%8F%E5%AE%9E%E7%8E%B0%E5%90%8C%E6%AD%A5%EF%BC%8C%E5%AE%9E%E7%8E%B0%E4%BA%92%E6%96%A5/" class="archive-article-date">
   	<time datetime="2020-09-12T14:35:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-12</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+
+<p> <strong>一.实现同步</strong><br><strong>同步模板</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">使用信号量实现同步时，需要将信号量的初值设置为<span class="number">0</span></span><br><span class="line">semaphore s=<span class="number">0</span>;</span><br><span class="line">p1() &#123;</span><br><span class="line">	p(s);</span><br><span class="line">	具体的代码</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">p2() &#123;</span><br><span class="line">	具体的代码</span><br><span class="line">	v(s);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>1.假设p1先执行，执行到p(s), s-=1, 此时s=-1&lt;0,进程阻塞，主动放弃cpu使用权，cpu调度执行p2,执行p2的具体任务，然后进行v(s),，s+=1，s=0，p2执行完毕。cpu调度继续执行p1，此时s=0，p1被唤醒，因此就达到了先执行p2后执行p1的同步关系。<br>2.假设p2先执行，首先执行具体的代码，然后进行v(s)，s+=1，s=1&gt;0，然后p2执行完毕。cpu调度执行p1，p1首先p(s)，s-=1，s=0，然后执行具体的代码。同样也达到了先执行p2后执行p1的同步关系。<br><strong>二.Linux下信号量实现同步，线程2先执行输出”hello”，线程1后执行输出”world\n”的功能</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;pthread.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;semaphore.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> x = <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  sem_init(&amp;sem, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">  <span class="function">thread <span class="title">t1</span><span class="params">([&amp;]()&#123;</span></span></span><br><span class="line"><span class="function"><span class="params">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;hello&quot;</span>;</span></span></span><br><span class="line"><span class="function"><span class="params">    sem_post(&amp;sem);</span></span></span><br><span class="line"><span class="function"><span class="params">  &#125;)</span></span>;</span><br><span class="line">  <span class="function">thread <span class="title">t2</span><span class="params">([&amp;]()&#123;</span></span></span><br><span class="line"><span class="function"><span class="params">    sem_wait(&amp;sem);</span></span></span><br><span class="line"><span class="function"><span class="params">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;world&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span></span></span><br><span class="line"><span class="function"><span class="params">  &#125;)</span></span>;</span><br><span class="line">  t1.join();</span><br><span class="line">  t2.join();</span><br><span class="line">  sem_destroy(&amp;sem);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行结果：<br><img src="https://img-blog.csdnimg.cn/20200912221940123.png#pic_center" alt="在这里插入图片描述"></p>
+<p><strong>三.实现互斥<br>互斥模板</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">互斥是对临界资源的保护  所以互斥只需要在临界区之前和之后分别进行加锁和解锁</span><br><span class="line">需要注意的是，用信号量充当互斥锁实现互斥的时候，信号量的初值应设置为<span class="number">1</span>，表示</span><br><span class="line">临界资源的个数为<span class="number">1.</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> x=<span class="number">10</span>; 临界资源</span><br><span class="line">semaphore s=<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">p1() &#123;</span><br><span class="line">	p(s);</span><br><span class="line">	x ++; 访问临界资源</span><br><span class="line">	v(s);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">p2() &#123;</span><br><span class="line">	p(s);</span><br><span class="line">	x --; 访问临界资源</span><br><span class="line">	v(s);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>1.假设p1先执行，p(s)，s-=1，s=0，假设此时cpu时间片用完，cpu调度执行p2，p(s)，s-=1，s=-1 &lt; 0，此时p2阻塞，主动放弃cpu使用权，cpu调度执行p1，进行x++，v(s)<br>s+=1, s=0，p1执行完毕。cpu调度执行p2，由于s=0，p2唤醒，执行x –, v(s)，s+=1，s=1，p2执行完毕。此时信号量为1，表示可以临界资源个数为1。<br>2.假设p2先执行同上。<br><strong>四.使用Linux信号量实现互斥</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;pthread.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;semaphore.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  sem_init(&amp;sem, <span class="number">0</span>, <span class="number">1</span>);</span><br><span class="line">  <span class="function">thread <span class="title">t1</span><span class="params">([&amp;]()&#123;</span></span></span><br><span class="line"><span class="function"><span class="params">    sem_wait(&amp;sem);</span></span></span><br><span class="line"><span class="function"><span class="params">    x ++;</span></span></span><br><span class="line"><span class="function"><span class="params">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;x = &quot;</span> &lt;&lt; x &lt;&lt; <span class="string">&quot; this thread id:&quot;</span> &lt;&lt; this_thread::get_id() &lt;&lt; <span class="built_in">endl</span>;</span></span></span><br><span class="line"><span class="function"><span class="params">    sem_post(&amp;sem);</span></span></span><br><span class="line"><span class="function"><span class="params">  &#125;)</span></span>;</span><br><span class="line"></span><br><span class="line">  <span class="function">thread <span class="title">t2</span><span class="params">([&amp;]()&#123;</span></span></span><br><span class="line"><span class="function"><span class="params">    sem_wait(&amp;sem);</span></span></span><br><span class="line"><span class="function"><span class="params">    x --;</span></span></span><br><span class="line"><span class="function"><span class="params">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;x = &quot;</span> &lt;&lt; x &lt;&lt; <span class="string">&quot; this thread id:&quot;</span> &lt;&lt; this_thread::get_id() &lt;&lt; <span class="built_in">endl</span>;</span></span></span><br><span class="line"><span class="function"><span class="params">    sem_post(&amp;sem);</span></span></span><br><span class="line"><span class="function"><span class="params">  &#125;)</span></span>;</span><br><span class="line"></span><br><span class="line">  t1.join();</span><br><span class="line">  t2.join();</span><br><span class="line">  sem_destroy(&amp;sem);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>执行结果：</strong><br><img src="https://img-blog.csdnimg.cn/202009122232347.png#pic_center" alt="在这里插入图片描述"></p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">操作系统</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/操作系统//" class="article-tag-list-link color5">操作系统</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2020/09/12/Linux%20%E4%BF%A1%E5%8F%B7%E9%87%8F%E5%AE%9E%E7%8E%B0%E5%90%8C%E6%AD%A5%EF%BC%8C%E5%AE%9E%E7%8E%B0%E4%BA%92%E6%96%A5/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2020/09/13/%E6%AD%BB%E9%94%81/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          死锁
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/09/12/%E4%BF%A1%E5%8F%B7%E9%87%8F%E5%8E%9F%E7%90%86/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">信号量原理</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>

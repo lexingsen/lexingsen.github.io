@@ -154,205 +154,848 @@
           <div id="js-content" class="content-ll">
             
   
-    <header class="article-header">
-  
+    <article id="post-java中的异常" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2018/09/17/java%E4%B8%AD%E7%9A%84%E5%BC%82%E5%B8%B8/">java中的异常</a>
     </h1>
   
 
-  
-  <a href="/2018/09/17/java%E4%B8%AD%E7%9A%84%E5%BC%82%E5%B8%B8/" class="archive-article-date">
+        
+        <a href="/2018/09/17/java%E4%B8%AD%E7%9A%84%E5%BC%82%E5%B8%B8/" class="archive-article-date">
   	<time datetime="2018-09-17T12:13:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-17</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 color=red>Java中的异常</font></p>
+<p><font size=4>异常：直观的理解就是不正常，不完全正确，可能存在某些问题。在实际编写程序的过程中，往往可能出于疏忽而导致程序出现bug。典型的有数组越界，除0等，在c语言中由于考虑到程序实际的效率而未考虑数组下标越界引起的程序错误，如果在编写程序涉及到数组的边界问题而未考虑，几乎100%会发生如下的bug。合理的处理异常，会使得程序的健壮性，可读性以及可维护性得到大大的提高。</p>
+<font size=4>
+在java中，提供了优秀的异常机制，当程序出现在运行时期的异常和编译阶段的异常，提供解决错误的方法。
+
+<p><font size=4 color=red >错误：</font><font size=4 color=blue face="Courier New">是指系统出现错误或运行环境出现的错误，此类错误非常严重。即使捕捉到也不能够有效的处理，由java虚拟机生成并抛出，通常这类型的错误是由系统错误引起的。<br><font size=4 color=red >运行时期异常：</font><font size=4 color=blue face="Courier New">是在运行时期可以被捕获的异常并能够做有效的处理，如果程序当中没有对这些可能存在的异常做处理，这些异常的处理通常由默认的异常处理程序进行处理。<br><font size=4 color=red face="Courier New">非运行时期异常：</font><font size=4 color=blue face="Courier New">通常是一些语法、语义错误，此类错误通常在编写代码时，由集成开发环境(IDE)提示错误。<br><font size=4 color=red><br>下图是java中异常的层次结构：</font></p>
+<p><img src="https://img-blog.csdn.net/20180917190804433?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="在这里插入图片描述"><br><font size=5 color=red>在程序中显式的进行异常的处理</font></p>
+<p><font size=4.5 face="Courier New" color=red>1.捕获可能存在的异常。</font><font size=4.5 face="Courier New">通过<code>try&#123;&#125;</code>和<code>catch(形式参数)&#123;&#125;</code>代码块，其中<code>catch(形式参数)&#123;&#125;</code>代码块可以有多个，但是<code>try&#123;&#125;</code>代码块只有一个。也就是说一个try代码块可以搭配多个catch代码块，因为在可能存在异常的代码块中，可能存在各种不同类型的异常，但是每个catch代码块只能够捕捉到特定类型的异常，所以为了去处理每种类型的异常，就需要增加相应的catch块。<font color=red>注意：catch代码块的参数列表需要写对应类型的异常。</font>当我们忘记可能发生异常的具体类型时间，可以使用Exception基类，因为在java中所有肯能出现的异常都继承Exception类，当然基类的引用是可以指向子类的方法的。(向上造型)，<font color=blue>注意：在实际的编程中，并不推荐使用Exception的对象作为catch的实参，当有多个catch块时，只能有一个catch块可以使用Exception,否则若所有的catch块都使用Exception,当程序中有多个异常时，根本找不多异常到底是哪一个，正如前边所说的，一个catch块只处理对应的异常。如果所有的catch都想用Exception，那岂不是所有的问题都可以由一个catch来处理了，这显然是矛盾的。</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">try&#123;</span><br><span class="line">	&#x2F;&#x2F;书写可能出些异常的代码块</span><br><span class="line">&#125;</span><br><span class="line">catch(某种类型的异常)&#123;</span><br><span class="line">	&#x2F;&#x2F;当出现异常时，对异常进行处理的代码块</span><br><span class="line">&#125;</span><br><span class="line">catch(另外一种类型的异常)&#123;</span><br><span class="line">&#125;</span><br><span class="line">finally&#123;&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=4 face="Courier New">在catch代码块中，异常对象可以使用的两个比较有用的方法。<br>(1)getMassage()方法，是Throwable类提供的一个方法，通过该方法的调用，可以得到有关异常的信息。<br><img src="https://img-blog.csdn.net/20180917200615394?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="在这里插入图片描述"><br>(2)printStackTrace()方法，也是由Throwable提供的一个重载的方法，用于输跟踪异常事件发生时堆栈的内容。<br><img src="https://img-blog.csdn.net/20180917201031472?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="在这里插入图片描述"><br>由于异常类都是直接或间接的继承Throwable类，因此子类中都是可以调用这两个方法的。<br><font size=4 face="Courier New">值得一提的是<code>finally</code>代码块也是非常重要，尤其是在<code>finally</code>代码块中释放资源。<code>finally</code>代码块中的内容，无论之前的·catch·块是否对一场进行了处理，它都一定会执行。如对数据库的连接，若将数据库关闭的操作写在catch块中，但是并没有出现catch所能处理的异常。此时，数据库的连接并没有关闭，而数据库的连接是由上限的，当到达一定数量时，就不允许创建新的连接了。此时，如果将关闭数据库的代码在finally代码块中，就可以解决上边存在的问题。<br><font size=4.5 face="Courier New" color=red>2.声明异常 <font size=4.5 face="Courier New"  color=black><br>（1）<code>throws</code>关键字，将方法执行时可能会出现的异常写在方法的头部，throws关键字后边声明多个异常，它们之间使用逗号隔开，这样调用该方法时就知道应该写什么样的代码来处理这些可能存在的异常，<font color=red>如果调用了声明的异常的方法，却并没有相应的catch块，这样的代码是不能编译通过的。</font>一旦在编写代码的过程中调用了声明异常的方法，调用方就必须做相应的处理，否则编译是不能通过的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">class Test&#123;</span><br><span class="line">	void fun() throws Exception&#123;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Main&#123;</span><br><span class="line">	public static void main(String[] args)&#123;</span><br><span class="line">		Test t &#x3D; new Test();</span><br><span class="line">		t.fun();&#x2F;&#x2F;不能编译通过</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=4.5 face="Courier New" color=black>（2）并不是所有可能出现的异常的方法对所有的异常进行异常的声明，如运行时异常RuntimeException异常，它和它的子类不需要进行异常声明。在处理的异常的过程中，如果当前调用方不对异常进行处理，那么由它的上一级调用者处理，沿着调用的层次向上传递。</p>
+<p><font size=5 color=red>使用自定义的异常</font><br><font size=4.5 face="Courier New">有时候，系统的提高的异常并不能完全够实际的开发使用，由于java的继承机制，可以很好的提高代码复用。可以通过继承基类Exception,编译自己的异常，以处理这些实际开发中可能存在的异常。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">class MyException extends Exception&#123;</span><br><span class="line">	MyException(String str)&#123;</span><br><span class="line">		System.out.println(str);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Salary&#123;</span><br><span class="line">	void fun(int n) throws MyException&#123;</span><br><span class="line">		if(n &gt; 100000)&#123;</span><br><span class="line">			  throw new MyException(&quot;工资大于10000!&quot;)</span><br><span class="line">			  &#x2F;&#x2F;MyException e &#x3D; new MyException(&quot;工资大于10000!&quot;);</span><br><span class="line">			  &#x2F;&#x2F;throw e;</span><br><span class="line">			  &#x2F;&#x2F;以上的两种写法是等价的</span><br><span class="line">		 &#125;		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Main&#123;</span><br><span class="line">	public static void main(String[] args)&#123;</span><br><span class="line">		Salary  s &#x3D; new Salary;</span><br><span class="line">		try&#123;</span><br><span class="line">			s.fun(10010);</span><br><span class="line">		&#125;</span><br><span class="line">		catch(MyException e)&#123;</span><br><span class="line">			e.printStackTrace;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdn.net/20180918103802313?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="在这里插入图片描述"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/java//" class="article-tag-list-link color5">java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/09/17/java%E4%B8%AD%E7%9A%84%E5%BC%82%E5%B8%B8/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-java素数筛选法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2018/09/13/java%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/">java素数筛选法</a>
     </h1>
   
 
-  
-  <a href="/2018/09/13/java%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/" class="archive-article-date">
+        
+        <a href="/2018/09/13/java%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/" class="archive-article-date">
   	<time datetime="2018-09-13T09:30:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-13</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 color=red face="Courier New">判断是否为素数</font><br><font size=4.5>对于一个任意一个正整数，如果它只能被自身或1整除，称其为素数，否则为合数。1比较特殊，既不是质数也不是合数。</p>
+<p><font size=4.5 >基于素数的定义，很快就可以直观的想到代码，对于任意一个正整数，只需要在（1，n）也就是[2,n-1]之间进行遍历，如果n可以被区间中的任何一个数字整除，它就不是质数。否则，如果对整个区间遍历完毕，还未找到一个数字可以整除n，那么这个数字就是质数。</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public Test&#123;</span><br><span class="line">	&#x2F;&#x2F;类方法</span><br><span class="line">	public static bool isPrime(int n)&#123;</span><br><span class="line">		for(int i&#x3D;2;i&lt;&#x3D;n-1;++i)&#123;</span><br><span class="line">			if(n%i&#x3D;&#x3D;0)&#123;</span><br><span class="line">				return false;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		return true;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=4.5 color=red face="Courier New">算法时间复杂度分析：</font><font size=4.5 face="Courier New">对于上边穷举遍历暴力的方法，判断一个正整数是否为素数。所需的时间复杂度是O(n),然而在实际应用中，判断某一个数字是否为为素数只是整个程序当中的一小部分，这样的时间复杂度相对而言还是比较高的。</font><br><font size=4.5 color=red face="Courier New">下面将一种时间复杂度为O(n^(1/2))时间复杂的判断素数的算法。</font></p>
+<p><font size=4.5 face="Courier New">数学背景：对于任意一个正整数N,可以将其分解为两个因数。特殊情况下N^(1/2)相等，即N=N^(1/2)*N^(1/2)。此外若存在两个因数，则其中一个必然大于N^(1/2)，而另外一个必然小于N^(1/2)。<font size=4.5 color=red>因此，只需要在区间[2,N^(1/2)]区间遍历即可，若在此区间存在一个正整数使得N被整除，则其为合数<font color=blue>（此时这个因数小于N^(1/2)，而另外一个因数必然大于N^(1/2)）</font>，否则其为质数。进过这样的 处理可以显著的降低判断是否为质数算法的时间复杂度，达到O(n^(1/2))。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public Test&#123;</span><br><span class="line">		public static bool isPrime(int n)&#123;</span><br><span class="line">		for(int i&#x3D;2;i&lt;&#x3D;Math.sqrt(n*1.0);++i)&#123;</span><br><span class="line">			if(n%i &#x3D;&#x3D; 0)&#123;</span><br><span class="line">				return false;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		return true;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=5 color=red face="Courier New">素数筛选法：</font><font size=4.5>从小到大遍历每一个数字，将其倍数筛去，剩下的即为素数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">class Test&#123;</span><br><span class="line">	private boolean[] p;&#x2F;&#x2F;用于标记对应下标的数字是否为素数</span><br><span class="line">	private int[] prime;</span><br><span class="line">	private int len&#x3D;0;</span><br><span class="line">	</span><br><span class="line">	&#x2F;&#x2F;构造方法</span><br><span class="line">	Test(int n)&#123;</span><br><span class="line">		p &#x3D; new boolean[n];</span><br><span class="line">		prime &#x3D; new int[n];</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	public void prime(int n)&#123;</span><br><span class="line">		for(int i&#x3D;2;i&lt;n;++i)&#123;</span><br><span class="line">			if(p[i]&#x3D;&#x3D;false)&#123;</span><br><span class="line">				prime[len++] &#x3D; i;&#x2F;&#x2F;false表示对应下标为素数</span><br><span class="line">				&#x2F;&#x2F;进行筛选</span><br><span class="line">				for(int j&#x3D;i+i;j&lt;n;j+&#x3D;i)&#123;</span><br><span class="line">					p[j] &#x3D; true;&#x2F;&#x2F;标记不是素数</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; </span><br><span class="line">	</span><br><span class="line">	public void show(int n)&#123;</span><br><span class="line">		for(int i&#x3D;0;i&lt;n;++i)&#123;</span><br><span class="line">			System.out.print(prime[i]+&quot; &quot;);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Main&#123;</span><br><span class="line">	public static void main(String[] args)&#123;</span><br><span class="line">		Test t &#x3D; new Test(100);</span><br><span class="line">		t.prime(100);</span><br><span class="line">		t.show(100);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=4.5 color=red>输出100范围内的素数：</font><br><img src="https://img-blog.csdn.net/20180913172942945?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/java//" class="article-tag-list-link color5">java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/09/13/java%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-java中Compareable接口思考" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2018/09/11/java%E4%B8%ADCompareable%E6%8E%A5%E5%8F%A3%E6%80%9D%E8%80%83/">java中Compareable接口思考</a>
     </h1>
   
 
-  
-  <a href="/2018/09/11/java%E4%B8%ADCompareable%E6%8E%A5%E5%8F%A3%E6%80%9D%E8%80%83/" class="archive-article-date">
+        
+        <a href="/2018/09/11/java%E4%B8%ADCompareable%E6%8E%A5%E5%8F%A3%E6%80%9D%E8%80%83/" class="archive-article-date">
   	<time datetime="2018-09-11T15:48:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-11</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font color=red face="Courier New" size=4.5>在C++中，如果需要比较两个类对象。就不能直接通过&gt;,&lt;进行比较，引用对象不是基本数据类型。C++提供了运算符的重载函数得以解决这个问题。但是在java中没有运算符重载这一说，因此如果需要比较两个对象可能需要通过对象访问实例方法获取相应的值再做比较。无论从代码的的形式上还是方便理解的层面上都是不良好的。幸运的是在java中提供了一些接口，通过类实现这些接口就可以通过这些实例方法在对象之间做比较。</p>
+<p><code>interface Compareable</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">class People implements Compareable&lt;People&gt;&#123;</span><br><span class="line">	private String name;</span><br><span class="line">	private int age;</span><br><span class="line">	</span><br><span class="line">	People(int age)&#123;</span><br><span class="line">		this.age &#x3D; age;</span><br><span class="line">	&#125;</span><br><span class="line">	public int compareTo(People o)&#123;</span><br><span class="line">		if(this.age&gt;o.age)&#123;</span><br><span class="line">			return 1;</span><br><span class="line">		&#125;</span><br><span class="line">		else if(this.age&lt;o,age)&#123;</span><br><span class="line">			return -1;</span><br><span class="line">		&#125;</span><br><span class="line">		else&#123;</span><br><span class="line">			return 0;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=4.5 face="Courier New">测试代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public class Main&#123;</span><br><span class="line">	public static void main(String[] args)&#123;</span><br><span class="line">		People p1 &#x3D; new People(10);</span><br><span class="line">		People p2 &#x3D; new People(20);</span><br><span class="line">		System.out.println(p1.compareTo(p2));	</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=4.5 face="Courier New">执行结果：<br><img src="https://img-blog.csdn.net/20180911234643213?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><font size=4.5 face="Courier New">通过构建这样的类实例方法，无论从代码的简洁程度上还是程序的易读性和易维护性都得到了很大提高。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/java//" class="article-tag-list-link color5">java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/09/11/java%E4%B8%ADCompareable%E6%8E%A5%E5%8F%A3%E6%80%9D%E8%80%83/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-java基本数据类型转换为字符串" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2018/09/10/java%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E4%B8%BA%E5%AD%97%E7%AC%A6%E4%B8%B2/">java基本数据类型转换为字符串</a>
     </h1>
   
 
-  
-  <a href="/2018/09/10/java%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E4%B8%BA%E5%AD%97%E7%AC%A6%E4%B8%B2/" class="archive-article-date">
+        
+        <a href="/2018/09/10/java%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E4%B8%BA%E5%AD%97%E7%AC%A6%E4%B8%B2/" class="archive-article-date">
   	<time datetime="2018-09-10T08:21:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-10</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<font size=4 color=black>
+由于基本数据类型不能直接强制转换为引用数据类型，一种实际中存在的需求是。当我们需要将基本数据类型的值转换成为对应的字符串应该怎么做？因此，java提供了包装类将基本数据类型封装成类。通过调用类的toString()方法可以将基本数据类型的值转换成对应的字符串。
+
+<p><font size=5 color=red>包装类</font><br><font size=4.5 face="Courier New" color=black>Byte(byte),Short(short),Integer(int),Long(long)<br>Float(float),Double(double),Character(char),Boolean(bool)<br>通过这些类对基本数据类型的封装，调用toString()方法即可转换为对应的字符串。<br><font size=4.5 face="Courier New" color=black><br><code>instanceof</code>关键字是java中的一个运算符，是用来在运行时指出对象是否是特定类的一个实例。<code>instanceof</code>通过返回一个布尔值来指出，这个对象是否是这个特定类或者是它的子类的一个实例。<code>true</code>表示对象是特定类的一个实例对象，否则不是。</p>
+<p><font size=4 color=red>测试代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">public class Main&#123;</span><br><span class="line">	public static void main(String[] args)&#123;</span><br><span class="line">		Character c &#x3D; new Character(&#39;c&#39;);</span><br><span class="line">		if(c.toString() instanceof String)&#123;</span><br><span class="line">			System.out.println(c.toString());</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		Integer i &#x3D; new Integer(10);</span><br><span class="line">		if(i.toString() instanceof String)&#123;</span><br><span class="line">			System.out.println(i.toString());</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		Double d &#x3D; new Double(12.25);</span><br><span class="line">		if(d.toString() instanceof String)&#123;</span><br><span class="line">			System.out.println(d.toString());</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=4 color=red>运行结果：<br><img src="https://img-blog.csdn.net/20180910161813928?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/java//" class="article-tag-list-link color5">java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/09/10/java%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E4%B8%BA%E5%AD%97%E7%AC%A6%E4%B8%B2/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-java类的初始化顺序" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2018/09/08/java%E7%B1%BB%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96%E9%A1%BA%E5%BA%8F/">java类的初始化顺序</a>
     </h1>
   
 
-  
-  <a href="/2018/09/08/java%E7%B1%BB%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96%E9%A1%BA%E5%BA%8F/" class="archive-article-date">
+        
+        <a href="/2018/09/08/java%E7%B1%BB%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96%E9%A1%BA%E5%BA%8F/" class="archive-article-date">
   	<time datetime="2018-09-08T14:14:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-08</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=4.5 face="Courier  New" color=red>了解类的初始化顺序对于编写正确的Java代码是非常重要的，尤其java是完全面向对象的语言，类作为整个程序编写的单位。</font><br><font size=4.5 face="Courier New" color=blue><br>构造方法<br>静态实例变量<br>实例变量<br>静态块<br>实例块</font></p>
+<p><font size=4.5 face="Courier New">测试代码：</font><br>所有类在同一包下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">class Test1&#123;</span><br><span class="line">	public Test1()&#123;</span><br><span class="line">		System.out.println(&quot;父类普通实例变量&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">class Test2&#123;</span><br><span class="line">	public Test2()&#123;</span><br><span class="line">		System.out.println(&quot;父类静态实例变量&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Test3&#123;</span><br><span class="line">	public Test3()&#123;</span><br><span class="line">		System.out.println(&quot;子类普通实例变量&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">class Test4&#123;</span><br><span class="line">	public Test4()&#123;</span><br><span class="line">		System.out.println(&quot;子类静态实例变量&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class public Father&#123;</span><br><span class="line">	private String Test1 p &#x3D; new Test1();</span><br><span class="line">	public static String Test2 &#x3D; q &#x3D; new Test2();</span><br><span class="line">	Father()&#123;</span><br><span class="line">		System.out.println(&quot;父类构造方法&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">	&#123;</span><br><span class="line">		System.out.println(&quot;父类实例块&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">	static&#123;</span><br><span class="line">		System.out.println(&quot;父类静态块&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class public Son extends Father&#123;</span><br><span class="line">	private String Test3 p &#x3D; new Test3();</span><br><span class="line">	public static String Test4 &#x3D; q &#x3D; new Test4();</span><br><span class="line">	Son()&#123;</span><br><span class="line">		System.out.println(&quot;子类构造方法&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">	&#123;</span><br><span class="line">		System.out.println(&quot;父类实例块&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">	static&#123;</span><br><span class="line">		System.out.println(&quot;父类静态块&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">在Main类中进行测试:</span><br><span class="line">public class Main&#123;</span><br><span class="line">	public static void main(String[] args)&#123;</span><br><span class="line">		Son s &#x3D; new Son();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdn.net/20180908221417826?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/java//" class="article-tag-list-link color5">java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/09/08/java%E7%B1%BB%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96%E9%A1%BA%E5%BA%8F/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-数字黑洞" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2018/09/08/%E6%95%B0%E5%AD%97%E9%BB%91%E6%B4%9E/">数字黑洞</a>
     </h1>
   
 
-  
-  <a href="/2018/09/08/%E6%95%B0%E5%AD%97%E9%BB%91%E6%B4%9E/" class="archive-article-date">
+        
+        <a href="/2018/09/08/%E6%95%B0%E5%AD%97%E9%BB%91%E6%B4%9E/" class="archive-article-date">
   	<time datetime="2018-09-08T06:23:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-08</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font color=red size=5>数字黑洞简介：</font><font face="Courier New" size=4.5><br>黑洞数又称陷阱数，是类具有奇特转换特性的整数。任何一个数字不全相同整数，经有限“重排求差”操作，总会得某一个或一些数，这些数即为黑洞数。“重排求差”操作即把组成该数的数字重排后得到的最大数减去重排后得到的最小数。—《互动百科》</p>
+<font face="Courier New" size=4>
+下面看《算法笔记》上一个关于给定四位不完全相同的数字，<font color=red>演示到达：“数字黑洞的过程"。</font>
+
+<p><font face="Courier New" color=black size=5>题目描述：</font><br><font face="Courier New" size=4.5>给定一个各位数字完全不相同的四位正整数，如果先把四个数字按照非递排序(递增)，再按照非递减排序(递增)，然后用<font color=blue>第一个数字减去第二个数字</font>将得到一个重复的数字。一直重复怎样做，很快会停在有数字黑洞之称的6174，这个神奇的数字也叫Kaprekar常数。<br>例如：从6767开始，将会得到<br>7766 - 6677 = 1089<br>9810 - 0189 = 9621<br>9621 - 1268 = 8352<br>8543 - 2358  = 6174<br>7641 - 1467 = 6174<br>…<br>现在给定任意四位正整数，请编写程序演示到达<font color=red>数字黑洞</font>的过程</p>
+<p><font face="Courier New" color=black size=4.5>输入格式：输入给出一个(0,10000)区间的正整数N。<br><font face="Courier New" color=black size=4.5>输出格式：如果N的四位数全相等，则在一行内输出”N - N = 0000”。否则将计算的每一步在一行内输出，直到6174作为差出现，输出格式见样例。注意，每个数字按四位数格式输出。<br><font face="Courier New" color=black size=4.5>输入样例1:6767<br><font face="Courier New" color=black size=4.5>输出样例1：<br><code>7766 - 6677 = 1089</code><br><code>9810 - 0189 = 9621</code><br><code>9621 - 1268 = 8352</code><br><code>8543 - 2358 = 6174</code><br><font face="Courier New" color=black size=4.5>输入样例2:2222<br><font face="Courier New" color=black size=4.5>输出样例2:<code>2222 - 2222 = 0</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;自定义排序规则，sort函数按照递增排序</span><br><span class="line">bool cmp(int a,int b)&#123;</span><br><span class="line">	return a&gt;b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;因为要获取当前数字按照每位排序的最大值和最小值</span><br><span class="line">&#x2F;&#x2F;将数字转换为数组方便排序</span><br><span class="line">void numToAarry(int num,int nums[])&#123;</span><br><span class="line">	for(int i&#x3D;0;i&lt;4;++i)&#123;</span><br><span class="line">		nums[i] &#x3D; num%10;&#x2F;&#x2F;获取当前数字的个位</span><br><span class="line">		num &#x2F;&#x3D; 10;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;排序完成后，将数组中已排好序的数字转换为数字</span><br><span class="line">int arrayToNum(int num,int nums[])&#123;</span><br><span class="line">	int num &#x3D; 0;</span><br><span class="line">	for(int i&#x3D;0;i&lt;4;++i)&#123;</span><br><span class="line">		num &#x3D; num*10+nums[i];</span><br><span class="line">	&#125;</span><br><span class="line">	return num;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">	int MAX;</span><br><span class="line">	int MIN;</span><br><span class="line">	int n;</span><br><span class="line">	scanf(&quot;%d&quot;,&amp;n);</span><br><span class="line">	while(1)&#123;</span><br><span class="line">		int nums[4];</span><br><span class="line">		numToAarry(n,nums);</span><br><span class="line">		sort(arr,arr+4);&#x2F;&#x2F;从小到达排序</span><br><span class="line">		MIN &#x3D; arrayToNum(nums);</span><br><span class="line">		sort(arr,arr+4,cmp);&#x2F;&#x2F;从大到小排序</span><br><span class="line">		MAX &#x3D; arrayToNum(nums);</span><br><span class="line">		n &#x3D; MAX-MIN;</span><br><span class="line">		&#x2F;&#x2F;%4d小数点前不足四位时用0补齐</span><br><span class="line">		printf(&quot;%04d - %04d &#x3D; %d&quot;,MAX,MIN,n);</span><br><span class="line">		if(n&#x3D;&#x3D;0 || n&#x3D;&#x3D;6174)</span><br><span class="line">			break;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>参考：《算法笔记》</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/算法基础//" class="article-tag-list-link color5">算法基础</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/09/08/%E6%95%B0%E5%AD%97%E9%BB%91%E6%B4%9E/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-一个时间复杂度O(n)，空间复杂度为O(1)的排序算法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2018/09/06/%E4%B8%80%E4%B8%AA%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6O(n)%EF%BC%8C%E7%A9%BA%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E4%B8%BAO(1)%E7%9A%84%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/">一个时间复杂度O(n)，空间复杂度为O(1)的排序算法</a>
     </h1>
   
 
-  
-  <a href="/2018/09/06/%E4%B8%80%E4%B8%AA%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6O(n)%EF%BC%8C%E7%A9%BA%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E4%B8%BAO(1)%E7%9A%84%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" class="archive-article-date">
+        
+        <a href="/2018/09/06/%E4%B8%80%E4%B8%AA%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6O(n)%EF%BC%8C%E7%A9%BA%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E4%B8%BAO(1)%E7%9A%84%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" class="archive-article-date">
   	<time datetime="2018-09-06T07:09:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-06</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face="Courier" color=red></font><font face="Courier New" size=5>其实就是利用Hash的思想，开辟一个固定长度的hash数组用于标记待排序数组的数据元素是否出现过。由于固定长度的hash数组，所以空间复杂度与待排序数组数据规模n没有关系，也就是说空间复杂度为O(1)。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">&#x2F;&#x2F;排序能力，[0,65535]区间的数字，你也可以试试更大的</span><br><span class="line">const int MAXN &#x3D; 65535;</span><br><span class="line">bool hash[MAXN];</span><br><span class="line"></span><br><span class="line">template&lt;typename T&gt;</span><br><span class="line">void Sort(T arr[],int n)&#123;</span><br><span class="line">	fill(hash,hash+MAXN,false);</span><br><span class="line">	&#x2F;&#x2F;时间复杂度为O(n)</span><br><span class="line">	for(int i&#x3D;0;i&lt;n;++i)&#123;</span><br><span class="line">		hash[arr[i]] &#x3D; true;&#x2F;&#x2F;标记arr[i]出现过</span><br><span class="line">	&#125;</span><br><span class="line">	&#x2F;&#x2F;时间复杂度为O(MAXN)</span><br><span class="line">	int k&#x3D;0;</span><br><span class="line">	for(int i&#x3D;0;i&lt;MAXN;++i)&#123;</span><br><span class="line">		if(hash[i] &#x3D;&#x3D; true)&#123;</span><br><span class="line">			arr[k++] &#x3D; i;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	总的时间复杂度为O(n+MAXN),即O(n)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void show(int arr[],int n)&#123;</span><br><span class="line">	for(int i&#x3D;0;i&lt;n;++i)</span><br><span class="line">		cout&lt;&lt;arr[i]&lt;&lt;&quot; &quot;;</span><br><span class="line">	cout&lt;&lt;endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">	int arr [] &#x3D; &#123;5,6,9,2,3,7,4,1,8&#125;;</span><br><span class="line">	int n &#x3D; sizeof(arr)&#x2F;sizeof(arr[0]);</span><br><span class="line">	show(arr,n);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdn.net/20180906151531961?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><font size=5 face="Courier New">尝试测试一个这样的排序算法性能</font><br><font size=4.5 color=red>1.待排序元素值不能出现重复，否则会丢失掉重复的数据元素。<br>2.对于一个几乎有序的待排序数组数组，其时间复杂任然为O(n)。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/数据结构//" class="article-tag-list-link color5">数据结构</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/09/06/%E4%B8%80%E4%B8%AA%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6O(n)%EF%BC%8C%E7%A9%BA%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E4%B8%BAO(1)%E7%9A%84%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-java生成随机数的两种方法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2018/09/06/java%E7%94%9F%E6%88%90%E9%9A%8F%E6%9C%BA%E6%95%B0%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%B3%95/">java生成随机数的两种方法</a>
     </h1>
   
 
-  
-  <a href="/2018/09/06/java%E7%94%9F%E6%88%90%E9%9A%8F%E6%9C%BA%E6%95%B0%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%B3%95/" class="archive-article-date">
+        
+        <a href="/2018/09/06/java%E7%94%9F%E6%88%90%E9%9A%8F%E6%9C%BA%E6%95%B0%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%B3%95/" class="archive-article-date">
   	<time datetime="2018-09-06T01:07:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-06</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 color=blue face="Courier New">1.使用Math类中的Math.random()方法</font></p>
+<p><font size=4.5>生成（0.1）区间的数字，因此当需要生成更大范围内的数字，需要在返回值的基础上扩大倍数以回去更大的随机值。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import java.util.Random</span><br><span class="line">public class Main&#123;</span><br><span class="line">	public static void main(String[] args)&#123;</span><br><span class="line">		for(int i&#x3D;0;i&lt;5;++i)&#123;</span><br><span class="line">			System.out.println(Math.Random()+&quot; &quot;);</span><br><span class="line">		&#125;</span><br><span class="line">		for(int i&#x3D;0;i&lt;5;++i)&#123;</span><br><span class="line">			&#x2F;&#x2F;扩大随机数的范围（0，1000）</span><br><span class="line">			System.out.println(1000*Math.Random()+&quot; &quot;);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<font size=4.5>
+静态成员方法可以通过类调用:
+随机生成的结果：
+![这里写图片描述](https://img-blog.csdn.net/20180906085608867?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
+![这里写图片描述](https://img-blog.csdn.net/20180906085728480?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
+
+<p><font size=5 color=blue face="Courier New">2.通过Random类定义随机对象</font><br><font size=4.5 face="Courier New">与Math类中的Math.random()方法不同的是，通过Random定义出来的对象，通过对象调用方法。可以获得不同范围内的随机数，而这个范围取决于你给定的范围。此外，获取随机数的类型也更多。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import java.util.Random;</span><br><span class="line">public class Main&#123;</span><br><span class="line">	public static void main(String[] args)&#123;</span><br><span class="line">		Random rand &#x3D; new Random();</span><br><span class="line">		&#x2F;&#x2F;随机生成[0,1000)区间内的数字</span><br><span class="line">		rand.nextInt(1000);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=4.5 color=red>可供选择生成随机数的类型</font><br><img src="https://img-blog.csdn.net/20180906090524786?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/java//" class="article-tag-list-link color5">java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/09/06/java%E7%94%9F%E6%88%90%E9%9A%8F%E6%9C%BA%E6%95%B0%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%B3%95/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-java指令集" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2018/09/06/java%E6%8C%87%E4%BB%A4%E9%9B%86/">java指令集</a>
     </h1>
   
 
-  
-  <a href="/2018/09/06/java%E6%8C%87%E4%BB%A4%E9%9B%86/" class="archive-article-date">
+        
+        <a href="/2018/09/06/java%E6%8C%87%E4%BB%A4%E9%9B%86/" class="archive-article-date">
   	<time datetime="2018-09-05T16:26:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-06</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+
+<font face="Courier New">
+<font size=5 color=red>1.栈和局部变量操作 ,将常量压入栈的指令 </font>
+`aconst_null` 将null对象引用压入栈 
+`iconst_m1`     将int类型常量-1压入栈 
+`iconst_0` 将int类型常量0压入栈 
+`iconst_1` 将int类型常量1压入栈 
+`iconst_2` 将int类型常量2压入栈 
+`iconst_3` 将int类型常量3压入栈 
+`iconst_4` 将int类型常量4压入栈 
+`iconst_5` 将int类型常量5压入栈 
+`lconst_0` 将long类型常量0压入栈 
+`lconst_1` 将long类型常量1压入栈 
+`fconst_0` 将float类型常量0压入栈 
+`fconst_1` 将float类型常量1压入栈 
+`dconst_0`将double类型常量0压入栈 
+`dconst_1` 将double类型常量1压入栈 
+`bipush` 将一个8位带符号整数压入栈 
+`sipush `将16位带符号整数压入栈 
+`ldc `把常量池中的项压入栈 
+`ldc_w` 把常量池中的项压入栈（使用宽索引） 
+`ldc2_w` 把常量池中long类型或者double类型的项压入栈（使用宽索引）
+
+<p><font size=5 color=red> 2.从栈中的局部变量中装载值的指令</font><br><code>iload</code> 从局部变量中装载int类型值<br><code>lload</code> 从局部变量中装载long类型值<br><code>fload</code> 从局部变量中装载float类型值<br><code>dload </code>从局部变量中装载double类型值<br><code>aload </code>从局部变量中装载引用类型值（refernce）<br><code>iload_0 </code>从局部变量0中装载int类型值<br><code>iload_1</code> 从局部变量1中装载int类型值<br><code>iload_2</code> 从局部变量2中装载int类型值<br><code>iload_3</code> 从局部变量3中装载int类型值<br><code>lload_0</code> 从局部变量0中装载long类型值<br><code>lload_1</code> 从局部变量1中装载long类型值<br><code>lload_2</code> 从局部变量2中装载long类型值<br><code>lload_3</code> 从局部变量3中装载long类型值<br><code>fload_0</code> 从局部变量0中装载float类型值<br><code>fload_1</code> 从局部变量1中装载float类型值<br><code>fload_2</code> 从局部变量2中装载float类型值<br><code>fload_3</code> 从局部变量3中装载float类型值<br><code>dload_0 </code>从局部变量0中装载double类型值<br><code>dload_1</code> 从局部变量1中装载double类型值<br><code>dload_2</code> 从局部变量2中装载double类型值<br><code>dload_3</code> 从局部变量3中装载double类型值<br><code>aload_0 </code>从局部变量0中装载引用类型值<br><code>aload_1</code> 从局部变量1中装载引用类型值<br><code>aload_2 </code>从局部变量2中装载引用类型值<br><code>aload_3</code> 从局部变量3中装载引用类型值<br><code>iaload</code> 从数组中装载int类型值<br><code>laload</code> 从数组中装载long类型值<br><code>faload</code> 从数组中装载float类型值<br><code>daload</code> 从数组中装载double类型值<br><code>aaload</code> 从数组中装载引用类型值<br><code>baload</code> 从数组中装载byte类型或boolean类型值<br><code>caload </code>从数组中装载char类型值<br><code>saload</code> 从数组中装载short类型值 </p>
+<p><font size=5 color=red>3.将栈中的值存入局部变量的指令</font> <font face="Courier New"><br><code>istore</code> 将int类型值存入局部变量<br><code>lstore</code> 将long类型值存入局部变量<br><code>fstore</code> 将float类型值存入局部变量<br><code>dstore </code>将double类型值存入局部变量<br><code>astore</code> 将将引用类型或returnAddress类型值存入局部变量<br><code>istore_0</code> 将int类型值存入局部变量0<br><code>istore_1</code> 将int类型值存入局部变量1<br><code>istore_2</code> 将int类型值存入局部变量2<br><code>istore_3</code> 将int类型值存入局部变量3<br><code>lstore_0</code> 将long类型值存入局部变量0<br><code>lstore_1</code> 将long类型值存入局部变量1<br><code>lstore_2</code> 将long类型值存入局部变量2<br><code>lstore_3</code> 将long类型值存入局部变量3<br><code>fstore_0</code> 将float类型值存入局部变量0<br><code>fstore_</code>1 将float类型值存入局部变量1<br><code>fstore_2 </code>将float类型值存入局部变量2<br><code>fstore_3</code> 将float类型值存入局部变量3<br><code>dstore_0</code> 将double类型值存入局部变量0<br><code>dstore_1</code> 将double类型值存入局部变量1<br><code>dstore_2</code> 将double类型值存入局部变量2<br><code>dstore_3</code> 将double类型值存入局部变量3<br><code>astore_0</code> 将引用类型或returnAddress类型值存入局部变量0<br><code>astore_1 </code>将引用类型或returnAddress类型值存入局部变量1<br><code>astore_2</code> 将引用类型或returnAddress类型值存入局部变量2<br><code>astore_3</code> 将引用类型或returnAddress类型值存入局部变量3<br><code>iastore </code>将int类型值存入数组中<br><code>lastore </code>将long类型值存入数组中<br><code>fastore </code>将float类型值存入数组中<br><code>dastore</code> 将double类型值存入数组中<br><code>aastore</code> 将引用类型值存入数组中<br><code>bastore </code>将byte类型或者boolean类型值存入数组中<br><code>castore</code> 将char类型值存入数组中<br><code>sastore</code> 将short类型值存入数组中<br>wide指令<br>wide 使用附加字节扩展局部变量索引<br><font face="Courier New"><font size=5 color=red>4.通用(无类型）栈操作 </font><br>nop 不做任何操作<br>pop 弹出栈顶端一个字长的内容<br>pop2 弹出栈顶端两个字长的内容<br>dup 复制栈顶部一个字长内容<br>dup_x1 复制栈顶部一个字长的内容，然后将复制内容及原来弹出的两个字长的内容压入栈<br>dup_x2 复制栈顶部一个字长的内容，然后将复制内容及原来弹出的三个字长的内容压入栈<br>dup2 复制栈顶部两个字长内容<br>dup2_x1 复制栈顶部两个字长的内容，然后将复制内容及原来弹出的三个字长的内容压入栈<br>dup2_x2 复制栈顶部两个字长的内容，然后将复制内容及原来弹出的四个字长的内容压入栈<br>swap 交换栈顶部两个字长内容 </p>
+<p><font size=5 color=red>5.类型转换</font> <font face="Courier New"><br>i2l 把int类型的数据转化为long类型<br>i2f 把int类型的数据转化为float类型<br>i2d 把int类型的数据转化为double类型<br>l2i 把long类型的数据转化为int类型<br>l2f 把long类型的数据转化为float类型<br>l2d 把long类型的数据转化为double类型<br>f2i 把float类型的数据转化为int类型<br>f2l 把float类型的数据转化为long类型<br>f2d 把float类型的数据转化为double类型<br>d2i 把double类型的数据转化为int类型<br>d2l 把double类型的数据转化为long类型<br>d2f 把double类型的数据转化为float类型<br>i2b 把int类型的数据转化为byte类型<br>i2c 把int类型的数据转化为char类型<br>i2s 把int类型的数据转化为short类型 </p>
+<p><font size=5 color=red>7.整数运算</font> <font face="Courier New"><br>iadd 执行int类型的加法<br>ladd 执行long类型的加法<br>isub 执行int类型的减法<br>lsub 执行long类型的减法<br>imul 执行int类型的乘法<br>lmul 执行long类型的乘法<br>idiv 执行int类型的除法<br>ldiv 执行long类型的除法<br>irem 计算int类型除法的余数<br>lrem 计算long类型除法的余数<br>ineg 对一个int类型值进行取反操作<br>lneg 对一个long类型值进行取反操作<br>iinc 把一个常量值加到一个int类型的局部变量上 </p>
+<p><font size=5 color=red>8.逻辑运算  移位操作 </font> <font face="Courier New"><br>ishl 执行int类型的向左移位操作<br>lshl 执行long类型的向左移位操作<br>ishr 执行int类型的向右移位操作<br>lshr 执行long类型的向右移位操作<br>iushr 执行int类型的向右逻辑移位操作<br>lushr 执行long类型的向右逻辑移位操作<br>按位布尔运算<br>iand 对int类型值进行“逻辑与”操作<br>land 对long类型值进行“逻辑与”操作<br>ior 对int类型值进行“逻辑或”操作<br>lor 对long类型值进行“逻辑或”操作<br>ixor 对int类型值进行“逻辑异或”操作<br>lxor 对long类型值进行“逻辑异或”操作<br>浮点运算<br>fadd 执行float类型的加法<br>dadd 执行double类型的加法<br>fsub 执行float类型的减法<br>dsub 执行double类型的减法<br>fmul 执行float类型的乘法<br>dmul 执行double类型的乘法<br>fdiv 执行float类型的除法<br>ddiv 执行double类型的除法<br>frem 计算float类型除法的余数<br>drem 计算double类型除法的余数<br>fneg 将一个float类型的数值取反<br>dneg 将一个double类型的数值取反<br>对象和数组<br>对象操作指令<br>new 创建一个新对象<br>checkcast 确定对象为所给定的类型<br>getfield 从对象中获取字段<br>putfield 设置对象中字段的值<br>getstatic 从类中获取静态字段<br>putstatic 设置类中静态字段的值<br>instanceof 判断对象是否为给定的类型<br>数组操作指令<br>newarray 分配数据成员类型为基本上数据类型的新数组<br>anewarray 分配数据成员类型为引用类型的新数组<br>arraylength 获取数组长度<br>multianewarray 分配新的多维数组<br>控制流<br>条件分支指令<br>ifeq 如果等于0，则跳转<br>ifne 如果不等于0，则跳转<br>iflt 如果小于0，则跳转<br>ifge 如果大于等于0，则跳转<br>ifgt 如果大于0，则跳转<br>ifle 如果小于等于0，则跳转<br>if_icmpcq 如果两个int值相等，则跳转<br>if_icmpne 如果两个int类型值不相等，则跳转<br>if_icmplt 如果一个int类型值小于另外一个int类型值，则跳转<br>if_icmpge 如果一个int类型值大于或者等于另外一个int类型值，则跳转<br>if_icmpgt 如果一个int类型值大于另外一个int类型值，则跳转<br>if_icmple 如果一个int类型值小于或者等于另外一个int类型值，则跳转<br>ifnull 如果等于null，则跳转<br>ifnonnull 如果不等于null，则跳转<br>if_acmpeq 如果两个对象引用相等，则跳转<br>if_acmpnc 如果两个对象引用不相等，则跳转<br>比较指令<br>lcmp 比较long类型值<br>fcmpl 比较float类型值（当遇到NaN时，返回-1）<br>fcmpg 比较float类型值（当遇到NaN时，返回1）<br>dcmpl 比较double类型值（当遇到NaN时，返回-1）<br>dcmpg 比较double类型值（当遇到NaN时，返回1）<br>无条件转移指令<br>goto 无条件跳转<br>goto_w 无条件跳转（宽索引）<br>表跳转指令<br>tableswitch 通过索引访问跳转表，并跳转<br>lookupswitch 通过键值匹配访问跳转表，并执行跳转操作<br>异常<br>athrow 抛出异常或错误<br>finally子句<br>jsr 跳转到子例程<br>jsr_w 跳转到子例程（宽索引）<br>rct 从子例程返回<br>方法调用与返回<br>方法调用指令<br>invokcvirtual 运行时按照对象的类来调用实例方法<br>invokespecial 根据编译时类型来调用实例方法<br>invokestatic 调用类（静态）方法<br>invokcinterface 调用接口方法<br>方法返回指令<br>ireturn 从方法中返回int类型的数据<br>lreturn 从方法中返回long类型的数据<br>freturn 从方法中返回float类型的数据<br>dreturn 从方法中返回double类型的数据<br>areturn 从方法中返回引用类型的数据<br>return 从方法中返回，返回值为void<br>线程同步<br>montiorenter 进入并获取对象监视器<br>monitorexit 释放并退出对象监视器<br></font><br><font face="Courier New"><br>JVM指令助记符<br>变量到操作数栈：iload,iload_,lload,lload_,fload,fload_,dload,dload_,aload,aload_<br>操作数栈到变量：istore,istore_,lstore,lstore_,fstore,fstore_,dstore,dstor_,astore,astore_<br>常数到操作数栈：bipush,sipush,ldc,ldc_w,ldc2_w,aconst_null,iconst_ml,iconst_,lconst_,fconst_,dconst_<br>加：iadd,ladd,fadd,dadd<br>减：isub,lsub,fsub,dsub<br>乘：imul,lmul,fmul,dmul<br>除：idiv,ldiv,fdiv,ddiv<br>余数：irem,lrem,frem,drem<br>取负：ineg,lneg,fneg,dneg<br>移位：ishl,lshr,iushr,lshl,lshr,lushr<br>按位或：ior,lor<br>按位与：iand,land<br>按位异或：ixor,lxor<br>类型转换：i2l,i2f,i2d,l2f,l2d,f2d(放宽数值转换)<br>i2b,i2c,i2s,l2i,f2i,f2l,d2i,d2l,d2f(缩窄数值转换)<br>创建类实便：new<br>创建新数组：newarray,anewarray,multianwarray<br>访问类的域和类实例域：getfield,putfield,getstatic,putstatic<br>把数据装载到操作数栈：baload,caload,saload,iaload,laload,faload,daload,aaload<br>从操作数栈存存储到数组：bastore,castore,sastore,iastore,lastore,fastore,dastore,aastore<br>获取数组长度：arraylength<br>检相类实例或数组属性：instanceof,checkcast<br>操作数栈管理：pop,pop2,dup,dup2,dup_xl,dup2_xl,dup_x2,dup2_x2,swap<br>有条件转移：ifeq,iflt,ifle,ifne,ifgt,ifge,ifnull,ifnonnull,if_icmpeq,if_icmpene,<br>if_icmplt,if_icmpgt,if_icmple,if_icmpge,if_acmpeq,if_acmpne,lcmp,fcmpl<br>fcmpg,dcmpl,dcmpg<br>复合条件转移：tableswitch,lookupswitch<br>无条件转移：goto,goto_w,jsr,jsr_w,ret<br>调度对象的实便方法：invokevirtual<br>调用由接口实现的方法：invokeinterface<br>调用需要特殊处理的实例方法：invokespecial<br>调用命名类中的静态方法：invokestatic<br>方法返回：ireturn,lreturn,freturn,dreturn,areturn,return<br>异常：athrow<br>finally关键字的实现使用：jsr,jsr_w,ret<br></font></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/java//" class="article-tag-list-link color5">java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/09/06/java%E6%8C%87%E4%BB%A4%E9%9B%86/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-LeetCode 120.三角形的最小路径和（二维DP）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2018/09/03/LeetCode%20120.%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84%E6%9C%80%E5%B0%8F%E8%B7%AF%E5%BE%84%E5%92%8C%EF%BC%88%E4%BA%8C%E7%BB%B4DP%EF%BC%89/">LeetCode 120.三角形的最小路径和（二维DP）</a>
     </h1>
   
 
-  
-  <a href="/2018/09/03/LeetCode%20120.%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84%E6%9C%80%E5%B0%8F%E8%B7%AF%E5%BE%84%E5%92%8C%EF%BC%88%E4%BA%8C%E7%BB%B4DP%EF%BC%89/" class="archive-article-date">
+        
+        <a href="/2018/09/03/LeetCode%20120.%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84%E6%9C%80%E5%B0%8F%E8%B7%AF%E5%BE%84%E5%92%8C%EF%BC%88%E4%BA%8C%E7%BB%B4DP%EF%BC%89/" class="archive-article-date">
   	<time datetime="2018-09-03T04:13:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-03</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    
-    
-</header>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font face="Courier New" size=5>题目描述</font><br><font face="Courier New" size=4>给定一个三角形，找出自顶向下的最小路径和。每一步只能移动到下一行中相邻的结点上。</p>
+<p><font face="Courier New" size=4>例如，给定三角形</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">     [2],</span><br><span class="line">    [3,4],</span><br><span class="line">   [6,5,7],</span><br><span class="line">  [4,1,8,3]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p><font face="Courier New" size=4>自顶向下的最小路径和为 11（即，2 + 3 + 5 + 1 = 11）。</p>
+<p><font face="Courier New" size=4>说明：</p>
+<p><font face="Courier New" size=4>如果你可以只使用 O(n) 的额外空间（n 为三角形的总行数）来解决这个问题，那么你的算法会很加分。<font></p>
+<p><font size=5 color=red face="Courier New">分析：</font><font face="Courier New" size=4 >从题目中看出，第n行三角形中有n个数字。可以用一个二维数组存储数字三角形。需要找出自顶向下的最小路径和，则需要找到每一行的最小值。<br><font color=red>用dp[1][1]表示最小路径和。</font><br>要找前两行的最小路径和,则需要找到与（1，1）下一行相邻的两个点（2，1）到底的最小路劲和（2，2），决策出最小的路径和，dp[1][1] = min(dp[2][1]，dp[2][2]) + f[1][1];<br>对于dp[i][j]，则其求解为:<br><font color=red size= 4.5>dp[i][j] = min{dp[i+1][j],dp[i+1][j+1]}+f[i][j]</font>。<br>即为<font color=red>状态转移方程</font>，将dp[i][j]称为状态。<br>边界条件：对于最后一行，最小路径和即为元素自身的值。<br><font size=4 face="Courier New"><br>AC代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;cstdio&gt;</span><br><span class="line">#include &lt;cassert&gt;</span><br><span class="line">#include &lt;cstring&gt;</span><br><span class="line">#include &lt;algorithm&gt;</span><br><span class="line"></span><br><span class="line">const int maxn &#x3D; 1000;</span><br><span class="line">int f[maxn][maxn];</span><br><span class="line">int dp[maxn][maxn];</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">	int n;</span><br><span class="line">	scanf(&quot;%d&quot;,&amp;n);</span><br><span class="line">	for(int i&#x3D;1;i &lt;&#x3D; n;++i)&#123;</span><br><span class="line">		for(int j&#x3D;1;j &lt;&#x3D; i;++j)&#123;</span><br><span class="line">			scanf(&quot;%d&quot;,&amp;f[i][j]);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	for(int j&#x3D;1;j &lt;&#x3D; n;++j)&#123;</span><br><span class="line">		dp[n][j] &#x3D; f[n][j];</span><br><span class="line">	&#125;</span><br><span class="line">	for(int i&#x3D;n-1;i &gt;&#x3D; 1;--i)&#123;</span><br><span class="line">		for(int j&#x3D;1;j &lt;&#x3D; i;++j)&#123;			</span><br><span class="line">			dp[i][j] &#x3D; f[i][j] + std::min(dp[i+1][j],dp[i+1][j+1]);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	printf(&quot;%d\n&quot;,dp[1][1]);</span><br><span class="line">	for(int i&#x3D;1;i&lt;&#x3D;n;++i)&#123;</span><br><span class="line">		for(int j&#x3D;1;j &lt;&#x3D; i;++j)&#123;</span><br><span class="line">			printf(&quot;dp[%d][%d]&#x3D;%d &quot;,i,j,dp[i][j]);</span><br><span class="line">		&#125;</span><br><span class="line">		printf(&quot;\n&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><font size=4 face="Courier New">执行结果：</font><br><img src="https://img-blog.csdn.net/2018090312205712?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/算法基础-Leetcode//" class="article-tag-list-link color4">算法基础 Leetcode</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/09/03/LeetCode%20120.%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84%E6%9C%80%E5%B0%8F%E8%B7%AF%E5%BE%84%E5%92%8C%EF%BC%88%E4%BA%8C%E7%BB%B4DP%EF%BC%89/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
   
     <nav id="page-nav">

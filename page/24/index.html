@@ -154,205 +154,857 @@
           <div id="js-content" class="content-ll">
             
   
-    <header class="article-header">
-  
+    <article id="post-二分查找的递归和非递归" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2018/08/14/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE%E7%9A%84%E9%80%92%E5%BD%92%E5%92%8C%E9%9D%9E%E9%80%92%E5%BD%92/">二分查找的递归和非递归</a>
     </h1>
   
 
-  
-  <a href="/2018/08/14/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE%E7%9A%84%E9%80%92%E5%BD%92%E5%92%8C%E9%9D%9E%E9%80%92%E5%BD%92/" class="archive-article-date">
+        
+        <a href="/2018/08/14/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE%E7%9A%84%E9%80%92%E5%BD%92%E5%92%8C%E9%9D%9E%E9%80%92%E5%BD%92/" class="archive-article-date">
   	<time datetime="2018-08-14T15:08:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-14</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p>二分查找的前提是数据有序，二分查找的性能十分优秀。时间复杂度为<font face="Courier New">O(log2n)</font><br><font color=red size = 4.5 face="Courier New">非递归</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">int binsearch(int arr[],int len,int value)&#123;</span><br><span class="line">	&#x2F;&#x2F;low和high指向当前查找区间的两端,value为查找的关键字</span><br><span class="line">	int low&#x3D;0;</span><br><span class="line">	int high&#x3D;len-1;</span><br><span class="line">	int mid;&#x2F;&#x2F;当前区间的中间</span><br><span class="line">	while(low &lt;&#x3D; high)&#123;</span><br><span class="line">		mid &#x3D; low + (high-low)&#x2F;2;</span><br><span class="line">		&#x2F;&#x2F;mid &#x3D; (low+high)&#x2F;2;这样的写法会有整型相加溢出的bug</span><br><span class="line">		if(arr[mid] &#x3D;&#x3D; value)&#123;</span><br><span class="line">			return mid;&#x2F;&#x2F;返回下标</span><br><span class="line">		&#125;</span><br><span class="line">		if(value &lt; arr[mid])&#123;</span><br><span class="line">			high &#x3D; mid-1;</span><br><span class="line">		&#125;</span><br><span class="line">		else&#123;</span><br><span class="line">			low &#x3D; mid+1;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return -1;&#x2F;&#x2F;未查找到返回-1</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><font color=red size = 4.5 face="Courier New">递归</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">int binsearch(int arr[],int left,int right,int value)&#123;</span><br><span class="line">	&#x2F;&#x2F;递归出口</span><br><span class="line">	if(left &gt; right)&#123;</span><br><span class="line">		return -1;</span><br><span class="line">	&#125;</span><br><span class="line">	mid &#x3D; low + (high-low)&#x2F;2;</span><br><span class="line">	if(arr[mid] &#x3D;&#x3D; value)&#123;</span><br><span class="line">		return mid;</span><br><span class="line">	&#125;</span><br><span class="line">	else if(arr[mid] &gt; value)&#123;</span><br><span class="line">		return binsearch(arr,left,mid-1,value);</span><br><span class="line">	&#125;</span><br><span class="line">	else&#123;</span><br><span class="line">		return binsearch(arr,mid+1，right,value);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>顺序查找的时间复杂度为<font face="Courier New">O(n)，相对于二分查找性能较差</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">int seqsearch(int arr[],int len,int value)&#123;</span><br><span class="line">	for(int i&#x3D;0;i &lt; len;++i)&#123;</span><br><span class="line">		if(arr[i] &#x3D;&#x3D; value)&#123;</span><br><span class="line">			return i;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return -1;&#x2F;&#x2F;未查找到返回-1</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/算法基础//" class="article-tag-list-link color5">算法基础</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/08/14/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE%E7%9A%84%E9%80%92%E5%BD%92%E5%92%8C%E9%9D%9E%E9%80%92%E5%BD%92/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-使用vs2008编译器自带的命令行工具查看类的内存布局" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2018/08/14/%E4%BD%BF%E7%94%A8vs2008%E7%BC%96%E8%AF%91%E5%99%A8%E8%87%AA%E5%B8%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7%E6%9F%A5%E7%9C%8B%E7%B1%BB%E7%9A%84%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80/">使用vs2008编译器自带的命令行工具查看类的内存布局</a>
     </h1>
   
 
-  
-  <a href="/2018/08/14/%E4%BD%BF%E7%94%A8vs2008%E7%BC%96%E8%AF%91%E5%99%A8%E8%87%AA%E5%B8%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7%E6%9F%A5%E7%9C%8B%E7%B1%BB%E7%9A%84%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80/" class="archive-article-date">
+        
+        <a href="/2018/08/14/%E4%BD%BF%E7%94%A8vs2008%E7%BC%96%E8%AF%91%E5%99%A8%E8%87%AA%E5%B8%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7%E6%9F%A5%E7%9C%8B%E7%B1%BB%E7%9A%84%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80/" class="archive-article-date">
   	<time datetime="2018-08-14T11:58:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-14</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=4 face="Courier New">测试代码:</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">class Base&#123;</span><br><span class="line">protected:</span><br><span class="line">	int _a;</span><br><span class="line">&#125;;	</span><br><span class="line"></span><br><span class="line">class Derive:public Base&#123;</span><br><span class="line">public:</span><br><span class="line">	int _b;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=4 face="Courier New">1.打开命令行工具</font><br><img src="https://img-blog.csdn.net/2018081419421694?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><font size=4 face="Courier New">2.输入源文件路径</font><br><img src="https://img-blog.csdn.net/20180814194656692?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><font size=4 face="Courier New">3.输入<code>cl main.cpp /d1reportSingleClassLayout</code>  <code>Derivr(类名)</code>，最后加类名。<br><img src="https://img-blog.csdn.net/20180814195721805?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/c-c//" class="article-tag-list-link color1">c/c++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/08/14/%E4%BD%BF%E7%94%A8vs2008%E7%BC%96%E8%AF%91%E5%99%A8%E8%87%AA%E5%B8%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7%E6%9F%A5%E7%9C%8B%E7%B1%BB%E7%9A%84%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-随机点名程序实现" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2018/08/14/%E9%9A%8F%E6%9C%BA%E7%82%B9%E5%90%8D%E7%A8%8B%E5%BA%8F%E5%AE%9E%E7%8E%B0/">随机点名程序实现</a>
     </h1>
   
 
-  
-  <a href="/2018/08/14/%E9%9A%8F%E6%9C%BA%E7%82%B9%E5%90%8D%E7%A8%8B%E5%BA%8F%E5%AE%9E%E7%8E%B0/" class="archive-article-date">
+        
+        <a href="/2018/08/14/%E9%9A%8F%E6%9C%BA%E7%82%B9%E5%90%8D%E7%A8%8B%E5%BA%8F%E5%AE%9E%E7%8E%B0/" class="archive-article-date">
   	<time datetime="2018-08-14T08:34:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-14</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=4 face="Courier New">代码：test.cpp</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;ctime&gt;</span><br><span class="line">#include&lt;cstdlib&gt;</span><br><span class="line">#include&lt;string&gt;</span><br><span class="line">#include&lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">	srand(time(NULL));</span><br><span class="line">	&#x2F;&#x2F;种下随机种子，否则rand()函数返回的是伪随机数</span><br><span class="line">	string name[] &#x3D; &#123;&quot;zhangsan&quot;,&quot;lisi&quot;,&quot;zhaoliu&quot;,&quot;wangwu&quot;&#125;;</span><br><span class="line">	int len &#x3D; sizeof(str)&#x2F;sizeof(str[0]);</span><br><span class="line">	cou t&lt;&lt; str[rand()%len] &lt;&lt; endl;&#x2F;&#x2F;输出随机到的名字</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行结果：</p>
+<p><img src="https://img-blog.csdn.net/20180814163416111?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/编程练习//" class="article-tag-list-link color5">编程练习</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/08/14/%E9%9A%8F%E6%9C%BA%E7%82%B9%E5%90%8D%E7%A8%8B%E5%BA%8F%E5%AE%9E%E7%8E%B0/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-C++ OOP思想" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2018/08/06/C++%20OOP%E6%80%9D%E6%83%B3/">C++ OOP思想</a>
     </h1>
   
 
-  
-  <a href="/2018/08/06/C++%20OOP%E6%80%9D%E6%83%B3/" class="archive-article-date">
+        
+        <a href="/2018/08/06/C++%20OOP%E6%80%9D%E6%83%B3/" class="archive-article-date">
   	<time datetime="2018-08-05T16:36:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-06</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p>oop思想<br><img src="https://img-blog.csdn.net/20180806001956259?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/c-c//" class="article-tag-list-link color1">c/c++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/08/06/C++%20OOP%E6%80%9D%E6%83%B3/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-Linux中查看进程的虚拟地址空间内存布局" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2018/08/05/Linux%E4%B8%AD%E6%9F%A5%E7%9C%8B%E8%BF%9B%E7%A8%8B%E7%9A%84%E8%99%9A%E6%8B%9F%E5%9C%B0%E5%9D%80%E7%A9%BA%E9%97%B4%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80/">Linux中查看进程的虚拟地址空间内存布局</a>
     </h1>
   
 
-  
-  <a href="/2018/08/05/Linux%E4%B8%AD%E6%9F%A5%E7%9C%8B%E8%BF%9B%E7%A8%8B%E7%9A%84%E8%99%9A%E6%8B%9F%E5%9C%B0%E5%9D%80%E7%A9%BA%E9%97%B4%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80/" class="archive-article-date">
+        
+        <a href="/2018/08/05/Linux%E4%B8%AD%E6%9F%A5%E7%9C%8B%E8%BF%9B%E7%A8%8B%E7%9A%84%E8%99%9A%E6%8B%9F%E5%9C%B0%E5%9D%80%E7%A9%BA%E9%97%B4%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80/" class="archive-article-date">
   	<time datetime="2018-08-05T03:43:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-05</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p>要查看一个进程的虚拟地址空间的内存布局，需要设置阻塞。如果没有设置阻塞，当<font face="Courier New">./a.out</font>按下去后，程序执行的速度非常快以至于来不及查看，所以需要设置阻塞。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">int a;</span><br><span class="line">static int b&#x3D;10;</span><br><span class="line">int main(int argc,char* argv[],char* envp[])&#123;</span><br><span class="line">	int a&#x3D;10;&#x2F;&#x2F;stack</span><br><span class="line">	char* p&#x3D;(char*)malloc(sizeof(char));&#x2F;&#x2F;heap</span><br><span class="line">	printf(&quot;a&#x3D;%d,p&#x3D;0x%x\n&quot;,a,p);&#x2F;&#x2F;动态链接库，*.so</span><br><span class="line">	getchar();&#x2F;&#x2F;设置阻塞</span><br><span class="line">	getchar();</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>1. gcc test.c   -&gt;  a.out</code><br><code>2. ./a.out &amp;放在后台执行</code><br><img src="https://img-blog.csdn.net/20180805113831548?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><code>3. ps -u查看进程id</code><br><code>4. cat /proc/进程id/maps   输出进程虚拟地址空间的布局</code><br><img src="https://img-blog.csdn.net/20180805114322896?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/linux//" class="article-tag-list-link color1">linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/08/05/Linux%E4%B8%AD%E6%9F%A5%E7%9C%8B%E8%BF%9B%E7%A8%8B%E7%9A%84%E8%99%9A%E6%8B%9F%E5%9C%B0%E5%9D%80%E7%A9%BA%E9%97%B4%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-c和c++的区别 （四）动态内存开辟、c!c++作用域" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2018/08/05/c%E5%92%8Cc++%E7%9A%84%E5%8C%BA%E5%88%AB%20%EF%BC%88%E5%9B%9B%EF%BC%89%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98%E5%BC%80%E8%BE%9F%E3%80%81c!c++%E4%BD%9C%E7%94%A8%E5%9F%9F/">c和c++的区别 （四）动态内存开辟、c/c++作用域</a>
     </h1>
   
 
-  
-  <a href="/2018/08/05/c%E5%92%8Cc++%E7%9A%84%E5%8C%BA%E5%88%AB%20%EF%BC%88%E5%9B%9B%EF%BC%89%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98%E5%BC%80%E8%BE%9F%E3%80%81c!c++%E4%BD%9C%E7%94%A8%E5%9F%9F/" class="archive-article-date">
+        
+        <a href="/2018/08/05/c%E5%92%8Cc++%E7%9A%84%E5%8C%BA%E5%88%AB%20%EF%BC%88%E5%9B%9B%EF%BC%89%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98%E5%BC%80%E8%BE%9F%E3%80%81c!c++%E4%BD%9C%E7%94%A8%E5%9F%9F/" class="archive-article-date">
   	<time datetime="2018-08-05T03:15:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-05</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 color=black>一、动态内存开辟</font><br><font color=black face="Courier New">C：malloc，free</font><br><font face="Courier New">C++：new，delete。new的底层调用任然是malloc，但相对于malloc，new具有初始化的功能。对于内置类型可以直接初始化，对于自定义类型，调用构造函数初始化。delete首先会进行析构，然后调用free。</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">int main()&#123;</span><br><span class="line">	内置类型内存的动态开辟：</span><br><span class="line">	int* p&#x3D;(int*)malloc(sizeof(int));</span><br><span class="line">	free(p);</span><br><span class="line">	int* q&#x3D;new int(10);</span><br><span class="line">	delete q;</span><br><span class="line"></span><br><span class="line">	一维数组的动态开辟：</span><br><span class="line">	int* p&#x3D;(int*)malloc(sizeof(int)*100);</span><br><span class="line">	free(p);</span><br><span class="line">	int* q&#x3D;new int[100];</span><br><span class="line">	delete []q;</span><br><span class="line"></span><br><span class="line">	二维数组的动态开辟：</span><br><span class="line">	如3*4：</span><br><span class="line">	int main()&#123;</span><br><span class="line">	int **p&#x3D;new int*[3];</span><br><span class="line">	for(int i&#x3D;0;i &lt; 3;++i)&#123;</span><br><span class="line">	   p[i] &#x3D; new int[4];</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	for(int i&#x3D;0;i &lt; 3;++i)&#123;</span><br><span class="line">		delete []p[i];</span><br><span class="line">	&#125;</span><br><span class="line">	delete []p;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=4.5 face="Courier New">1.默认的new开辟内存失败，不能以NULL作为判断。当new动态开辟内存失败时，会抛出异常 throw bad_alloc(“”)。</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">try&#123;</span><br><span class="line">	int *p&#x3D;new int(10);</span><br><span class="line">&#125;</span><br><span class="line">catch(const bad_alloc &amp;err)&#123;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=4.5 face="Courier New">2.int* p=new <font color=red>(nothrow) </font>int(10);</font><font size=4.5>可以通过返回值是否为<font face="Courier New">NULL判断动态开辟是否成功。</font></p>
+<p><font size=4.5 face="Courier New">3.在堆上开辟常量内存。</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">在堆上开辟常量内存</span><br><span class="line">const int* p &#x3D; new const int(10);</span><br><span class="line">const int* q &#x3D; new const int[10];</span><br></pre></td></tr></table></figure>
+
+<p><font size=4.5 face="Courier New">4.定位new placement new</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">char buffer[1000] &#x3D; &#123;0&#125;;</span><br><span class="line">char* p &#x3D; new (buffer) char[100];&#x2F;&#x2F;在buff上开辟100字节内存</span><br><span class="line"></span><br><span class="line">int* p &#x3D; new int;</span><br><span class="line">p &#x3D; new (p) int(10);</span><br><span class="line"></span><br><span class="line">int* p&#x3D;(int*)operator new(sizeof(int)); &#x2F;&#x2F;malloc</span><br><span class="line">p &#x3D; new (p) int(10);&#x2F;&#x2F;初始化</span><br></pre></td></tr></table></figure>
+
+<p><font size=5 color=black>二、C/C++作用域</font><br><font size=4 face="Courier New">C作用域：<br>（1）全局作用域<br>（2）局部作用域</font></p>
+<p><font size=4 face="Courier New">C++作用域：<br>（1）局部作用域<br>（2）类作用域<br>（3）名字空间作用域<code>namespace</code>，又分为局部的名字作用域和全局的名字作用域</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;MyName不参与编译，不产生符号</span><br><span class="line">namespace MyName&#123;</span><br><span class="line">	int data&#x3D;10;</span><br><span class="line">	int sum(int a,int b)&#123;return a+b;&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F;int data&#x3D;20;</span><br><span class="line">&#x2F;&#x2F;using 声明，下边这样的声明方式，一次只能声明一个符号</span><br><span class="line">using MyName::data;</span><br><span class="line">using MyName::sum;</span><br><span class="line"></span><br><span class="line">using namespace MyName;&#x2F;&#x2F;声明整个名字空间MyName中的符号</span><br><span class="line">int main()&#123;</span><br><span class="line">	int data&#x3D;30;</span><br><span class="line">	cout&lt;&lt;data&lt;&lt;endl;&#x2F;&#x2F;优先使用局部的</span><br><span class="line">	cout&lt;&lt;::data&lt;&lt;endl;&#x2F;&#x2F;::全局的作用域符号</span><br><span class="line">	cout&lt;&lt;MyName::data&lt;&lt;endl;&#x2F;&#x2F;MyName名字空间</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdn.net/20180805105500419?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><font size=4 face="Courier New">在名字空间定义变量的好处是，可以在不同作用域定义同名的变量，而不致引起冲突。可以定义多个同名的名字空间，在编译的时候进行合并。</font></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/c-c//" class="article-tag-list-link color1">c/c++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/08/05/c%E5%92%8Cc++%E7%9A%84%E5%8C%BA%E5%88%AB%20%EF%BC%88%E5%9B%9B%EF%BC%89%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98%E5%BC%80%E8%BE%9F%E3%80%81c!c++%E4%BD%9C%E7%94%A8%E5%9F%9F/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-c和c++的区别 （三）const&amp;(引用)和const!(地址)在函数中的应用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2018/08/05/c%E5%92%8Cc++%E7%9A%84%E5%8C%BA%E5%88%AB%20%EF%BC%88%E4%B8%89%EF%BC%89const&(%E5%BC%95%E7%94%A8)%E5%92%8Cconst!(%E5%9C%B0%E5%9D%80)%E5%9C%A8%E5%87%BD%E6%95%B0%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/">c和c++的区别 （三）const&amp;(引用)和const*(地址)在函数中的应用</a>
     </h1>
   
 
-  
-  <a href="/2018/08/05/c%E5%92%8Cc++%E7%9A%84%E5%8C%BA%E5%88%AB%20%EF%BC%88%E4%B8%89%EF%BC%89const&(%E5%BC%95%E7%94%A8)%E5%92%8Cconst!(%E5%9C%B0%E5%9D%80)%E5%9C%A8%E5%87%BD%E6%95%B0%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" class="archive-article-date">
+        
+        <a href="/2018/08/05/c%E5%92%8Cc++%E7%9A%84%E5%8C%BA%E5%88%AB%20%EF%BC%88%E4%B8%89%EF%BC%89const&(%E5%BC%95%E7%94%A8)%E5%92%8Cconst!(%E5%9C%B0%E5%9D%80)%E5%9C%A8%E5%87%BD%E6%95%B0%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" class="archive-article-date">
   	<time datetime="2018-08-04T16:22:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-05</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 color=black face="Courier New">一、用普通引用接收返回值</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">int GetInt()&#123;</span><br><span class="line">	int value&#x3D;10;</span><br><span class="line">	return value;&#x2F;&#x2F;返回值通过eax寄存器带回</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">	int &amp;a&#x3D;GetInt();&#x2F;&#x2F;错误</span><br><span class="line">	&#x2F;&#x2F;引用初始化的值要能取地址，寄存器没有地址</span><br><span class="line">	修改为:const int&amp; a&#x3D;GetInt();</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdn.net/20180804234433337?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><font size=5 color=black face="Courier New">二、返回局部变量的地址</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;不能返回局部变量的地址或引用</span><br><span class="line">int* GetIntPtr()&#123;</span><br><span class="line">	int value&#x3D;10;</span><br><span class="line">	&#x2F;&#x2F;const int value&#x3D;10;是数据,在.data段,这种情况可以返回地址</span><br><span class="line">	return &amp;value;</span><br><span class="line">	&#x2F;&#x2F;lea eax,[value]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">	int* p&#x3D;GetIntPtr();        eax-&gt;p</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdn.net/20180805000531583?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><font size=5 color=black face="Courier New">三、返回.data段变量的地址</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">int* GetIntPtr()&#123;</span><br><span class="line">	static int value&#x3D;10;</span><br><span class="line">	return &amp;value;</span><br><span class="line">	&#x2F;&#x2F;lea eax,[value]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">	int *&amp;p&#x3D;GetIntPtr();&#x2F;&#x2F;错误，引用初始化的值要能取地址</span><br><span class="line">	&#x2F;&#x2F;修改为常引用:int* const&amp;p&#x3D;GetIntPtr();</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdn.net/20180805000723142?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<p><font size=5 color=black face="Courier New">四、返回局部变量的引用</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;不能返回局部变量的引用</span><br><span class="line">int&amp; GetIntRef()&#123;</span><br><span class="line">	int value&#x3D;10;&#x2F;&#x2F;const int value&#x3D;10;是正确的</span><br><span class="line">	return value;</span><br><span class="line">	&#x2F;&#x2F;lea eax,[value]</span><br><span class="line">&#125;</span><br><span class="line">int main()&#123;</span><br><span class="line">	int a&#x3D;GetIntRef();       *eax-&gt;p</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=5 color=black face="Courier New">五、返回指针的地址、返回指针的引用</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">int** GetIntPtrPtr()&#123;</span><br><span class="line">	static int data&#x3D;10;</span><br><span class="line">	static int* p&#x3D;&amp;data;</span><br><span class="line">	return &amp;p;&#x2F;&#x2F;通过eax寄存器带回</span><br><span class="line">&#125;</span><br><span class="line">int*&amp; GetIntPtrRef()&#123;</span><br><span class="line">	static int data&#x3D;10;</span><br><span class="line">	static int *p&#x3D;&amp;data;</span><br><span class="line">	return p;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>临时量的产生由三种不同的情况：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1.函数调用之前</span><br><span class="line">2.函数的return语句处</span><br><span class="line">3.函数调用之后</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/c-c//" class="article-tag-list-link color1">c/c++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/08/05/c%E5%92%8Cc++%E7%9A%84%E5%8C%BA%E5%88%AB%20%EF%BC%88%E4%B8%89%EF%BC%89const&(%E5%BC%95%E7%94%A8)%E5%92%8Cconst!(%E5%9C%B0%E5%9D%80)%E5%9C%A8%E5%87%BD%E6%95%B0%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-C!C++函数返回值问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2018/08/04/C!C++%E5%87%BD%E6%95%B0%E8%BF%94%E5%9B%9E%E5%80%BC%E9%97%AE%E9%A2%98/">C/C++函数返回值问题</a>
     </h1>
   
 
-  
-  <a href="/2018/08/04/C!C++%E5%87%BD%E6%95%B0%E8%BF%94%E5%9B%9E%E5%80%BC%E9%97%AE%E9%A2%98/" class="archive-article-date">
+        
+        <a href="/2018/08/04/C!C++%E5%87%BD%E6%95%B0%E8%BF%94%E5%9B%9E%E5%80%BC%E9%97%AE%E9%A2%98/" class="archive-article-date">
   	<time datetime="2018-08-04T15:28:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-04</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font color=black size=5>函数返回值问题</font><br>在C/C++中<br>内置类型：<code>char short int long float double</code><br>结构体类型、联合体类型<code>union</code>、枚举类型<code>enum</code></p>
+<p>函数返回值分为三种情况：<br><font color=black size=4.5>1.函数返回值小于等于4字节时，返回值由eax寄存器带回。</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">int fun(int a,int b)&#123;return a+b;&#125;</span><br><span class="line">int main()&#123;</span><br><span class="line">	int a&#x3D;10;</span><br><span class="line">	int b&#x3D;10;</span><br><span class="line">	int ret&#x3D;sum(a,b);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdn.net/20180804093106877?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><font color=black size=4.5>2.函数返回值大于4字节小于等于时，返回值是由eax和edx寄存器带回。</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">typedef struct data&#123;</span><br><span class="line">	int x;</span><br><span class="line">	int y;</span><br><span class="line">&#125;Data;</span><br><span class="line"></span><br><span class="line">Data sum(Data a,Data b)&#123;</span><br><span class="line">	Data c;</span><br><span class="line">	c.x&#x3D;a.x+b.x;</span><br><span class="line">	c.y&#x3D;a.y+b.y;</span><br><span class="line">	return c;</span><br><span class="line">&#125;</span><br><span class="line">int main()&#123;</span><br><span class="line">	Data a&#x3D;&#123;1,2&#125;;</span><br><span class="line">	Data b&#x3D;&#123;3,4&#125;;</span><br><span class="line">	Data ret&#x3D;sum(a,b);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdn.net/20180804100307636?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><font color=black size=4.5>3.函数返回值大于8个字节，产生临时量。函数调用之前就产生，被调用函数return处通过ebp+8进行访问。</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">typedef strut&#123;</span><br><span class="line">	int a[20];</span><br><span class="line">&#125;Data;</span><br><span class="line"></span><br><span class="line">Data sum(Data a,Data b)&#123;</span><br><span class="line">	Data temp &#x3D; &#123;0&#125;;</span><br><span class="line">	temp.a[0]&#x3D;a.a[0]+b.a[0];</span><br><span class="line">	return temp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">	Data a &#x3D; &#123;0&#125;;</span><br><span class="line">	Data b &#x3D; &#123;0&#125;;</span><br><span class="line">	Data ret &#x3D; sum(a,b);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdn.net/20180804232556429?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/c-c//" class="article-tag-list-link color1">c/c++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/08/04/C!C++%E5%87%BD%E6%95%B0%E8%BF%94%E5%9B%9E%E5%80%BC%E9%97%AE%E9%A2%98/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-c和c++的区别（二）const和引用、一级指针、二级指针的结合" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2018/08/04/c%E5%92%8Cc++%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%88%E4%BA%8C%EF%BC%89const%E5%92%8C%E5%BC%95%E7%94%A8%E3%80%81%E4%B8%80%E7%BA%A7%E6%8C%87%E9%92%88%E3%80%81%E4%BA%8C%E7%BA%A7%E6%8C%87%E9%92%88%E7%9A%84%E7%BB%93%E5%90%88/">c和c++的区别（二）const和引用、一级指针、二级指针的结合</a>
     </h1>
   
 
-  
-  <a href="/2018/08/04/c%E5%92%8Cc++%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%88%E4%BA%8C%EF%BC%89const%E5%92%8C%E5%BC%95%E7%94%A8%E3%80%81%E4%B8%80%E7%BA%A7%E6%8C%87%E9%92%88%E3%80%81%E4%BA%8C%E7%BA%A7%E6%8C%87%E9%92%88%E7%9A%84%E7%BB%93%E5%90%88/" class="archive-article-date">
+        
+        <a href="/2018/08/04/c%E5%92%8Cc++%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%88%E4%BA%8C%EF%BC%89const%E5%92%8C%E5%BC%95%E7%94%A8%E3%80%81%E4%B8%80%E7%BA%A7%E6%8C%87%E9%92%88%E3%80%81%E4%BA%8C%E7%BA%A7%E6%8C%87%E9%92%88%E7%9A%84%E7%BB%93%E5%90%88/" class="archive-article-date">
   	<time datetime="2018-08-04T01:07:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-04</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 color=red>一、const和一级指针的结合</font></p>
+<p>一级指针的模型<br><img src="https://img-blog.csdn.net/20180803194603681?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>一级指针有<font color=red>两种表达方式</font>，<code>p</code>和<code>*p</code>。所以<code>const</code>与一级指针有两种结合方式。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;在c++语法规则中，const修饰距离它最近的类型。</span><br><span class="line">int a&#x3D;10;</span><br><span class="line">int *p&#x3D;&amp;a;</span><br><span class="line">int const *p;</span><br><span class="line">&#x2F;&#x2F;距离const最近的类型是int,而不是int*,因为int已经是类型了</span><br><span class="line">&#x2F;&#x2F;const的是*p,p本身没有被const修饰</span><br><span class="line">const int *p;</span><br><span class="line">&#x2F;&#x2F;距离const最近的是int,*不能构成类型。const修饰的是*p,p没有被修饰</span><br><span class="line">int* const p;</span><br><span class="line">&#x2F;&#x2F;距离const最近的类型是int*,修饰的是一个指针变量p。但*p没有被修改</span><br><span class="line">&#x2F;&#x2F;存在内存泄漏</span><br><span class="line">const int* const p;</span><br><span class="line">&#x2F;&#x2F;距离第一个const最近的类型是int,修饰的是*p。距离第二个const的类型</span><br><span class="line">&#x2F;&#x2F;是int*,所以修饰的p。</span><br></pre></td></tr></table></figure>
+<p>在C++中，定义常量必须进行初始化。那么上边四个哪些是常量？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">int a&#x3D;10;</span><br><span class="line">int *p&#x3D;&amp;a;</span><br><span class="line">int const *p;&#x2F;&#x2F;const修饰*p，但是没有修饰p。p可更改，故不是常量。</span><br><span class="line">const int *p;&#x2F;&#x2F;const修饰*p,没有修饰p。p可更改，故不是常量。</span><br><span class="line">int* const p;&#x2F;&#x2F;const修饰的是p,是常量。</span><br><span class="line">const int const* p;&#x2F;&#x2F;变量名p本身被const修饰，故是常量。</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">int main()&#123;</span><br><span class="line">	int a&#x3D;10;</span><br><span class="line">	const int b&#x3D;20;</span><br><span class="line">	a&#x3D;b;&#x2F;&#x2F;正确，将常量值赋值给变量</span><br><span class="line">	b&#x3D;a;&#x2F;&#x2F;错误，常量不能作左值</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=4.5>在C++中，当const关键字修饰常量时，const所在的位置，会不会出现问题。主要是担心代码会修改被const修饰的常量值，如果有这样的风险，编译器不会通过代码的编译的。</p>
+<p><font size=4.5 color=red>修改的方式有两种：<br>1.直接修改</font> 直接修改比较容易判断，看常量是否作左值。<br><font size=4.5 color=red>2.间接修改</font> 会不会将常量的引用或地址泄漏出去，通过使用引用（使用引用会自动解引用）或指针间接修改常量。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">一级指针与const结合总结：</span><br><span class="line">const int*  -&gt;  int*     &#x2F;&#x2F;错误</span><br><span class="line">int*        -&gt;  const int*    &#x2F;&#x2F;正确</span><br></pre></td></tr></table></figure>
+<p><font size=4.5 color=red>测试一：test.cpp</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">int main()&#123;</span><br><span class="line">	&#x2F;*</span><br><span class="line">	int a&#x3D;10;</span><br><span class="line">	int *p&#x3D;&amp;a;&#x2F;&#x2F;&amp;a  int*     正确的赋值</span><br><span class="line">	*&#x2F;</span><br><span class="line">	const int b&#x3D;10;</span><br><span class="line">	int *p &#x3D; &amp;b;</span><br><span class="line">	const int* q &#x3D; &amp;b;</span><br><span class="line">	&#x2F;&#x2F;&amp;b -&gt; const int* ,将常量的地址泄漏出去了</span><br><span class="line">	&#x2F;&#x2F;但是泄漏出去不一定是错误的，且看下边的例子</span><br><span class="line">	</span><br><span class="line">	*p&#x3D;20;&#x2F;&#x2F;错误，可以通过*p修改b内存块的地址。const没有修饰*p</span><br><span class="line">	&#x2F;&#x2F;存在间接修改常量内存块的风险,编译是不通过的</span><br><span class="line">	*q&#x3D;20;&#x2F;&#x2F;此时q为const int*,不能作左值，编译错误</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdn.net/20180803214247619?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><font size=4.5 color=red>测试二：test1.cpp</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">int main()&#123;</span><br><span class="line">&#x2F;&#x2F;对于const int*,可以存储常量的地址，也可以存储变量的地址</span><br><span class="line">	int a&#x3D;10;&#x2F;&#x2F; const int a&#x3D;10;</span><br><span class="line">	const int* p&#x3D;&amp;a;</span><br><span class="line">	int* q&#x3D;p;&#x2F;&#x2F;直观的感受q就是&amp;a啊，a是变量，可以通过*q修改a</span><br><span class="line">	&#x2F;*但是编译是错误的，为什么呢？</span><br><span class="line">	对于const int* p,其类型为const int*，不管存储的常量的地址</span><br><span class="line">	还是变量的地址，都按照其类型存储，即const int*，即使是存储</span><br><span class="line">	的是变量的地址也会提升为常量的地址。</span><br><span class="line">	int *q&#x3D;p;*q并没被const的修饰，所以会出现编译错误</span><br><span class="line">	*&#x2F;</span><br><span class="line">	可见，其实const int*里边存储与变量a无关</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdn.net/20180803220102599?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><font size=4.5 color=red>测试三：test2.cpp</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">test2.cpp</span><br><span class="line">int main()&#123;</span><br><span class="line">	const int* p&#x3D;NULL;</span><br><span class="line">	int* q&#x3D;p;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdn.net/20180803220943980?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><font size=4.5 color=red>测试四：test3.cpp</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;输出类型</span><br><span class="line">test3.cpp</span><br><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;typeinfo&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int main()&#123;</span><br><span class="line"></span><br><span class="line">	int a&#x3D;10;</span><br><span class="line">	int const *p&#x3D;&amp;a;</span><br><span class="line">	int *const q&#x3D;&amp;a;</span><br><span class="line">	cout&lt;&lt;typeid(p).name()&lt;&lt;endl;</span><br><span class="line">	cout&lt;&lt;typeid(q).name()&lt;&lt;endl;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdn.net/2018080322233946?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>有上图结果可知，const没有修饰*（指针）/&amp;（引用），不用考虑。</p>
+<p><font size=5 color=red>二、const和引用的结合</font><br>定义引用时，由于<code>&amp;</code>和<font color=black>变量名</font>紧挨着。所以const和引用结合只有一种方式，即<code>const int &amp;变量名</code>或<code>int const &amp;变量名</code>，而不会出现<code>int &amp;const 变量名</code>这种形式。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">int main()&#123;</span><br><span class="line">	&#x2F;&#x2F;int a&#x3D;10;</span><br><span class="line">	&#x2F;&#x2F;int &amp;b&#x3D;a;</span><br><span class="line">	&#x2F;&#x2F;const int &amp;c&#x3D;a;</span><br><span class="line">	</span><br><span class="line">	const int a&#x3D;10;</span><br><span class="line">	int &amp;b&#x3D;a;&#x2F;&#x2F;错误，将a的引用泄露出去，通过对b赋值可以修改常量</span><br><span class="line">	&#x2F;&#x2F;对于常变量只能使用常引用</span><br><span class="line">	const int a&#x3D;10;</span><br><span class="line">	const int&amp; b&#x3D;a;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=4.5 color=red>常引用</font><br>const&amp;引用常量(包括可寻址的常量和不可寻址的常量)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">int main()&#123;</span><br><span class="line">	int &amp;a&#x3D;10;&#x2F;&#x2F;错误，不能用立即数进行初始化</span><br><span class="line">	const int &amp;b&#x3D;10;&#x2F;&#x2F;正确的，为什么呢？</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>从汇编的角度看看常引用为什么是可行的，往往越底层的东西越能带来透彻的理解。<br><img src="https://img-blog.csdn.net/20180804003849306?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">const int&amp; a&#x3D;10;</span><br><span class="line">mov dword ptr[ebp-14h],OAh</span><br><span class="line">&#x2F;&#x2F;函数栈帧空间以栈底指针ebp的偏移量offset表示栈空间的地址</span><br><span class="line">&#x2F;&#x2F;将OAh(10)存到[ebp-14h]指向的四字节的内存空间中</span><br><span class="line">mov eax,[ebp-14h]</span><br><span class="line">&#x2F;&#x2F;将地址[ebp-14h]存放到eax寄存器中</span><br><span class="line">mov dword ptr[a],eax</span><br><span class="line">&#x2F;&#x2F;将eax寄存器中的内容即[ebp-14h]存放到地址为a四字节的空间[a]中</span><br></pre></td></tr></table></figure>
+<p>通过上边汇编代码的分析，所谓常引用，实际上是在内存中寻取了一块空间，作为临时量，存放立即数。而引用则是对这块内存空间即临时量的引用。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">const int &amp;a&#x3D;10;&#x2F;&#x2F;可以看作是下边两行代码</span><br><span class="line">const int temp&#x3D;10;</span><br><span class="line">const int &amp;a&#x3D;temp;</span><br></pre></td></tr></table></figure>
+
+<p><font size=4.5 color=red>指针变量与常引用结合</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">如现在要向地址为0x0011ff22内存块写入10,定义指针的引用变量</span><br><span class="line">int main()&#123;</span><br><span class="line">	int *&amp;p &#x3D; (int*)0x0011fff22;*p&#x3D;10;</span><br><span class="line">	&#x2F;&#x2F;显然这是错误，引用不能用立即数初始化</span><br><span class="line">	&#x2F;&#x2F;结合上边的常引用</span><br><span class="line">	const int*&amp;p还是int* const &amp;p哪一个是正确的呢?</span><br><span class="line">	const int*&amp;p其中,const修饰的是*p,并非引用，是错误的</span><br><span class="line">	int * const &amp;p;是正确的</span><br><span class="line">	</span><br><span class="line">	int* const &amp;p&#x3D;(int*)0x0011ff22;&#x2F;&#x2F;可以看作是</span><br><span class="line">	int* const temp&#x3D;(int*)0x0011ff22;&#x2F;&#x2F;临时量存储立即数</span><br><span class="line">	int* const &amp;p&#x3D;temp;	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=4.5 color=red>引用不参与类型，不能说是引用类型</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;typeinfo&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">	int a&#x3D;10;</span><br><span class="line">	int &amp;b&#x3D;a;</span><br><span class="line">	cout&lt;&lt;typeid(b).name()&lt;&lt;endl;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdn.net/20180804011603131?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>可见引用不参与类型，但是指针是参与类型的。</p>
+<p><font size=5 color=red>三、const和二级指针的结合</font><br>二级指针的模型<br><img src="https://img-blog.csdn.net/20180804012923529?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>二级指针有<font color=red>三种表达方式</font>，即<code>q</code>、<code>*q</code>和    <code>**q</code>,所以<code>const</code>和二级指针最基本的结合方式有三种。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int const **q;&#x2F;&#x2F;修饰的是**q,没有修饰*q和q</span><br><span class="line">int* const *q;&#x2F;&#x2F;修饰的是*q,没有修饰**q和q</span><br><span class="line">int** const q;&#x2F;&#x2F;修饰的是q,没有修饰**q和*q</span><br></pre></td></tr></table></figure>
+<p><font size=4.5 color=red>二级指针和const结合的典型问题</font><br><font size=4 color=red>1.</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">int main()&#123;</span><br><span class="line">	int a&#x3D;10;</span><br><span class="line">	int* p&#x3D;&amp;a;</span><br><span class="line">	const int** q&#x3D;&amp;p;</span><br><span class="line">	&#x2F;&#x2F;错误   **q和*p是等价的，*q和p是等价的</span><br><span class="line">	&#x2F;&#x2F;由于const修饰了**q,所以不需考虑通过*p修改常量的值</span><br><span class="line">	&#x2F;&#x2F;*q是const int*类型</span><br><span class="line">	&#x2F;&#x2F;const int a&#x3D;10;   &amp;a  -&gt; const int*</span><br><span class="line">	&#x2F;&#x2F;*q&#x3D;&amp;a    由于*q和p等价      p&#x3D;&amp;a</span><br><span class="line">	&#x2F;&#x2F;所以存在通过对*q解引用修改常量内存块的风险</span><br><span class="line">	&#x2F;&#x2F;通过对p解引用修改常量内存块的风险</span><br><span class="line"></span><br><span class="line">	以下两种修改方式均是正确的</span><br><span class="line">	int a&#x3D;10;</span><br><span class="line">	const int *p&#x3D;&amp;a;</span><br><span class="line">	const int **q&#x3D;&amp;p</span><br><span class="line">	或</span><br><span class="line">	int a&#x3D;10;</span><br><span class="line">	int *p&#x3D;&amp;a;</span><br><span class="line">	const int* const *q&#x3D;&amp;p;	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=4 color=red>2.</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">int main()&#123;</span><br><span class="line">	int a&#x3D;10;</span><br><span class="line">	int *p&#x3D;&amp;a;</span><br><span class="line">	const int *&amp;q&#x3D;p;&#x2F;&#x2F;   q和p等价，错误同上</span><br><span class="line">	const int **q&#x3D;&amp;p;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=4 color=red>3.</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">int main()&#123;</span><br><span class="line">	int a&#x3D;10;</span><br><span class="line">	int *p&#x3D;&amp;a;</span><br><span class="line">	int* const *q&#x3D;&amp;p;&#x2F;&#x2F;正确</span><br><span class="line">	</span><br><span class="line">	int a&#x3D;10;</span><br><span class="line">	int *p&#x3D;&amp;a;</span><br><span class="line">	int** const q&#x3D;&amp;p;&#x2F;&#x2F;正确</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=4 color=red>4.</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">int main()&#123;</span><br><span class="line">	int a&#x3D;10;</span><br><span class="line">	const int* p&#x3D;&amp;a;&#x2F;&#x2F;const修饰的是*p即内存a被封锁</span><br><span class="line">	int** q&#x3D;&amp;p;&#x2F;&#x2F;错误，通过**q可以将常量内存块修改</span><br><span class="line">	改正为：int const **q&#x3D;&amp;p;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=4 color=red>5.</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">int main()&#123;</span><br><span class="line">	int a&#x3D;10;</span><br><span class="line">	int* const p&#x3D;&amp;a;&#x2F;&#x2F;const修饰的是p</span><br><span class="line">	int** q&#x3D;&amp;p;&#x2F;&#x2F;错误，通过*q可以修改常量内存块的值</span><br><span class="line">	改正为：int* const *q&#x3D;&amp;p;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<font size=5 color=black>
+综上：当一级指针、二级指针和const结合时。
+1.`const  int*` 转化为`int* `  <font color=red>   错误</font>
+2.`int*` 转化为`const int*`<font color=red>正确</font>
+3.`const  int** `转化为`int**`<font color=red>错误</ font>
+4.`int** `转化为`const int**`<font color=red>错误</font>
+5.当const为`**`之间时，`*const*退化为一级指针考虑。`
+</ font>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/c-c//" class="article-tag-list-link color1">c/c++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/08/04/c%E5%92%8Cc++%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%88%E4%BA%8C%EF%BC%89const%E5%92%8C%E5%BC%95%E7%94%A8%E3%80%81%E4%B8%80%E7%BA%A7%E6%8C%87%E9%92%88%E3%80%81%E4%BA%8C%E7%BA%A7%E6%8C%87%E9%92%88%E7%9A%84%E7%BB%93%E5%90%88/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-volatile关键字的使用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2018/08/04/volatile%E5%85%B3%E9%94%AE%E5%AD%97%E7%9A%84%E4%BD%BF%E7%94%A8/">volatile关键字的使用</a>
     </h1>
   
 
-  
-  <a href="/2018/08/04/volatile%E5%85%B3%E9%94%AE%E5%AD%97%E7%9A%84%E4%BD%BF%E7%94%A8/" class="archive-article-date">
+        
+        <a href="/2018/08/04/volatile%E5%85%B3%E9%94%AE%E5%AD%97%E7%9A%84%E4%BD%BF%E7%94%A8/" class="archive-article-date">
   	<time datetime="2018-08-03T16:10:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-04</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    
-    
-</header>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 color=black>MSDN手册中对volatile关键字的解释：</font><br><img src="https://img-blog.csdn.net/20180803232242803?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><font size=5 color=red>大概的翻译：</font><br><font size=5 color=black>volatile关键字是一个类型限定符，用于声明一个对象可以通过其他语句(例如操作系统、硬件或并发执行的线程)在程序中进行修改。<br></font><br><font size=5 color=black>volatile关键字的两个功能：</font><br><font size=4>（1）防止编译器对汇编指令做顺序上的优化。<br>（2）防止寄存器存储变量的副本值。   应用在多线程中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">int gdata&#x3D;10;&#x2F;&#x2F;全局变量</span><br><span class="line">int fun()&#123;</span><br><span class="line">	gdata&#x3D;20;</span><br><span class="line">&#125;</span><br><span class="line">thread1线程1&#123;</span><br><span class="line">	fun();</span><br><span class="line">&#125;</span><br><span class="line">thread2线程2&#123;</span><br><span class="line">	int a&#x3D;gdata;</span><br><span class="line">	&#x2F;&#x2F;mov eax,dword ptr[gdata]</span><br><span class="line">	&#x2F;&#x2F;mov dword ptr[c],eax</span><br><span class="line">	int c&#x3D;gdata;&#x2F;&#x2F;mov dword ptr[c],eax</span><br><span class="line">	&#x2F;&#x2F;为了优化指令，编译器认为两次赋值中间没有对gdata进行赋值</span><br><span class="line">	&#x2F;&#x2F;第二次对c赋值使用gdata存储在寄存器eax的副本值	</span><br><span class="line"></span><br><span class="line">	&#x2F;*实际上会存在这样的情况，由于时间片轮转技术。当分配给线程2时间</span><br><span class="line">	片用完时，恰巧将mov dword ptr[c],eax执行完毕。此时，时间片分</span><br><span class="line">	线程1，当线程1执行完毕后，gdata&#x3D;20。时间片再次分配给线程1，现场</span><br><span class="line">	恢复后，int c&#x3D;gdata用的暂存在eax寄存器中的gadta&#x3D;10,而此时</span><br><span class="line">	gdata&#x3D;20,显然时错误的*&#x2F;</span><br><span class="line">	&#x2F;&#x2F;因此，为了防止类似这样的错误，可以加volatile关键字，防止寄存器</span><br><span class="line">	&#x2F;&#x2F;存储变量的副本值</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</font>
+
+<p><font size=5 color=black>指令的调优</font><br><font size=4>1.编译器对指令的调优      使用<code> volatile</code>关键字</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">void fun(int *a)&#123;*a&#x3D;10;int b&#x3D;*a;&#125;</span><br><span class="line">&#x2F;&#x2F;上述的代码，进过汇编编译器可能优化汇编指令为：</span><br><span class="line">void fun(int *a)&#123;int b&#x3D;*a;*a&#x3D;10;&#125;</span><br><span class="line">&#x2F;&#x2F;如果不需要或防止编译器对汇编指令作顺序的优化，添加volatile关键字限定</span><br><span class="line">void fun(volatile int* a)&#123;*a&#x3D;10;int b&#x3D;*a&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=4>2.程序执行时cpu对指令的调优     barrier()</font><br>当程序开始执行时，由于CPU的流水线技术，可能会对指令进行顺序上的调优。以达到指令级并行，提高指令执行的速度。但是如果程序员不希望发生顺序的调优，则可在可能发生调优的上下程序段之间添加<code>barrier();</code>以防止CPU对指令的调优。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/c-c//" class="article-tag-list-link color1">c/c++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/08/04/volatile%E5%85%B3%E9%94%AE%E5%AD%97%E7%9A%84%E4%BD%BF%E7%94%A8/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
   
     <nav id="page-nav">

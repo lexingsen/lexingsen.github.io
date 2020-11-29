@@ -156,29 +156,199 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-PAT（乙级）1065.单身狗（25）" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       PAT（乙级）1065.单身狗（25）
     </h1>
   
 
-  
-  <a href="/2019/03/27/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891065.%E5%8D%95%E8%BA%AB%E7%8B%97%EF%BC%8825%EF%BC%89/" class="archive-article-date">
+        
+        <a href="/2019/03/27/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891065.%E5%8D%95%E8%BA%AB%E7%8B%97%EF%BC%8825%EF%BC%89/" class="archive-article-date">
   	<time datetime="2019-03-27T12:37:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-27</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face="Courier New">PAT 1065.单身狗 （25）</font></p>
+<p><font size=4 face="Courier New">“单身狗”:是中文对于单身人士的一种爱称。本题请你从上万人的大型派对中找出落单的客人，以便给予特殊关爱。</p>
+<p><font size=5 face="Courier New" color=red>输入格式：</font><br><font size=4 face="Courier New">输入第一行给出一个正整数 N（≤ 50 000），是已知夫妻/伴侣的对数；随后 N 行，每行给出一对夫妻/伴侣——为方便起见，每人对应一个 ID 号，为 5 位数字（从 00000 到 99999），ID 间以空格分隔；之后给出一个正整数 M（≤ 10 000），为参加派对的总人数；随后一行给出这 M 位客人的 ID，以空格分隔。题目保证无人重婚或脚踩两条船。</p>
+<p><font size=5 face="Courier New" color=red>输出格式：</font><br><font size=4 face="Courier New">首先第一行输出落单客人的总人数；随后第二行按 ID 递增顺序列出落单的客人。ID 间用 1 个空格分隔，行的首尾不得有多余空格。</p>
+<p><font size=5 face="Courier New" color=red>输入样例：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">3</span><br><span class="line">11111 22222</span><br><span class="line">33333 44444</span><br><span class="line">55555 66666</span><br><span class="line">7</span><br><span class="line">55555 44444 10000 88888 22222 11111 23333</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier New" color=red>输出样例：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">5</span><br><span class="line">10000 23333 44444 55555 88888</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier New" color=blue>题目分析：读取夫妻/伴侣使用map存储方便之后使用。读取查询的ID时首先使用hash数组标记出现此人，之后遍历map表，如果夫妻/伴侣两个人同时出现在hash数组中，说明这两人不是单身狗，随后标记为false。最后遍历单身狗hash数组，将值为true对应的下标即单身狗ID存储到vector中，对vector排序后输出即可。</p>
+<p><font size=5 face="Courier New">AC代码：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;vector&gt;</span><br><span class="line">#include &lt;algorithm&gt;</span><br><span class="line">#include &lt;map&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">const int max_n &#x3D; 100010;</span><br><span class="line">bool is_appear[max_n] &#x3D; &#123;false&#125;;</span><br><span class="line"></span><br><span class="line">map&lt;int, int&gt; mp;</span><br><span class="line"></span><br><span class="line">vector&lt;int&gt; v;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    &#x2F;&#x2F;freopen(&quot;in.txt&quot;, &quot;r&quot;, stdin);</span><br><span class="line">    int n, a, b;</span><br><span class="line">    scanf(&quot;%d&quot;, &amp;n);</span><br><span class="line">    for(int i&#x3D;0; i&lt;n; ++i)&#123;</span><br><span class="line">        scanf(&quot;%d%d&quot;, &amp;a,&amp;b);</span><br><span class="line">        mp.insert(make_pair(a,b));</span><br><span class="line">    &#125;</span><br><span class="line">    int m, tmp;</span><br><span class="line">    scanf(&quot;%d&quot;, &amp;m);</span><br><span class="line">    for(int i&#x3D;0; i&lt;m; ++i)&#123;</span><br><span class="line">        scanf(&quot;%d&quot;, &amp;tmp);</span><br><span class="line">        is_appear[tmp] &#x3D; true;</span><br><span class="line">    &#125;</span><br><span class="line">    for(auto it&#x3D;mp.begin(); it!&#x3D;mp.end(); ++it)&#123;</span><br><span class="line">        if(is_appear[it-&gt;first] &amp;&amp; is_appear[it-&gt;second])&#123;</span><br><span class="line">            is_appear[it-&gt;first] &#x3D; false;</span><br><span class="line">            is_appear[it-&gt;second] &#x3D; false;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    for(int i&#x3D;0; i&lt;max_n; ++i)&#123;</span><br><span class="line">        if(is_appear[i]&#x3D;&#x3D;true)</span><br><span class="line">            v.push_back(i);</span><br><span class="line">    &#125;</span><br><span class="line">    sort(v.begin(), v.end());</span><br><span class="line">    printf(&quot;%d\n&quot;, v.size());</span><br><span class="line">    for(int i&#x3D;0; i&lt;v.size(); ++i)&#123;</span><br><span class="line">        printf(&quot;%05d&quot;, v[i]);</span><br><span class="line">        if(i!&#x3D;v.size()-1)printf(&quot; &quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/PAT乙级题解//" class="article-tag-list-link color3">PAT乙级题解</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2019/03/27/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891065.%E5%8D%95%E8%BA%AB%E7%8B%97%EF%BC%8825%EF%BC%89/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2019/03/27/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891059.C%E8%AF%AD%E8%A8%80%E7%AB%9E%E8%B5%9B%EF%BC%8820%EF%BC%89/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          PAT（乙级）1059.C语言竞赛（20）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/03/27/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891033.%E6%97%A7%E9%94%AE%E7%9B%98%E6%89%93%E5%AD%97%EF%BC%8820%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">PAT（乙级）1033.旧键盘打字（20）</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>

@@ -156,29 +156,192 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-数据结构：最小生成树算法模板prim和kruskal（考研）" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       数据结构：最小生成树算法模板prim和kruskal（考研）
     </h1>
   
 
-  
-  <a href="/2019/08/22/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%9A%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91%E7%AE%97%E6%B3%95%E6%A8%A1%E6%9D%BFprim%E5%92%8Ckruskal%EF%BC%88%E8%80%83%E7%A0%94%EF%BC%89/" class="archive-article-date">
+        
+        <a href="/2019/08/22/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%9A%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91%E7%AE%97%E6%B3%95%E6%A8%A1%E6%9D%BFprim%E5%92%8Ckruskal%EF%BC%88%E8%80%83%E7%A0%94%EF%BC%89/" class="archive-article-date">
   	<time datetime="2019-08-22T09:34:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-22</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face=Consonlas>1.prim</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;cstring&gt;</span><br><span class="line">#include &lt;algorihtm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">const int N&#x3D;510;</span><br><span class="line">const int INF&#x3D;0x3f3f3f3f;</span><br><span class="line">int dist[N];&#x2F;&#x2F;保存距离</span><br><span class="line">bool st[N];&#x2F;&#x2F;标记点是否已经被访问过</span><br><span class="line">int g[N][N];&#x2F;&#x2F;邻接矩阵存储图</span><br><span class="line"></span><br><span class="line">int n, m;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;返回值为最小生成树的权值</span><br><span class="line">int prim() &#123; </span><br><span class="line">	memset(dist, INF, sizeof(dist));</span><br><span class="line">	int res &#x3D; 0;</span><br><span class="line">	for(int i&#x3D;0; i&lt;n; ++i) &#123;</span><br><span class="line">		int t &#x3D; -1;</span><br><span class="line">		&#x2F;&#x2F;寻找当前权值最小的边    并将其所连接的边并入的MST中</span><br><span class="line">		for(int j&#x3D;1; j&lt;&#x3D;n; ++j) &#123;</span><br><span class="line">			&#x2F;&#x2F;这里包含了两种情况   </span><br><span class="line">			&#x2F;&#x2F;（1）初始状态t&#x3D;&#x3D;-1  （2）其他边的权值更小并且所连接的点没有被访问过  </span><br><span class="line">			if(!st[j] &amp;&amp; (t&#x3D;&#x3D;-1  || dist[j] &lt; dist[t]) </span><br><span class="line">				t &#x3D; j;</span><br><span class="line">		&#125;</span><br><span class="line">		if(i &amp;&amp; dist[t]&#x3D;&#x3D;INF) return INF;</span><br><span class="line">		if(i) res +&#x3D; dist[t];&#x2F;&#x2F; 因为t&#x3D;&#x3D;0的时候res&#x3D;0 不需要你进行相加</span><br><span class="line">		st[t] &#x3D; true;&#x2F;&#x2F;标记访问过了</span><br><span class="line"></span><br><span class="line">		&#x2F;&#x2F;以t顶点作为媒介  更新侯选边的权值</span><br><span class="line">		for(int j&#x3D;1; j&lt;&#x3D;n; ++j) dist[j] &#x3D; min(dist[j], g[t][j]);</span><br><span class="line">	&#125;</span><br><span class="line">	return res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=5 face=Consonlas>2.kruskal</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">const int N&#x3D;510;</span><br><span class="line">const int M&#x3D;1000;</span><br><span class="line">const int INF&#x3D;0x3f3f3f3f;</span><br><span class="line"></span><br><span class="line">int father[N];</span><br><span class="line"></span><br><span class="line">int find(int x) &#123;</span><br><span class="line">	int a &#x3D; x;</span><br><span class="line">	while(x !&#x3D; father[x]) x &#x3D; father[x];</span><br><span class="line">	while(a !&#x3D; father[a]) &#123;</span><br><span class="line">		int z &#x3D; a;</span><br><span class="line">		father[z] &#x3D; x;</span><br><span class="line">		a &#x3D; father[a];</span><br><span class="line">	&#125;</span><br><span class="line">	return x;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void Union(int a, int b) &#123;</span><br><span class="line">	int fa &#x3D; find(a);</span><br><span class="line">	int fb &#x3D; find(b);</span><br><span class="line">	if(fa !&#x3D; fb) father[fa] &#x3D; fb;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;边类</span><br><span class="line">struct Edge&#123;</span><br><span class="line">	int a, b;</span><br><span class="line">	int weight;</span><br><span class="line">&#125;edges[M];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;返回值为MST的权值</span><br><span class="line">int kruskal() &#123;</span><br><span class="line">	int res &#x3D; 0;</span><br><span class="line">	int cnt &#x3D; 0;</span><br><span class="line">	sort(edges, edges+m, [](const Edge &amp;a, const Edge&amp; b) &#123;return a.weight &lt; b.weight;&#125;);</span><br><span class="line">	for(int i&#x3D;1; i&lt;&#x3D;n; ++i) father[i] &#x3D; i;&#x2F;&#x2F;初始化并查集数组</span><br><span class="line">	</span><br><span class="line">	&#x2F;&#x2F;遍历边集   已经按照权值由小到大排好序了</span><br><span class="line">	for(int i&#x3D;0; i&lt;m; ++i) &#123;</span><br><span class="line">		int a &#x3D; edges[i].a;</span><br><span class="line">		int b &#x3D; edges[i].b;</span><br><span class="line">		</span><br><span class="line">		&#x2F;&#x2F;为了保证添加进去edges[i]这条边后不形成回路</span><br><span class="line">		&#x2F;&#x2F;所以首先要判断这条边的两个顶点是否在 不同的连通分量中</span><br><span class="line">		if(find(a) !&#x3D; find(b)) &#123;</span><br><span class="line">			&#x2F;&#x2F;证明两个顶点在不同的连通分量中</span><br><span class="line">			res +&#x3D; edges[i].weight;</span><br><span class="line">			Union(a, b);</span><br><span class="line">			cnt ++;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	&#x2F;&#x2F;如果最后得到的MST的边数 小于 n-1 证明不是最小生成树</span><br><span class="line">	if(cnt &lt; n-1) return INF;</span><br><span class="line">	return res;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/数据结构-图论//" class="article-tag-list-link color3">数据结构 图论</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2019/08/22/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%9A%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91%E7%AE%97%E6%B3%95%E6%A8%A1%E6%9D%BFprim%E5%92%8Ckruskal%EF%BC%88%E8%80%83%E7%A0%94%EF%BC%89/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2019/08/23/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%9A%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F%E7%9A%84%E4%B8%A4%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84partition%E6%93%8D%E4%BD%9C%E4%BB%A5%E5%8F%8A%E9%9D%9E%E9%80%92%E5%BD%92%E5%BD%A2%E5%BC%8F/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          数据结构：快速排序的两种常见的partition操作以及非递归形式
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/08/20/%E5%9F%BA%E6%95%B0%E6%8E%92%E5%BA%8F%E7%9A%84%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">基数排序的简单实现</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>

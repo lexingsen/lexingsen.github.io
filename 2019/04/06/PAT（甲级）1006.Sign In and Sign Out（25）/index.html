@@ -156,29 +156,201 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-PAT（甲级）1006.Sign In and Sign Out（25）" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       PAT（甲级）1006.Sign In and Sign Out（25）
     </h1>
   
 
-  
-  <a href="/2019/04/06/PAT%EF%BC%88%E7%94%B2%E7%BA%A7%EF%BC%891006.Sign%20In%20and%20Sign%20Out%EF%BC%8825%EF%BC%89/" class="archive-article-date">
+        
+        <a href="/2019/04/06/PAT%EF%BC%88%E7%94%B2%E7%BA%A7%EF%BC%891006.Sign%20In%20and%20Sign%20Out%EF%BC%8825%EF%BC%89/" class="archive-article-date">
   	<time datetime="2019-04-06T05:25:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-06</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face="Consolas">PAT 1141.PAT Ranking of Institutions （25 分)</font></p>
+<p><font size=4 face="Consolas">At the beginning of every day, the first person who signs in the computer room will unlock the door, and the last one who signs out will lock the door. Given the records of signing in’s and out’s, you are supposed to find the ones who have unlocked and locked the door on that day.<br><font size=4 face="Consolas"><br><font size=5 face="Consolas" color=red>输入格式：</font><br><font size=4 face="Consolas">Each input file contains one test case. Each case contains the records for one day. The case starts with a positive integer M, which is the total number of records, followed by M lines, each in the format:<br><code>ID_number Sign_in_time Sign_out_time</code><br>where times are given in the format <code>HH:MM:SS</code>, and <code>ID_number</code> is a string with no more than 15 characters.</p>
+<p><font size=5 face="Consolas" color=red>输出格式：</font><br><font size=4 face="Consolas">For each test case, output in one line the ID numbers of the persons who have unlocked and locked the door on that day. The two ID numbers must be separated by one space.<br><font color=red>Note</font>: It is guaranteed that the records are consistent. That is, the sign in time must be earlier than the sign out time for each person, and there are no two persons sign in or out at the same moment.</p>
+<p><font size=5 face="Consolas" color=red>输入样例：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">3</span><br><span class="line">CS301111 15:30:28 17:00:10</span><br><span class="line">SC3021234 08:00:00 11:25:25</span><br><span class="line">CS301133 21:45:00 21:58:40</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Consolas" color=red>输出样例：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SC3021234 CS301133</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Consolas" color=blue>题目分析：sort的使用，求解最早签到时间和最晚签到离开时间。主要的难度在于签到和签到离开时间的处理，当成字符串处理会比较直接简单。</p>
+<p><font size=5 face="Consolas" font color=red>注意：由于题目可以转化为输出最早签到的人名和最晚签到离开的人，此题也也可以直接在输入时间比较。在一天中按照hh:mm:ss的形式，最早为00：00：00，最晚为23:59:59</font></p>
+<p><font size=5 face="Consolas" color=black>AC代码1：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;unordered_map&gt;</span><br><span class="line">#include &lt;string&gt;</span><br><span class="line">#include &lt;vector&gt;</span><br><span class="line">#include &lt;algorithm&gt;</span><br><span class="line">#include &lt;map&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">struct people&#123;</span><br><span class="line">    string id, sign_in, sign_out;</span><br><span class="line">    people(string id, string sign_in, string sign_out)&#123;</span><br><span class="line">        this-&gt;id &#x3D; id;</span><br><span class="line">        this-&gt;sign_in &#x3D; sign_in;</span><br><span class="line">        this-&gt;sign_out &#x3D; sign_out;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">vector&lt;people&gt; v;</span><br><span class="line"></span><br><span class="line">bool cmpin(people a, people b) &#123;return a.sign_in &lt; b.sign_in;&#125;</span><br><span class="line">bool cmpout(people a, people b)&#123;return a.sign_out &gt; b.sign_out;&#125;</span><br><span class="line">void print(people a)&#123;</span><br><span class="line">    cout&lt;&lt;a.id&lt;&lt;&quot; &quot;&lt;&lt;a.sign_in&lt;&lt;&quot; &quot;&lt;&lt;a.sign_out&lt;&lt;endl;</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    &#x2F;&#x2F;freopen(&quot;in.txt&quot;, &quot;r&quot;, stdin);</span><br><span class="line">    int n;</span><br><span class="line">    scanf(&quot;%d&quot;, &amp;n);</span><br><span class="line">    string id,sign_in,sign_out;</span><br><span class="line">    for(int i&#x3D;0; i&lt;n; ++i)&#123;</span><br><span class="line">        cin&gt;&gt;id&gt;&gt;sign_in&gt;&gt;sign_out;</span><br><span class="line">        v.push_back(people(id, sign_in, sign_out));</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F;for_each(v.begin(), v.end(), print);</span><br><span class="line">    sort(v.begin(), v.end(), cmpin);</span><br><span class="line">    cout&lt;&lt;v[0].id&lt;&lt;&quot; &quot;;</span><br><span class="line">    sort(v.begin(), v.end(), cmpout);</span><br><span class="line">    cout&lt;&lt;v[0].id&lt;&lt;endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Consolas" color=black>AC代码2：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;string&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    string earliest &#x3D; &quot;23:59:59&quot;;</span><br><span class="line">    string latest  &#x3D; &quot;00:00:00&quot;;</span><br><span class="line">    string earliestName, latestName;</span><br><span class="line">    int n;</span><br><span class="line">    scanf(&quot;%d&quot;, &amp;n);</span><br><span class="line">    string id, early, finally;</span><br><span class="line">    for(int i&#x3D;0; i&lt;n; ++i)&#123;</span><br><span class="line">        cin&gt;&gt;id&gt;&gt;early&gt;&gt;finally;</span><br><span class="line">        if(early &lt;&#x3D; earliest)&#123;</span><br><span class="line">            earliest &#x3D; early;</span><br><span class="line">            earliestName &#x3D; id;</span><br><span class="line">        &#125;</span><br><span class="line">        if(finally &gt;&#x3D; latest)&#123;</span><br><span class="line">            latest &#x3D; finally;</span><br><span class="line">            latestName &#x3D; id;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cout&lt;&lt;earliestName&lt;&lt;&quot; &quot;&lt;&lt;latestName&lt;&lt;endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/PAT甲级题解//" class="article-tag-list-link color3">PAT甲级题解</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2019/04/06/PAT%EF%BC%88%E7%94%B2%E7%BA%A7%EF%BC%891006.Sign%20In%20and%20Sign%20Out%EF%BC%8825%EF%BC%89/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2019/04/06/PAT%EF%BC%88%E7%94%B2%E7%BA%A7%EF%BC%891050.String%20Subtraction%EF%BC%8820%EF%BC%89/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          PAT（甲级）1050.String Subtraction（20）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/04/06/PAT%EF%BC%88%E7%94%B2%E7%BA%A7%EF%BC%891141.PAT%20Ranking%20of%20Institutions%20%EF%BC%8825%20%E5%88%86)/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">PAT（甲级）1141.PAT Ranking of Institutions （25 分)</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>

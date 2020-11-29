@@ -156,29 +156,200 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-PAT（乙级）1051.复数乘法（15）" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       PAT（乙级）1051.复数乘法（15）
     </h1>
   
 
-  
-  <a href="/2019/04/04/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891051.%E5%A4%8D%E6%95%B0%E4%B9%98%E6%B3%95%EF%BC%8815%EF%BC%89/" class="archive-article-date">
+        
+        <a href="/2019/04/04/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891051.%E5%A4%8D%E6%95%B0%E4%B9%98%E6%B3%95%EF%BC%8815%EF%BC%89/" class="archive-article-date">
   	<time datetime="2019-04-04T04:23:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-04</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face="Courier New">PAT 1051.复数乘法（15） </font></p>
+<p><font size=4 face="Courier New">复数可以写成 (A+Bi) 的常规形式，其中 A 是实部，B 是虚部，i 是虚数单位，满足 <code>i^2=−1</code>；也可以写成极坐标下的指数形式 <code>(R×e​(Pi))</code>，其中 <code>R</code> 是复数模，<code>P</code> 是辐角，<code>i </code>是虚数单位，其等价于三角形式 <code>R(cos(P)+isin(P))</code>。<br>现给定两个复数的 R 和 P，要求输出两数乘积的常规形式。<br><font size=4 face="Courier New"><br><font size=5 face="Courier New" color=red>输入格式：</font><br><font size=4 face="Courier New">输入在一行中依次给出两个复数的 R​1, P​1 , R​2​​ , P​2 ，数字间以空格分隔。</p>
+<p><font size=5 face="Courier New" color=red>输出格式：</font><br><font size=4 face="Courier New">在一行中按照 <code>A+Bi </code>的格式输出两数乘积的常规形式，实部和虚部均保留 2 位小数。注意：如果 B 是负数，则应该写成<code>A-|B|i</code>的形式。</p>
+<p><font size=5 face="Courier New" color=red>输入样例：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2.3 3.5 5.2 0.4</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier New" color=red>输出样例：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-8.68-8.23i</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier New" color=blue>题目分析：这道题目的主要难点在于输出格式的处理上。<br><font size=4 color=red face="Courier New">1.对于实部，因为题目要求保留两位有效数字，对于<code>real = -0.0032</code>类似的数字会舍为<code>-0.00</code>,这样的输出是不符合题意的，应该输出为<code>0.00</code>,所以当实部<code>real &lt; 0 &amp;&amp; real &gt;-0.005</code>输出<code>0.00</code>否则正常输出即可;<br>2.对于虚部，因为要添加正负号。所以要区分</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1.img &lt; 0 &amp;&amp; img &gt; -0.005原因同上，输出+.2lfi;</span><br><span class="line">2.img &lt;&#x3D; -0.005，正常输出即可， 输出.2lfi;</span><br><span class="line">3.img &gt;&#x3D;0, 需要添加正号+, 输出+.2lf;</span><br></pre></td></tr></table></figure>
+<p><font size=4 face="Courier New" color=blue>看到上边，其实对于任意保留位数，可以划分为3个区间，<code>（+无穷大，0]（0，某个数字）[某个数字，-无穷大）</code>,其中某个数字是这样计算而来，保留2小数，就用最小的保留两位数字除以二得到。如保留两位数字，最小为0.01，其对应的数字为0.01/2=0.005。</p>
+<p><font size=5 face="Courier New" color=black>AC代码:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;cmath&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    double r1,p1,r2,p2;</span><br><span class="line">    cin&gt;&gt;r1&gt;&gt;p1&gt;&gt;r2&gt;&gt;p2;</span><br><span class="line">    double real &#x3D; r1*r2*(cos(p1+p2));</span><br><span class="line">    double img  &#x3D; r1*r2*(sin(p1+p2));</span><br><span class="line">    </span><br><span class="line">    if(real&lt;0 &amp;&amp; real&gt;-0.005)</span><br><span class="line">        printf(&quot;0.00&quot;);</span><br><span class="line">    else</span><br><span class="line">        printf(&quot;%.2lf&quot;, real);</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    if(img&lt;0 &amp;&amp; img&gt;-0.005)</span><br><span class="line">       printf(&quot;+0.00i&quot;);</span><br><span class="line">        </span><br><span class="line">    else if(img&lt;&#x3D;-0.005)</span><br><span class="line">       printf(&quot;%.2lfi&quot;, img);</span><br><span class="line">    else</span><br><span class="line">       printf(&quot;+%.2lfi&quot;, img);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/PAT乙级题解//" class="article-tag-list-link color3">PAT乙级题解</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2019/04/04/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891051.%E5%A4%8D%E6%95%B0%E4%B9%98%E6%B3%95%EF%BC%8815%EF%BC%89/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2019/04/04/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891001.%E5%AE%B3%E6%AD%BB%E4%BA%BA%E4%B8%8D%E5%81%BF%E5%91%BD%E7%9A%84(3n+1)%E7%8C%9C%E6%83%B3%EF%BC%8815%EF%BC%89/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          PAT（乙级）1001.害死人不偿命的(3n+1)猜想（15）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/04/04/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891017.A%E9%99%A4%E4%BB%A5B%EF%BC%8820%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">PAT（乙级）1017.A除以B（20）</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>

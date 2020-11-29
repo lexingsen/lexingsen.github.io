@@ -156,29 +156,190 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-Linux-解决登陆mysql数据库出现 “Access denied for user &#39;root&#39;@&#39;localhost&#39; (using password! YES)”的问题" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       Linux-解决登陆mysql数据库出现 “Access denied for user &#39;root&#39;@&#39;localhost&#39; (using password: YES)”的问题
     </h1>
   
 
-  
-  <a href="/2018/11/25/Linux-%E8%A7%A3%E5%86%B3%E7%99%BB%E9%99%86mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E5%87%BA%E7%8E%B0%20%E2%80%9CAccess%20denied%20for%20user%20'root'@'localhost'%20(using%20password!%20YES)%E2%80%9D%E7%9A%84%E9%97%AE%E9%A2%98/" class="archive-article-date">
+        
+        <a href="/2018/11/25/Linux-%E8%A7%A3%E5%86%B3%E7%99%BB%E9%99%86mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E5%87%BA%E7%8E%B0%20%E2%80%9CAccess%20denied%20for%20user%20'root'@'localhost'%20(using%20password!%20YES)%E2%80%9D%E7%9A%84%E9%97%AE%E9%A2%98/" class="archive-article-date">
   	<time datetime="2018-11-25T14:58:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-25</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face="Courier New">我的平台为redhat-linux,其它版本linux类同。</p>
+<p><font size=5 face="Courier New">请按照下列步骤依此执行，亲测有效：<br>1.切换为root用户，停止mysql服务，<code>service mysqld stop</code>。<br>2.在当前终端中输入<code> mysqld_safe --user=mysql --skip-grant-tables --skip-networking</code>。<br>3.新打开一个终端输入<code>mysql</code>。<br>4.进入mysql后，输入<code> update mysql.user set password=PASSWORD(&#39;123456&#39;) where user=&#39;root&#39;;</code>修改密码。<br>5.刷新<code>flush priviledges;</code>  退出 <code>quit;</code><br>6.重新启动mysqld服务,<code>service mysqld restart</code></font></p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Linux//" class="article-tag-list-link color1">Linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2018/11/25/Linux-%E8%A7%A3%E5%86%B3%E7%99%BB%E9%99%86mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E5%87%BA%E7%8E%B0%20%E2%80%9CAccess%20denied%20for%20user%20'root'@'localhost'%20(using%20password!%20YES)%E2%80%9D%E7%9A%84%E9%97%AE%E9%A2%98/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2018/11/29/C!S%E6%A8%A1%E5%BC%8F%E4%B8%8B---%E5%A4%9A%E8%BF%9B%E7%A8%8B%E7%BC%96%E7%A8%8B/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          C/S模式下---多进程编程
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/11/24/%E8%BD%AF%E9%93%BE%E6%8E%A5%E5%92%8C%E7%A1%AC%E9%93%BE%E6%8E%A5/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">软链接和硬链接</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>

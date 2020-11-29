@@ -159,29 +159,197 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-strcmp函数的分析及实现" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       strcmp函数的分析及实现
     </h1>
   
 
-  
-  <a href="/2018/04/04/strcmp%E5%87%BD%E6%95%B0%E7%9A%84%E5%88%86%E6%9E%90%E5%8F%8A%E5%AE%9E%E7%8E%B0/" class="archive-article-date">
+        
+        <a href="/2018/04/04/strcmp%E5%87%BD%E6%95%B0%E7%9A%84%E5%88%86%E6%9E%90%E5%8F%8A%E5%AE%9E%E7%8E%B0/" class="archive-article-date">
   	<time datetime="2018-04-04T11:40:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-04</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><strong>函数原型：</strong>   <code>int strcmp(const char *string1,const char *string2)</code></p>
+<p><strong>所在库文件：</strong> <code>#include&lt;string.h&gt;</code></p>
+<p><strong>参数：</strong>  以<code>null</code>结尾的字符串   <code>const</code>修饰防止字符串被修改，进行保护。</p>
+<p><strong>返回值：</strong><br><img src="https://img-blog.csdn.net/20180404184226445?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>上图在MSDN文档中截取，返回值表明了<strong>字符串1</strong>和<strong>字符串2</strong>的字典序关系。<br>什么是字典序关系呢？</p>
+<p>度娘的回答是</p>
+<p>在数学中，字典或词典顺序（也称为词汇顺序，字典顺序，字母顺序或词典顺序）是基于字母顺序排列的单词按字母顺序排列的方法。 这种泛化主要在于定义有序完全有序集合（通常称为字母表）的元素的序列（通常称为计算机科学中的单词）的总顺序。</p>
+<p>其实讲了这么多，我们只需要明白，这里的字典序是一种按顺序排列的法则，但它排列的根据是什么呢？其根据是ascii码表。</p>
+<p>这时就应该联想到在计算机科学中ASCII码表，<code>strcmp</code>函数的返回值是两个字符串的字典序关系，其实也就是在ascii表中的先后排列关系。<br>所以<code>strcmp</code>函数真正比较的是字符串中<strong>每个字符的ascii</strong>码值大小。</p>
+<p>在上图中，请一定注意。返回值的三种情况分别为     0     &gt;0     &lt;0。并没说其返回值为 0    -1      1，所以我们在使用的时候千万不能将返回值与-1或1进行比较的。如果进行了比较，很有可能给程序带来许多潜藏的bug，难以发现。</p>
+<p><strong>ASCII表</strong><br><img src="https://img-blog.csdn.net/20180404190440557?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<p><strong>函数功能描述</strong><br>当s1 &lt; s2时，返回负值。<br>当s1 &gt; s2时，返回正值。<br>当s1 == s2，返回0。<br>两个字符串的每个字符从左到右依此按照对应的ascii码值大小进行比较，若两字符对应的ascii码值相等，继续比较直到出现不同的字符或者遇到串尾标志符<code>&#39;\0&#39;</code>为止。</p>
+<p>下面实现<code>strcmp</code>函数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">#include&lt;assert.h&gt;</span><br><span class="line"></span><br><span class="line">int my_strcmp(const char *string1,const char *string2)</span><br><span class="line">&#123;</span><br><span class="line">	assert(NULL !&#x3D; string1);</span><br><span class="line">	assert(NULL !&#x3D; string2);&#x2F;&#x2F;防御性编程</span><br><span class="line">	const char *p &#x3D; string1;</span><br><span class="line">	const char *q &#x3D; string2;</span><br><span class="line">	while(*p &#x3D;&#x3D; *q)</span><br><span class="line">	&#123;</span><br><span class="line">		if(*p &#x3D;&#x3D; &#39;\0&#39;)&#x2F;&#x2F;此时*p &#x3D;&#x3D; *q &#x3D;&#x3D; &#39;\0&#39;即两字符串完全相同</span><br><span class="line">		&#123;</span><br><span class="line">			return 0;</span><br><span class="line">		&#125;</span><br><span class="line">		p++;</span><br><span class="line">		q++;</span><br><span class="line">	&#125;</span><br><span class="line">	&#x2F;&#x2F;跳出while循环，即此时的*p与*q不相同</span><br><span class="line">	&#x2F;&#x2F;按照返回值       *string1 &gt; *string2      返回值大于0</span><br><span class="line">	&#x2F;&#x2F;               *string1 &lt; *string2      返回值小于0</span><br><span class="line">	&#x2F;&#x2F;ascii码值共有256个  无符号字符型指针进行解引用 0 - 2^8-1 共256</span><br><span class="line">	return *(unsigned char*)p - *(unsigned char*)q;	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>测试用例：</strong><br>char *p1 = “ABCDE”;<br>char *p2 = “ABCDE”;</p>
+<p>char *p1 = “ABCDE”;<br>char *p2 = “ABCD”;</p>
+<p>char *p1 = “ABCD”;<br>char *p2 = “ABCDE”;</p>
+<p>char *p = “hhha”;<br>char *q = “hhhh”;</p>
+<p>char string1[] = “The quick brown dog jumps over the lazy fox”;<br>char string2[] = “The QUICK brown dog jumps over the lazy fox”;</p>
+<p>更多的测试用例大家可以进行规定，观察结果与预期的结果是否相同。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2018/04/04/strcmp%E5%87%BD%E6%95%B0%E7%9A%84%E5%88%86%E6%9E%90%E5%8F%8A%E5%AE%9E%E7%8E%B0/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2018/04/05/const%E4%BF%AE%E9%A5%B0%E7%AC%A6%E7%9A%84%E4%BD%BF%E7%94%A8%EF%BC%88%E4%BF%AE%E9%A5%B0%E7%BB%93%E6%9E%84%E4%BD%93%E6%8C%87%E9%92%88%EF%BC%8C%E5%BC%95%E7%94%A8%E5%A4%96%E9%83%A8%E7%9A%84const%20%E5%8F%98%E9%87%8F%EF%BC%89/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          const修饰符的使用（修饰结构体指针，引用外部的const 变量）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/04/04/%E4%BD%BF%E7%94%A8vi!vim%E6%90%9C%E7%B4%A2%E5%85%B3%E9%94%AE%E5%AD%97%E5%90%8E%E5%88%A0%E9%99%A4%E5%85%B3%E9%94%AE%E5%AD%97%E9%AB%98%E4%BA%AE/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">使用vi/vim搜索关键字后删除关键字高亮</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>

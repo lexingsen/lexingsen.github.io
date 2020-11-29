@@ -156,29 +156,203 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-PAT（乙级）1067.试密码(20)" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       PAT（乙级）1067.试密码(20)
     </h1>
   
 
-  
-  <a href="/2019/03/26/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891067.%E8%AF%95%E5%AF%86%E7%A0%81(20)/" class="archive-article-date">
+        
+        <a href="/2019/03/26/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891067.%E8%AF%95%E5%AF%86%E7%A0%81(20)/" class="archive-article-date">
   	<time datetime="2019-03-26T07:15:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-26</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face="Courier New">1067.试密码(20)</font></p>
+<p><font size=4 face="Courier New">当你试图登录某个系统却忘了密码时，系统一般只会允许你尝试有限多次，当超出允许次数时，账号就会被锁死。本题就请你实现这个小功能。</p>
+<p><font size=5 face="Courier New" color=red>输入格式：</font><br><font size=4 face="Courier New">输入在第一行给出一个密码（长度不超过 20 的、不包含空格、Tab、回车的非空字符串）和一个正整数 N（≤ 10），分别是正确的密码和系统允许尝试的次数。随后每行给出一个以回车结束的非空字符串，是用户尝试输入的密码。输入保证至少有一次尝试。当读到一行只有单个 <code>#</code> 字符时，输入结束，并且这一行不是用户的输入。</p>
+<p><font size=5 face="Courier New" color=red>输出格式：</font><br><font size=4 face="Courier New">对用户的每个输入，如果是正确的密码且尝试次数不超过 N，则在一行中输出<code> Welcome in</code>，并结束程序；如果是错误的，则在一行中按格式输出 <code> Wrong password: 用户输入的错误密码</code>；当错误尝试达到 N 次时，再输出一行 <code>Account locked</code>，并结束程序。</p>
+<p><font size=5 face="Courier New" color=red>输入样例1：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Correct%pw 3</span><br><span class="line">correct%pw</span><br><span class="line">Correct@PW</span><br><span class="line">whatisthepassword!</span><br><span class="line">Correct%pw</span><br><span class="line">#</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier New" color=red>输出样例1：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Wrong password: correct%pw</span><br><span class="line">Wrong password: Correct@PW</span><br><span class="line">Wrong password: whatisthepassword!</span><br><span class="line">Account locked</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier New" color=red>输入样例2：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cool@gplt 3</span><br><span class="line">coolman@gplt</span><br><span class="line">coollady@gplt</span><br><span class="line">cool@gplt</span><br><span class="line">try again</span><br><span class="line">#</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier New" color=red>输出样例2：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Wrong password: coolman@gplt</span><br><span class="line">Wrong password: coollady@gplt</span><br><span class="line">Welcome in</span><br></pre></td></tr></table></figure>
+<p><font size=5 color=blue face="Courier New">题目分析：是一个简单的字符串处理。但是需要注意一些问题，题目要求的是长度不超过 20 的、不包含空格、Tab、回车的非空字符串，但实际上可能在输入有不正确的格式被正确的处理了。如样例2的第四个输入，try again，注意scanf不能读取到空格，处理字符串时可以使用getline()获取整个字符串包含空格。</p>
+<p><font size=5 face="Courier  New">AC代码：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;cstdio&gt;</span><br><span class="line">#include &lt;string&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    freopen(&quot;in.txt&quot;, &quot;r&quot;, stdin);</span><br><span class="line">    string origin, test;</span><br><span class="line">    int n;</span><br><span class="line">    cin&gt;&gt;origin&gt;&gt;n;</span><br><span class="line">	getchar();</span><br><span class="line">    int cnt &#x3D; 0;</span><br><span class="line">    while(n--)&#123;</span><br><span class="line">    	getline(cin, test);</span><br><span class="line">    	if(test.length()&#x3D;&#x3D;1 &amp;&amp; test[0]&#x3D;&#x3D;&#39;#&#39;)</span><br><span class="line">    		return 0;</span><br><span class="line">        if(test&#x3D;&#x3D;origin)&#123;</span><br><span class="line">            cout&lt;&lt;&quot;Welcome in&quot;&lt;&lt;endl;</span><br><span class="line">            return 0;</span><br><span class="line">        &#125;</span><br><span class="line">        else&#123;</span><br><span class="line">            cout&lt;&lt;&quot;Wrong password: &quot;&lt;&lt;test&lt;&lt;endl;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cout&lt;&lt;&quot;Account locked&quot;&lt;&lt;endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/PAT乙级题解//" class="article-tag-list-link color3">PAT乙级题解</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2019/03/26/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891067.%E8%AF%95%E5%AF%86%E7%A0%81(20)/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2019/03/26/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891076.Wifi%E5%AF%86%E7%A0%81%EF%BC%8815%EF%BC%89/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          PAT（乙级）1076.Wifi密码（15）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/03/26/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891066.%E5%9B%BE%E5%83%8F%E8%BF%87%E6%BB%A4%EF%BC%8815%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">PAT（乙级）1066.图像过滤（15）</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>

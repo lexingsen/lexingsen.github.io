@@ -154,205 +154,888 @@
           <div id="js-content" class="content-ll">
             
   
-    <header class="article-header">
-  
+    <article id="post-protobuf的使用(二)" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2020/05/30/protobuf%E7%9A%84%E4%BD%BF%E7%94%A8(%E4%BA%8C)/">protobuf的使用(二)</a>
     </h1>
   
 
-  
-  <a href="/2020/05/30/protobuf%E7%9A%84%E4%BD%BF%E7%94%A8(%E4%BA%8C)/" class="archive-article-date">
+        
+        <a href="/2020/05/30/protobuf%E7%9A%84%E4%BD%BF%E7%94%A8(%E4%BA%8C)/" class="archive-article-date">
   	<time datetime="2020-05-30T02:35:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-30</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face=consolas>1.定义字符串一般不使用string,使用bytes来代替string。若定义为string,proto底层还是会把string-&gt;bytes，虽然不会影响结果，但是在一定程度上还是会浪费效率。</font></p>
+<p><font size=5 face=consolas>2.其他的数据类型，基本数据，列表，映射表</font></p>
+<p><font size=5 face=consolas>3.为成员变量设置值<br>test.proto</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">message Error &#123;</span><br><span class="line">	int32 errorCode &#x3D; 1;</span><br><span class="line">	bytes errorMsg &#x3D; 2;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">message User &#123;</span><br><span class="line">	bytes name &#x3D; 1;</span><br><span class="line">	int32 age &#x3D; 2;</span><br><span class="line">	enum Sex &#123;</span><br><span class="line">		MAN &#x3D; 0;</span><br><span class="line">		WOMAN &#x3D; 1;</span><br><span class="line">	&#125;</span><br><span class="line">	Sex sex &#x3D; 3;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">message GetUserList &#123;</span><br><span class="line">	Error error &#x3D; 1;</span><br><span class="line">	repeated User list &#x3D; 2;&#x2F;&#x2F; repeated表示列表</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><font size=5 face=consolas>main.cc</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">int main() &#123;</span><br><span class="line">  GetUserList p;</span><br><span class="line">  Error* err &#x3D; p.mutable_error();</span><br><span class="line">  err-&gt;set_errorcode(1);</span><br><span class="line">  err-&gt;set_errormsg(&quot;xxx&quot;);</span><br><span class="line"></span><br><span class="line">  User* user &#x3D; p.add_list();</span><br><span class="line">  user-&gt;set_age(10);</span><br><span class="line">  user-&gt;set_name(&quot;zhangsan&quot;);</span><br><span class="line">  user-&gt;set_sex(User::MAN);</span><br><span class="line"></span><br><span class="line">  cout &lt;&lt; p.list_size() &lt;&lt; endl;</span><br><span class="line">  return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">c++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/c-c//" class="article-tag-list-link color1">c/c++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/05/30/protobuf%E7%9A%84%E4%BD%BF%E7%94%A8(%E4%BA%8C)/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-protobuf的使用(一)" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2020/05/30/protobuf%E7%9A%84%E4%BD%BF%E7%94%A8(%E4%B8%80)/">protobuf的使用(一)</a>
     </h1>
   
 
-  
-  <a href="/2020/05/30/protobuf%E7%9A%84%E4%BD%BF%E7%94%A8(%E4%B8%80)/" class="archive-article-date">
+        
+        <a href="/2020/05/30/protobuf%E7%9A%84%E4%BD%BF%E7%94%A8(%E4%B8%80)/" class="archive-article-date">
   	<time datetime="2020-05-30T01:26:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-30</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=6 face=consonlas color=black><strong>一、protobuf简介</strong></font><br><font size=5 face=consonlas>protobuf (protocol buffer)是google公司实现的一种数据交换的格式，由于其是一种二进制的格式，相对于xml,json进行数据交换要快很多，且占用存储空间更小。因此可以把它用于分布式应用之间的数据通信的数据交换格式，作为一种效率和兼容性都非常优秀的二进制数据传输格式。</font></p>
+<p><font size=6 face=consonlas color=black><strong>二、protobuf的基础语法及编译命令</strong></font><br><font size=5 face=consonlas>由于protobuf独立于平台语言，Google为其提供了多种语言的实现，包括Java,C++,Go,Python等，并且为每一种实现都包含了相应语言的编译器和库文件，方便不同语言开发者的使用。</p>
+<p><font size=5 face=consonlas color=black><strong>(1)基础语法</strong></font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">syntax &#x3D; &quot;proto3&quot;;</span><br><span class="line">package testprotobuf;</span><br><span class="line"></span><br><span class="line">message Person &#123;</span><br><span class="line">	string name &#x3D; 1; &#x2F;&#x2F; 字符串类型</span><br><span class="line">	int32 age &#x3D; 2; &#x2F;&#x2F; int32类型</span><br><span class="line">	enum Sex &#123;    &#x2F;&#x2F;枚举类型</span><br><span class="line">		MAN &#x3D; 0;</span><br><span class="line">		WOMAN &#x3D; 1;</span><br><span class="line">	&#125;</span><br><span class="line">	Sex sex &#x3D; 3;</span><br><span class="line">	bool flag &#x3D; 4; &#x2F;&#x2F; bool类型</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=5 face=consonlas color=black><strong>(2)编译</strong></font><br><font size=5 face=consonlas>使用protoc讲proto文件，编译生成C++的源文件和头文件，如对test1.proto进行编译：<br><code>protoc test1.proto --cpp_out=./</code><br>生成test1.pb.cc和test1.pb.h文件</p>
+<p><font size=6 face=consonlas color=black><strong>三、使用proto文件生成的类，对对象进行序列化和反序列化</strong></font></p>
+<p><font size=5 face=consonlas color=black><strong>(1)序列化</strong></font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;test1.pb.h&quot;</span><br><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;string&gt;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line">using namespace testprotobuf;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">  Person p;</span><br><span class="line">  p.set_age(10);</span><br><span class="line">  p.set_name(&quot;zhangsan&quot;);</span><br><span class="line">  p.set_sex(testprotobuf::Person::MAN);</span><br><span class="line">  p.set_flag(false);</span><br><span class="line"></span><br><span class="line">  &#x2F;&#x2F; 序列化</span><br><span class="line">  std::string msg;</span><br><span class="line">  if (p.SerializeToString(&amp;msg)) &#123;</span><br><span class="line">    cout &lt;&lt; msg.c_str() &lt;&lt; endl;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>g++ main.cc test1.pb.cc -lprotobuf -o main</code></p>
+<p><font size=5 face=consonlas color=black><strong>(2)反序列化</strong></font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;test1.pb.h&quot;</span><br><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;string&gt;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line">using namespace testprotobuf;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">  Person p;</span><br><span class="line">  p.set_age(10);</span><br><span class="line">  p.set_name(&quot;zhangsan&quot;);</span><br><span class="line">  p.set_sex(testprotobuf::Person::MAN);</span><br><span class="line">  p.set_flag(false);</span><br><span class="line"></span><br><span class="line">  &#x2F;&#x2F; 序列化</span><br><span class="line">  std::string msg;</span><br><span class="line">  if (p.SerializeToString(&amp;msg)) &#123;</span><br><span class="line">    cout &lt;&lt; msg.c_str() &lt;&lt; endl;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">	&#x2F;&#x2F; 反序列化</span><br><span class="line">   Person p1;</span><br><span class="line">   if (p1.ParseFromString(msg)) &#123;</span><br><span class="line">     cout &lt;&lt; p1.name() &lt;&lt; endl;</span><br><span class="line">     cout &lt;&lt; p1.age() &lt;&lt; endl;</span><br><span class="line">     cout &lt;&lt; p1.sex() &lt;&lt; endl;</span><br><span class="line">     cout &lt;&lt; p1.flag() &lt;&lt; endl;</span><br><span class="line">  &#125;</span><br><span class="line">  return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">c++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/c-c//" class="article-tag-list-link color1">c/c++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/05/30/protobuf%E7%9A%84%E4%BD%BF%E7%94%A8(%E4%B8%80)/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-C++关键字mutable和explicit" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2020/05/22/C++%E5%85%B3%E9%94%AE%E5%AD%97mutable%E5%92%8Cexplicit/">C++关键字mutable和explicit</a>
     </h1>
   
 
-  
-  <a href="/2020/05/22/C++%E5%85%B3%E9%94%AE%E5%AD%97mutable%E5%92%8Cexplicit/" class="archive-article-date">
+        
+        <a href="/2020/05/22/C++%E5%85%B3%E9%94%AE%E5%AD%97mutable%E5%92%8Cexplicit/" class="archive-article-date">
   	<time datetime="2020-05-22T01:20:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-22</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p>mutuble:使得变量可以修改，不能修饰被static和const的变量。<br>一般在类的常方法中，尽管常方法不允许我们修改类中的任何变量，但是有时候由于实际场景的需求，还是需要对某一或某几个变量进行修改，这时候就可以使用mutable来修饰对应的变量了。</p>
+<p>explicit:禁止类构造函数进行自动隐式转换，这样可能造成歧义。<br>1.对于单个无默认参数的构造函数适用。<br>2.对于多个无默认值参数的构造函数不适用。<br>3.对于多个参数的构造函数，如果第一个参数未给出默认值，而其余所有的参数都给出了默认值同样适用。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/c-c//" class="article-tag-list-link color1">c/c++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/05/22/C++%E5%85%B3%E9%94%AE%E5%AD%97mutable%E5%92%8Cexplicit/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-PAT（乙级）1047.编程团体赛（20）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2020/05/06/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891047.%E7%BC%96%E7%A8%8B%E5%9B%A2%E4%BD%93%E8%B5%9B%EF%BC%8820%EF%BC%89/">PAT（乙级）1047.编程团体赛（20）</a>
     </h1>
   
 
-  
-  <a href="/2020/05/06/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891047.%E7%BC%96%E7%A8%8B%E5%9B%A2%E4%BD%93%E8%B5%9B%EF%BC%8820%EF%BC%89/" class="archive-article-date">
+        
+        <a href="/2020/05/06/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891047.%E7%BC%96%E7%A8%8B%E5%9B%A2%E4%BD%93%E8%B5%9B%EF%BC%8820%EF%BC%89/" class="archive-article-date">
   	<time datetime="2020-05-06T00:02:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-06</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face="consolas" color=black><strong>PAT 1047.编程团体赛（20）</strong></font></p>
+<p><font size=4 face="consolas" color=black>编程团体赛的规则为：每个参赛队由若干队员组成；所有队员独立比赛；参赛队的成绩为所有队员的成绩和；成绩最高的队获胜。<br>现给定所有队员的比赛成绩，请你编写程序找出冠军队。</p>
+<p><font size=5 face="consolas" color=red><strong>输入格式：</strong></font><br><font size=4 face="consolas"  color=black>输入第一行给出一个正整数 N（≤10^4），即所有参赛队员总数。随后 N 行，每行给出一位队员的成绩，格式为：<code>队伍编号-队员编号 成绩</code>，其中<code>队伍编号</code>为 1 到 1000 的正整数，<code>队员编号</code>为 1 到 10 的正整数，<code>成绩</code>为 0 到 100 的整数。</p>
+<p><font size=5 face="consolas" color=red><strong>输出格式：</strong></font><br><font size=4 face="consolas"  color=black>在一行中输出冠军队的编号和总成绩，其间以一个空格分隔。注意：题目保证冠军队是唯一的。</p>
+<p><font size=5 face="consolas" color=red><strong>输入样例：</strong></font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">6</span><br><span class="line">3-10 99</span><br><span class="line">11-5 87</span><br><span class="line">102-1 0</span><br><span class="line">102-3 100</span><br><span class="line">11-9 89</span><br><span class="line">3-2 61</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="consolas" color=red><strong>输出样例：</strong></font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">11 176</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="consolas" color=blue>题目分析：数组hash的使用，这个题目队员编号没啥意义，统计成绩。找最大值及其下标即可。</font></p>
+<p><font size=5 face="consolas"  color=black><strong>AC代码：</strong></font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">const int max_n &#x3D; 1000;</span><br><span class="line">int arr[max_n] &#x3D; &#123;0&#125;;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    int n, a, b, score;</span><br><span class="line">    scanf(&quot;%d&quot;, &amp;n);</span><br><span class="line">    for(int i&#x3D;0; i&lt;n; ++i)&#123;</span><br><span class="line">        scanf(&quot;%d-%d %d&quot;, &amp;a, &amp;b, &amp;score);</span><br><span class="line">        arr[a] +&#x3D; score;</span><br><span class="line">    &#125;</span><br><span class="line">    int max_score, index;</span><br><span class="line">    for(int i&#x3D;1; i&lt;&#x3D;1000; ++i)&#123;</span><br><span class="line">        if(arr[i]&gt;max_score)&#123;</span><br><span class="line">            index &#x3D; i;</span><br><span class="line">            max_score &#x3D; arr[i];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cout&lt;&lt;index&lt;&lt;&quot; &quot;&lt;&lt;max_score&lt;&lt;endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/PAT乙级题解//" class="article-tag-list-link color3">PAT乙级题解</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/05/06/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891047.%E7%BC%96%E7%A8%8B%E5%9B%A2%E4%BD%93%E8%B5%9B%EF%BC%8820%EF%BC%89/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-信号量" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2020/05/06/%E4%BF%A1%E5%8F%B7%E9%87%8F/">信号量</a>
     </h1>
   
 
-  
-  <a href="/2020/05/06/%E4%BF%A1%E5%8F%B7%E9%87%8F/" class="archive-article-date">
+        
+        <a href="/2020/05/06/%E4%BF%A1%E5%8F%B7%E9%87%8F/" class="archive-article-date">
   	<time datetime="2020-05-05T23:58:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-06</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p>头文件：<code>include &lt;semaphore.h&gt;</code><br>主要的函数：</p>
+<p><font size=5 face="Courier New"  color=black><strong>1.初始化信号量</strong></font><br><font size=4.5 face="Courier New">函数原型：<code>int sem_init(sem_t* sem,int pshared,unsigned int value)</code><font size=4.5 face="Courier New"><br>参数：<br><code>sem:</code>指定是哪一个信号量<br><code>pshared:</code>指定信号量的类型，值为0表示是在当前进程使用的局部信号量，否则该信号量就可以在多个进程中共享。<br><code>value:</code>指定信号量的初始值，可以理解为最多由多少个线程可以访问共享资源。<br><font size=4.5 face="Courier New">返回值：</font></p>
+<p><font size=5 face="Courier New" color=black><strong>2.销毁信号量</strong></font><br><font size=4.5 face="Courier New">函数原型：<code>int sem_destroy(sem_t* sem)</code><br><font size=4.5 face="Courier New">函数功能：释放信号量占用的内核资源，<font color=red>注意</font>不能释放正在被线程其他等待的信号量，否则会出现错误。<br><font size=4.5 face="Courier New">返回值：</font></p>
+<p><font size=5 face="Courier New" color=black><strong>3.加锁</strong></font><br><font size=4.5 face="Courier New">函数原型：<code>int sem_wait(sem_t* sem)</code><br><font size=4.5 face="Courier New">函数功能：对信号量的值<code>value</code>进行-1操作，相当于p操作。如果value的值为0，会发生阻塞。</p>
+<p><font size=5 face="Courier New" color=black><strong>4.尝试加锁</strong></font><br><font size=4.5 face="Courier New">函数原型：<code>int sem_trywait(sem_t* sem)</code><br><font size=4.5 face="Courier New">函数功能：对信号量的值<code>value</code>进行-1操作，相当于p操作。如果value的值为0，会立即返回，不发生阻塞。</p>
+<p><font size=5 face="Courier New" color=black><strong>5.解锁</strong></font><br><font size=4.5 face="Courier New">函数原型：<code>int sem_post(sem_t* sem)</code><br><font size=4.5 face="Courier New">函数功能：对信号量的值<code>value</code>进行+1操作，相当于v操作。当信号量的值value大于0时，其他调用sem_wait()正在等待信号量的线程将被唤醒。</p>
+<p><font size=4.5 face="Courier New" color=black>线程级信号量相对于互斥锁对于线程的控制尺度更大，在sem_init()第三个参数可以控制同时访问共享资源的线程的个数，通过这个参数，可以实现同步控制、互斥、以及阻塞。</p>
+<p><font size=4.5 face="Courier New" color=black>比如两个线程协同工作，只有在一个工作线程完成对共享资源的访问操作之后，另外一个工作线程才可以对共享资源做访问。还有比如只有当事件发生后才能让线程开始工作，需要让线程在此之间处于阻塞的状态，一旦事件发生后，唤醒等待的线程即可开始工作。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/linux//" class="article-tag-list-link color1">linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/05/06/%E4%BF%A1%E5%8F%B7%E9%87%8F/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-面试题05. 替换空格" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2020/05/05/%E9%9D%A2%E8%AF%95%E9%A2%9805.%20%E6%9B%BF%E6%8D%A2%E7%A9%BA%E6%A0%BC/">面试题05. 替换空格</a>
     </h1>
   
 
-  
-  <a href="/2020/05/05/%E9%9D%A2%E8%AF%95%E9%A2%9805.%20%E6%9B%BF%E6%8D%A2%E7%A9%BA%E6%A0%BC/" class="archive-article-date">
+        
+        <a href="/2020/05/05/%E9%9D%A2%E8%AF%95%E9%A2%9805.%20%E6%9B%BF%E6%8D%A2%E7%A9%BA%E6%A0%BC/" class="archive-article-date">
   	<time datetime="2020-05-05T14:33:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-05</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face=cosonlas><strong>替换空格</strong></font><br><font size=4 face=cosonlas>请实现一个函数，把字符串 s 中的每个空格替换成”%20”。<br></font></p>
+<p><font size=5 face=cosonlas><strong>示例1：</strong></font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：s &#x3D; &quot;We are happy.&quot;</span><br><span class="line">输出：&quot;We%20are%20happy.&quot;</span><br></pre></td></tr></table></figure>
+<p><font size=5 face=cosonlas><strong>限制：</strong></font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0 &lt;&#x3D; s 的长度 &lt;&#x3D; 10000</span><br></pre></td></tr></table></figure>
+
+<p><font size=5 face=cosonlas color=blue><strong>简单题，直接遍历</strong></font><br>时间复杂度为O(n),空间复杂度为O(n)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    string replaceSpace(string s) &#123; </span><br><span class="line">      string res;</span><br><span class="line">      for (int i&#x3D;0; i&lt;s.size(); ++i) &#123;</span><br><span class="line">        if (s[i] &#x3D;&#x3D; &#39; &#39;) res +&#x3D; &quot;%20&quot;;</span><br><span class="line">        else res +&#x3D; s[i];</span><br><span class="line">      &#125;</span><br><span class="line">      return res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">c++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/剑指offer//" class="article-tag-list-link color3">剑指offer</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/05/05/%E9%9D%A2%E8%AF%95%E9%A2%9805.%20%E6%9B%BF%E6%8D%A2%E7%A9%BA%E6%A0%BC/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-面试题04. 二维数组中的查找" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2020/05/05/%E9%9D%A2%E8%AF%95%E9%A2%9804.%20%E4%BA%8C%E7%BB%B4%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E6%9F%A5%E6%89%BE/">面试题04. 二维数组中的查找</a>
     </h1>
   
 
-  
-  <a href="/2020/05/05/%E9%9D%A2%E8%AF%95%E9%A2%9804.%20%E4%BA%8C%E7%BB%B4%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E6%9F%A5%E6%89%BE/" class="archive-article-date">
+        
+        <a href="/2020/05/05/%E9%9D%A2%E8%AF%95%E9%A2%9804.%20%E4%BA%8C%E7%BB%B4%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E6%9F%A5%E6%89%BE/" class="archive-article-date">
   	<time datetime="2020-05-05T14:07:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-05</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face=cosonlas><strong>二维数组中的查找</strong></font><br><font size=4 face=cosonlas>在一个 n * m 的二维数组中，每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。</p>
+</font>
+
+<p><font size=5 face=cosonlas><strong>示例：</strong></font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">现有矩阵 matrix 如下：</span><br><span class="line">[</span><br><span class="line">  [1,   4,  7, 11, 15],</span><br><span class="line">  [2,   5,  8, 12, 19],</span><br><span class="line">  [3,   6,  9, 16, 22],</span><br><span class="line">  [10, 13, 14, 17, 24],</span><br><span class="line">  [18, 21, 23, 26, 30]</span><br><span class="line">]</span><br><span class="line">给定 target &#x3D; 5，返回 true。</span><br><span class="line">给定 target &#x3D; 20，返回 false。</span><br></pre></td></tr></table></figure>
+<p><font size=5 face=cosonlas><strong>限制：</strong></font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">0 &lt;&#x3D; n &lt;&#x3D; 1000</span><br><span class="line">0 &lt;&#x3D; m &lt;&#x3D; 1000</span><br></pre></td></tr></table></figure>
+
+<p><font size=5 face=cosonlas color=blue><strong>方法一(二分查找)：</strong></font><br>给出的矩阵，每行每列都是递增有序的。因此可以按行或按列进行二分查找。按行进行二分查找，时间复杂度为O(nlogm)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    bool findNumberIn2DArray(vector&lt;vector&lt;int&gt;&gt;&amp; matrix, int target) &#123;</span><br><span class="line">      for (int i&#x3D;0; i&lt;matrix.size(); ++i) &#123;</span><br><span class="line">        if (binarySearch(matrix[i], 0, matrix[i].size()-1, target)) return true;</span><br><span class="line">      &#125;</span><br><span class="line">      return false;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    bool binarySearch(vector&lt;int&gt;&amp; a, int l, int r, int x) &#123;</span><br><span class="line">      while (l &lt;&#x3D; r) &#123;</span><br><span class="line">        int m &#x3D; (r-l)&#x2F;2 + l;</span><br><span class="line">        if (a[m] &#x3D;&#x3D; x) return true;</span><br><span class="line">        else if (a[m] &lt; x) l &#x3D; m+1;</span><br><span class="line">        else if (a[m] &gt; x) r &#x3D; m-1;</span><br><span class="line">      &#125;</span><br><span class="line">      return false;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><font size=5 face=cosonlas color=blue><strong>方法二：</strong></font><br>从右上角开始，如果当前元素大于target，列向左移动。<br>如果当前元素小于target，行向下移动。<br>如果相等，返回true。<br>如果越界后还是未找到target，则返回false<br>时间复杂度O(n+m)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    bool findNumberIn2DArray(vector&lt;vector&lt;int&gt;&gt;&amp; a, int target) &#123;</span><br><span class="line">      if (!a.size()) return false;</span><br><span class="line">      int n &#x3D; a.size(), m &#x3D; a[0].size();</span><br><span class="line">      int row &#x3D; 0, col &#x3D; m-1;</span><br><span class="line">      while (row &lt; n &amp;&amp; col &gt;&#x3D; 0) &#123;</span><br><span class="line">        if (a[row][col] &gt; target) col --;</span><br><span class="line">        else if (a[row][col] &lt; target) row ++;</span><br><span class="line">        else return true;</span><br><span class="line">      &#125;</span><br><span class="line">      return false;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">c++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/剑指offer//" class="article-tag-list-link color3">剑指offer</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/05/05/%E9%9D%A2%E8%AF%95%E9%A2%9804.%20%E4%BA%8C%E7%BB%B4%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E6%9F%A5%E6%89%BE/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-面试题03. 数组中重复的数字" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2020/05/05/%E9%9D%A2%E8%AF%95%E9%A2%9803.%20%E6%95%B0%E7%BB%84%E4%B8%AD%E9%87%8D%E5%A4%8D%E7%9A%84%E6%95%B0%E5%AD%97/">面试题03. 数组中重复的数字</a>
     </h1>
   
 
-  
-  <a href="/2020/05/05/%E9%9D%A2%E8%AF%95%E9%A2%9803.%20%E6%95%B0%E7%BB%84%E4%B8%AD%E9%87%8D%E5%A4%8D%E7%9A%84%E6%95%B0%E5%AD%97/" class="archive-article-date">
+        
+        <a href="/2020/05/05/%E9%9D%A2%E8%AF%95%E9%A2%9803.%20%E6%95%B0%E7%BB%84%E4%B8%AD%E9%87%8D%E5%A4%8D%E7%9A%84%E6%95%B0%E5%AD%97/" class="archive-article-date">
   	<time datetime="2020-05-05T13:32:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-05</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face=cosonlas><strong>找出数组中重复的数字</strong></font><br><font size=4 face=cosonlas>在一个长度为 n 的数组 nums 里的所有数字都在 0～n-1 的范围内。数组中某些数字是重复的，但不知道有几个数字重复了，也不知道每个数字重复了几次。请找出数组中任意一个重复的数字。<br></font></p>
+<p><font size=5 face=cosonlas><strong>示例1：</strong></font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：</span><br><span class="line">[2, 3, 1, 0, 2, 5, 3]</span><br><span class="line">输出：2 或 3 </span><br></pre></td></tr></table></figure>
+<p><font size=5 face=cosonlas><strong>限制：</strong></font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2 &lt;&#x3D; n &lt;&#x3D; 100000</span><br></pre></td></tr></table></figure>
+
+<p><font size=5 face=cosonlas color=blue><strong>方法一（hash计数)：</strong></font></p>
+<p><font size=4 face=cosonlas>空间复杂度为O(n),时间复杂度为O(n),典型的以空间换时间的策略</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    int findRepeatNumber(vector&lt;int&gt;&amp; a) &#123;</span><br><span class="line">      int n &#x3D; a.size();</span><br><span class="line">      int hash[n];</span><br><span class="line">      for (int i&#x3D;0; i&lt;n; ++i) hash[i] &#x3D; 0;</span><br><span class="line">      for (int i&#x3D;0; i&lt;n; ++i) hash[a[i]] ++;</span><br><span class="line">      for (int i&#x3D;0; i&lt;n; ++i) &#123;</span><br><span class="line">        if (hash[i] &gt; 1) return i;</span><br><span class="line">      &#125;</span><br><span class="line">      return -1;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><font size=5 face=cosonlas color=blue><strong>方法二 .排序,比较相邻元素</strong></font></p>
+<p><font size=4 face=cosonlas>空间复杂度为O(1),时间复杂度为O(nlogn)</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    int findRepeatNumber(vector&lt;int&gt;&amp; a) &#123;</span><br><span class="line">      sort(a.begin(), a.end());</span><br><span class="line">      for (int i&#x3D;1; i&lt;a.size(); ++i) &#123;</span><br><span class="line">        if (a[i] &#x3D;&#x3D; a[i-1]) return a[i];</span><br><span class="line">      &#125;</span><br><span class="line">      return -1;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><font size=5 face=cosonlas color=blue><strong>方法三 .抽屉原理</strong></font></p>
+<p><font size=4 face=cosonlas>利用题目已知的条件，数组长度为n，且数组内所有元素的范围为0~n-1。利用这个特性，将值为x的元素放置在a[x]中，在放置的过程中，如果a[x]==a[a[x]] (a[x]作为索引)，说明有重复。否则，交换a[x]与a[a[x]]。</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    int findRepeatNumber(vector&lt;int&gt;&amp; a) &#123;</span><br><span class="line">      int n &#x3D; a.size();</span><br><span class="line">      for (int i&#x3D;0; i&lt;n; ++i) &#123;</span><br><span class="line">        while (i !&#x3D; a[i]) &#123;</span><br><span class="line">          if (a[i] &#x3D;&#x3D; a[a[i]]) return a[i];</span><br><span class="line">          swap(a[i], a[a[i]]);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      return -1;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">c++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/剑指offer//" class="article-tag-list-link color3">剑指offer</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/05/05/%E9%9D%A2%E8%AF%95%E9%A2%9803.%20%E6%95%B0%E7%BB%84%E4%B8%AD%E9%87%8D%E5%A4%8D%E7%9A%84%E6%95%B0%E5%AD%97/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-x86保护模式下的内存分段的地址映射" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2020/03/13/x86%E4%BF%9D%E6%8A%A4%E6%A8%A1%E5%BC%8F%E4%B8%8B%E7%9A%84%E5%86%85%E5%AD%98%E5%88%86%E6%AE%B5%E7%9A%84%E5%9C%B0%E5%9D%80%E6%98%A0%E5%B0%84/">x86保护模式下的内存分段的地址映射</a>
     </h1>
   
 
-  
-  <a href="/2020/03/13/x86%E4%BF%9D%E6%8A%A4%E6%A8%A1%E5%BC%8F%E4%B8%8B%E7%9A%84%E5%86%85%E5%AD%98%E5%88%86%E6%AE%B5%E7%9A%84%E5%9C%B0%E5%9D%80%E6%98%A0%E5%B0%84/" class="archive-article-date">
+        
+        <a href="/2020/03/13/x86%E4%BF%9D%E6%8A%A4%E6%A8%A1%E5%BC%8F%E4%B8%8B%E7%9A%84%E5%86%85%E5%AD%98%E5%88%86%E6%AE%B5%E7%9A%84%E5%9C%B0%E5%9D%80%E6%98%A0%E5%B0%84/" class="archive-article-date">
   	<time datetime="2020-03-13T06:54:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-13</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face=consolas>阅读此文，先熟悉<a target="_blank" rel="noopener" href="https://blog.csdn.net/ASJBFJSB/article/details/104839384">x86体系早期的实模式下的内存分段的地址映射</a>。</font></p>
+<p><font size=5 face=consolas>正是由于在实模式下直接对物理内存进行读写，非常不安全，所以诞生了新的内存分段的映射方式，其目的就是对物理内存进行保护，而对内存进行保护需要注意的是一下三点：</font><br><font size=5 color=red face=consolas>1.内存的起始地址。</font><br><font size=5 color=red face=consolas>2.内存的长度。</font><br><font size=5 color=red face=consolas>3.内存的权限信息。</font></p>
+<p><font size=5 face=consolas>此时CPU的架构已经来到了32位，寻址能力达到了2^32=4G。此前的分段地址映射的模式已经不再适用，但是Intel x86的CPU为了能够保证整个体系向前兼容的能力，所以它并不能删除80386之前已有的CPU内部寄存器，如段寄存器CS,DS,SS。它的解决办法是对已有的段寄存器做出新的定义。</font></p>
+<p><font size=5 face=consolas>保护模式下内存分段的地址映射的模式：<font color=blue>段描述符+段表</font>。</font><br><font size=5 face=consolas>其中段表是由段表项组成的，那么有多少个段表项？，段表项具体描述了什么信息？，每个段表项有多大字节？，段表的起始地址在哪里存放？，带着这些个问题，接下来一一分析。</font></p>
+<p><font size=5 face=consolas color=blue>(1)对段寄存器的重新定义，即段描述符：<br><img src="https://img-blog.csdnimg.cn/2020031314321171.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>从上图可以看到段表的下标的最大值为2^13=8192个，但是由于Linux内核使用了12个，那么剩余了8180个段表项可以被使用。<br><img src="https://img-blog.csdnimg.cn/20200313143619855.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br></font><br><font size=5 face=consolas color=blue>(2)因为8086中的段寄存器已经被重新定义，所以80386扩充了新的寄存器LDTR,GDTR寄存器，用于存放段表的起始地址。</font></p>
+<p><font size=5 face=consolas color=blue>(3)段表项是如何定义的？接下来看段表项描述符:</font><br><img src="https://img-blog.csdnimg.cn/20200313144503509.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><font size=5 face=consolas>可以看到段表项大小为64位，即8字节大小。其中地址信息占用32位，描述段长度信息占用20，2^20=1M，但是具体能够描述多大的段，它的单位是由G位来决定的，G=0表示描述的单位是字节，即描述段大小位1MB。G=1表述描述的单位是一个页面4KB,此时1M*4KB=4GB，刚刚是32位下整个寻址空间大小。</font></p>
+<p><font size=6 face=consolas color=red>x86保护模式下内存分段和内存分页的地址映射的工作流程：</p>
+<p></font><font size=5 face=consolas>1.通过段寄存右移三位，获得在段表中的下标。</font><br><font size=5 face=consolas>2.根据段寄存的TI判断使用GTRD或LDTR。</font><br><font size=5 face=consolas>3.从LDTR或GTRD中拿到段描述符表的起始地址。</font><br><font size=5 face=consolas>4.如TI=0使用GDT, GDTR[CS&gt;&gt;3].BaseAddress + IP(需要与length做比较，方式越界) = 线性地址，由于此处没有分页的机制，线性地址就是物理地址。可以直接进行访问了。</font></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/linux//" class="article-tag-list-link color1">linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/03/13/x86%E4%BF%9D%E6%8A%A4%E6%A8%A1%E5%BC%8F%E4%B8%8B%E7%9A%84%E5%86%85%E5%AD%98%E5%88%86%E6%AE%B5%E7%9A%84%E5%9C%B0%E5%9D%80%E6%98%A0%E5%B0%84/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-x86体系早期的实模式下的内存分段的地址映射" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2020/03/13/x86%E4%BD%93%E7%B3%BB%E6%97%A9%E6%9C%9F%E7%9A%84%E5%AE%9E%E6%A8%A1%E5%BC%8F%E4%B8%8B%E7%9A%84%E5%86%85%E5%AD%98%E5%88%86%E6%AE%B5%E7%9A%84%E5%9C%B0%E5%9D%80%E6%98%A0%E5%B0%84/">x86体系早期的实模式下的内存分段的地址映射</a>
     </h1>
   
 
-  
-  <a href="/2020/03/13/x86%E4%BD%93%E7%B3%BB%E6%97%A9%E6%9C%9F%E7%9A%84%E5%AE%9E%E6%A8%A1%E5%BC%8F%E4%B8%8B%E7%9A%84%E5%86%85%E5%AD%98%E5%88%86%E6%AE%B5%E7%9A%84%E5%9C%B0%E5%9D%80%E6%98%A0%E5%B0%84/" class="archive-article-date">
+        
+        <a href="/2020/03/13/x86%E4%BD%93%E7%B3%BB%E6%97%A9%E6%9C%9F%E7%9A%84%E5%AE%9E%E6%A8%A1%E5%BC%8F%E4%B8%8B%E7%9A%84%E5%86%85%E5%AD%98%E5%88%86%E6%AE%B5%E7%9A%84%E5%9C%B0%E5%9D%80%E6%98%A0%E5%B0%84/" class="archive-article-date">
   	<time datetime="2020-03-13T06:05:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-13</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    
-    
-</header>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face=consolas>实模式：程序员可以直接在物理地址上进行编写程序，此时还没有操作系统进行内存的管理。</font></p>
+<p><font size=5 face=consolas>实模式下的CPU架构为：8086，16位数据总线，20位的地址总线。可寻址空间大小为<font color=red>2^20=1M</font>，但是由于数据总线仅仅支持16位，而由CPU法出的地址却是20位，为了使得地址位数为16。8086进行了这样的规定：<font color=blue>物理内存的地址必须是16的倍数，也就是说经过分段，段大小在这个区间[16, 2^16=64k]。</font>这样做的好处是，地址是16的倍数意味着地址的二进制形式其第四位是0，这样一来，多余的4位0可以不用表示，那么就可以用16位的数据总线来传输20位的物理内存地址。</font></p>
+<p><font size=5 face=consolas>8086常用的段寄存器(都是16位的): <font color=red>DS(数据段寄存器)，CS(代码段寄存器)，SS(堆栈段寄存器)。</font></font></p>
+<p><font size=5 face=consolas>实模式内存分段的管理：由于段寄存器都是16位的，在实际由CPU发出的地址是类似这样的，DS&lt;&lt;4 + IP = 物理地址， 通过这样的方式进行物理内存的访问。其中，DS&lt;&lt;4也称之为段基址，IP为偏移量，偏移地址，逻辑地址(它表示的在内存的一个段上的偏移量)。</font></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/linux//" class="article-tag-list-link color1">linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/03/13/x86%E4%BD%93%E7%B3%BB%E6%97%A9%E6%9C%9F%E7%9A%84%E5%AE%9E%E6%A8%A1%E5%BC%8F%E4%B8%8B%E7%9A%84%E5%86%85%E5%AD%98%E5%88%86%E6%AE%B5%E7%9A%84%E5%9C%B0%E5%9D%80%E6%98%A0%E5%B0%84/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
   
     <nav id="page-nav">

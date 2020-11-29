@@ -158,29 +158,198 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-PAT（甲级）1005.Spell It Right（20）" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       PAT（甲级）1005.Spell It Right（20）
     </h1>
   
 
-  
-  <a href="/2019/05/19/PAT%EF%BC%88%E7%94%B2%E7%BA%A7%EF%BC%891005.Spell%20It%20Right%EF%BC%8820%EF%BC%89/" class="archive-article-date">
+        
+        <a href="/2019/05/19/PAT%EF%BC%88%E7%94%B2%E7%BA%A7%EF%BC%891005.Spell%20It%20Right%EF%BC%8820%EF%BC%89/" class="archive-article-date">
   	<time datetime="2019-05-19T14:50:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-19</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face="Consolas">PAT 1002.A+B for Polynomials (25)</font><br><font size=4 face="Consolas">Given a non-negative integer N, your task is to compute the sum of all the digits of N, and output every digit of the sum in English.</p>
+<p><font size=5 face="Consolas" color=red>输入格式：</font><br><font size=4 face="Consolas">Each input file contains one test case. Each case occupies one line which contains an <font color=red>N (≤10^100​​)</font>.</p>
+<p><font size=5 face="Consolas" color=red>输出格式：</font><br><font size=4 face="Consolas">For each test case, output in one line the digits of the sum in English words. There must be one space between two consecutive words, but no extra space at the end of a line.</p>
+<p><font size=5 face="Consolas" color=red>输入样例：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">12345</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Consolas" color=red>输出样例：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">one five</span><br></pre></td></tr></table></figure>
+
+<p><font size=5 face="Consolas" color=blue>题目分析:首先注意题目的数据范围我用红色高亮了，N (≤<code>10^100​​</code>)，而在C++中最大的整数是unsigned long long int是 <code>2^64-1</code>(18446744073709551615‬)显然是表示不了这么大（10^100）的数字的，对于大整数此时应该选择字符串或字符数组表示。<br><font size=4 face="Consolas" color=black>对于C/C++中基本数据的最大最小值，大家可以使用<code>#include&lt;climits&gt;</code>这个函数库。<br><img src="https://img-blog.csdnimg.cn/20190519224057203.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><font size=5 face="Consolas" color=black>AC代码：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;map&gt;</span><br><span class="line">using namesapce std;</span><br><span class="line"></span><br><span class="line">map&lt;int, string&gt; mp &#x3D; &#123;&#123;0,&quot;zero&quot;&#125;,&#123;1,&quot;one&quot;&#125;,&#123;2,&quot;two&quot;&#125;,&#123;3,&quot;three&quot;&#125;,&#123;4,&quot;four&quot;&#125;,&#123;5,&quot;five&quot;&#125;,&#123;6,&quot;six&quot;&#125;,&#123;7,&quot;seven&quot;&#125;,&#123;8,&quot;eight&quot;&#125;,&#123;9,&quot;nine&quot;&#125;&#125;;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">	string s;</span><br><span class="line">	cin &gt;&gt; s;</span><br><span class="line">	int sum &#x3D; 0;</span><br><span class="line">	for(int i&#x3D;0; i&lt;s.length(); ++i)&#123;</span><br><span class="line">		sum +&#x3D; s[i]-&#39;0&#39;;</span><br><span class="line">	&#125;</span><br><span class="line">	s &#x3D; to_string(sum);</span><br><span class="line">	for(int i&#x3D;0; i&lt;s.length(); ++i)&#123;</span><br><span class="line">		printf(&quot;%s&quot;,mp[s[i]-&#39;0&#39;].c_str());</span><br><span class="line">        if(i!&#x3D;s.length()-1)</span><br><span class="line">            printf(&quot; &quot;);</span><br><span class="line">	&#125;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/PAT甲级题解//" class="article-tag-list-link color3">PAT甲级题解</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2019/05/19/PAT%EF%BC%88%E7%94%B2%E7%BA%A7%EF%BC%891005.Spell%20It%20Right%EF%BC%8820%EF%BC%89/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2019/06/03/LeetCode%207.%E6%95%B4%E6%95%B0%E5%8F%8D%E8%BD%AC%EF%BC%88C++%EF%BC%89/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          LeetCode 7.整数反转（C++）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/05/19/PAT%EF%BC%88%E7%94%B2%E7%BA%A7%EF%BC%891004.Counting%20Leaves%EF%BC%8830%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">PAT（甲级）1004.Counting Leaves（30）</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>

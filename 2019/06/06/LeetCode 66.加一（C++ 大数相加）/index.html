@@ -156,29 +156,190 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-LeetCode 66.加一（C++ 大数相加）" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       LeetCode 66.加一（C++ 大数相加）
     </h1>
   
 
-  
-  <a href="/2019/06/06/LeetCode%2066.%E5%8A%A0%E4%B8%80%EF%BC%88C++%20%E5%A4%A7%E6%95%B0%E7%9B%B8%E5%8A%A0%EF%BC%89/" class="archive-article-date">
+        
+        <a href="/2019/06/06/LeetCode%2066.%E5%8A%A0%E4%B8%80%EF%BC%88C++%20%E5%A4%A7%E6%95%B0%E7%9B%B8%E5%8A%A0%EF%BC%89/" class="archive-article-date">
   	<time datetime="2019-06-06T00:08:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-06</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font face="Consolas" size=5 color=blue>思路：<br>1.由于题目未给定数字的长度，因此需要字符串模拟来表示大整数，用C/C++基本类型是表示不出来的，我试过long long过了大概50个样例，就溢出了。<br>2.模拟大数相加，在本题中，就是一个大数加1。</font><br><font face="Consolas" size=4>AC代码（C++）：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    vector&lt;int&gt; plusOne(vector&lt;int&gt; &amp;digits)&#123;</span><br><span class="line">        string s,t&#x3D;&quot;1&quot;;</span><br><span class="line">        for(int i&#x3D;0; i&lt;digits.size(); ++i)&#123;</span><br><span class="line">            s +&#x3D; to_string(digits[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        reverse(s.begin(), s.end());</span><br><span class="line"></span><br><span class="line">        for(int i&#x3D;0; i&lt;s.length()-1; ++i)&#123;</span><br><span class="line">            t +&#x3D; &quot;0&quot;;</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;大数相加 </span><br><span class="line">	    int c &#x3D; 0;</span><br><span class="line">	    string r;</span><br><span class="line">	    for(int i&#x3D;0; i&lt;s.length() || i&lt;t.length(); ++i)&#123;</span><br><span class="line">		    int temp &#x3D; s[i]-&#39;0&#39; + t[i] - &#39;0&#39; + c;</span><br><span class="line">		</span><br><span class="line">		    r +&#x3D; to_string(temp % 10);</span><br><span class="line">		    c &#x3D; temp &#x2F; 10;</span><br><span class="line">	    &#125; </span><br><span class="line">	    if(c!&#x3D;0)</span><br><span class="line">            r +&#x3D; to_string(c);</span><br><span class="line">	    vector&lt;int&gt; res;</span><br><span class="line">	    for(int i&#x3D;r.length()-1; i&gt;&#x3D;0; --i)&#123;</span><br><span class="line">		    res.push_back(r[i]-&#39;0&#39;);</span><br><span class="line">	    &#125;</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Leetcode//" class="article-tag-list-link color4">Leetcode</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2019/06/06/LeetCode%2066.%E5%8A%A0%E4%B8%80%EF%BC%88C++%20%E5%A4%A7%E6%95%B0%E7%9B%B8%E5%8A%A0%EF%BC%89/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2019/07/21/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%9A%E6%A0%91%E7%9B%B8%E5%85%B3%E7%9A%84%E4%B8%80%E4%BA%9B%E7%9F%A5%E8%AF%86%E7%82%B9%EF%BC%88%E8%80%83%E7%A0%94%EF%BC%89/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          数据结构：树相关的一些知识点（考研）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/06/05/LeetCode%20125.%E9%AA%8C%E8%AF%81%E5%9B%9E%E6%96%87%E4%B8%B2%EF%BC%88C++%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">LeetCode 125.验证回文串（C++）</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>

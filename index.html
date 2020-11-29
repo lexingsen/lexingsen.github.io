@@ -154,205 +154,941 @@
           <div id="js-content" class="content-ll">
             
   
-    <header class="article-header">
-  
+    <article id="post-线性代数：求A^n" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2020/11/28/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%EF%BC%9A%E6%B1%82A%5En/">线性代数：求A^n</a>
     </h1>
   
 
-  
-  <a href="/2020/11/28/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%EF%BC%9A%E6%B1%82A%5En/" class="archive-article-date">
+        
+        <a href="/2020/11/28/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%EF%BC%9A%E6%B1%82A%5En/" class="archive-article-date">
   	<time datetime="2020-11-28T01:55:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-28</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><img src="https://img-blog.csdnimg.cn/20201128095439123.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">线性代数</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/线性代数//" class="article-tag-list-link color5">线性代数</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/11/28/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%EF%BC%9A%E6%B1%82A%5En/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-clang -Xclang -ast-print -fsyntax-only main.cc ＞ main-init.cc" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2020/11/25/clang%20-Xclang%20-ast-print%20-fsyntax-only%20main.cc%20%EF%BC%9E%20main-init.cc/">clang -Xclang -ast-print -fsyntax-only main.cc ＞ main-init.cc</a>
     </h1>
   
 
-  
-  <a href="/2020/11/25/clang%20-Xclang%20-ast-print%20-fsyntax-only%20main.cc%20%EF%BC%9E%20main-init.cc/" class="archive-article-date">
+        
+        <a href="/2020/11/25/clang%20-Xclang%20-ast-print%20-fsyntax-only%20main.cc%20%EF%BC%9E%20main-init.cc/" class="archive-article-date">
   	<time datetime="2020-11-24T23:12:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-25</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face=consolas color=black>分析C++泛型编程代码的利器，生成实例化后的代码！！！</font></p>
+<p><font size=4 face=consolas>如下面我们编写计算斐波那契数列的元函数：</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">int</span> N&gt;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Fib</span> &#123;</span></span><br><span class="line">  <span class="class"><span class="keyword">enum</span> &#123;</span>Value = Fib&lt;N<span class="number">-1</span>&gt;::Value + Fib&lt;N<span class="number">-2</span>&gt;::Value&#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;&gt;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Fib</span>&lt;</span><span class="number">1</span>&gt; &#123;</span><br><span class="line">  <span class="class"><span class="keyword">enum</span> &#123;</span>Value = <span class="number">1</span>&#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;&gt;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Fib</span>&lt;</span><span class="number">2</span>&gt; &#123;</span><br><span class="line">  <span class="class"><span class="keyword">enum</span> &#123;</span>Value = <span class="number">1</span>&#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  Fib&lt;<span class="number">20</span>&gt;::Value;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><font size=4 face=consolas>鼠标指针放到<code>Fib&lt;20&gt;::Value;</code>上，观察编译期的结果：</font><br><img src="https://img-blog.csdnimg.cn/20201125072012710.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<p><font size=4 face=consolas>使用clang工具生成实例化的模板文件:</font></p>
+<p><font size=5 face=consolas>命令格式：<code>clang -Xclang -ast-print -fsyntax-only main.cc ＞ main-init.cc</code></font><br><font size=4 face=consolas>其中输入文件为main.cc 输出文件为main-init.cc</font></p>
+<p><font size=5 face=consolas>生成的文件：</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br></pre></td><td class="code"><pre><span class="line">main-init.cc</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">int</span> N&gt; <span class="class"><span class="keyword">struct</span> <span class="title">Fib</span> &#123;</span></span><br><span class="line">    <span class="class"><span class="keyword">enum</span>  &#123;</span></span><br><span class="line">        Value = Fib&lt;N - <span class="number">1</span>&gt;::Value + Fib&lt;N - <span class="number">2</span>&gt;::Value</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">template</span>&lt;&gt; <span class="class"><span class="keyword">struct</span> <span class="title">Fib</span>&lt;</span><span class="number">20</span>&gt; &#123;</span><br><span class="line">    <span class="class"><span class="keyword">enum</span>  &#123;</span></span><br><span class="line">        Value = Fib&lt;<span class="number">20</span> - <span class="number">1</span>&gt;::Value + Fib&lt;<span class="number">20</span> - <span class="number">2</span>&gt;::Value</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">template</span>&lt;&gt; <span class="class"><span class="keyword">struct</span> <span class="title">Fib</span>&lt;</span><span class="number">19</span>&gt; &#123;</span><br><span class="line">    <span class="class"><span class="keyword">enum</span>  &#123;</span></span><br><span class="line">        Value = Fib&lt;<span class="number">19</span> - <span class="number">1</span>&gt;::Value + Fib&lt;<span class="number">19</span> - <span class="number">2</span>&gt;::Value</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">template</span>&lt;&gt; <span class="class"><span class="keyword">struct</span> <span class="title">Fib</span>&lt;</span><span class="number">18</span>&gt; &#123;</span><br><span class="line">    <span class="class"><span class="keyword">enum</span>  &#123;</span></span><br><span class="line">        Value = Fib&lt;<span class="number">18</span> - <span class="number">1</span>&gt;::Value + Fib&lt;<span class="number">18</span> - <span class="number">2</span>&gt;::Value</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">template</span>&lt;&gt; <span class="class"><span class="keyword">struct</span> <span class="title">Fib</span>&lt;</span><span class="number">17</span>&gt; &#123;</span><br><span class="line">    <span class="class"><span class="keyword">enum</span>  &#123;</span></span><br><span class="line">        Value = Fib&lt;<span class="number">17</span> - <span class="number">1</span>&gt;::Value + Fib&lt;<span class="number">17</span> - <span class="number">2</span>&gt;::Value</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">template</span>&lt;&gt; <span class="class"><span class="keyword">struct</span> <span class="title">Fib</span>&lt;</span><span class="number">16</span>&gt; &#123;</span><br><span class="line">    <span class="class"><span class="keyword">enum</span>  &#123;</span></span><br><span class="line">        Value = Fib&lt;<span class="number">16</span> - <span class="number">1</span>&gt;::Value + Fib&lt;<span class="number">16</span> - <span class="number">2</span>&gt;::Value</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">template</span>&lt;&gt; <span class="class"><span class="keyword">struct</span> <span class="title">Fib</span>&lt;</span><span class="number">15</span>&gt; &#123;</span><br><span class="line">    <span class="class"><span class="keyword">enum</span>  &#123;</span></span><br><span class="line">        Value = Fib&lt;<span class="number">15</span> - <span class="number">1</span>&gt;::Value + Fib&lt;<span class="number">15</span> - <span class="number">2</span>&gt;::Value</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">template</span>&lt;&gt; <span class="class"><span class="keyword">struct</span> <span class="title">Fib</span>&lt;</span><span class="number">14</span>&gt; &#123;</span><br><span class="line">    <span class="class"><span class="keyword">enum</span>  &#123;</span></span><br><span class="line">        Value = Fib&lt;<span class="number">14</span> - <span class="number">1</span>&gt;::Value + Fib&lt;<span class="number">14</span> - <span class="number">2</span>&gt;::Value</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">template</span>&lt;&gt; <span class="class"><span class="keyword">struct</span> <span class="title">Fib</span>&lt;</span><span class="number">13</span>&gt; &#123;</span><br><span class="line">    <span class="class"><span class="keyword">enum</span>  &#123;</span></span><br><span class="line">        Value = Fib&lt;<span class="number">13</span> - <span class="number">1</span>&gt;::Value + Fib&lt;<span class="number">13</span> - <span class="number">2</span>&gt;::Value</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">template</span>&lt;&gt; <span class="class"><span class="keyword">struct</span> <span class="title">Fib</span>&lt;</span><span class="number">12</span>&gt; &#123;</span><br><span class="line">    <span class="class"><span class="keyword">enum</span>  &#123;</span></span><br><span class="line">        Value = Fib&lt;<span class="number">12</span> - <span class="number">1</span>&gt;::Value + Fib&lt;<span class="number">12</span> - <span class="number">2</span>&gt;::Value</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">template</span>&lt;&gt; <span class="class"><span class="keyword">struct</span> <span class="title">Fib</span>&lt;</span><span class="number">11</span>&gt; &#123;</span><br><span class="line">    <span class="class"><span class="keyword">enum</span>  &#123;</span></span><br><span class="line">        Value = Fib&lt;<span class="number">11</span> - <span class="number">1</span>&gt;::Value + Fib&lt;<span class="number">11</span> - <span class="number">2</span>&gt;::Value</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">template</span>&lt;&gt; <span class="class"><span class="keyword">struct</span> <span class="title">Fib</span>&lt;</span><span class="number">10</span>&gt; &#123;</span><br><span class="line">    <span class="class"><span class="keyword">enum</span>  &#123;</span></span><br><span class="line">        Value = Fib&lt;<span class="number">10</span> - <span class="number">1</span>&gt;::Value + Fib&lt;<span class="number">10</span> - <span class="number">2</span>&gt;::Value</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">template</span>&lt;&gt; <span class="class"><span class="keyword">struct</span> <span class="title">Fib</span>&lt;</span><span class="number">9</span>&gt; &#123;</span><br><span class="line">    <span class="class"><span class="keyword">enum</span>  &#123;</span></span><br><span class="line">        Value = Fib&lt;<span class="number">9</span> - <span class="number">1</span>&gt;::Value + Fib&lt;<span class="number">9</span> - <span class="number">2</span>&gt;::Value</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">template</span>&lt;&gt; <span class="class"><span class="keyword">struct</span> <span class="title">Fib</span>&lt;</span><span class="number">8</span>&gt; &#123;</span><br><span class="line">    <span class="class"><span class="keyword">enum</span>  &#123;</span></span><br><span class="line">        Value = Fib&lt;<span class="number">8</span> - <span class="number">1</span>&gt;::Value + Fib&lt;<span class="number">8</span> - <span class="number">2</span>&gt;::Value</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">template</span>&lt;&gt; <span class="class"><span class="keyword">struct</span> <span class="title">Fib</span>&lt;</span><span class="number">7</span>&gt; &#123;</span><br><span class="line">    <span class="class"><span class="keyword">enum</span>  &#123;</span></span><br><span class="line">        Value = Fib&lt;<span class="number">7</span> - <span class="number">1</span>&gt;::Value + Fib&lt;<span class="number">7</span> - <span class="number">2</span>&gt;::Value</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">template</span>&lt;&gt; <span class="class"><span class="keyword">struct</span> <span class="title">Fib</span>&lt;</span><span class="number">6</span>&gt; &#123;</span><br><span class="line">    <span class="class"><span class="keyword">enum</span>  &#123;</span></span><br><span class="line">        Value = Fib&lt;<span class="number">6</span> - <span class="number">1</span>&gt;::Value + Fib&lt;<span class="number">6</span> - <span class="number">2</span>&gt;::Value</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">template</span>&lt;&gt; <span class="class"><span class="keyword">struct</span> <span class="title">Fib</span>&lt;</span><span class="number">5</span>&gt; &#123;</span><br><span class="line">    <span class="class"><span class="keyword">enum</span>  &#123;</span></span><br><span class="line">        Value = Fib&lt;<span class="number">5</span> - <span class="number">1</span>&gt;::Value + Fib&lt;<span class="number">5</span> - <span class="number">2</span>&gt;::Value</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">template</span>&lt;&gt; <span class="class"><span class="keyword">struct</span> <span class="title">Fib</span>&lt;</span><span class="number">4</span>&gt; &#123;</span><br><span class="line">    <span class="class"><span class="keyword">enum</span>  &#123;</span></span><br><span class="line">        Value = Fib&lt;<span class="number">4</span> - <span class="number">1</span>&gt;::Value + Fib&lt;<span class="number">4</span> - <span class="number">2</span>&gt;::Value</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">template</span>&lt;&gt; <span class="class"><span class="keyword">struct</span> <span class="title">Fib</span>&lt;</span><span class="number">3</span>&gt; &#123;</span><br><span class="line">    <span class="class"><span class="keyword">enum</span>  &#123;</span></span><br><span class="line">        Value = Fib&lt;<span class="number">3</span> - <span class="number">1</span>&gt;::Value + Fib&lt;<span class="number">3</span> - <span class="number">2</span>&gt;::Value</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">template</span>&lt;&gt; <span class="class"><span class="keyword">struct</span> <span class="title">Fib</span>&lt;</span><span class="number">1</span>&gt; &#123;</span><br><span class="line">    <span class="class"><span class="keyword">enum</span>  &#123;</span></span><br><span class="line">        Value = <span class="number">1</span></span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">template</span>&lt;&gt; <span class="class"><span class="keyword">struct</span> <span class="title">Fib</span>&lt;</span><span class="number">2</span>&gt; &#123;</span><br><span class="line">    <span class="class"><span class="keyword">enum</span>  &#123;</span></span><br><span class="line">        Value = <span class="number">1</span></span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Fib&lt;<span class="number">20</span>&gt;::Value;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">c++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/c-c//" class="article-tag-list-link color1">c/c++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/11/25/clang%20-Xclang%20-ast-print%20-fsyntax-only%20main.cc%20%EF%BC%9E%20main-init.cc/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-C++11-关键字集合" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2020/11/22/C++11-%E5%85%B3%E9%94%AE%E5%AD%97%E9%9B%86%E5%90%88/">C++11-关键字集合</a>
     </h1>
   
 
-  
-  <a href="/2020/11/22/C++11-%E5%85%B3%E9%94%AE%E5%AD%97%E9%9B%86%E5%90%88/" class="archive-article-date">
+        
+        <a href="/2020/11/22/C++11-%E5%85%B3%E9%94%AE%E5%AD%97%E9%9B%86%E5%90%88/" class="archive-article-date">
   	<time datetime="2020-11-22T14:54:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-22</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><img src="https://img-blog.csdnimg.cn/20201122225347838.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">C++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/c-c//" class="article-tag-list-link color1">c/c++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/11/22/C++11-%E5%85%B3%E9%94%AE%E5%AD%97%E9%9B%86%E5%90%88/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-C++STL-vector实现 空间配置器" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2020/11/22/C++STL-vector%E5%AE%9E%E7%8E%B0%20%E7%A9%BA%E9%97%B4%E9%85%8D%E7%BD%AE%E5%99%A8/">C++STL-vector实现 空间配置器</a>
     </h1>
   
 
-  
-  <a href="/2020/11/22/C++STL-vector%E5%AE%9E%E7%8E%B0%20%E7%A9%BA%E9%97%B4%E9%85%8D%E7%BD%AE%E5%99%A8/" class="archive-article-date">
+        
+        <a href="/2020/11/22/C++STL-vector%E5%AE%9E%E7%8E%B0%20%E7%A9%BA%E9%97%B4%E9%85%8D%E7%BD%AE%E5%99%A8/" class="archive-article-date">
   	<time datetime="2020-11-22T01:18:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-22</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face=consolas color=black>一、没有空间配置器的vector</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">vector</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">  T *_first;</span><br><span class="line">  T *_last;</span><br><span class="line">  T *_end;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="built_in">vector</span>(<span class="keyword">int</span> size=<span class="number">10</span>) &#123;</span><br><span class="line">    _first = <span class="keyword">new</span> T[size];</span><br><span class="line">    _end = _first+size;</span><br><span class="line">    _last = _first;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">vector</span>(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;T&gt;&amp; src) &#123;</span><br><span class="line">    <span class="keyword">int</span> size=src._end - src._first;</span><br><span class="line">    _first = <span class="keyword">new</span> T[size];</span><br><span class="line">    <span class="keyword">int</span> len = _last-_first;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;len; ++i) &#123;</span><br><span class="line">      _first[i] = src._first[i];</span><br><span class="line">    &#125;</span><br><span class="line">    _last = _first + len;</span><br><span class="line">    _end = _first + size;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">vector</span>&lt;T&gt;&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;T&gt;&amp; src) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span> == &amp;src) &#123;</span><br><span class="line">      <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">delete</span>[] _first;</span><br><span class="line">    <span class="keyword">int</span> size = src._end - src._first;</span><br><span class="line">    <span class="keyword">int</span> len = src._last - src._first;</span><br><span class="line">    _first = <span class="keyword">new</span> T[size];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;len; ++i) &#123;</span><br><span class="line">      _first[i] = src._first[i];</span><br><span class="line">    &#125;</span><br><span class="line">    _last = _first + len;</span><br><span class="line">    _end = _first + size;</span><br><span class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  ~<span class="built_in">vector</span>() &#123;</span><br><span class="line">    <span class="keyword">delete</span>[] _first;</span><br><span class="line">    _first = _last = _end = <span class="literal">nullptr</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">push_back</span><span class="params">(<span class="keyword">const</span> T &amp;x)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (full()) &#123;</span><br><span class="line">      resize();</span><br><span class="line">    &#125;</span><br><span class="line">    *_last ++ = x;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">pop_back</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (empty()) &#123;</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    -- _last;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function">T <span class="title">back</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (empty()) &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> *(_last<span class="number">-1</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">full</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> _end == _last;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">empty</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> _last == _first;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">resize</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> size=_end-_first;</span><br><span class="line">    T *tmp = <span class="keyword">new</span> T[<span class="number">2</span>*size];</span><br><span class="line">    <span class="keyword">int</span> len = _last-_first;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;len; ++i) &#123;</span><br><span class="line">      tmp[i] = _first[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">delete</span>[] _first;</span><br><span class="line">    _first = tmp;</span><br><span class="line">    _end = _first + <span class="number">2</span>*size;</span><br><span class="line">    _last = _first + len;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Test</span> &#123;</span></span><br><span class="line">  Test() &#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Test()&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  ~Test() &#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;~Test()&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  Test(<span class="keyword">const</span> Test &amp;t) &#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Test(const Test&amp;)&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  Test&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> Test&amp; t) &#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;operator=(const Test&amp;)&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  Test t1;</span><br><span class="line">  Test t2;</span><br><span class="line">  <span class="built_in">vector</span>&lt;Test&gt; vec;</span><br><span class="line">  vec.push_back(t1);</span><br><span class="line">  vec.push_back(t2);</span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;===========================&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  vec.pop_back();</span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;===========================&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=4 face=consolas>执行结果：</font><br><img src="https://img-blog.csdnimg.cn/20201122075454843.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<p><font size=4 face=consolas>通过观察打印结果，得到一下几个存在的问题？</font><br><font size=4 face=consolas>1.vector中什么元素都没有，居然就进行了10次构造？按道理，没有push_back进去元素，我们只需要申请初始空间即可，不需要进行构造。</font><br><font size=4 face=consolas>2.pop_back推出vector尾部的元素时，没有进行析构，如果此时vector的元素为对象并且持有堆资源，那么就会造成内存的泄露？</font><br><font size=4 face=consolas>3.pop_back推出尾部元素时，只需要析构该位置的元素即可，不需要释放空间？空间的释放时机是vector对象生命周期结束时</font><br><font size=4 face=consolas color=red>造成上述结果的缘由：</font><br><font size=4 face=consolas color=red>1.vector的构造函数直接使用了new，包含两个动作，开辟空间和调用构造函数进行构造。<br>2.pop_back时，直接 –_last，没有进行该位置对象的析构。但是如果单纯的使用delete，不仅不会调用析构函数析构该位置的对象，还会删除该位置的内存。</font><br>综上：本质的问题就是new没有将开辟内存和构造对象这两个操作步骤分离开来。<br>delete没有将析构对象和释放内存这两个操作分离开来。</font></p>
+<p><font size=5 face=consolas color=black>二、增加空间配置器的vector</font><br><font size=4 face=consolas>为了解决上述存在的问题，将开辟内存、释放内存、析构对象和构造对象四个步骤分离开来，抽象成一个空间配置器，是的上边四个操作每一个都是互不干涉，相互独立的操作。</font></p>
+<p><font size=4 face=consolas>空间配置器</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Allocator</span> &#123;</span></span><br><span class="line">	<span class="comment">// 开辟内存</span></span><br><span class="line">	<span class="function">T* <span class="title">allocate</span><span class="params">(<span class="keyword">size_t</span> size)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> (T*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(T)*size);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 释放内存</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">deallocate</span><span class="params">(T *p)</span> </span>&#123;</span><br><span class="line">		<span class="built_in">free</span>(p);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 构造对象，这里使用定位new</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">construct</span><span class="params">(T *p, <span class="keyword">const</span> T&amp; x)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">new</span> (p) T(x);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 析构对象</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">destoy</span><span class="params">(T *p)</span> </span>&#123;</span><br><span class="line">		p-&gt;~T();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><font size=4 face=consolas>增加空间配置器的vector</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> Alloc=Allocator&lt;T&gt;&gt;</span><br><span class="line">class <span class="built_in">vector</span> &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">  T *_first;</span><br><span class="line">  T *_last;</span><br><span class="line">  T *_end;</span><br><span class="line">  Alloc _allocator; <span class="comment">// 增加空间配置器成员处理vector成员 内存开辟 内存释放 对象构造 对象析构</span></span><br><span class="line">  </span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="built_in">vector</span>(<span class="keyword">int</span> size=<span class="number">10</span>) &#123;</span><br><span class="line">    <span class="comment">// _first = new T[size];</span></span><br><span class="line">    _first = _allocator.allocate(size); <span class="comment">// 仅仅开辟内存</span></span><br><span class="line">    _end = _first+size;</span><br><span class="line">    _last = _first;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">vector</span>(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;T&gt;&amp; src) &#123;</span><br><span class="line">    <span class="keyword">int</span> size=src._end - src._first;</span><br><span class="line">    <span class="comment">// _first = new T[size];</span></span><br><span class="line">    _first = _allocator.allocate(size);</span><br><span class="line">    <span class="keyword">int</span> len = _last-_first;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;len; ++i) &#123;</span><br><span class="line">      <span class="comment">// _first[i] = src._first[i];</span></span><br><span class="line">      _allocator.construct(_first[i], src._first[i]); <span class="comment">// 构造对象</span></span><br><span class="line">    &#125;</span><br><span class="line">    _last = _first + len;</span><br><span class="line">    _end = _first + size;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">vector</span>&lt;T&gt;&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;T&gt;&amp; src) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span> == &amp;src) &#123;</span><br><span class="line">      <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">delete</span>[] _first;</span><br><span class="line">    <span class="keyword">int</span> size = src._end - src._first;</span><br><span class="line">    <span class="keyword">int</span> len = src._last - src._first;</span><br><span class="line">    _first = <span class="keyword">new</span> T[size];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;len; ++i) &#123;</span><br><span class="line">      _first[i] = src._first[i];</span><br><span class="line">    &#125;</span><br><span class="line">    _last = _first + len;</span><br><span class="line">    _end = _first + size;</span><br><span class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  ~<span class="built_in">vector</span>() &#123;</span><br><span class="line">    <span class="comment">// delete[] _first;  1.首先析构有效的对象元素  2.释放空间</span></span><br><span class="line">    <span class="keyword">int</span> len = _last - _first;</span><br><span class="line">    <span class="keyword">for</span> (T* p=_first; p!=_last; ++p) &#123;</span><br><span class="line">		_allocator.destroy(p);<span class="comment">// 析构有效对象</span></span><br><span class="line">	&#125; </span><br><span class="line">	_allocator.deallocate(_first); <span class="comment">// 释放内存</span></span><br><span class="line">    _first = _last = _end = <span class="literal">nullptr</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">push_back</span><span class="params">(<span class="keyword">const</span> T &amp;x)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (full()) &#123;</span><br><span class="line">      resize();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// *_last ++ = x;</span></span><br><span class="line">    _allocator.construct(_last, x);</span><br><span class="line">    _last ++;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">pop_back</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (empty()) &#123;</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    -- _last;</span><br><span class="line">    _allocator.destroy(_last);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function">T <span class="title">back</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (empty()) &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> *(_last<span class="number">-1</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">full</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> _end == _last;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">empty</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> _last == _first;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">resize</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> size=_end-_first;</span><br><span class="line">    <span class="comment">// T *tmp = new T[2*size];</span></span><br><span class="line">    T* tmp = _allocator.allocate(<span class="number">2</span>*size);</span><br><span class="line">    <span class="keyword">int</span> len = _last-_first;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;len; ++i) &#123;</span><br><span class="line">      _allocator.construct(tmp+i, _first[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// delete[] _first;</span></span><br><span class="line">    <span class="keyword">for</span> (T *p=_first; p!=_last; ++p) &#123;</span><br><span class="line">		_allocator.destroy(p);</span><br><span class="line">	&#125;</span><br><span class="line">	_allocator.deallocate(_first);</span><br><span class="line">    _first = tmp;</span><br><span class="line">    _end = _first + <span class="number">2</span>*size;</span><br><span class="line">    _last = _first + len;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Test</span> &#123;</span></span><br><span class="line">  Test() &#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Test()&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  ~Test() &#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;~Test()&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  Test(<span class="keyword">const</span> Test &amp;t) &#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Test(const Test&amp;)&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  Test&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> Test&amp; t) &#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;operator=(const Test&amp;)&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  Test t1;</span><br><span class="line">  Test t2;</span><br><span class="line">  <span class="built_in">vector</span>&lt;Test&gt; vec;</span><br><span class="line">  vec.push_back(t1);</span><br><span class="line">  vec.push_back(t2);</span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;===========================&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  vec.pop_back();</span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;===========================&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><font size=4 face=consolas>执行结果：</font><br><img src="https://img-blog.csdnimg.cn/20201122084336460.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br><font size=4 face=consolas>观察执行结果，增加空间配置器的vector完全按照预期。内存开辟和释放，对象构造和析构完全分离开来，至此，简易的vector已经实现了。</font></p>
+<p><font size=5 face=consolas color=black>三、增加带右值引用的push_back，进一步提高效率，旨在优化构造对象的背后调用函数的开销。</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> Ty&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">push_back</span><span class="params">(Ty &amp;&amp;x)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (full()) &#123;</span><br><span class="line">		resize();</span><br><span class="line">	&#125;</span><br><span class="line">	_allocator.constuct(_last, <span class="built_in">std</span>::forward&lt;Ty&gt;(x));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">对应的空间配置器中的对象构造</span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> Ty&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">construct</span><span class="params">(T *p, Ty &amp;&amp;x)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">new</span> (p) T(<span class="built_in">std</span>::forward&lt;Ty&gt;(x));</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><font size=4 face=consolas>需要注意的是模板类Test中需要实现，带右值引用的拷贝构造函数和赋值运算符重载函数。</font></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">c++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/c-c//" class="article-tag-list-link color1">c/c++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/11/22/C++STL-vector%E5%AE%9E%E7%8E%B0%20%E7%A9%BA%E9%97%B4%E9%85%8D%E7%BD%AE%E5%99%A8/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-C++11-forward&amp;move&amp;引用折叠" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2020/11/22/C++11-forward&move&%E5%BC%95%E7%94%A8%E6%8A%98%E5%8F%A0/">C++11-forward&amp;move&amp;引用折叠</a>
     </h1>
   
 
-  
-  <a href="/2020/11/22/C++11-forward&move&%E5%BC%95%E7%94%A8%E6%8A%98%E5%8F%A0/" class="archive-article-date">
+        
+        <a href="/2020/11/22/C++11-forward&move&%E5%BC%95%E7%94%A8%E6%8A%98%E5%8F%A0/" class="archive-article-date">
   	<time datetime="2020-11-21T23:22:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-22</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face=consolas color=black>一、move</font><br><font size=4 face=consolas>C++11引入了右值引用，方便处理临时对象，临时量，没有内存的值，字面量等。早在之前的常引用也可对对左值引用，但是仅仅能够提升左值的生命周期，不能对其进行修改。</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span>&amp; a=<span class="number">10</span>;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">int tmp=10;</span></span><br><span class="line"><span class="comment">const int&amp; a=tmp;</span></span><br><span class="line"><span class="comment">但是这里的a所引用的值是不能被修改的</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<p><font size=4 face=consolas>C++11，提出右值引用。不仅能够提升临时量的声明周期，还能够对临时进行修改。</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> &amp;&amp;d=<span class="number">10</span>;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">int tmp=10;</span></span><br><span class="line"><span class="comment">int &amp;&amp;d=tmp;</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<p><font size=4 face=consolas color=red>tips：右值引用变量本身是一个左值。</font><br><font size=4 face=consolas>在实际开发中，当我们需要对一个左值进行操作时间，函数参数会写成这种形式<code>T &amp;&amp; x</code>，但是在函数内部，由于右值引用变量本身还是一个左值，此时操作x，x还是被认为是一个左值。但是我们需要x是一个右值，如何处理呢？</font><br><font size=4 face=consolas>C++11提出了std::move移动语义，将x强制转换为一个右值，方便后序的处理！！！</font><br><font size=4 face=consolas>下面是move的源码实现：</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> _Tp&gt;</span><br><span class="line"><span class="keyword">constexpr</span> <span class="keyword">typename</span> <span class="built_in">std</span>::remove_reference&lt;_Tp&gt;::type&amp;&amp;</span><br><span class="line">move(_Tp&amp;&amp; <span class="keyword">__t</span>) <span class="keyword">noexcept</span></span><br><span class="line">    &#123; <span class="keyword">return</span> <span class="keyword">static_cast</span>&lt;<span class="keyword">typename</span> <span class="built_in">std</span>::remove_reference&lt;_Tp&gt;::type&amp;&amp;&gt;(<span class="keyword">__t</span>); &#125;</span><br></pre></td></tr></table></figure>
+<p><font size=4 face=consolas>通过源码可以看到，move实际上做的事情就是进行强制转换，强制转换为一个右值。</font><br><font size=4 face=consolas>如在vector的push_back操作中</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Allocator</span> &#123;</span></span><br><span class="line">	<span class="function">T* <span class="title">allocate</span><span class="params">(<span class="keyword">size_t</span> size)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> (T*)<span class="built_in">malloc</span>(size * T);</span><br><span class="line">	&#125;</span><br><span class="line">		</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">deallocate</span><span class="params">(T *p)</span> </span>&#123;</span><br><span class="line">		<span class="built_in">free</span>(p);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/* void construct(T *p, const T &amp;x) &#123;</span></span><br><span class="line"><span class="comment">		new (p) T(val);</span></span><br><span class="line"><span class="comment">	   &#125;</span></span><br><span class="line"><span class="comment">	</span></span><br><span class="line"><span class="comment">	void construct(T *p, T &amp;&amp;x) &#123;</span></span><br><span class="line"><span class="comment">		new (p) T(std::move(val));</span></span><br><span class="line"><span class="comment">	&#125;</span></span><br><span class="line"><span class="comment">	*/</span></span><br><span class="line">	<span class="comment">// 统一处理</span></span><br><span class="line">	<span class="keyword">template</span> &lt;<span class="keyword">typename</span> Ty&gt;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">construct</span> <span class="params">(T *p, Ty &amp;&amp;x)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">new</span> (p) T(<span class="built_in">std</span>::forward&lt;Ty&gt;(x));</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">destruct</span><span class="params">(T *p)</span> </span>&#123;</span><br><span class="line">		p-&gt;~T();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">push_back</span><span class="params">(T &amp;&amp;x)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (full()) &#123;</span><br><span class="line">		resize();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">	这样调用，x认为是一个左值，直接调用构造函数</span></span><br><span class="line"><span class="comment">	而事实上，我们希望x是一个右值，去调用带有右值的构造函数</span></span><br><span class="line"><span class="comment">	*/</span></span><br><span class="line">	<span class="comment">// _allocator.construct(x);</span></span><br><span class="line">	<span class="comment">// 修改一下</span></span><br><span class="line">	<span class="comment">// 使用std::move()强制转换为右值，便可调用带右值的构造函数</span></span><br><span class="line">	_allocator.construct(_last, <span class="built_in">std</span>::move(x));</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><font size=5 face=consolas color=black>二、forward</font><br><font size=4 face=consolas>个人理解forward的产生一方面是为了配和右值引用的使用，另一方面是为了更好的进行模板编程。</font><br><font size=4 face=consolas color=red>这里还是要提一句，左值引用变量本身是一个右值，这样就造成了一个事实。如下：</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">construct</span><span class="params">(T *p, <span class="keyword">const</span> T &amp;x)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">construct</span><span class="params">(T *p, T &amp;&amp;x)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">push_back</span><span class="params">(<span class="keyword">const</span> T &amp;x)</span> </span>&#123;</span><br><span class="line">...</span><br><span class="line">	construct(x);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">push_back</span><span class="params">(T &amp;&amp;x)</span> </span>&#123;</span><br><span class="line">...</span><br><span class="line">	construct(x);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=4 face=consolas>不管是实际参数传入的是一个左值还是右值，都会被当成左值处理。</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Test</span> &#123;</span>&#125;;</span><br><span class="line">Test t1;</span><br><span class="line">push_back(t1); <span class="comment">// t1本身就是左值一定会调用 push_back(const T&amp;)</span></span><br><span class="line">push_back(Test());<span class="comment">// Test()是一个临时对象，是右值，调用push_back(T &amp;&amp;x)</span></span><br><span class="line"><span class="comment">// 但是在push_back函数内部x还是被当作了一个右值</span></span><br><span class="line"><span class="comment">// 最终他们都是调用construct(T *p, const T&amp; x)</span></span><br></pre></td></tr></table></figure>
+<p><font size=4 face=consolas>为了解决上述问题，C++11提出了forward类型的完美转发。使用函数模板类型推演+引用折叠是的左值引用参数和右值引用参数函数得到统一化。</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> Ty&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">push_back</span><span class="params">(Ty &amp;&amp;x)</span> </span>&#123;</span><br><span class="line">	....</span><br><span class="line">	_allocator.construt(_last, <span class="built_in">std</span>::forward&lt;Ty&gt;(x));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=4 face=consolas>引用折叠</font><br><font size=4 face=consolas>T&amp; + &amp;&amp; = T&amp;</font><br><font size=4 face=consolas>T&amp;&amp; + &amp;&amp; = T&amp;&amp;</font><br><img src="https://img-blog.csdnimg.cn/20201122072216329.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">c++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/c-c//" class="article-tag-list-link color1">c/c++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/11/22/C++11-forward&move&%E5%BC%95%E7%94%A8%E6%8A%98%E5%8F%A0/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-带右值引用的拷贝构造函数和运算符重载函数" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2020/11/22/%E5%B8%A6%E5%8F%B3%E5%80%BC%E5%BC%95%E7%94%A8%E7%9A%84%E6%8B%B7%E8%B4%9D%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD%E5%87%BD%E6%95%B0/">带右值引用的拷贝构造函数和运算符重载函数</a>
     </h1>
   
 
-  
-  <a href="/2020/11/22/%E5%B8%A6%E5%8F%B3%E5%80%BC%E5%BC%95%E7%94%A8%E7%9A%84%E6%8B%B7%E8%B4%9D%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD%E5%87%BD%E6%95%B0/" class="archive-article-date">
+        
+        <a href="/2020/11/22/%E5%B8%A6%E5%8F%B3%E5%80%BC%E5%BC%95%E7%94%A8%E7%9A%84%E6%8B%B7%E8%B4%9D%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD%E5%87%BD%E6%95%B0/" class="archive-article-date">
   	<time datetime="2020-11-21T17:54:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-22</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face=consolas>考虑一个占用堆资源类对象的拷贝构造和赋值运算符重载函数，当我们用一个临时对象去拷贝构造一个新对象或者赋值给一个已经存在的对象时，会出现一下的问题：如string类</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyString</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="keyword">char</span> *mptr;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	MyString(<span class="keyword">const</span> <span class="keyword">char</span> *src = <span class="literal">nullptr</span>) &#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;MyString(const char*)&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		<span class="keyword">if</span> (src != <span class="literal">nullptr</span>) &#123;</span><br><span class="line">			mptr = <span class="keyword">new</span> <span class="keyword">char</span>[<span class="built_in">strlen</span>(src) + <span class="number">1</span>];</span><br><span class="line">			<span class="built_in">strcpy</span>(mptr, src);</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			mptr = <span class="keyword">new</span> <span class="keyword">char</span>[<span class="number">1</span>];</span><br><span class="line">			*mptr = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	MyString(<span class="keyword">const</span> MyString&amp; src) &#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;MyString(const MyString&amp;)&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		mptr = <span class="keyword">new</span> <span class="keyword">char</span>[<span class="built_in">strlen</span>(src.mptr) + <span class="number">1</span>];</span><br><span class="line">		<span class="built_in">strcpy</span>(mptr, src.mptr);</span><br><span class="line">	&#125;</span><br><span class="line">		</span><br><span class="line">	MyString&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> MyString&amp; src) &#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;operator=(const MyString&amp;)&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		<span class="keyword">if</span> (<span class="keyword">this</span> == &amp;src) &#123;</span><br><span class="line">			<span class="keyword">return</span>  *<span class="keyword">this</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">delete</span>[] mptr;</span><br><span class="line">		mptr = <span class="keyword">new</span> <span class="keyword">char</span>[<span class="built_in">strlen</span>(src.mptr) + <span class="number">1</span>];</span><br><span class="line">		<span class="built_in">strcpy</span>(mptr, src.mptr);</span><br><span class="line">		<span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	~MyString() &#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;~MyString()&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		<span class="keyword">delete</span>[] mptr;</span><br><span class="line">		mptr = <span class="literal">nullptr</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">const</span> <span class="keyword">char</span>* <span class="title">c_str</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> mptr;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function">MyString <span class="title">getString</span><span class="params">(MyString &amp;s)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">const</span> <span class="keyword">char</span>* t = s.c_str();</span><br><span class="line">	<span class="function">MyString <span class="title">res</span><span class="params">(t)</span></span>;</span><br><span class="line">	<span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="function">MyString <span class="title">s1</span><span class="params">(<span class="string">&quot;aaaaaaaaaaaaaaaaaaaaaaaaaaa&quot;</span>)</span></span>;</span><br><span class="line">	MyString s2;</span><br><span class="line">	s2 = getString(s1);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=5 face=consolas color=red>1.当我们用临时对象去拷贝构造一个新对象时。<br>MyString res = MyString(“aaaa”);<br><img src="https://img-blog.csdnimg.cn/20201122013211769.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br>显然，这样做很不合理，很浪费！！！你临时对象用完就析构了，还不如直接给我新对象用，避免开辟新空间，避免拷贝！！！<br><img src="https://img-blog.csdnimg.cn/20201122013323579.png#pic_center" alt="在这里插入图片描述"><br></font><br><font size=5 face=consolas>到这里就引出了第一个主题，带右值引用的拷贝构造函数。因为临时对象是右值。临时对象用完就要析构的，那就把临时对象占用的资源直接给新对象就好了。这样做一方面避免了在原来拷贝构造函数需要首先申请空间，然后进行拷贝的麻烦。另一方面避免临时对象析构时还有释放堆资源的麻烦，一举两得！！！</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">MyString(MyString &amp;&amp;src) &#123;</span><br><span class="line">	mptr = src.mptr;</span><br><span class="line">	src.mptr = <span class="literal">nullptr</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=5 face=consolas color=red>2.当我们用临时对象去赋值一个已经存在的对象时。这里指的对象都是持有堆资源的对象。</font><br><font size=5 face=consolas>首先，被赋值的对象要释放自己占用的堆资源，然后申请一个和临时对象指向堆资源一摸一样大小的空间，之后将临时对象指向堆空间的内容拷贝到自己的堆空间中。</font><br><font size=5 face=consolas color=red>这里同样存在着上边的问题，我临时对象给你赋值完我就析构了，堆资源也在析构函数中被释放了，但是你被赋值的对象还得申请空间，还得拷贝，你直接用临时对象的那块堆资源不就好了。<br><img src="https://img-blog.csdnimg.cn/20201122014506719.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br></font><br>问题就处在临时对象赋值完就析构了，与其白白浪费，不如拿来直接使用，有点“偷”的感觉！！！<br><img src="https://img-blog.csdnimg.cn/20201122014948899.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">MyString&amp; opeator=(MyString &amp;&amp;s) &#123;</span><br><span class="line">	<span class="keyword">if</span> (<span class="keyword">this</span> == &amp;s) &#123;</span><br><span class="line">		<span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">delete</span>[] mptr;</span><br><span class="line">	mptr = s.mptr;</span><br><span class="line">	s.mptr = <span class="literal">nullptr</span>;</span><br><span class="line">	<span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=4 face=consolas>结论：<br>至此，通过一个例子我们总结出了带右值引用的拷贝构造函数和运算符重载函数所带来效率的提升，以及为什么可以这样处理的原因。在实际开发中，当出现一定要用临时对象作为返回值，要用临时来进行赋值时，我们可以为其类实现带右值引用的拷贝构造函数和运算符重载函数，在程序的效率上会得到很大的提升。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">c++ c++11</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/c-c//" class="article-tag-list-link color1">c/c++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/11/22/%E5%B8%A6%E5%8F%B3%E5%80%BC%E5%BC%95%E7%94%A8%E7%9A%84%E6%8B%B7%E8%B4%9D%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD%E5%87%BD%E6%95%B0/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-面试22.栈的压入、弹出" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2020/11/21/%E9%9D%A2%E8%AF%9522.%E6%A0%88%E7%9A%84%E5%8E%8B%E5%85%A5%E3%80%81%E5%BC%B9%E5%87%BA/">面试22.栈的压入、弹出</a>
     </h1>
   
 
-  
-  <a href="/2020/11/21/%E9%9D%A2%E8%AF%9522.%E6%A0%88%E7%9A%84%E5%8E%8B%E5%85%A5%E3%80%81%E5%BC%B9%E5%87%BA/" class="archive-article-date">
+        
+        <a href="/2020/11/21/%E9%9D%A2%E8%AF%9522.%E6%A0%88%E7%9A%84%E5%8E%8B%E5%85%A5%E3%80%81%E5%BC%B9%E5%87%BA/" class="archive-article-date">
   	<time datetime="2020-11-21T15:26:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-21</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face=consolas>题目：</font><br>输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否为该栈的弹出顺序。假设压入栈的所有数字均不相等。例如，序列 {1,2,3,4,5} 是某栈的压栈序列，序列 {4,5,3,2,1} 是该压栈序列对应的一个弹出序列，但 {4,3,5,1,2} 就不可能是该压栈序列的弹出序列。</p>
+<p><font size=5 face=consolas>样例1：</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">输入：pushed = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>], popped = [<span class="number">4</span>,<span class="number">5</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">1</span>]</span><br><span class="line">输出：<span class="literal">true</span></span><br><span class="line">解释：我们可以按以下顺序执行：</span><br><span class="line">push(<span class="number">1</span>), push(<span class="number">2</span>), push(<span class="number">3</span>), push(<span class="number">4</span>), pop() -&gt; <span class="number">4</span>,</span><br><span class="line">push(<span class="number">5</span>), pop() -&gt; <span class="number">5</span>, pop() -&gt; <span class="number">3</span>, pop() -&gt; <span class="number">2</span>, pop() -&gt; <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p><font size=5 face=consolas>样例2：</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：pushed = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>], popped = [<span class="number">4</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">1</span>,<span class="number">2</span>]</span><br><span class="line">输出：<span class="literal">false</span></span><br><span class="line">解释：<span class="number">1</span> 不能在 <span class="number">2</span> 之前弹出</span><br></pre></td></tr></table></figure>
+<p><font size=5 face=consolas>方法：</font><br>使用模拟的思路，首先将入栈序列一次入栈，然后将当前栈顶元素与出栈序列的当前元素进行比较。如果相同，就出栈当前元素，并且将出栈序列后移一个元素位置。当所有的元素入栈之后，判断栈中是否还有元素，如果有说明出栈序列不合法。没有则合法。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">validateStackSequences</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; a, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; b)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">int</span> n=a.size(),m=b.size();</span><br><span class="line">      <span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; st;</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>,j=<span class="number">0</span>; i&lt;n; ++i) &#123;</span><br><span class="line">        st.push(a[i]);</span><br><span class="line">        <span class="keyword">while</span> (!st.empty() &amp;&amp; st.top()==b[j]) &#123;</span><br><span class="line">          st.pop();</span><br><span class="line">          j ++;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> st.empty();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/剑指offer//" class="article-tag-list-link color3">剑指offer</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/11/21/%E9%9D%A2%E8%AF%9522.%E6%A0%88%E7%9A%84%E5%8E%8B%E5%85%A5%E3%80%81%E5%BC%B9%E5%87%BA/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-C++对象的优化--减少不必要的函数调用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2020/11/21/C++%E5%AF%B9%E8%B1%A1%E7%9A%84%E4%BC%98%E5%8C%96--%E5%87%8F%E5%B0%91%E4%B8%8D%E5%BF%85%E8%A6%81%E7%9A%84%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8/">C++对象的优化--减少不必要的函数调用</a>
     </h1>
   
 
-  
-  <a href="/2020/11/21/C++%E5%AF%B9%E8%B1%A1%E7%9A%84%E4%BC%98%E5%8C%96--%E5%87%8F%E5%B0%91%E4%B8%8D%E5%BF%85%E8%A6%81%E7%9A%84%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8/" class="archive-article-date">
+        
+        <a href="/2020/11/21/C++%E5%AF%B9%E8%B1%A1%E7%9A%84%E4%BC%98%E5%8C%96--%E5%87%8F%E5%B0%91%E4%B8%8D%E5%BF%85%E8%A6%81%E7%9A%84%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8/" class="archive-article-date">
   	<time datetime="2020-11-21T14:58:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-21</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face=consolas>测试环境：win10+vs2013</font><br><font size=5 face=consolas>初始代码：</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="keyword">int</span> ma;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	Test(<span class="keyword">int</span> data = <span class="number">10</span>) :ma(data) &#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Test(int)&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	Test(<span class="keyword">const</span> Test&amp; t) :ma(t.ma) &#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Test(const Test&amp;)&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	~Test() &#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;~Test()&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	Test&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> Test&amp; t) &#123;</span><br><span class="line">		ma = t.ma;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;operator=&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		<span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">getData</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> ma;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function">Test <span class="title">getObject</span><span class="params">(Test t)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> val = t.getData();</span><br><span class="line">	<span class="function">Test <span class="title">res</span><span class="params">(val)</span></span>;</span><br><span class="line">	<span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="function">Test <span class="title">t1</span><span class="params">(<span class="number">10</span>)</span></span>;</span><br><span class="line">	Test t2;</span><br><span class="line"></span><br><span class="line">	t2 = getObject(t1);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><font size=5 face=consolas color=red>执行结果：<br>上面短短的三行代码，背后居然11次的函数调用，效率太低了！！！</font><br><img src="https://img-blog.csdnimg.cn/20201121223831622.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<p><font size=5 face=consolas>一、函数参数要求传入对象时，使用引用传递</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="keyword">int</span> ma;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	Test(<span class="keyword">int</span> data = <span class="number">10</span>) :ma(data) &#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Test(int)&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">		</span><br><span class="line">	Test(<span class="keyword">const</span> Test&amp; t) :ma(t.ma) &#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Test(const Test&amp;)&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	~Test() &#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;~Test()&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	Test&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> Test&amp; t) &#123;</span><br><span class="line">		ma = t.ma;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;operator=&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		<span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">getData</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> ma;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 相对上边的代码 仅仅是将形式参数 Test t改为Test &amp;t</span></span><br><span class="line"><span class="function">Test <span class="title">getObject</span><span class="params">(Test&amp; t)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> val = t.getData();</span><br><span class="line">	<span class="function">Test <span class="title">res</span><span class="params">(val)</span></span>;</span><br><span class="line">	<span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="function">Test <span class="title">t1</span><span class="params">(<span class="number">10</span>)</span></span>;</span><br><span class="line">	Test t2;</span><br><span class="line"></span><br><span class="line">	t2 = getObject(t1);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=5 face=consolas>执行结果：</font><br><img src="https://img-blog.csdnimg.cn/20201121224406775.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<p><font size=5 face=consolas>可以看到，经过函数参数的优化（值传递-&gt;引用传递），减少了一次临时对象构造和析构的函数开销。</font><br><font size=5 face=consolas color=red>相对于之前，只有9次的函数调用，减少了两次！！！</font></p>
+<p><font size=5 face=consolas>二、函数返回时，返回临时对象，不要先定义对象，然后再返回。直接提前计算好构造该函数返回对象所需要的参数，直接返回临时对象。</font></p>
+<p><font size=5 face=consolas></font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="keyword">int</span> ma;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	Test(<span class="keyword">int</span> data = <span class="number">10</span>) :ma(data) &#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Test(int)&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	Test(<span class="keyword">const</span> Test&amp; t) :ma(t.ma) &#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Test(const Test&amp;)&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	~Test() &#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;~Test()&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	Test&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> Test&amp; t) &#123;</span><br><span class="line">		ma = t.ma;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;operator=&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		<span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">getData</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> ma;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function">Test <span class="title">getObject</span><span class="params">(Test &amp;t)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> val = t.getData();</span><br><span class="line">	<span class="comment">// Test res(val);</span></span><br><span class="line">	<span class="comment">// return res;</span></span><br><span class="line">	<span class="keyword">return</span> Test(val);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="function">Test <span class="title">t1</span><span class="params">(<span class="number">10</span>)</span></span>;</span><br><span class="line">	Test t2;</span><br><span class="line"></span><br><span class="line">	t2 = getObject(t1);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><font size=5 face=consolas>执行结果：</font><br><img src="https://img-blog.csdnimg.cn/20201121224933848.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br><font size=5 face=consolas color=red>相对于上一步优化，又减少了两次函数调用的开销！！！</font></p>
+<p><font size=5 face=consolas>三、当需要接受一个函数的返回值时，并且该返回值是一个对象，不要以赋值的方式接受，以初始化的方式接受。</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="keyword">int</span> ma;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	Test(<span class="keyword">int</span> data = <span class="number">10</span>) :ma(data) &#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Test(int)&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	Test(<span class="keyword">const</span> Test&amp; t) :ma(t.ma) &#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Test(const Test&amp;)&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	~Test() &#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;~Test()&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	Test&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> Test&amp; t) &#123;</span><br><span class="line">		ma = t.ma;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;operator=&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		<span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">getData</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> ma;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function">Test <span class="title">getObject</span><span class="params">(Test &amp;t)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> val = t.getData();</span><br><span class="line">	<span class="comment">// Test res(val);</span></span><br><span class="line">	<span class="comment">// return res;</span></span><br><span class="line">	<span class="keyword">return</span> Test(val);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="function">Test <span class="title">t1</span><span class="params">(<span class="number">10</span>)</span></span>;</span><br><span class="line">	Test t2 = getObject(t1);<span class="comment">// 初始化的方式接受</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// t2 = getObject(t1); // 赋值的方式接受</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><font size=5 face=consolas>执行结果：</font><br><img src="https://img-blog.csdnimg.cn/202011212255163.png#pic_center" alt="在这里插入图片描述"></p>
+<p><font size=5 face=consolas color=red>相对于初始的代码，同样是获取一个对象的功能，优化到现在只有两次的构造和两次析构的调用，程序减少了相当大的一部分的函数调用开销，程序的效率也得到了很大的提升。一次调用getObejct()函数可以减少7次的函数调用开销，那么100万次的调用，就能减少700万次的开销。量变产生质变！！！</font><br><font size=5 face=consolas></font><br><strong>对象优化的三条规则</strong><br>1.当函数的形式参数需要传递对象时，不要用值接受，用引用接受。减少一次临时对象的构造和析构。<br>2.当函数的返回值为对象时，不要再函数题先定义好零时对象，然后再返回值。直接提前计算好构造该返回对象需要的参数，直接返回一个临时对象。<br>3.当接受函数返回值为对象的函数的返回值时，以初始化的方式接受，不要以赋值的方式接受。<br><strong>tips</strong>：当以临时对象拷贝构造一个新对象时，编译器不会产生这个临时对象，直接以构造临时对象的方式直接构造新对象，减少一次临时对象的构造和析构。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">c++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/c-c//" class="article-tag-list-link color1">c/c++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/11/21/C++%E5%AF%B9%E8%B1%A1%E7%9A%84%E4%BC%98%E5%8C%96--%E5%87%8F%E5%B0%91%E4%B8%8D%E5%BF%85%E8%A6%81%E7%9A%84%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-C++-对象的生存周期" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2020/11/21/C++-%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%94%9F%E5%AD%98%E5%91%A8%E6%9C%9F/">C++-对象的生存周期</a>
     </h1>
   
 
-  
-  <a href="/2020/11/21/C++-%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%94%9F%E5%AD%98%E5%91%A8%E6%9C%9F/" class="archive-article-date">
+        
+        <a href="/2020/11/21/C++-%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%94%9F%E5%AD%98%E5%91%A8%E6%9C%9F/" class="archive-article-date">
   	<time datetime="2020-11-21T10:36:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-21</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="keyword">int</span> ma;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	A(<span class="keyword">int</span> a=<span class="number">20</span>):ma(a) &#123;<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;A(int)&quot;</span> &lt;&lt; <span class="built_in">endl</span>;&#125;</span><br><span class="line">	~A() &#123;<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;~A()&quot;</span> &lt;&lt; <span class="built_in">endl</span>;&#125;</span><br><span class="line">	A(<span class="keyword">const</span> A&amp; t):ma(t.ma) &#123;<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;A(const A&amp;)&quot;</span> &lt;&lt; <span class="built_in">endl</span>;&#125;</span><br><span class="line">	A&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> A&amp; t) &#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;operator=&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		<span class="keyword">this</span>.ma = t.ma;</span><br><span class="line">		<span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	A a1; <span class="comment">// 构造a1</span></span><br><span class="line">	<span class="function">A <span class="title">a2</span><span class="params">(a1)</span></span>; <span class="comment">// 用a1拷贝构造a2</span></span><br><span class="line">	A a3 = a1; <span class="comment">// 用a1拷贝构造a3</span></span><br><span class="line">	A a4 = A(<span class="number">20</span>); <span class="comment">// 用临时对象拷贝构造a4,但是编译器做了优化，此处不用产生临时对象，相当于A a4(20);</span></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;=========&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	a2 = a4; <span class="comment">// 调用赋值运算符重载构造函数</span></span><br><span class="line">	a2 = A(<span class="number">100</span>);</span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">	此处的临时对象需要产生，因为是要拷贝构造，所以临时对象是要一个已经存在的，占有内存的对象</span></span><br><span class="line"><span class="comment">	1.首先构造临时对象</span></span><br><span class="line"><span class="comment">	2.使用临时对象拷贝构a2</span></span><br><span class="line"><span class="comment">	3.临时对象对象的生存周期是语句末，到语句末析构临时对象</span></span><br><span class="line"><span class="comment">	*/</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>指针和引用</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	A *p = &amp;A(<span class="number">10</span>); <span class="comment">// 错误的，不能用指针指向一个临时对象。因为到语句末，临时对象就析构了</span></span><br><span class="line">	<span class="keyword">const</span> A&amp; ref = A(<span class="number">10</span>); <span class="comment">// 可以用一个常引用引用一个临时对象，临时对象的声明周期提升为栈变量的生命周期</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">c++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/c-c//" class="article-tag-list-link color1">c/c++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/11/21/C++-%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%94%9F%E5%AD%98%E5%91%A8%E6%9C%9F/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-单链表逆置(递归和迭代)" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2020/11/16/%E5%8D%95%E9%93%BE%E8%A1%A8%E9%80%86%E7%BD%AE(%E9%80%92%E5%BD%92%E5%92%8C%E8%BF%AD%E4%BB%A3)/">单链表逆置(递归和迭代)</a>
     </h1>
   
 
-  
-  <a href="/2020/11/16/%E5%8D%95%E9%93%BE%E8%A1%A8%E9%80%86%E7%BD%AE(%E9%80%92%E5%BD%92%E5%92%8C%E8%BF%AD%E4%BB%A3)/" class="archive-article-date">
+        
+        <a href="/2020/11/16/%E5%8D%95%E9%93%BE%E8%A1%A8%E9%80%86%E7%BD%AE(%E9%80%92%E5%BD%92%E5%92%8C%E8%BF%AD%E4%BB%A3)/" class="archive-article-date">
   	<time datetime="2020-11-15T17:31:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-16</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    
-    
-</header>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font face=consolas size=5>迭代</font></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> ListNode <span class="title">reverseList</span><span class="params">(ListNode head)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (head == <span class="keyword">null</span>) <span class="keyword">return</span> head;</span><br><span class="line">    ListNode a=head, b=head.next;</span><br><span class="line">    head.next = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">while</span> (b != <span class="keyword">null</span>) &#123;</span><br><span class="line">      ListNode c = b.next;</span><br><span class="line">      b.next = a;</span><br><span class="line">      a = b;</span><br><span class="line">      b = c;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> a;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font face=consolas size=5>递归</font></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> ListNode <span class="title">reverseList</span><span class="params">(ListNode head)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (head==<span class="keyword">null</span> || head.next==<span class="keyword">null</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> head;</span><br><span class="line">    &#125;</span><br><span class="line">    ListNode res = reverseList(head.next);</span><br><span class="line">    head.next.next = head;</span><br><span class="line">    head.next = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/数据结构-java-Leetcode//" class="article-tag-list-link color4">数据结构 java Leetcode</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/11/16/%E5%8D%95%E9%93%BE%E8%A1%A8%E9%80%86%E7%BD%AE(%E9%80%92%E5%BD%92%E5%92%8C%E8%BF%AD%E4%BB%A3)/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
   
     <nav id="page-nav">

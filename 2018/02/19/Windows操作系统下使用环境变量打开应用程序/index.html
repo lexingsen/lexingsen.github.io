@@ -165,29 +165,179 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-Windows操作系统下使用环境变量打开应用程序" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       Windows操作系统下使用环境变量打开应用程序
     </h1>
   
 
-  
-  <a href="/2018/02/19/Windows%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%8B%E4%BD%BF%E7%94%A8%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E6%89%93%E5%BC%80%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F/" class="archive-article-date">
+        
+        <a href="/2018/02/19/Windows%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%8B%E4%BD%BF%E7%94%A8%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E6%89%93%E5%BC%80%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F/" class="archive-article-date">
   	<time datetime="2018-02-19T13:32:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-19</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><strong>环境变量</strong><br>       环境变量（environment variables）一般是指在操作系统中用来指定操作系统运行环境的一些参数，如：临时文件夹位置和系统文件夹位置等。   —-来之百度百科的解释<br>Environment variables are a set of dynamic named values that can affect the way running processes will behave on a computer. They are part of the environment in which a process runs.                                                                      —- 来着维基百科的解释</p>
+<p>   其实通俗的讲环境变量就是路径，，当要求系统运行一个程序而没有告诉它程序所在的完整路径时，系统除了在当前目录下面寻找此程序外，还应到path中指定的路径去找。用户通过设置环境变量，来更好的运行进程。<br>   下面以添加TIM的环境变量为例学习使用Windows下的环境变量：<br>   （我的操作系统是win10，其实大同小异）<br>   1.右击此电脑，点击属性。<img src="http://img.blog.csdn.net/2018021921073937?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQVNKQkZKU0I=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>   2.在右上角点击高级系统设置，出现如下对话框。<br>   <img src="http://img.blog.csdn.net/20180219210912294?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQVNKQkZKU0I=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>   3.点击右下角环境变量，出现如下对话框。<br>   <img src="http://img.blog.csdn.net/20180219211029701?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQVNKQkZKU0I=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>   这是我们可以看见两种不同的环境变量，即用户变量和系统变量。他们之间的区别在于用户变量仅仅对该用户提供支持，而系统变量是对所有用户提供支持的，所以在设置的时候可以根据情况自行选择二者之一。<br>   4.我以用户变量举例，点击新建。<br>   <img src="http://img.blog.csdn.net/20180219211550405?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQVNKQkZKU0I=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>   5.输入变量名和变量值（即路径）<br>   假设变量名为  ：  path<br>   那么怎样设置变量值呢？这是重点，以TIM举例。<br>   （1）找到后缀为.exe的可执行文件所在的文件夹。<br>   <img src="http://img.blog.csdn.net/20180219212136773?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQVNKQkZKU0I=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>   （2）点击当前文件所在位置的空白处即可得到绝对路径。<br>   <img src="http://img.blog.csdn.net/20180219212434984?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQVNKQkZKU0I=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>   即得到环境变量的变量值。<br>   6.拷贝到变量值所在一栏，点击确定。<br>   至此就将TIM添加到环境变量中，下面验证是否添加成功。<br>   7.键盘组合键 win+R 打开运行窗口,输入TIM即可成功运行TIM。<br><img src="http://img.blog.csdn.net/20180219213019463?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQVNKQkZKU0I=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><img src="http://img.blog.csdn.net/20180219213029667?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQVNKQkZKU0I=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>8.同时也可以在命令提示符中输入TIM，运行程序。<br>小伙伴们赶快去试试吧！</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2018/02/19/Windows%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%8B%E4%BD%BF%E7%94%A8%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E6%89%93%E5%BC%80%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2018/03/11/C%E8%AF%AD%E8%A8%80%20%E5%AE%9E%E7%8E%B0%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E6%95%B4%E5%9E%8B%E5%BC%BA%E5%88%B6%E8%BD%AC%E5%8C%96/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          C语言 实现浮点数的整型强制转化
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/02/12/%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F%E7%9A%84%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%92%8C%E7%94%9F%E5%AD%98%E5%91%A8%E6%9C%9F/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">局部变量的作用域和生存周期</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>

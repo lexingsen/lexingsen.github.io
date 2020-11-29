@@ -156,29 +156,192 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-C++中的new有几种？" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       C++中的new有几种？
     </h1>
   
 
-  
-  <a href="/2020/01/25/C++%E4%B8%AD%E7%9A%84new%E6%9C%89%E5%87%A0%E7%A7%8D%EF%BC%9F/" class="archive-article-date">
+        
+        <a href="/2020/01/25/C++%E4%B8%AD%E7%9A%84new%E6%9C%89%E5%87%A0%E7%A7%8D%EF%BC%9F/" class="archive-article-date">
   	<time datetime="2020-01-25T01:51:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-25</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face="consolas">1.普通new<br><font color="red">形式：int* p = new int;</font><br>此时不能通过p是否为nullptr来判断内存是否开辟成功，而是需要通过bad_alloc来捕获异常。</font></p>
+<p><font size=5 face="consolas">2.(nothrow) new<br><font color="red">形式：int *p = new (nothrow) int(20);</font><br>此时指针已经退化为C语言中通过malloc开辟内存得到的指针，是可以通过判空来验证是否成功开辟内存。</font></p>
+<p><font size=5 face="consolas">3.申请指向常量内存的指针的new<br><font color="red">形式：const int* p = new const int(20);</font><br></font></p>
+<p><font size=5 face="consolas">4.定位new<br><font color="red">形式：int data  = 0;<br>int *p = new (&amp;data) int(20);</font><br>在已知的内存上进行new。<br></font></p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/c-c//" class="article-tag-list-link color1">c/c++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2020/01/25/C++%E4%B8%AD%E7%9A%84new%E6%9C%89%E5%87%A0%E7%A7%8D%EF%BC%9F/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2020/01/31/%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1%EF%BC%88%E4%BA%8C%EF%BC%89%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%EF%BC%88System%20V%20%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%EF%BC%89/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          进程通信（二）消息队列（System V 消息队列）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/11/29/%E5%85%B7%E6%9C%89n%E4%B8%AA%E8%8A%82%E7%82%B9%E7%9A%84%E5%BA%A6%E4%B8%BAm%E7%9A%84%E6%A0%91%E7%9A%84%E6%9C%80%E5%A4%A7%E9%AB%98%E5%BA%A6%E5%92%8C%E6%9C%80%E4%BD%8E%E9%AB%98%E5%BA%A6%E6%8E%A8%E5%AF%BC/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">具有n个节点的度为m的树的最大高度和最低高度推导</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>

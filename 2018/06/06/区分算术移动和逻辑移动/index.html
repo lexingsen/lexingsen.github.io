@@ -159,29 +159,182 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-区分算术移动和逻辑移动" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       区分算术移动和逻辑移动
     </h1>
   
 
-  
-  <a href="/2018/06/06/%E5%8C%BA%E5%88%86%E7%AE%97%E6%9C%AF%E7%A7%BB%E5%8A%A8%E5%92%8C%E9%80%BB%E8%BE%91%E7%A7%BB%E5%8A%A8/" class="archive-article-date">
+        
+        <a href="/2018/06/06/%E5%8C%BA%E5%88%86%E7%AE%97%E6%9C%AF%E7%A7%BB%E5%8A%A8%E5%92%8C%E9%80%BB%E8%BE%91%E7%A7%BB%E5%8A%A8/" class="archive-article-date">
   	<time datetime="2018-06-06T00:26:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-06</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face="Courier New">移位运算是计算机三大基本运算之一，基本运算包括<strong>按位运算</strong>、<strong>逻辑运算</strong>和<strong>移位运算</strong>。</font><br><font size=4 face="Courier New">基本运算的特点:<br>（1）仅对寄存器中的数据进行运算。<br>（2）计算机中最基本的操作单元，在一个时钟周期内完成。<br>（3）需要控制信号。<br></font><br><font size=5 face="Courier New" color=red><strong>区分算术移位和逻辑移位</strong></font><br><font size=4 face="Courier New">从运算符本身是区分不了算术移位还是逻辑移位，因为它们的运算符号都是<code>&lt;&lt;，&gt;&gt;</code>,实际上取决于操作数的类型。如果操作数是无符号数即是逻辑移位，如果操作数是带符号数，是算术移位。</font></p>
+<p><font size=5font color=red><strong>1.逻辑移位</strong></font><br><font size=4 face="Courier New"><strong>操作对象：</strong> 二进制无符号数，例如像地址。<br>（1）逻辑右移<br>特点：高位补0，低位移出。<br>（2）逻辑左移<br>特点：低位补0，高位移出。<br>问题探究：什么时候会发生溢出？如何判断溢出？<br><font color=red>如果高位移出的是一，则左移发生溢出。</font></p>
+<p><font size=5font color=red><strong>2.算术移位</strong></font><br><font size=4 face="Courier New"><strong>操作对象:</strong> 二进制有符号数，现代计算机中有符号数字使用<strong>补码</strong>表示。由于计算机不能识别正负号，而0和1恰好可以表示这两种状态。这样就将符号数字化了。<br>问题探究：什么时候会发生溢出？如何判断溢出？<br>算术左移溢出判断：如果移出的位不等于新的符号位，则溢出。<br>算术右移不会发生溢出，但是如果移出的低位不为0，则可能发生数据丢失的的情况。<br></font></p>
+<p><font size=5font color=red>（1）算术左移</font><br><font size=4 face="Courier New">算术左移：按指定的位数向左移位，C语言中用符号 “&lt;&lt;” 表示。<br>**移出的位放在一个<font color=red>特殊的寄存器</font>中，低位补0。**<br><img src="https://img-blog.csdn.net/20180606073409326?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><strong>算术左移可以实现的功能:</strong> 左移n位实现乘以2^n的功能。</p>
+<p><font size=5font color=red>（2）算术右移</font><br><font size=4 face="Courier New">算术右移：按指定的位数向右移位，C语言中用符号 “&gt;&gt;” 表示。<br><img src="https://img-blog.csdn.net/20180606074745674?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><strong>算术右移可以实现的功能：</strong> 右移n位实现乘以2^(-n)的功能。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2018/06/06/%E5%8C%BA%E5%88%86%E7%AE%97%E6%9C%AF%E7%A7%BB%E5%8A%A8%E5%92%8C%E9%80%BB%E8%BE%91%E7%A7%BB%E5%8A%A8/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2018/06/13/%E4%BD%8D%E8%BF%90%E7%AE%97%E7%BB%83%E4%B9%A0%E9%A2%98/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          位运算练习题
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/05/29/%E5%9B%BE%E7%A4%BA%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E7%9A%84%E6%9E%90%E6%9E%84%E9%A1%BA%E5%BA%8F%EF%BC%88%E9%BB%98%E8%AE%A4%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E3%80%81%E6%8B%B7%E8%B4%9D%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%92%8C%E8%B5%8B%E5%80%BC%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD%E5%87%BD%E6%95%B0%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">图示构造函数的析构顺序（默认构造函数、拷贝构造函数和赋值运算符重载函数）</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>

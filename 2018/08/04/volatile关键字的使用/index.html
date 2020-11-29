@@ -158,29 +158,195 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-volatile关键字的使用" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       volatile关键字的使用
     </h1>
   
 
-  
-  <a href="/2018/08/04/volatile%E5%85%B3%E9%94%AE%E5%AD%97%E7%9A%84%E4%BD%BF%E7%94%A8/" class="archive-article-date">
+        
+        <a href="/2018/08/04/volatile%E5%85%B3%E9%94%AE%E5%AD%97%E7%9A%84%E4%BD%BF%E7%94%A8/" class="archive-article-date">
   	<time datetime="2018-08-03T16:10:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-04</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 color=black>MSDN手册中对volatile关键字的解释：</font><br><img src="https://img-blog.csdn.net/20180803232242803?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><font size=5 color=red>大概的翻译：</font><br><font size=5 color=black>volatile关键字是一个类型限定符，用于声明一个对象可以通过其他语句(例如操作系统、硬件或并发执行的线程)在程序中进行修改。<br></font><br><font size=5 color=black>volatile关键字的两个功能：</font><br><font size=4>（1）防止编译器对汇编指令做顺序上的优化。<br>（2）防止寄存器存储变量的副本值。   应用在多线程中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">int gdata&#x3D;10;&#x2F;&#x2F;全局变量</span><br><span class="line">int fun()&#123;</span><br><span class="line">	gdata&#x3D;20;</span><br><span class="line">&#125;</span><br><span class="line">thread1线程1&#123;</span><br><span class="line">	fun();</span><br><span class="line">&#125;</span><br><span class="line">thread2线程2&#123;</span><br><span class="line">	int a&#x3D;gdata;</span><br><span class="line">	&#x2F;&#x2F;mov eax,dword ptr[gdata]</span><br><span class="line">	&#x2F;&#x2F;mov dword ptr[c],eax</span><br><span class="line">	int c&#x3D;gdata;&#x2F;&#x2F;mov dword ptr[c],eax</span><br><span class="line">	&#x2F;&#x2F;为了优化指令，编译器认为两次赋值中间没有对gdata进行赋值</span><br><span class="line">	&#x2F;&#x2F;第二次对c赋值使用gdata存储在寄存器eax的副本值	</span><br><span class="line"></span><br><span class="line">	&#x2F;*实际上会存在这样的情况，由于时间片轮转技术。当分配给线程2时间</span><br><span class="line">	片用完时，恰巧将mov dword ptr[c],eax执行完毕。此时，时间片分</span><br><span class="line">	线程1，当线程1执行完毕后，gdata&#x3D;20。时间片再次分配给线程1，现场</span><br><span class="line">	恢复后，int c&#x3D;gdata用的暂存在eax寄存器中的gadta&#x3D;10,而此时</span><br><span class="line">	gdata&#x3D;20,显然时错误的*&#x2F;</span><br><span class="line">	&#x2F;&#x2F;因此，为了防止类似这样的错误，可以加volatile关键字，防止寄存器</span><br><span class="line">	&#x2F;&#x2F;存储变量的副本值</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</font>
+
+<p><font size=5 color=black>指令的调优</font><br><font size=4>1.编译器对指令的调优      使用<code> volatile</code>关键字</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">void fun(int *a)&#123;*a&#x3D;10;int b&#x3D;*a;&#125;</span><br><span class="line">&#x2F;&#x2F;上述的代码，进过汇编编译器可能优化汇编指令为：</span><br><span class="line">void fun(int *a)&#123;int b&#x3D;*a;*a&#x3D;10;&#125;</span><br><span class="line">&#x2F;&#x2F;如果不需要或防止编译器对汇编指令作顺序的优化，添加volatile关键字限定</span><br><span class="line">void fun(volatile int* a)&#123;*a&#x3D;10;int b&#x3D;*a&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=4>2.程序执行时cpu对指令的调优     barrier()</font><br>当程序开始执行时，由于CPU的流水线技术，可能会对指令进行顺序上的调优。以达到指令级并行，提高指令执行的速度。但是如果程序员不希望发生顺序的调优，则可在可能发生调优的上下程序段之间添加<code>barrier();</code>以防止CPU对指令的调优。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/c-c//" class="article-tag-list-link color1">c/c++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2018/08/04/volatile%E5%85%B3%E9%94%AE%E5%AD%97%E7%9A%84%E4%BD%BF%E7%94%A8/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2018/08/04/c%E5%92%8Cc++%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%88%E4%BA%8C%EF%BC%89const%E5%92%8C%E5%BC%95%E7%94%A8%E3%80%81%E4%B8%80%E7%BA%A7%E6%8C%87%E9%92%88%E3%80%81%E4%BA%8C%E7%BA%A7%E6%8C%87%E9%92%88%E7%9A%84%E7%BB%93%E5%90%88/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          c和c++的区别（二）const和引用、一级指针、二级指针的结合
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/08/02/C%E5%92%8CC++%E4%B8%AD%E7%9A%84const%E4%BF%AE%E9%A5%B0%E7%AC%A6%E7%9A%84%E5%85%A8%E9%9D%A2%E5%AF%B9%E6%AF%94/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">C和C++中的const修饰符的全面对比</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>

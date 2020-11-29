@@ -165,29 +165,240 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-c和c++的区别（二）const和引用、一级指针、二级指针的结合" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       c和c++的区别（二）const和引用、一级指针、二级指针的结合
     </h1>
   
 
-  
-  <a href="/2018/08/04/c%E5%92%8Cc++%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%88%E4%BA%8C%EF%BC%89const%E5%92%8C%E5%BC%95%E7%94%A8%E3%80%81%E4%B8%80%E7%BA%A7%E6%8C%87%E9%92%88%E3%80%81%E4%BA%8C%E7%BA%A7%E6%8C%87%E9%92%88%E7%9A%84%E7%BB%93%E5%90%88/" class="archive-article-date">
+        
+        <a href="/2018/08/04/c%E5%92%8Cc++%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%88%E4%BA%8C%EF%BC%89const%E5%92%8C%E5%BC%95%E7%94%A8%E3%80%81%E4%B8%80%E7%BA%A7%E6%8C%87%E9%92%88%E3%80%81%E4%BA%8C%E7%BA%A7%E6%8C%87%E9%92%88%E7%9A%84%E7%BB%93%E5%90%88/" class="archive-article-date">
   	<time datetime="2018-08-04T01:07:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-04</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 color=red>一、const和一级指针的结合</font></p>
+<p>一级指针的模型<br><img src="https://img-blog.csdn.net/20180803194603681?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>一级指针有<font color=red>两种表达方式</font>，<code>p</code>和<code>*p</code>。所以<code>const</code>与一级指针有两种结合方式。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;在c++语法规则中，const修饰距离它最近的类型。</span><br><span class="line">int a&#x3D;10;</span><br><span class="line">int *p&#x3D;&amp;a;</span><br><span class="line">int const *p;</span><br><span class="line">&#x2F;&#x2F;距离const最近的类型是int,而不是int*,因为int已经是类型了</span><br><span class="line">&#x2F;&#x2F;const的是*p,p本身没有被const修饰</span><br><span class="line">const int *p;</span><br><span class="line">&#x2F;&#x2F;距离const最近的是int,*不能构成类型。const修饰的是*p,p没有被修饰</span><br><span class="line">int* const p;</span><br><span class="line">&#x2F;&#x2F;距离const最近的类型是int*,修饰的是一个指针变量p。但*p没有被修改</span><br><span class="line">&#x2F;&#x2F;存在内存泄漏</span><br><span class="line">const int* const p;</span><br><span class="line">&#x2F;&#x2F;距离第一个const最近的类型是int,修饰的是*p。距离第二个const的类型</span><br><span class="line">&#x2F;&#x2F;是int*,所以修饰的p。</span><br></pre></td></tr></table></figure>
+<p>在C++中，定义常量必须进行初始化。那么上边四个哪些是常量？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">int a&#x3D;10;</span><br><span class="line">int *p&#x3D;&amp;a;</span><br><span class="line">int const *p;&#x2F;&#x2F;const修饰*p，但是没有修饰p。p可更改，故不是常量。</span><br><span class="line">const int *p;&#x2F;&#x2F;const修饰*p,没有修饰p。p可更改，故不是常量。</span><br><span class="line">int* const p;&#x2F;&#x2F;const修饰的是p,是常量。</span><br><span class="line">const int const* p;&#x2F;&#x2F;变量名p本身被const修饰，故是常量。</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">int main()&#123;</span><br><span class="line">	int a&#x3D;10;</span><br><span class="line">	const int b&#x3D;20;</span><br><span class="line">	a&#x3D;b;&#x2F;&#x2F;正确，将常量值赋值给变量</span><br><span class="line">	b&#x3D;a;&#x2F;&#x2F;错误，常量不能作左值</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=4.5>在C++中，当const关键字修饰常量时，const所在的位置，会不会出现问题。主要是担心代码会修改被const修饰的常量值，如果有这样的风险，编译器不会通过代码的编译的。</p>
+<p><font size=4.5 color=red>修改的方式有两种：<br>1.直接修改</font> 直接修改比较容易判断，看常量是否作左值。<br><font size=4.5 color=red>2.间接修改</font> 会不会将常量的引用或地址泄漏出去，通过使用引用（使用引用会自动解引用）或指针间接修改常量。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">一级指针与const结合总结：</span><br><span class="line">const int*  -&gt;  int*     &#x2F;&#x2F;错误</span><br><span class="line">int*        -&gt;  const int*    &#x2F;&#x2F;正确</span><br></pre></td></tr></table></figure>
+<p><font size=4.5 color=red>测试一：test.cpp</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">int main()&#123;</span><br><span class="line">	&#x2F;*</span><br><span class="line">	int a&#x3D;10;</span><br><span class="line">	int *p&#x3D;&amp;a;&#x2F;&#x2F;&amp;a  int*     正确的赋值</span><br><span class="line">	*&#x2F;</span><br><span class="line">	const int b&#x3D;10;</span><br><span class="line">	int *p &#x3D; &amp;b;</span><br><span class="line">	const int* q &#x3D; &amp;b;</span><br><span class="line">	&#x2F;&#x2F;&amp;b -&gt; const int* ,将常量的地址泄漏出去了</span><br><span class="line">	&#x2F;&#x2F;但是泄漏出去不一定是错误的，且看下边的例子</span><br><span class="line">	</span><br><span class="line">	*p&#x3D;20;&#x2F;&#x2F;错误，可以通过*p修改b内存块的地址。const没有修饰*p</span><br><span class="line">	&#x2F;&#x2F;存在间接修改常量内存块的风险,编译是不通过的</span><br><span class="line">	*q&#x3D;20;&#x2F;&#x2F;此时q为const int*,不能作左值，编译错误</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdn.net/20180803214247619?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><font size=4.5 color=red>测试二：test1.cpp</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">int main()&#123;</span><br><span class="line">&#x2F;&#x2F;对于const int*,可以存储常量的地址，也可以存储变量的地址</span><br><span class="line">	int a&#x3D;10;&#x2F;&#x2F; const int a&#x3D;10;</span><br><span class="line">	const int* p&#x3D;&amp;a;</span><br><span class="line">	int* q&#x3D;p;&#x2F;&#x2F;直观的感受q就是&amp;a啊，a是变量，可以通过*q修改a</span><br><span class="line">	&#x2F;*但是编译是错误的，为什么呢？</span><br><span class="line">	对于const int* p,其类型为const int*，不管存储的常量的地址</span><br><span class="line">	还是变量的地址，都按照其类型存储，即const int*，即使是存储</span><br><span class="line">	的是变量的地址也会提升为常量的地址。</span><br><span class="line">	int *q&#x3D;p;*q并没被const的修饰，所以会出现编译错误</span><br><span class="line">	*&#x2F;</span><br><span class="line">	可见，其实const int*里边存储与变量a无关</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdn.net/20180803220102599?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><font size=4.5 color=red>测试三：test2.cpp</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">test2.cpp</span><br><span class="line">int main()&#123;</span><br><span class="line">	const int* p&#x3D;NULL;</span><br><span class="line">	int* q&#x3D;p;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdn.net/20180803220943980?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><font size=4.5 color=red>测试四：test3.cpp</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;输出类型</span><br><span class="line">test3.cpp</span><br><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;typeinfo&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int main()&#123;</span><br><span class="line"></span><br><span class="line">	int a&#x3D;10;</span><br><span class="line">	int const *p&#x3D;&amp;a;</span><br><span class="line">	int *const q&#x3D;&amp;a;</span><br><span class="line">	cout&lt;&lt;typeid(p).name()&lt;&lt;endl;</span><br><span class="line">	cout&lt;&lt;typeid(q).name()&lt;&lt;endl;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdn.net/2018080322233946?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>有上图结果可知，const没有修饰*（指针）/&amp;（引用），不用考虑。</p>
+<p><font size=5 color=red>二、const和引用的结合</font><br>定义引用时，由于<code>&amp;</code>和<font color=black>变量名</font>紧挨着。所以const和引用结合只有一种方式，即<code>const int &amp;变量名</code>或<code>int const &amp;变量名</code>，而不会出现<code>int &amp;const 变量名</code>这种形式。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">int main()&#123;</span><br><span class="line">	&#x2F;&#x2F;int a&#x3D;10;</span><br><span class="line">	&#x2F;&#x2F;int &amp;b&#x3D;a;</span><br><span class="line">	&#x2F;&#x2F;const int &amp;c&#x3D;a;</span><br><span class="line">	</span><br><span class="line">	const int a&#x3D;10;</span><br><span class="line">	int &amp;b&#x3D;a;&#x2F;&#x2F;错误，将a的引用泄露出去，通过对b赋值可以修改常量</span><br><span class="line">	&#x2F;&#x2F;对于常变量只能使用常引用</span><br><span class="line">	const int a&#x3D;10;</span><br><span class="line">	const int&amp; b&#x3D;a;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=4.5 color=red>常引用</font><br>const&amp;引用常量(包括可寻址的常量和不可寻址的常量)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">int main()&#123;</span><br><span class="line">	int &amp;a&#x3D;10;&#x2F;&#x2F;错误，不能用立即数进行初始化</span><br><span class="line">	const int &amp;b&#x3D;10;&#x2F;&#x2F;正确的，为什么呢？</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>从汇编的角度看看常引用为什么是可行的，往往越底层的东西越能带来透彻的理解。<br><img src="https://img-blog.csdn.net/20180804003849306?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">const int&amp; a&#x3D;10;</span><br><span class="line">mov dword ptr[ebp-14h],OAh</span><br><span class="line">&#x2F;&#x2F;函数栈帧空间以栈底指针ebp的偏移量offset表示栈空间的地址</span><br><span class="line">&#x2F;&#x2F;将OAh(10)存到[ebp-14h]指向的四字节的内存空间中</span><br><span class="line">mov eax,[ebp-14h]</span><br><span class="line">&#x2F;&#x2F;将地址[ebp-14h]存放到eax寄存器中</span><br><span class="line">mov dword ptr[a],eax</span><br><span class="line">&#x2F;&#x2F;将eax寄存器中的内容即[ebp-14h]存放到地址为a四字节的空间[a]中</span><br></pre></td></tr></table></figure>
+<p>通过上边汇编代码的分析，所谓常引用，实际上是在内存中寻取了一块空间，作为临时量，存放立即数。而引用则是对这块内存空间即临时量的引用。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">const int &amp;a&#x3D;10;&#x2F;&#x2F;可以看作是下边两行代码</span><br><span class="line">const int temp&#x3D;10;</span><br><span class="line">const int &amp;a&#x3D;temp;</span><br></pre></td></tr></table></figure>
+
+<p><font size=4.5 color=red>指针变量与常引用结合</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">如现在要向地址为0x0011ff22内存块写入10,定义指针的引用变量</span><br><span class="line">int main()&#123;</span><br><span class="line">	int *&amp;p &#x3D; (int*)0x0011fff22;*p&#x3D;10;</span><br><span class="line">	&#x2F;&#x2F;显然这是错误，引用不能用立即数初始化</span><br><span class="line">	&#x2F;&#x2F;结合上边的常引用</span><br><span class="line">	const int*&amp;p还是int* const &amp;p哪一个是正确的呢?</span><br><span class="line">	const int*&amp;p其中,const修饰的是*p,并非引用，是错误的</span><br><span class="line">	int * const &amp;p;是正确的</span><br><span class="line">	</span><br><span class="line">	int* const &amp;p&#x3D;(int*)0x0011ff22;&#x2F;&#x2F;可以看作是</span><br><span class="line">	int* const temp&#x3D;(int*)0x0011ff22;&#x2F;&#x2F;临时量存储立即数</span><br><span class="line">	int* const &amp;p&#x3D;temp;	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=4.5 color=red>引用不参与类型，不能说是引用类型</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;typeinfo&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">	int a&#x3D;10;</span><br><span class="line">	int &amp;b&#x3D;a;</span><br><span class="line">	cout&lt;&lt;typeid(b).name()&lt;&lt;endl;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdn.net/20180804011603131?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>可见引用不参与类型，但是指针是参与类型的。</p>
+<p><font size=5 color=red>三、const和二级指针的结合</font><br>二级指针的模型<br><img src="https://img-blog.csdn.net/20180804012923529?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>二级指针有<font color=red>三种表达方式</font>，即<code>q</code>、<code>*q</code>和    <code>**q</code>,所以<code>const</code>和二级指针最基本的结合方式有三种。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int const **q;&#x2F;&#x2F;修饰的是**q,没有修饰*q和q</span><br><span class="line">int* const *q;&#x2F;&#x2F;修饰的是*q,没有修饰**q和q</span><br><span class="line">int** const q;&#x2F;&#x2F;修饰的是q,没有修饰**q和*q</span><br></pre></td></tr></table></figure>
+<p><font size=4.5 color=red>二级指针和const结合的典型问题</font><br><font size=4 color=red>1.</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">int main()&#123;</span><br><span class="line">	int a&#x3D;10;</span><br><span class="line">	int* p&#x3D;&amp;a;</span><br><span class="line">	const int** q&#x3D;&amp;p;</span><br><span class="line">	&#x2F;&#x2F;错误   **q和*p是等价的，*q和p是等价的</span><br><span class="line">	&#x2F;&#x2F;由于const修饰了**q,所以不需考虑通过*p修改常量的值</span><br><span class="line">	&#x2F;&#x2F;*q是const int*类型</span><br><span class="line">	&#x2F;&#x2F;const int a&#x3D;10;   &amp;a  -&gt; const int*</span><br><span class="line">	&#x2F;&#x2F;*q&#x3D;&amp;a    由于*q和p等价      p&#x3D;&amp;a</span><br><span class="line">	&#x2F;&#x2F;所以存在通过对*q解引用修改常量内存块的风险</span><br><span class="line">	&#x2F;&#x2F;通过对p解引用修改常量内存块的风险</span><br><span class="line"></span><br><span class="line">	以下两种修改方式均是正确的</span><br><span class="line">	int a&#x3D;10;</span><br><span class="line">	const int *p&#x3D;&amp;a;</span><br><span class="line">	const int **q&#x3D;&amp;p</span><br><span class="line">	或</span><br><span class="line">	int a&#x3D;10;</span><br><span class="line">	int *p&#x3D;&amp;a;</span><br><span class="line">	const int* const *q&#x3D;&amp;p;	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=4 color=red>2.</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">int main()&#123;</span><br><span class="line">	int a&#x3D;10;</span><br><span class="line">	int *p&#x3D;&amp;a;</span><br><span class="line">	const int *&amp;q&#x3D;p;&#x2F;&#x2F;   q和p等价，错误同上</span><br><span class="line">	const int **q&#x3D;&amp;p;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=4 color=red>3.</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">int main()&#123;</span><br><span class="line">	int a&#x3D;10;</span><br><span class="line">	int *p&#x3D;&amp;a;</span><br><span class="line">	int* const *q&#x3D;&amp;p;&#x2F;&#x2F;正确</span><br><span class="line">	</span><br><span class="line">	int a&#x3D;10;</span><br><span class="line">	int *p&#x3D;&amp;a;</span><br><span class="line">	int** const q&#x3D;&amp;p;&#x2F;&#x2F;正确</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=4 color=red>4.</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">int main()&#123;</span><br><span class="line">	int a&#x3D;10;</span><br><span class="line">	const int* p&#x3D;&amp;a;&#x2F;&#x2F;const修饰的是*p即内存a被封锁</span><br><span class="line">	int** q&#x3D;&amp;p;&#x2F;&#x2F;错误，通过**q可以将常量内存块修改</span><br><span class="line">	改正为：int const **q&#x3D;&amp;p;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=4 color=red>5.</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">int main()&#123;</span><br><span class="line">	int a&#x3D;10;</span><br><span class="line">	int* const p&#x3D;&amp;a;&#x2F;&#x2F;const修饰的是p</span><br><span class="line">	int** q&#x3D;&amp;p;&#x2F;&#x2F;错误，通过*q可以修改常量内存块的值</span><br><span class="line">	改正为：int* const *q&#x3D;&amp;p;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<font size=5 color=black>
+综上：当一级指针、二级指针和const结合时。
+1.`const  int*` 转化为`int* `  <font color=red>   错误</font>
+2.`int*` 转化为`const int*`<font color=red>正确</font>
+3.`const  int** `转化为`int**`<font color=red>错误</ font>
+4.`int** `转化为`const int**`<font color=red>错误</font>
+5.当const为`**`之间时，`*const*退化为一级指针考虑。`
+</ font>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/c-c//" class="article-tag-list-link color1">c/c++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2018/08/04/c%E5%92%8Cc++%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%88%E4%BA%8C%EF%BC%89const%E5%92%8C%E5%BC%95%E7%94%A8%E3%80%81%E4%B8%80%E7%BA%A7%E6%8C%87%E9%92%88%E3%80%81%E4%BA%8C%E7%BA%A7%E6%8C%87%E9%92%88%E7%9A%84%E7%BB%93%E5%90%88/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2018/08/04/C!C++%E5%87%BD%E6%95%B0%E8%BF%94%E5%9B%9E%E5%80%BC%E9%97%AE%E9%A2%98/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          C/C++函数返回值问题
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/08/04/volatile%E5%85%B3%E9%94%AE%E5%AD%97%E7%9A%84%E4%BD%BF%E7%94%A8/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">volatile关键字的使用</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>

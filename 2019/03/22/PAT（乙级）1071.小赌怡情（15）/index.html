@@ -156,29 +156,204 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-PAT（乙级）1071.小赌怡情（15）" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       PAT（乙级）1071.小赌怡情（15）
     </h1>
   
 
-  
-  <a href="/2019/03/22/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891071.%E5%B0%8F%E8%B5%8C%E6%80%A1%E6%83%85%EF%BC%8815%EF%BC%89/" class="archive-article-date">
+        
+        <a href="/2019/03/22/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891071.%E5%B0%8F%E8%B5%8C%E6%80%A1%E6%83%85%EF%BC%8815%EF%BC%89/" class="archive-article-date">
   	<time datetime="2019-03-22T01:35:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-22</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face="Courier New">1071.小赌怡情（15）</font></p>
+<p><font size=4 face="Courier New">常言道”小赌怡情”。这是一个很简单的小游戏：首先由计算机给出第一个整数；然后玩家下注赌第二个整数将会比第一个数大还是小；玩家下注 t 个筹码后，计算机给出第二个数。若玩家猜对了，则系统奖励玩家 t 个筹码；否则扣除玩家 t 个筹码。<br>注意：玩家下注的筹码数不能超过自己帐户上拥有的筹码数。当玩家输光了全部筹码后，游戏就结束。</p>
+<p><font size=5 face="Courier New" color=red>输入格式：</font><br><font size=4 face="Courier New">输入在第一行给出 2 个正整数 T 和 K（≤ 100），分别是系统在初始状态下赠送给玩家的筹码数、以及需要处理的游戏次数。随后 K 行，每行对应一次游戏，顺序给出 4 个数字：<br><code>n1 b t n2</code><br>其中 <code>n1 </code>和 <code>n2</code> 是计算机先后给出的两个[0, 9]内的整数，保证两个数字不相等。<code>b </code>为<code>0</code>表示玩家赌小，为 <code>1</code> 表示玩家赌大。<code>t </code>表示玩家下注的筹码数，保证在整型范围内。</p>
+<p><font size=5 face="Courier New" color=red>输出格式：</font><br><font size=4 face="Courier New">对每一次游戏，根据下列情况对应输出（其中 t 是玩家下注量，x 是玩家当前持有的筹码量）：<br>玩家赢，输出<code> Win t!  Total = x.</code>；<br>玩家输，输出 <code>Lose t.  Total = x.</code>；<br>玩家下注超过持有的筹码量，输出 <code>Not enough tokens.  Total = x.</code>；<br>玩家输光后，输出<code> Game Over.</code> 并结束程序。</p>
+<p><font size=5 face="Courier New" color=red>输入样例1：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">100 4</span><br><span class="line">8 0 100 2</span><br><span class="line">3 1 50 1</span><br><span class="line">5 1 200 6</span><br><span class="line">7 0 200 8</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier New" color=red>输出样例1：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Win 100!  Total &#x3D; 200.</span><br><span class="line">Lose 50.  Total &#x3D; 150.</span><br><span class="line">Not enough tokens.  Total &#x3D; 150.</span><br><span class="line">Not enough tokens.  Total &#x3D; 150.</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier New" color=red>输入样例2：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">100 4</span><br><span class="line">8 0 100 2</span><br><span class="line">3 1 200 1</span><br><span class="line">5 1 200 6</span><br><span class="line">7 0 200 8</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier New" color=red>输出样例2：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Win 100!  Total &#x3D; 200.</span><br><span class="line">Lose 200.  Total &#x3D; 0.</span><br><span class="line">Game Over.</span><br></pre></td></tr></table></figure>
+
+<p><font size=5 face="Courier New" color=blue>分析：简单模拟</font></p>
+<p><font size=4 face="Courier New">AC代码：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int sum_money;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    &#x2F;&#x2F;freopen(&quot;in.txt&quot;, &quot;r&quot;, stdin);</span><br><span class="line">    int n;</span><br><span class="line">    scanf(&quot;%d %d&quot;, &amp;sum_money, &amp;n);</span><br><span class="line">    int n1, b, t, n2;</span><br><span class="line">    for(int i&#x3D;0; i&lt;n; ++i)&#123;</span><br><span class="line">        scanf(&quot;%d%d%d%d&quot;, &amp;n1, &amp;b, &amp;t, &amp;n2);</span><br><span class="line">        if(sum_money&#x3D;&#x3D;0)&#123;</span><br><span class="line">            printf(&quot;Game Over.\n&quot;);</span><br><span class="line">            break;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if(t &gt; sum_money)&#123;</span><br><span class="line">            printf(&quot;Not enough tokens.  Total &#x3D; %d.\n&quot;, sum_money);</span><br><span class="line">            continue;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if(n2&lt;n1 &amp;&amp; b&#x3D;&#x3D;0)&#123;</span><br><span class="line">            sum_money +&#x3D; t;</span><br><span class="line">            printf(&quot;Win %d!  Total &#x3D; %d.\n&quot;,t, sum_money);</span><br><span class="line">        &#125;</span><br><span class="line">        else if(n2&gt;n1 &amp;&amp; b&#x3D;&#x3D;1)&#123;</span><br><span class="line">            sum_money +&#x3D; t;</span><br><span class="line">            printf(&quot;Win %d!  Total &#x3D; %d.\n&quot;,t, sum_money);</span><br><span class="line">        &#125;</span><br><span class="line">        else&#123;</span><br><span class="line">            sum_money -&#x3D; t;</span><br><span class="line">            printf(&quot;Lose %d.  Total &#x3D; %d.\n&quot;,t, sum_money);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/PAT乙级题解//" class="article-tag-list-link color3">PAT乙级题解</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2019/03/22/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891071.%E5%B0%8F%E8%B5%8C%E6%80%A1%E6%83%85%EF%BC%8815%EF%BC%89/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2019/03/26/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891066.%E5%9B%BE%E5%83%8F%E8%BF%87%E6%BB%A4%EF%BC%8815%EF%BC%89/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          PAT（乙级）1066.图像过滤（15）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/03/21/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891042.%E7%BB%9F%E8%AE%A1%E5%AD%97%E7%AC%A6%EF%BC%8820%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">PAT（乙级）1042.统计字符（20）</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>

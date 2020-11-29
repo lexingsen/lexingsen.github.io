@@ -154,205 +154,885 @@
           <div id="js-content" class="content-ll">
             
   
-    <header class="article-header">
-  
+    <article id="post-递归逆序和正数输出正整数" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2020/11/15/%E9%80%92%E5%BD%92%E9%80%86%E5%BA%8F%E5%92%8C%E6%AD%A3%E6%95%B0%E8%BE%93%E5%87%BA%E6%AD%A3%E6%95%B4%E6%95%B0/">递归逆序和正数输出正整数</a>
     </h1>
   
 
-  
-  <a href="/2020/11/15/%E9%80%92%E5%BD%92%E9%80%86%E5%BA%8F%E5%92%8C%E6%AD%A3%E6%95%B0%E8%BE%93%E5%87%BA%E6%AD%A3%E6%95%B4%E6%95%B0/" class="archive-article-date">
+        
+        <a href="/2020/11/15/%E9%80%92%E5%BD%92%E9%80%86%E5%BA%8F%E5%92%8C%E6%AD%A3%E6%95%B0%E8%BE%93%E5%87%BA%E6%AD%A3%E6%95%B4%E6%95%B0/" class="archive-article-date">
   	<time datetime="2020-11-15T08:24:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-15</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face=consolas>正序输出</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (x == <span class="number">0</span>) <span class="keyword">return</span>;</span><br><span class="line">	print(x/<span class="number">10</span>);</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; x%<span class="number">10</span> &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=5 face=consolas>逆序输出</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">reversePrint</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (x == <span class="number">0</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span> x;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; x%<span class="number">10</span> &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">	reversePrint(x/<span class="number">10</span>); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/c-c-趣味编程-算法基础//" class="article-tag-list-link color1">c/c++ 趣味编程 算法基础</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/11/15/%E9%80%92%E5%BD%92%E9%80%86%E5%BA%8F%E5%92%8C%E6%AD%A3%E6%95%B0%E8%BE%93%E5%87%BA%E6%AD%A3%E6%95%B4%E6%95%B0/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-BF算法-串匹配算法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2020/11/11/BF%E7%AE%97%E6%B3%95-%E4%B8%B2%E5%8C%B9%E9%85%8D%E7%AE%97%E6%B3%95/">BF算法-串匹配算法</a>
     </h1>
   
 
-  
-  <a href="/2020/11/11/BF%E7%AE%97%E6%B3%95-%E4%B8%B2%E5%8C%B9%E9%85%8D%E7%AE%97%E6%B3%95/" class="archive-article-date">
+        
+        <a href="/2020/11/11/BF%E7%AE%97%E6%B3%95-%E4%B8%B2%E5%8C%B9%E9%85%8D%E7%AE%97%E6%B3%95/" class="archive-article-date">
   	<time datetime="2020-11-11T02:51:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-11</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face=consolas>串的模式匹配：暴力算法，时间复杂度为O(n)。</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 返回第一次匹配到的位置</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">bf</span><span class="params">(<span class="keyword">char</span> *s, <span class="keyword">char</span> *t)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i=<span class="number">0</span>,j=<span class="number">0</span>,k=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span> (i &lt; <span class="built_in">strlen</span>(s) &amp;&amp; j &lt; <span class="built_in">strlen</span>(t)) &#123;</span><br><span class="line">		<span class="keyword">if</span> (s[i] == t[j]) &#123;</span><br><span class="line">			i ++, j++;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			j = <span class="number">0</span>; <span class="comment">// 模式串回溯</span></span><br><span class="line">			i = ++k; <span class="comment">// 文本串移动到失配的下一个位置</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (j &gt;= <span class="built_in">strlen</span>(t)) &#123;</span><br><span class="line">		<span class="keyword">return</span> k;</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">数据结构 算法</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/c-c-数据结构-算法基础//" class="article-tag-list-link color1">c/c++ 数据结构 算法基础</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/11/11/BF%E7%AE%97%E6%B3%95-%E4%B8%B2%E5%8C%B9%E9%85%8D%E7%AE%97%E6%B3%95/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-层序遍历求树的深度" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2020/11/09/%E5%B1%82%E5%BA%8F%E9%81%8D%E5%8E%86%E6%B1%82%E6%A0%91%E7%9A%84%E6%B7%B1%E5%BA%A6/">层序遍历求树的深度</a>
     </h1>
   
 
-  
-  <a href="/2020/11/09/%E5%B1%82%E5%BA%8F%E9%81%8D%E5%8E%86%E6%B1%82%E6%A0%91%E7%9A%84%E6%B7%B1%E5%BA%A6/" class="archive-article-date">
+        
+        <a href="/2020/11/09/%E5%B1%82%E5%BA%8F%E9%81%8D%E5%8E%86%E6%B1%82%E6%A0%91%E7%9A%84%E6%B7%B1%E5%BA%A6/" class="archive-article-date">
   	<time datetime="2020-11-09T13:20:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-09</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">TreeNode</span> &#123;</span></span><br><span class="line">  <span class="keyword">int</span> val;</span><br><span class="line">  TreeNode *left, *right;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfsGetDepth</span><span class="params">(TreeNode *root, <span class="keyword">int</span> &amp;x)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!root) <span class="keyword">return</span>;</span><br><span class="line">  <span class="built_in">queue</span>&lt;TreeNode*&gt; q;</span><br><span class="line">  q.push(root);</span><br><span class="line">  <span class="keyword">while</span> (!q.empty()) &#123;</span><br><span class="line">    <span class="keyword">int</span> n = q.size();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;n; ++i) &#123;</span><br><span class="line">      <span class="keyword">auto</span> f=q.front();q.pop();</span><br><span class="line">      <span class="keyword">if</span> (f-&gt;left) q.push(f-&gt;left);</span><br><span class="line">      <span class="keyword">if</span> (f-&gt;right) q.push(f-&gt;right);</span><br><span class="line">    &#125;</span><br><span class="line">    x ++;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">leetcode c++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/数据结构-算法基础-Leetcode//" class="article-tag-list-link color4">数据结构 算法基础 Leetcode</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/11/09/%E5%B1%82%E5%BA%8F%E9%81%8D%E5%8E%86%E6%B1%82%E6%A0%91%E7%9A%84%E6%B7%B1%E5%BA%A6/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-最长公共子序列(dp)" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2020/10/30/%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%AD%90%E5%BA%8F%E5%88%97(dp)/">最长公共子序列(dp)</a>
     </h1>
   
 
-  
-  <a href="/2020/10/30/%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%AD%90%E5%BA%8F%E5%88%97(dp)/" class="archive-article-date">
+        
+        <a href="/2020/10/30/%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%AD%90%E5%BA%8F%E5%88%97(dp)/" class="archive-article-date">
   	<time datetime="2020-10-30T01:17:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-30</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=4 face=consolas>f[i][j]表示所有在第一个序列中前i个字母出现并且在第二个序列中前j个字母出现的子序列。</font><br><font size=4 face=consolas>初始化：第一行，第一列f[i][0]和f[0][j]均为0</font><br><font size=4 face=consolas>状态转移：<br>（1）当前a[i]==b[j], f[i][j] = f[i-1][j-1]+1;<br>（2）a[i]!=b[j]，f[i][j] = max(f[i-1][j], f[i][j-1]);</font><br><font size=4 face=consolas></font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">longestCommonSubsequence</span><span class="params">(<span class="built_in">string</span> a, <span class="built_in">string</span> b)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> n = a.size();</span><br><span class="line">		<span class="keyword">int</span> m = b.size();</span><br><span class="line">		<span class="function">vevtor&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; <span class="title">f</span><span class="params">(n+<span class="number">1</span>, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(m+<span class="number">1</span>, <span class="number">0</span>))</span></span>;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">1</span>; i&lt;=n; ++i) &#123;</span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> j=<span class="number">1</span>; j&lt;=m; ++j) &#123;</span><br><span class="line">				f[i][j] = max(f[i<span class="number">-1</span>][j], f[i][j<span class="number">-1</span>]);</span><br><span class="line">				<span class="keyword">if</span> (a[i<span class="number">-1</span>] == b[j<span class="number">-1</span>]) &#123;</span><br><span class="line">					f[i][j] = max(f[i<span class="number">-1</span>][j<span class="number">-1</span>]+<span class="number">1</span>, f[i][j]);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> f[n][m];</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">动态规划 算法 leetcode</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/c-c-算法基础-Leetcode//" class="article-tag-list-link color5">c/c++ 算法基础 Leetcode</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/10/30/%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%AD%90%E5%BA%8F%E5%88%97(dp)/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-最长回文子串" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2020/10/29/%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2/">最长回文子串</a>
     </h1>
   
 
-  
-  <a href="/2020/10/29/%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2/" class="archive-article-date">
+        
+        <a href="/2020/10/29/%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2/" class="archive-article-date">
   	<time datetime="2020-10-28T23:48:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-29</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="built_in">string</span> <span class="title">longestPalindrome</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (s.size()==<span class="number">1</span> || !s.size()) <span class="keyword">return</span> s;</span><br><span class="line">		<span class="keyword">if</span> (s.size()==<span class="number">2</span> &amp;&amp; s[<span class="number">0</span>]==s[<span class="number">1</span>]) <span class="keyword">return</span> s;</span><br><span class="line">		<span class="keyword">int</span> n = s.siz();</span><br><span class="line">		<span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">bool</span>&gt;&gt; <span class="title">f</span><span class="params">(n, <span class="built_in">vector</span>&lt;<span class="keyword">bool</span>&gt;(n))</span></span>;</span><br><span class="line">		<span class="comment">// 记录子串的起始索引和长度</span></span><br><span class="line">		<span class="keyword">int</span> start=<span class="number">0</span>,len=<span class="number">1</span>;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;n; ++i) &#123;</span><br><span class="line">			f[i][i] = <span class="number">1</span>;<span class="comment">// 所有长度为1的子串均为一个回文串</span></span><br><span class="line">			<span class="keyword">if</span> (i+<span class="number">1</span>&lt;n &amp;&amp; s[i]==s[i+<span class="number">1</span>]) &#123;</span><br><span class="line">				start = i;</span><br><span class="line">				len = <span class="number">2</span>;</span><br><span class="line">				<span class="comment">// 长度为2的回文串</span></span><br><span class="line">				f[i][i+<span class="number">1</span>] = <span class="number">1</span>;		</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;                     </span><br><span class="line">		<span class="comment">// 枚举长度L [3,n]  </span></span><br><span class="line">		<span class="comment">// 枚举左右端点 i   right=i+L-1  right-i+1==L</span></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> L=<span class="number">3</span>; i&lt;=n; ++L) &#123;</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i+L<span class="number">-1</span>&lt;n; ++i) &#123;</span><br><span class="line">				<span class="keyword">int</span> j = i+L<span class="number">-1</span>;</span><br><span class="line">				<span class="comment">// 左右端点处字符相等并且子区间是一个回文串，则可以扩充</span></span><br><span class="line">				<span class="keyword">if</span> (s[i]==s[j] &amp;&amp; f[i+<span class="number">1</span>][j<span class="number">-1</span>]) &#123;</span><br><span class="line">					f[i][j] = <span class="number">1</span>;</span><br><span class="line">					start = i;</span><br><span class="line">					len = L;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> s.substr(start, len);		                                                                                                                                                                                                                                                                                                                           </span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/c-c-数据结构-Leetcode//" class="article-tag-list-link color5">c/c++ 数据结构 Leetcode</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/10/29/%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-多机调度问题（贪心）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2020/10/28/%E5%A4%9A%E6%9C%BA%E8%B0%83%E5%BA%A6%E9%97%AE%E9%A2%98%EF%BC%88%E8%B4%AA%E5%BF%83%EF%BC%89/">多机调度问题（贪心）</a>
     </h1>
   
 
-  
-  <a href="/2020/10/28/%E5%A4%9A%E6%9C%BA%E8%B0%83%E5%BA%A6%E9%97%AE%E9%A2%98%EF%BC%88%E8%B4%AA%E5%BF%83%EF%BC%89/" class="archive-article-date">
+        
+        <a href="/2020/10/28/%E5%A4%9A%E6%9C%BA%E8%B0%83%E5%BA%A6%E9%97%AE%E9%A2%98%EF%BC%88%E8%B4%AA%E5%BF%83%EF%BC%89/" class="archive-article-date">
   	<time datetime="2020-10-28T04:23:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-28</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face=consolas>有n个任务，m台机器，n&gt;m，每个作业i可以选择一台设备进行加工，加工时间为ti，每台机器同时只能加工一个作业，且不可中断。实现作业调度，使得n个作业的等待时间最短。</font><br><font size=5 face=consolas>样例输入：</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">6</span> <span class="number">3</span></span><br><span class="line"><span class="number">2</span> <span class="number">5</span> <span class="number">13</span> <span class="number">15</span> <span class="number">16</span> <span class="number">20</span></span><br></pre></td></tr></table></figure>
+<p><font size=5 face=consolas>样例输出：</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">28</span></span><br></pre></td></tr></table></figure>
+<p><font size=5 face=consolas>贪心策略：优先处理花费时间长的任务，这样可以减少短任务的等待时间</font><br><font size=5 face=consolas>实现：</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N=<span class="number">10010</span>;</span><br><span class="line"><span class="keyword">int</span> t[N]; <span class="comment">// 存储任务所需要时间</span></span><br><span class="line"><span class="keyword">int</span> time[N]; <span class="comment">// 存储完成任务后的时间</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n,m;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; n &gt;&gt; m;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;n; ++i) <span class="built_in">cin</span> &gt;&gt; t[i];</span><br><span class="line">	sort(t, t+n, [](<span class="keyword">const</span> <span class="keyword">int</span>&amp; x, <span class="keyword">const</span> <span class="keyword">int</span>&amp; y) &#123;<span class="keyword">return</span> x &gt; y;&#125;);</span><br><span class="line">	<span class="keyword">int</span> res = <span class="number">0</span>;<span class="comment">//统计等待时间</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;n; ++i) &#123;</span><br><span class="line">	<span class="comment">// 将最长处理时间的任务分配给最先空闲的机器</span></span><br><span class="line">	<span class="comment">// 这里不需要关注那一台机器首先空闲</span></span><br><span class="line">		res += (res + *min_element(time, time+n));</span><br><span class="line">		*min_element(time,time+n) += t[i];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 输出最早完成时间</span></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; *max_element(time, time+n) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/数据结构-算法基础//" class="article-tag-list-link color5">数据结构 算法基础</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/10/28/%E5%A4%9A%E6%9C%BA%E8%B0%83%E5%BA%A6%E9%97%AE%E9%A2%98%EF%BC%88%E8%B4%AA%E5%BF%83%EF%BC%89/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-for循环  while循环  do while循环流程图画法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2020/10/25/for%E5%BE%AA%E7%8E%AF%20%20while%E5%BE%AA%E7%8E%AF%20%20do%20while%E5%BE%AA%E7%8E%AF%E6%B5%81%E7%A8%8B%E5%9B%BE%E7%94%BB%E6%B3%95/">for循环  while循环  do while循环流程图画法</a>
     </h1>
   
 
-  
-  <a href="/2020/10/25/for%E5%BE%AA%E7%8E%AF%20%20while%E5%BE%AA%E7%8E%AF%20%20do%20while%E5%BE%AA%E7%8E%AF%E6%B5%81%E7%A8%8B%E5%9B%BE%E7%94%BB%E6%B3%95/" class="archive-article-date">
+        
+        <a href="/2020/10/25/for%E5%BE%AA%E7%8E%AF%20%20while%E5%BE%AA%E7%8E%AF%20%20do%20while%E5%BE%AA%E7%8E%AF%E6%B5%81%E7%A8%8B%E5%9B%BE%E7%94%BB%E6%B3%95/" class="archive-article-date">
   	<time datetime="2020-10-25T08:30:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-25</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 f face=consolas>1.for(表达式1;表达式2;表达式3）</font><br><img src="https://img-blog.csdnimg.cn/20201025161957387.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<p><font size=5 f face=consolas>2.while(条件) {循环体}</font><br><img src="https://img-blog.csdnimg.cn/20201025162354116.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<p><font size=5 f face=consolas>3.do {循环体} while(条件)</font><br><img src="https://img-blog.csdnimg.cn/20201025163008409.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">c++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/c-c//" class="article-tag-list-link color1">c/c++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/10/25/for%E5%BE%AA%E7%8E%AF%20%20while%E5%BE%AA%E7%8E%AF%20%20do%20while%E5%BE%AA%E7%8E%AF%E6%B5%81%E7%A8%8B%E5%9B%BE%E7%94%BB%E6%B3%95/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-输出二叉树中值为x的祖先" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2020/10/24/%E8%BE%93%E5%87%BA%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%AD%E5%80%BC%E4%B8%BAx%E7%9A%84%E7%A5%96%E5%85%88/">输出二叉树中值为x的祖先</a>
     </h1>
   
 
-  
-  <a href="/2020/10/24/%E8%BE%93%E5%87%BA%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%AD%E5%80%BC%E4%B8%BAx%E7%9A%84%E7%A5%96%E5%85%88/" class="archive-article-date">
+        
+        <a href="/2020/10/24/%E8%BE%93%E5%87%BA%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%AD%E5%80%BC%E4%B8%BAx%E7%9A%84%E7%A5%96%E5%85%88/" class="archive-article-date">
   	<time datetime="2020-10-24T14:59:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-24</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> val;</span><br><span class="line">	node *left, *right;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 返回值判断二叉树中是否含有x</span></span><br><span class="line"><span class="comment">// 含有x并且在子树中 则当前节点是一个祖先</span></span><br><span class="line"><span class="comment">// 含有x但是就是当前节点的值 则直接返回到上一层调用</span></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">ancestor</span><span class="params">(node *root, <span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (!root) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	<span class="keyword">if</span> (root-&gt;val == x) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	<span class="keyword">if</span> ((root-&gt;left &amp;&amp; root-&gt;left-&gt;val == x) || (root-&gt;right &amp;&amp; root-&gt;right-&gt;val == x)) &#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; root-&gt;val &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">1024程序员节</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/c-c-数据结构-算法基础//" class="article-tag-list-link color1">c/c++ 数据结构 算法基础</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/10/24/%E8%BE%93%E5%87%BA%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%AD%E5%80%BC%E4%B8%BAx%E7%9A%84%E7%A5%96%E5%85%88/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-最近公共祖先lca(C++实现)" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2020/10/24/%E6%9C%80%E8%BF%91%E5%85%AC%E5%85%B1%E7%A5%96%E5%85%88lca(C++%E5%AE%9E%E7%8E%B0)/">最近公共祖先lca(C++实现)</a>
     </h1>
   
 
-  
-  <a href="/2020/10/24/%E6%9C%80%E8%BF%91%E5%85%AC%E5%85%B1%E7%A5%96%E5%85%88lca(C++%E5%AE%9E%E7%8E%B0)/" class="archive-article-date">
+        
+        <a href="/2020/10/24/%E6%9C%80%E8%BF%91%E5%85%AC%E5%85%B1%E7%A5%96%E5%85%88lca(C++%E5%AE%9E%E7%8E%B0)/" class="archive-article-date">
   	<time datetime="2020-10-24T10:38:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-24</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> val;</span><br><span class="line">	node *left, *right;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function">node *<span class="title">lca</span><span class="params">(node *root, node *p, node *q)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (!root || root==q || root==q) <span class="keyword">return</span> root;</span><br><span class="line">	<span class="keyword">auto</span> left = lca(root-&gt;left, p, q);</span><br><span class="line">	<span class="keyword">auto</span> right = lca(root-&gt;right, p, q);</span><br><span class="line">	<span class="keyword">if</span> (!left) <span class="keyword">return</span> right;</span><br><span class="line">	<span class="keyword">if</span> (!right) <span class="keyword">return</span> left;</span><br><span class="line">	<span class="keyword">return</span> root;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">1024程序员节 c++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/c-c-数据结构//" class="article-tag-list-link color1">c/c++ 数据结构</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/10/24/%E6%9C%80%E8%BF%91%E5%85%AC%E5%85%B1%E7%A5%96%E5%85%88lca(C++%E5%AE%9E%E7%8E%B0)/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-1024我在csdn" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2020/10/24/1024%E6%88%91%E5%9C%A8csdn/">1024我在csdn</a>
     </h1>
   
 
-  
-  <a href="/2020/10/24/1024%E6%88%91%E5%9C%A8csdn/" class="archive-article-date">
+        
+        <a href="/2020/10/24/1024%E6%88%91%E5%9C%A8csdn/" class="archive-article-date">
   	<time datetime="2020-10-24T01:56:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-24</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    
-    
-</header>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p>程序员的快乐</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">1024程序员节</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/数据结构//" class="article-tag-list-link color5">数据结构</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/10/24/1024%E6%88%91%E5%9C%A8csdn/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
   
     <nav id="page-nav">

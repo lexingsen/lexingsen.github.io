@@ -154,205 +154,833 @@
           <div id="js-content" class="content-ll">
             
   
-    <header class="article-header">
-  
+    <article id="post-C语言不做数组下标安全性检查" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2018/03/29/C%E8%AF%AD%E8%A8%80%E4%B8%8D%E5%81%9A%E6%95%B0%E7%BB%84%E4%B8%8B%E6%A0%87%E5%AE%89%E5%85%A8%E6%80%A7%E6%A3%80%E6%9F%A5/">C语言不做数组下标安全性检查</a>
     </h1>
   
 
-  
-  <a href="/2018/03/29/C%E8%AF%AD%E8%A8%80%E4%B8%8D%E5%81%9A%E6%95%B0%E7%BB%84%E4%B8%8B%E6%A0%87%E5%AE%89%E5%85%A8%E6%80%A7%E6%A3%80%E6%9F%A5/" class="archive-article-date">
+        
+        <a href="/2018/03/29/C%E8%AF%AD%E8%A8%80%E4%B8%8D%E5%81%9A%E6%95%B0%E7%BB%84%E4%B8%8B%E6%A0%87%E5%AE%89%E5%85%A8%E6%80%A7%E6%A3%80%E6%9F%A5/" class="archive-article-date">
   	<time datetime="2018-03-29T11:04:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-29</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p>Ｃ语言的编译器是不检查下标越界的,以前知道这个问题,可是没有想过是什么原因?</p>
+<p> 总结如下:<br>　　１,不检查下标是否越界可以有效提高程序运行的效率，因为如果你检查，那么编译器必须在生成的目标代码中加入额外的代码用于程序运行时检测下标是否越界，这就会导致程序的运行速度下降，所以为了程序的运行效率，C/C++才不检查下标是否越界。<br>　　２,不检查下标是为了给程序员更大的空间，也为指针操作带来更多的方便。如果有这个检查的话指针的功能将会大大被削弱，C的数组标识符，里面并没有包含该数组长度的信息，只包含地址信息，所以语言本身无法检查，只能通过编译器检查，而早期的C语言编译器也不对数组越界进行检查，只能由程序员自己检查确保。以及在早期的CRT函数中也不对字符串指针或数组进行越界检查，都是要求程序员确保空间足够，因此也才也才有了在VS2005之后微软提供的安全的CRT函数版本。　　</p>
+<p>　　自己写了一段检测程序测试这个问题，发现如果数组下标越界了，那么它会自动接着那块内存往后写。想了一下明白了，以前说不允许数组下标越界，并不是因为界外没有存储空间，而是因为界外的内容是未知的。也就是说如果界外的空间暂时没有被利用，那么我们可以占用那块内存，但是如果之前界外的内存已经存放了东西，那么我们越界过去就会覆盖那块内存，导致错误的产生。<br>通用数组长度的计算</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	char p[] &#x3D; &#123;&#39;a&#39;,&#39;b&#39;,&#39;c&#39;,&#39;d&#39;,&#39;e&#39;&#125;;</span><br><span class="line">	int arr[] &#x3D; &#123;1,2,3,4,5&#125;;</span><br><span class="line">	char *str[] &#x3D; &#123;&quot;hello&quot;,&quot;nihao&quot;,&quot;hehe&quot;&#125;;</span><br><span class="line">	</span><br><span class="line">	int len1 &#x3D; sizeof(p)&#x2F;sizeof(p[0]);</span><br><span class="line">	int len2 &#x3D; sizeof(arr)&#x2F;sizeof(arr[0]);</span><br><span class="line">	int len3 &#x3D; sizeof(str)&#x2F;sizeof(str[0]);</span><br><span class="line">	</span><br><span class="line">	printf(&quot;len1 &#x3D; %d,len2 &#x3D; %d,len3 &#x3D; %d\n&quot;,len1,len2,len3);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdn.net/20180329190336220?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<p>通过这种办法，就可以计算出任意类型数组的长度，是一种通用的计算数组长度的方法。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/29/C%E8%AF%AD%E8%A8%80%E4%B8%8D%E5%81%9A%E6%95%B0%E7%BB%84%E4%B8%8B%E6%A0%87%E5%AE%89%E5%85%A8%E6%80%A7%E6%A3%80%E6%9F%A5/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-数组作为形参退化为指针" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2018/03/29/%E6%95%B0%E7%BB%84%E4%BD%9C%E4%B8%BA%E5%BD%A2%E5%8F%82%E9%80%80%E5%8C%96%E4%B8%BA%E6%8C%87%E9%92%88/">数组作为形参退化为指针</a>
     </h1>
   
 
-  
-  <a href="/2018/03/29/%E6%95%B0%E7%BB%84%E4%BD%9C%E4%B8%BA%E5%BD%A2%E5%8F%82%E9%80%80%E5%8C%96%E4%B8%BA%E6%8C%87%E9%92%88/" class="archive-article-date">
+        
+        <a href="/2018/03/29/%E6%95%B0%E7%BB%84%E4%BD%9C%E4%B8%BA%E5%BD%A2%E5%8F%82%E9%80%80%E5%8C%96%E4%B8%BA%E6%8C%87%E9%92%88/" class="archive-article-date">
   	<time datetime="2018-03-29T10:26:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-29</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p>#一个小程序进行验证</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void Sizeof(int arr[])</span><br><span class="line">&#123;</span><br><span class="line">	printf(&quot;%d\n&quot;,sizeof(arr));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">	int arr[] &#x3D; &#123;1,2,3,4,5&#125;;</span><br><span class="line">	printf(&quot;传入Sizeof()函数进行计算:\n&quot;);</span><br><span class="line">	Sizeof(arr);</span><br><span class="line">	printf(&quot;为传入Sizeof()函数直接在主函数中进行计算:\n&quot;);</span><br><span class="line">	printf(&quot;%d\n&quot;,sizeof(arr));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在代码中可以看到，主函数与Sizeof函数执行了同样的计算。即计算数组的大小，但是结果却是始料未及的。<br><img src="https://img-blog.csdn.net/20180329182317200?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>出现这样的结果其原因就是在函数中，当数组作为形式参数进行传参时，其意义发生了变化。将其解析为一个指针，而指针的大小为四个字节。此时将数组作为一个指针类型进行计算。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/29/%E6%95%B0%E7%BB%84%E4%BD%9C%E4%B8%BA%E5%BD%A2%E5%8F%82%E9%80%80%E5%8C%96%E4%B8%BA%E6%8C%87%E9%92%88/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-举例分析可变参数函数实现的过程" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2018/03/12/%E4%B8%BE%E4%BE%8B%E5%88%86%E6%9E%90%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0%E5%87%BD%E6%95%B0%E5%AE%9E%E7%8E%B0%E7%9A%84%E8%BF%87%E7%A8%8B/">举例分析可变参数函数实现的过程</a>
     </h1>
   
 
-  
-  <a href="/2018/03/12/%E4%B8%BE%E4%BE%8B%E5%88%86%E6%9E%90%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0%E5%87%BD%E6%95%B0%E5%AE%9E%E7%8E%B0%E7%9A%84%E8%BF%87%E7%A8%8B/" class="archive-article-date">
+        
+        <a href="/2018/03/12/%E4%B8%BE%E4%BE%8B%E5%88%86%E6%9E%90%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0%E5%87%BD%E6%95%B0%E5%AE%9E%E7%8E%B0%E7%9A%84%E8%BF%87%E7%A8%8B/" class="archive-article-date">
   	<time datetime="2018-03-12T13:54:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-12</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><strong>求总和函数（可变参数形式）</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">int average(int n,...)</span><br><span class="line">&#123;</span><br><span class="line">    int sum;</span><br><span class="line">    va_list args;</span><br><span class="line">    va_start(args,n);</span><br><span class="line">    for(int i &#x3D; 0;i&lt;n;++i)</span><br><span class="line">    &#123;</span><br><span class="line">        sum +&#x3D; va_arg(args,int);</span><br><span class="line">    &#125;</span><br><span class="line">    va_end(args);</span><br><span class="line">    return sum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">typedef char *  va_list   &#x2F;&#x2F;为char* 别名为va_list</span><br></pre></td></tr></table></figure>
+<p><strong>函数栈调用</strong><br>对于C语言，其调用遵循_cdecl规则：<br>1.所有参数从右到左依次入栈。<br>2.这些参数由调用者清除，称为手动清除。<br>3.被调用函数不会要求调用者传递多少参数，调用者传递过多或者过少的参数，甚至完全不同的参数都不会产生编译阶段的错误。(简化的将就是调用参数的类型和数量不会产生编译阶段的错误)</p>
+<p><strong>以求和函数举例</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int sum &#x3D; sum(3,4,5,6);</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://img.blog.csdn.net/20180312214534833?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQVNKQkZKU0I=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<p><strong>三个宏宏定义</strong></p>
+<p><strong>（1）va_start</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#define va_start        _crt_va_start</span><br><span class="line">#define _crt_va_start   va_start(ap,v)</span><br><span class="line">#define va_start(ap,v)  (ap &#x3D; (va_list)&amp;v + _INTSIZEOF(v)) </span><br><span class="line">#define _INTSIZEOF(v) ((sizeof(v) + sizeof(int) - 1) &amp; ~(sizeof(int)-1))</span><br></pre></td></tr></table></figure>
+<p><strong>va_start宏的作用：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#define va_start(ap,v)  (ap &#x3D; (va_list)&amp;v + _INTSIZEOF(v)) </span><br><span class="line">ap &#x3D; (char*)&amp;v + (sizeof(v) + sizeof(int) - 1) &amp; ~(sizeof(int)-1);</span><br></pre></td></tr></table></figure>
+
+<p><strong>参数类型：</strong> ap为va_list类型指针，即为char *,v是最后一个确定的参数。其含义是它之后的参数均为可变参数。</p>
+<p><strong>功能：</strong>获取可变参数中的第一个参数，并将其地址保存在ap中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#define _INTSIZEOF(v) ((sizeof(v) + sizeof(int) - 1) &amp; ~(sizeof(int)-1))</span><br></pre></td></tr></table></figure>
+<p>_INTSIZEOF(v)宏函数是为了对齐内存。</p>
+<p><strong>（2）va_arg</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#define va_arg(ap,t) (*(t*))(ap +&#x3D; _INTSIZEOF(t) - _INTSIZEOF(t))</span><br></pre></td></tr></table></figure>
+<p><strong>va_arg宏的作用：</strong></p>
+<p><strong>参数类型：</strong> ap为va_list类型的指针，即char，它指向当前需要获取的参数。t为当前参数的类型。</p>
+<p><strong>功能：</strong> 获取ap当前所指向参数的指针，并将其强制转化为 *t,并进行解引用 ,然后将ap指向可变参数表的下一个参数。</p>
+<p><strong>（3）va_end</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#define va_end(ap)  (ap &#x3D; (va_list)0)</span><br><span class="line">ap &#x3D; (char*)0 &#x3D; NULL;</span><br></pre></td></tr></table></figure>
+<p><strong>va_end宏的作用：</strong></p>
+<p><strong>参数类型：</strong> ap为va_list类型的指针 。</p>
+<p><strong>功能：</strong> 使指针指向空，不在使用该指针。防止ap成为野指针，进行错误引用。实际上通常va_start与va_end是配对使用。</p>
+<p>了解并掌握以上三个宏的使用方法以及函数栈调用的规则后。</p>
+<p><strong>下面开始分析求和可变参数函数的实现过程：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">int average(int n,...)    &#x2F;&#x2F;...表示参数的类型和数量不确定 n表示传入参数的个数</span><br><span class="line">&#123;</span><br><span class="line">    int sum;</span><br><span class="line">    va_list args;    &#x2F;&#x2F;相当于定义   char *p;</span><br><span class="line">    va_start(args,n); &#x2F;&#x2F;获取可变参数列表中的第一个参数的地址并保存在p内 va_start（p,n）</span><br><span class="line">    for(int i &#x3D; 0;i&lt;n;++i)</span><br><span class="line">    &#123;</span><br><span class="line">        sum +&#x3D; va_arg(args,int);</span><br><span class="line">    &#125;</span><br><span class="line">    va_end(args);   &#x2F;&#x2F; 等价于*p &#x3D; NULL;</span><br><span class="line">    return sum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/12/%E4%B8%BE%E4%BE%8B%E5%88%86%E6%9E%90%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0%E5%87%BD%E6%95%B0%E5%AE%9E%E7%8E%B0%E7%9A%84%E8%BF%87%E7%A8%8B/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-printf函数的返回值！" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2018/03/12/printf%E5%87%BD%E6%95%B0%E7%9A%84%E8%BF%94%E5%9B%9E%E5%80%BC%EF%BC%81/">printf函数的返回值！</a>
     </h1>
   
 
-  
-  <a href="/2018/03/12/printf%E5%87%BD%E6%95%B0%E7%9A%84%E8%BF%94%E5%9B%9E%E5%80%BC%EF%BC%81/" class="archive-article-date">
+        
+        <a href="/2018/03/12/printf%E5%87%BD%E6%95%B0%E7%9A%84%E8%BF%94%E5%9B%9E%E5%80%BC%EF%BC%81/" class="archive-article-date">
   	<time datetime="2018-03-12T07:41:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-12</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><strong>printf函数原型</strong>       </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int printf(const char * p,...);</span><br></pre></td></tr></table></figure>
+<p><strong>返回值</strong><br>返回值为整型，是输出字符的个数，即格式化字符串中字符的个数。</p>
+<p><strong>举例</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">int main（）</span><br><span class="line">&#123;</span><br><span class="line">	int count &#x3D; printf(&quot;ni hao csdn,%d\n&quot;,111);</span><br><span class="line">	&#x2F;&#x2F;这里的格式化字符串包括逗号、空格、换行符、字母及数字共计16个字符</span><br><span class="line">	printf(&quot;n &#x3D; %d\n&quot;,n);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>输出结果</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">n &#x3D; 16;</span><br></pre></td></tr></table></figure>
+<p>来自阿里的一个面试题</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">int main（）</span><br><span class="line">&#123;</span><br><span class="line">	printf(&quot;%d\n&quot;,printf(&quot;%d\n&quot;,printf(&quot;hello!\n&quot;))); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样的题目第一眼看上去有一点懵，其实它考的就是printf函数的返回值，及输出字符的个数。<br><strong>输出结果</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;由内而外依次分析</span><br><span class="line">printf(&quot;hello!\n&quot;);</span><br><span class="line">&#x2F;&#x2F;在屏幕上输出hello！并进行换行，其返回值为7。</span><br><span class="line">printf(&quot;%d\n&quot;,printf(&quot;hello!\n&quot;));</span><br><span class="line">&#x2F;*由上一步可以知道其实  printf(&quot;hello!\n&quot;) &#x3D;&#x3D; 7 所以输出7并进行换行*&#x2F;</span><br><span class="line">printf(&quot;%d\n&quot;,printf(&quot;%d\n&quot;,printf(&quot;hello!\n&quot;)));</span><br><span class="line">&#x2F;&#x2F;尽管这一行很长，但是经过简化，他可以这样表示</span><br><span class="line">printf(&quot;%d\n&quot;,2);</span><br><span class="line">&#x2F;&#x2F;因为printf(&quot;%d\n&quot;,printf(&quot;hello!\n&quot;))的返回值为2</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/12/printf%E5%87%BD%E6%95%B0%E7%9A%84%E8%BF%94%E5%9B%9E%E5%80%BC%EF%BC%81/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-C语言 实现浮点数的整型强制转化" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2018/03/11/C%E8%AF%AD%E8%A8%80%20%E5%AE%9E%E7%8E%B0%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E6%95%B4%E5%9E%8B%E5%BC%BA%E5%88%B6%E8%BD%AC%E5%8C%96/">C语言 实现浮点数的整型强制转化</a>
     </h1>
   
 
-  
-  <a href="/2018/03/11/C%E8%AF%AD%E8%A8%80%20%E5%AE%9E%E7%8E%B0%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E6%95%B4%E5%9E%8B%E5%BC%BA%E5%88%B6%E8%BD%AC%E5%8C%96/" class="archive-article-date">
+        
+        <a href="/2018/03/11/C%E8%AF%AD%E8%A8%80%20%E5%AE%9E%E7%8E%B0%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E6%95%B4%E5%9E%8B%E5%BC%BA%E5%88%B6%E8%BD%AC%E5%8C%96/" class="archive-article-date">
   	<time datetime="2018-03-11T12:09:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-11</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><strong>1.整型在内存中的存储形式</strong><br>    int 与 float 均是四个字节大小，即32位，但是他们在内存中的存储形式却是完全不相同的。</p>
+<p>下面举一个例子，在vs下通过查看内存验证一下以上的事实。<br><strong>1.1   int  a = 12;</strong><br>  由于是正数，所以符号位取0。<br>          (12) = 1010B<br>        所以其在内存中存储形式为 0101 0000 0000 0000 0000 0000 0000 0000<br>为了方便计算16进制数，将4位二进制数列为一组进行表示。<br><img src="http://img.blog.csdn.net/20180309161618332?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQVNKQkZKU0I=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>在监视窗口找到a的地址。<br><img src="http://img.blog.csdn.net/20180309161953214?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQVNKQkZKU0I=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>通过地址查看该地址存储的信息。<br><img src="http://img.blog.csdn.net/2018030916215994?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQVNKQkZKU0I=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>将其展开 0000 1010 0000 0000 0000 0000 0000 0000<br><strong>2.单精度浮点数在内存在内存的储存</strong><br>举例 float b = 12.125;<br><img src="http://img.blog.csdn.net/20180311193856818?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQVNKQkZKU0I=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<p>在监视窗口找到b的地址</p>
+<p><img src="http://img.blog.csdn.net/20180311194014635?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQVNKQkZKU0I=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<p>通过b的地址，查看一下b在内存中的存储形式。<br><img src="http://img.blog.csdn.net/20180311194228896?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQVNKQkZKU0I=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<p>可见，b在内存中4字节是按照 00 00 42 41存储，因为我的机器是小端模式，所以真正的存储形式是 41 42 00 00。接下来分析一下这32个位都是什么，大家都知道二进制的四位可以用十六进制的1位表示。<br><img src="http://img.blog.csdn.net/2018031119485178?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQVNKQkZKU0I=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<p>关于浮点数的由十进制到二进制的转换大家一定也清楚，整数部分除二取余，小数部分乘二取整。<br>最后的结果是：12.125（10） = 1100.001（2）</p>
+<p>浮点数共计占内存4个字节，即32位。这32位是按照这样的规则存储的：</p>
+<p>（1）一位符号位   整数为0     负数1。用0，1将符号数字化，因为计算机是不懂正负号，而0和1恰恰可以表示这两种状态。</p>
+<p>（2）指数位八位<br>比如 float  a = 12.125(10) = 1100.001(2)<br>其实就是科学计数法表示， 1.2125 * 10^1  (10)  =   1.1100001 * 2^3<br>所在其指数位就为   exp = 3,但是实际计算机在存储的过程中还给指数位加了一个偏移常数127，所以指数为最终的结果是130。以二进制表示就是1000 0010。</p>
+<p>（3）由二步骤可以知道12.125尾数为1.1100001,但是可以联想一下，任意一个单精度类型的数据转化成科学计数法的二进制数都是1.xxxxxxxxxx，因此实际上在存储中将第一位的略去不表示，这样一来。其实在尾数位，我们用23位保存了24的数据，这样进度就提高了一位。</p>
+<p>由上图可知，这样的事实成功的被验证了。</p>
+<p>洋洋洒洒，废话连篇。真正转化现在开始，了解了前面的知识，我们就知道了浮点数是如何计算机中存储的，将其转换成整型无非就是取到它的整数部分即可。</p>
+<p>下面实现这样的一个单精度浮点数到整型的强转函数:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">int float_to_int(float f)</span><br><span class="line">&#123;</span><br><span class="line">	int *p &#x3D; (int*)&amp;f;</span><br><span class="line">	&#x2F;&#x2F;由于指针访问内存是按照基类型进行的，首先进行强转访问浮点数f</span><br><span class="line">	int temp &#x3D; *p;</span><br><span class="line">	&#x2F;&#x2F;用中间变量接受f的值</span><br><span class="line">	&#x2F;&#x2F;提取符号位</span><br><span class="line">	int sign &#x3D; -1;</span><br><span class="line">	if((temp &amp; 0x80000000) &#x3D;&#x3D; 0)</span><br><span class="line">	&#123;</span><br><span class="line">		sign &#x3D; 1;</span><br><span class="line">	&#125;</span><br><span class="line">	&#x2F;&#x2F;条件表达式中进行了位与运算，其实就是提取指数位的值。前面已经讲过了，符号位为0，其为正值。若为1，其为负值。</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;提取指数位</span><br><span class="line">    int exp;</span><br><span class="line">    exp &#x3D; ( (  (temp &gt;&gt; 23) &amp; 0x0ff  )  ) - 127;</span><br><span class="line">    &#x2F;&#x2F;由于在存储的时候指数位加了偏置常数   现在相当于是计算指数位的逆过程 所以自然要减去</span><br><span class="line">	</span><br><span class="line">	&#x2F;&#x2F;提取尾数位</span><br><span class="line">	int tail;</span><br><span class="line">	tail &#x3D; ( ( temp &amp; 0x007fffff ) | 0x00800000 );</span><br><span class="line">	&#x2F;*和之前提取指数位和符号位的方法是一致的，要提取哪几位，在对应的位进行与1运算就可以了</span><br><span class="line">	现在我们要提取的是除符号位和指数位共计九位的其他23，即尾数为。只需要在对应的为与1即可*&#x2F;</span><br><span class="line">	&#x2F;*还记得在存储尾数的时候，因为任意一个单精度的二进制数以科学记数法表示时，第一位都是1，</span><br><span class="line">	所以存储的时间，为了能够提高精度，省略了改位。但是现在是在进行他的逆过程，所以我们要在</span><br><span class="line">	要进行或1位运算*&#x2F;</span><br><span class="line">	</span><br><span class="line">	int res &#x3D; (tail &gt;&gt; (23 - exp));</span><br><span class="line">	</span><br><span class="line">	return res * sign;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;进行验证</span><br><span class="line">int main（）</span><br><span class="line">&#123;</span><br><span class="line">	float a  &#x3D; 12.125; &#x2F;&#x2F;a &#x3D; -12.125 a &#x3D; 0.05 a &#x3D; -0.05</span><br><span class="line">	int b &#x3D; float_to_int(a);</span><br><span class="line">	printf(&quot;b &#x3D; %d\n&quot;,b);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="http://img.blog.csdn.net/20180311200418439?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQVNKQkZKU0I=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><img src="http://img.blog.csdn.net/20180311200427338?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQVNKQkZKU0I=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><img src="http://img.blog.csdn.net/20180311200439355?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQVNKQkZKU0I=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><img src="http://img.blog.csdn.net/20180311200447995?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQVNKQkZKU0I=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<p>大家也可自行验证，但是美中不足的是这样强转函数存在缺点，就是当我们将浮点数0传入函数进行强转，其结果却差强人意。<br>（关于这点，目前还在测试，一定会有一个满意的解释的）</p>
+<p>写到这里，差不多结束了，其实双精度浮点数的强转时类似，只要能完全掌握双精度浮点数在内存中的存数形式。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">c语言</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/11/C%E8%AF%AD%E8%A8%80%20%E5%AE%9E%E7%8E%B0%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E6%95%B4%E5%9E%8B%E5%BC%BA%E5%88%B6%E8%BD%AC%E5%8C%96/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-Windows操作系统下使用环境变量打开应用程序" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2018/02/19/Windows%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%8B%E4%BD%BF%E7%94%A8%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E6%89%93%E5%BC%80%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F/">Windows操作系统下使用环境变量打开应用程序</a>
     </h1>
   
 
-  
-  <a href="/2018/02/19/Windows%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%8B%E4%BD%BF%E7%94%A8%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E6%89%93%E5%BC%80%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F/" class="archive-article-date">
+        
+        <a href="/2018/02/19/Windows%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%8B%E4%BD%BF%E7%94%A8%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E6%89%93%E5%BC%80%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F/" class="archive-article-date">
   	<time datetime="2018-02-19T13:32:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-19</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><strong>环境变量</strong><br>       环境变量（environment variables）一般是指在操作系统中用来指定操作系统运行环境的一些参数，如：临时文件夹位置和系统文件夹位置等。   —-来之百度百科的解释<br>Environment variables are a set of dynamic named values that can affect the way running processes will behave on a computer. They are part of the environment in which a process runs.                                                                      —- 来着维基百科的解释</p>
+<p>   其实通俗的讲环境变量就是路径，，当要求系统运行一个程序而没有告诉它程序所在的完整路径时，系统除了在当前目录下面寻找此程序外，还应到path中指定的路径去找。用户通过设置环境变量，来更好的运行进程。<br>   下面以添加TIM的环境变量为例学习使用Windows下的环境变量：<br>   （我的操作系统是win10，其实大同小异）<br>   1.右击此电脑，点击属性。<img src="http://img.blog.csdn.net/2018021921073937?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQVNKQkZKU0I=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>   2.在右上角点击高级系统设置，出现如下对话框。<br>   <img src="http://img.blog.csdn.net/20180219210912294?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQVNKQkZKU0I=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>   3.点击右下角环境变量，出现如下对话框。<br>   <img src="http://img.blog.csdn.net/20180219211029701?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQVNKQkZKU0I=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>   这是我们可以看见两种不同的环境变量，即用户变量和系统变量。他们之间的区别在于用户变量仅仅对该用户提供支持，而系统变量是对所有用户提供支持的，所以在设置的时候可以根据情况自行选择二者之一。<br>   4.我以用户变量举例，点击新建。<br>   <img src="http://img.blog.csdn.net/20180219211550405?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQVNKQkZKU0I=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>   5.输入变量名和变量值（即路径）<br>   假设变量名为  ：  path<br>   那么怎样设置变量值呢？这是重点，以TIM举例。<br>   （1）找到后缀为.exe的可执行文件所在的文件夹。<br>   <img src="http://img.blog.csdn.net/20180219212136773?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQVNKQkZKU0I=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>   （2）点击当前文件所在位置的空白处即可得到绝对路径。<br>   <img src="http://img.blog.csdn.net/20180219212434984?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQVNKQkZKU0I=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>   即得到环境变量的变量值。<br>   6.拷贝到变量值所在一栏，点击确定。<br>   至此就将TIM添加到环境变量中，下面验证是否添加成功。<br>   7.键盘组合键 win+R 打开运行窗口,输入TIM即可成功运行TIM。<br><img src="http://img.blog.csdn.net/20180219213019463?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQVNKQkZKU0I=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><img src="http://img.blog.csdn.net/20180219213029667?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQVNKQkZKU0I=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>8.同时也可以在命令提示符中输入TIM，运行程序。<br>小伙伴们赶快去试试吧！</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/02/19/Windows%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%8B%E4%BD%BF%E7%94%A8%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E6%89%93%E5%BC%80%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-局部变量的作用域和生存周期" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2018/02/12/%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F%E7%9A%84%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%92%8C%E7%94%9F%E5%AD%98%E5%91%A8%E6%9C%9F/">局部变量的作用域和生存周期</a>
     </h1>
   
 
-  
-  <a href="/2018/02/12/%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F%E7%9A%84%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%92%8C%E7%94%9F%E5%AD%98%E5%91%A8%E6%9C%9F/" class="archive-article-date">
+        
+        <a href="/2018/02/12/%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F%E7%9A%84%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%92%8C%E7%94%9F%E5%AD%98%E5%91%A8%E6%9C%9F/" class="archive-article-date">
   	<time datetime="2018-02-12T14:08:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-12</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    
-    
-</header>
-  
-    <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/30/break%E5%92%8Ccontiue%E7%9A%84%E5%8C%BA%E5%88%AB/">break和contiue的区别</a>
-    </h1>
-  
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<h2 id="变量定义的三种情况"><a href="#变量定义的三种情况" class="headerlink" title="变量定义的三种情况"></a>变量定义的三种情况</h2><p>（1）在函数开头定义<br>（2）在函数的内部定义<br>（3）在复合语句块内部定义</p>
+<h2 id="局部变量"><a href="#局部变量" class="headerlink" title="局部变量"></a>局部变量</h2><p>定义在函数内部的变量只能在函数内部引用，同样定义在复合语句块中的变量只是在复合语句块内有效。将这种变量称为“局部变量”，顾名思义，这些变量的作用域仅仅是在函数内部或复合语句块内。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;复合语句块的局部变量举例</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># include&lt;stdio.h&gt;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    int s &#x3D; 10;</span><br><span class="line">    &#123;</span><br><span class="line">        int i &#x3D;1;</span><br><span class="line">    &#125;</span><br><span class="line">    s +&#x3D; i;</span><br><span class="line">    printf(&quot;%d\n&quot;，s);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样的代码在编译的时候就会报错，因为我们在复合语句块内定义一个 整型  i = 1，其作用域是复合语句块内，若我们想在复合语句块外用引用该变量是不可行的。变量i只在复合语句块内有效，离开该复合语句块变量就失效，系统会把它占用的内存释放掉。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;[Error] &#39;i&#39; was not declared in this scope</span><br></pre></td></tr></table></figure>
+<p>这是一个错误提示信息，编译器说 i 这个变量没有声明。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;定义在函数内部的局部变量</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># include&lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int func(int n)</span><br><span class="line">&#123;</span><br><span class="line">	int i &#x3D; 10;</span><br><span class="line">	return n;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	int n &#x3D; 10;</span><br><span class="line">	printf(&quot;%d\n&quot;,func(n));</span><br><span class="line">	printf(&quot;%d\n&quot;,i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>现在我们定义了一个 返回值为整型func(int n)函数，其功能是我传入一个整型数，其返回值是原值。但在主函数中，我想输出定义在func()函数内部局部变量i的值。同样是不可行的，编译器在编译的的时候就会报错。但是在不同的函数中可以定义同名的变量，因为他们代表不同的对象，互不干扰。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;[Error] &#39;i&#39; was not declared in this scope</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;错误提示同我们在复合语句块中引用局部变量是相同的。</span><br></pre></td></tr></table></figure>
+<p> 上述例子虽然简单，但是也直白直观的感受到局部变量的作用域和生命周期。我们在实际写代码的过程中，一定要注意局部变量的引用。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/02/12/%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F%E7%9A%84%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%92%8C%E7%94%9F%E5%AD%98%E5%91%A8%E6%9C%9F/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
 
   
-  <a href="/2018/01/30/break%E5%92%8Ccontiue%E7%9A%84%E5%8C%BA%E5%88%AB/" class="archive-article-date">
-  	<time datetime="2018-01-30T05:02:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-30</time>
-</a>
-  
+    <article id="post-break和continue的区别" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-  
-    
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2018/01/30/break%E5%92%8Ccontinue%E7%9A%84%E5%8C%BA%E5%88%AB/">break和continue的区别</a>
     </h1>
   
 
-  
-  <a href="/2018/01/30/break%E5%92%8Ccontinue%E7%9A%84%E5%8C%BA%E5%88%AB/" class="archive-article-date">
+        
+        <a href="/2018/01/30/break%E5%92%8Ccontinue%E7%9A%84%E5%8C%BA%E5%88%AB/" class="archive-article-date">
   	<time datetime="2018-01-30T05:02:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-30</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+
+<p><span style="font-size:18px">1.continue</span></p>
+<p><span style="font-size:18px">continue语句形式如下：</span></p>
+<p><span style="font-size:18px">continue;</span></p>
+<p><span style="font-size:18px">continue语句用于循环结构（包括while(当型循环)、do&nbsp; &nbsp;while（直到型循环）和 for循环），</span></p>
+<p><span style="font-size:18px">continue作为循环结构中循环体的一部分。在程序执行的过程中，一旦遇到了continue语句，</span></p>
+<p><span style="font-size:18px">立即结束本次循环。跳过循环体中尚未执行的部分，接着进行是否继续循环的条件判断。</span></p>
+<p><span style="font-size:18px">2.break;</span></p>
+<p><span style="font-size:18px">break语句的形式如下</span></p>
+<p><span style="font-size:18px">break;</span></p>
+<p><span style="font-size:18px">break语句大多数用于switch...case..。语句的分支语句中，在程序执行的过程中，一旦遇到了</span></p>
+<p><span style="font-size:18px">break语句，立即退出当前的switch语句。</span></p>
+<p><span style="font-size:18px">同时，break语句可以用于循环结构中，作为循环结构中循环体的一部分。在程序执行的过程，</span></p>
+<p><span style="font-size:18px">一旦遇到break语句，立即退出当前的循环体，接着执行循环体之后的语句。</span></p>
+<p><span style="font-size:18px">3.continue和break的区别</span></p>
+<p><span style="font-size:18px">通过对比break和continue语句在循环结构中的使用，不难发现，continue语句只是结束本次</span></p>
+<p><span style="font-size:18px">循环，不在执行循环体continue后边的语句，并不是终止当前循环。而break语句是直接结束</span></p>
+<p><span style="font-size:18px">本次循环。</span></p>
+<p><span style="font-size:18px">下面用一个简单的例子验证一下：</span></p>
+<p><span style="font-size:18px">1.continue</span></p>
+<p><span style="font-size:18px"></span></p>
+<pre class="plain"># include&lt;stdio.h&gt;
+
+<p>void main()<br>{<br>    int arr[]={1,2,3,4,5};<br>    int len=sizeof(arr)/sizeof(arr[0]);<br>    for(int i=0;i&lt;len;&#43;&#43;i)<br>    {<br>        if(arr[i]==4)<br>        {<br>            continue;<br>        }<br>        printf(&quot;%d &quot;,arr[i]);<br>    }<br>}</pre><br>运行结果为：<br><br><br></p>
+<p></p>
+<p><img src="https://img-blog.csdn.net/20180130125458422?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQVNKQkZKU0I=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></p>
+<p>2.break</p>
+<p></p>
+<pre class="plain"># include&lt;stdio.h&gt;
+
+<p>void main()<br>{<br>    int arr[]={1,2,3,4,5};<br>    int len=sizeof(arr)/sizeof(arr[0]);<br>    for(int i=0;i&lt;len;&#43;&#43;i)<br>    {<br>        if(arr[i]==4)<br>        {<br>            break;<br>        }<br>        printf(&quot;%d &quot;,arr[i]);<br>    }<br>}</pre><br>运行结果为：<br><br><br></p>
+<p></p>
+<p><img src="https://img-blog.csdn.net/20180130125703604?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQVNKQkZKU0I=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></p>
+<p>实际上在continue和break语句在具体程序中的使用，往往可以在较大程度上减少时间复杂度，减小程序运行时间。</p>
+<p><br>
+</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/01/30/break%E5%92%8Ccontinue%E7%9A%84%E5%8C%BA%E5%88%AB/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-break和contiue的区别" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/30/break%E5%92%8Ccontiue%E7%9A%84%E5%8C%BA%E5%88%AB/">break和contiue的区别</a>
+    </h1>
+  
+
+        
+        <a href="/2018/01/30/break%E5%92%8Ccontiue%E7%9A%84%E5%8C%BA%E5%88%AB/" class="archive-article-date">
+  	<time datetime="2018-01-30T05:02:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-30</time>
+</a>
+        
+      </header>
     
-</header>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="1-continue"><a href="#1-continue" class="headerlink" title="1.continue"></a>1.continue</h3><p>continue语句形式如下：</p>
+<p>continue;</p>
+<p>continue语句用于循环结构（包括while(当型循环)、do   while（直到型循环）和 for循环），</p>
+<p>continue作为循环结构中循环体的一部分。在程序执行的过程中，一旦遇到了continue语句，</p>
+<p>立即结束本次循环。跳过循环体中尚未执行的部分，接着进行是否继续循环的条件判断。</p>
+<h3 id="2-break"><a href="#2-break" class="headerlink" title="2.break"></a>2.break</h3><p>break语句的形式如下</p>
+<p>break;</p>
+<p>break语句大多数用于switch…case..。语句的分支语句中，在程序执行的过程中，一旦遇到了</p>
+<p>break语句，立即退出当前的switch语句。</p>
+<p>同时，break语句可以用于循环结构中，作为循环结构中循环体的一部分。在程序执行的过程，</p>
+<p>一旦遇到break语句，立即退出当前的循环体，接着执行循环体之后的语句。</p>
+<p>3.continue和break的区别</p>
+<p>通过对比break和continue语句在循环结构中的使用，不难发现，continue语句只是结束本次</p>
+<p>循环，不在执行循环体continue后边的语句，并不是终止当前循环。而break语句是直接结束</p>
+<p>本次循环。</p>
+<h3 id="下面用一个简单的例子验证一下："><a href="#下面用一个简单的例子验证一下：" class="headerlink" title="下面用一个简单的例子验证一下："></a>下面用一个简单的例子验证一下：</h3><p>1.continue</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># <span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> arr[]=&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;;</span><br><span class="line">	<span class="keyword">int</span> len=<span class="keyword">sizeof</span>(arr)/<span class="keyword">sizeof</span>(arr[<span class="number">0</span>]);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;len;++i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>(arr[i]==<span class="number">4</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">continue</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>,arr[i]);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果为:<br><img src="./img/1.png"></p>
+<p>2.break</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># <span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> arr[]=&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;;</span><br><span class="line">	<span class="keyword">int</span> len=<span class="keyword">sizeof</span>(arr)/<span class="keyword">sizeof</span>(arr[<span class="number">0</span>]);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;len;++i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>(arr[i]==<span class="number">4</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>,arr[i]);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果为：</p>
+<p><img src="./img/2.png"></p>
+<p>实际上在continue和break语句在具体程序中的使用，往往可以在较大程度上减少时间复杂度，减小程序运行时间。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">c</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/01/30/break%E5%92%8Ccontiue%E7%9A%84%E5%8C%BA%E5%88%AB/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <header class="article-header">
-  
+    <article id="post-震惊！三天打鱼两天筛网这样写" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2018/01/21/%E9%9C%87%E6%83%8A%EF%BC%81%E4%B8%89%E5%A4%A9%E6%89%93%E9%B1%BC%E4%B8%A4%E5%A4%A9%E7%AD%9B%E7%BD%91%E8%BF%99%E6%A0%B7%E5%86%99/">震惊！三天打鱼两天筛网这样写</a>
     </h1>
   
 
-  
-  <a href="/2018/01/21/%E9%9C%87%E6%83%8A%EF%BC%81%E4%B8%89%E5%A4%A9%E6%89%93%E9%B1%BC%E4%B8%A4%E5%A4%A9%E7%AD%9B%E7%BD%91%E8%BF%99%E6%A0%B7%E5%86%99/" class="archive-article-date">
+        
+        <a href="/2018/01/21/%E9%9C%87%E6%83%8A%EF%BC%81%E4%B8%89%E5%A4%A9%E6%89%93%E9%B1%BC%E4%B8%A4%E5%A4%A9%E7%AD%9B%E7%BD%91%E8%BF%99%E6%A0%B7%E5%86%99/" class="archive-article-date">
   	<time datetime="2018-01-21T10:20:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-21</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    
-    
-</header>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>原题目：有一个人从1990年一月一日开始三天打鱼两天晒网，问他今天在干嘛？</p>
+<p>拿到这样的一个题目瞬间会有一点懵，但是仔细分析其中的逻辑关系，可以得到下面的思路。</p>
+<p>首先，从1990年1月1日到今天共计多少天。</p>
+<p>其次，如何得到今天是打渔还是晒网，可以看出三天打鱼两天晒网是一个循环，也就是是说五天为一个周期。</p>
+<p>顺着这样的一个思路，我们开始写代码。</p>
+<p>1.针对一个具体的日期，我们需要知道是何年何月何日。因此，在C语言中的结构题类型就可以满足定义这样一个具体日期。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> </span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">      <span class="keyword">int</span> year;</span><br><span class="line">      <span class="keyword">int</span> month;</span><br><span class="line">      <span class="keyword">int</span> day;</span><br><span class="line">&#125;data;</span><br></pre></td></tr></table></figure>
+<p>2.接着我们要计算1990年1月1日到今天为止总计为多少天。考虑到要计算天数，我们要细化日期的内容。对于年，有平年和闰年之分，平年365天，闰年366天，这都是常识。对于月，定义这样的一个平年通用型的数组比较贴切。</p>
+<p>定义长度为13且Permonth[0]=0,这样下标与月份一致，便于计算。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>  Permonth[<span class="number">13</span>]=&#123;<span class="number">0</span>,<span class="number">31</span>,<span class="number">28</span>,<span class="number">31</span>,<span class="number">30</span>,<span class="number">31</span>,<span class="number">30</span>,<span class="number">31</span>,<span class="number">31</span>,<span class="number">30</span>,<span class="number">31</span>,<span class="number">30</span>,<span class="number">31</span>&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>如果今年刚好不是闰年，我们只要计算出这个月前今年的总天数加上这个月的天数就可以了。但是如果是闰年我们还需要继续划分，如果是二月前，同上。如果月份大于三，我们还是需要在二月天数的基础上增加一。即Permonth[2]+=1;</p>
+<p>3.二步骤虽然略麻烦一点，但为三步骤提供了思路。C语言就是函数（function）构成的，一个大的功能往往也可以分解为多个子功能去合作完成，也正所谓模块化程序设计。这样，首先我们写一个判断平闰年的函数，在这样的一个题目里，它得到两次使用。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">is_leapyear</span><span class="params">(<span class="keyword">int</span> year)</span></span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">    <span class="keyword">if</span>(year&lt;<span class="number">0</span>)</span><br><span class="line">   &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;输入错误!&quot;</span>);</span><br><span class="line">   &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">   &#123;</span><br><span class="line">         <span class="keyword">if</span>(year%<span class="number">4</span>==<span class="number">0</span>&amp;&amp;year%<span class="number">100</span>!=<span class="number">0</span>||year%<span class="number">400</span>==<span class="number">0</span>)<span class="comment">//判断为闰年核心</span></span><br><span class="line">         &#123;</span><br><span class="line">               <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">         &#125;</span><br><span class="line">         <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">               <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接下来我们写总天数的函数</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">countday</span><span class="params">(date *p,<span class="keyword">int</span> *sum)</span><span class="comment">//传入结构题的地址，并传入保存总天数值的地址</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> permonth[<span class="number">13</span>]=&#123;<span class="number">0</span>,<span class="number">31</span>,<span class="number">28</span>,<span class="number">31</span>,<span class="number">30</span>,<span class="number">31</span>,<span class="number">30</span>,<span class="number">31</span>,<span class="number">31</span>,<span class="number">30</span>,<span class="number">31</span>,<span class="number">30</span>,<span class="number">31</span>&#125;;</span><br><span class="line">	<span class="keyword">int</span> totalday=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> year=<span class="number">1990</span>;year&lt;p-&gt;year;++year)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>(is_leapyear(p-&gt;year))</span><br><span class="line">		&#123;</span><br><span class="line">			totalday+=<span class="number">366</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		&#123;</span><br><span class="line">			totalday+=<span class="number">365</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(is_leapyear(p-&gt;year))</span><br><span class="line">	&#123;</span><br><span class="line">		permonth[<span class="number">2</span>]+=<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;p-&gt;month;++i)</span><br><span class="line">	&#123;</span><br><span class="line">		totalday+=permonth[i];</span><br><span class="line">	&#125;</span><br><span class="line">	totalday+=p-&gt;day;</span><br><span class="line">	*sum=totalday;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>到此为止，我们就把从1990年1月1日到今天的总天数计算出来了。<br>4.总天数计算出来后，因为三天打渔两天晒网，五天即一个循环，所以总天数对5取模。结果为4和0时，即为晒网。结果为1，2，3时，即为打渔。<br>5.考虑程序的冗余性，输入的具体日期完全可能出现意料之外的情况，因此也需要考虑在内。</p>
+<p>最后，附上源代码。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta"># <span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> </span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">int</span> year;</span><br><span class="line">	<span class="keyword">int</span> day;</span><br><span class="line">	<span class="keyword">int</span> month;</span><br><span class="line">&#125;date;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">init_date</span><span class="params">(date *p)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	p-&gt;day=<span class="number">0</span>;</span><br><span class="line">	p-&gt;month=<span class="number">0</span>;</span><br><span class="line">	p-&gt;year=<span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">is_leapyear</span><span class="params">(<span class="keyword">int</span> year)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(year%<span class="number">4</span>==<span class="number">0</span>&amp;&amp;year%<span class="number">100</span>!=<span class="number">0</span>||year%<span class="number">400</span>==<span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">countday</span><span class="params">(date *p,<span class="keyword">int</span> *sum)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> permonth[<span class="number">13</span>]=&#123;<span class="number">0</span>,<span class="number">31</span>,<span class="number">28</span>,<span class="number">31</span>,<span class="number">30</span>,<span class="number">31</span>,<span class="number">30</span>,<span class="number">31</span>,<span class="number">31</span>,<span class="number">30</span>,<span class="number">31</span>,<span class="number">30</span>,<span class="number">31</span>&#125;;</span><br><span class="line">	<span class="keyword">int</span> totalday=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> year=<span class="number">1990</span>;year&lt;p-&gt;year;++year)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>(is_leapyear(p-&gt;year))</span><br><span class="line">		&#123;</span><br><span class="line">			totalday+=<span class="number">366</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		&#123;</span><br><span class="line">			totalday+=<span class="number">365</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(is_leapyear(p-&gt;year))</span><br><span class="line">	&#123;</span><br><span class="line">		permonth[<span class="number">2</span>]+=<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;p-&gt;month;++i)</span><br><span class="line">	&#123;</span><br><span class="line">		totalday+=permonth[i];</span><br><span class="line">	&#125;</span><br><span class="line">	totalday+=p-&gt;day;</span><br><span class="line">	*sum=totalday;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	date l;</span><br><span class="line">	init_date(&amp;l);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;请输入今天是几年几月几日：\n&quot;</span>);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d%d%d&quot;</span>,&amp;l.year,&amp;l.month,&amp;l.day);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">	<span class="keyword">int</span> s;                        <span class="comment">//用来接收总天数</span></span><br><span class="line">	countday(&amp;l,&amp;s);</span><br><span class="line">	<span class="keyword">if</span>(s%<span class="number">5</span>==<span class="number">4</span>||s%<span class="number">5</span>==<span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;今天晒网！&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;今天打渔！&quot;</span>); </span><br><span class="line">	&#125; 	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">C++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/01/21/%E9%9C%87%E6%83%8A%EF%BC%81%E4%B8%89%E5%A4%A9%E6%89%93%E9%B1%BC%E4%B8%A4%E5%A4%A9%E7%AD%9B%E7%BD%91%E8%BF%99%E6%A0%B7%E5%86%99/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
   
     <nav id="page-nav">

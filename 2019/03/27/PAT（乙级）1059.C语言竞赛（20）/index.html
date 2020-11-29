@@ -156,29 +156,198 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-PAT（乙级）1059.C语言竞赛（20）" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       PAT（乙级）1059.C语言竞赛（20）
     </h1>
   
 
-  
-  <a href="/2019/03/27/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891059.C%E8%AF%AD%E8%A8%80%E7%AB%9E%E8%B5%9B%EF%BC%8820%EF%BC%89/" class="archive-article-date">
+        
+        <a href="/2019/03/27/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891059.C%E8%AF%AD%E8%A8%80%E7%AB%9E%E8%B5%9B%EF%BC%8820%EF%BC%89/" class="archive-article-date">
   	<time datetime="2019-03-27T13:15:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-27</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face="Courier New">PAT 1059.C语言竞赛（20）</font></p>
+<p><font size=4 face="Courier New">C 语言竞赛是浙江大学计算机学院主持的一个欢乐的竞赛。既然竞赛主旨是为了好玩，颁奖规则也就制定得很滑稽：<br>0、冠军将赢得一份“神秘大奖”（比如很巨大的一本学生研究论文集……）。<br>1、排名为素数的学生将赢得最好的奖品 —— 小黄人玩偶！<br>2、其他人将得到巧克力。<br>给定比赛的最终排名以及一系列参赛者的 ID，你要给出这些参赛者应该获得的奖品。</p>
+<p><font size=5 face="Courier New" color=red>输入格式：</font><br><font size=4 face="Courier New">输入第一行给出一个正整数 N（≤10^4），是参赛者人数。随后 N 行给出最终排名，每行按排名顺序给出一位参赛者的 ID（4 位数字组成）。接下来给出一个正整数 K 以及 K 个需要查询的 ID。</p>
+<p><font size=5 face="Courier New" color=red>输出格式：</font><br><font size=4 face="Courier New">对每个要查询的 ID，在一行中输出<code> ID: 奖品</code>，其中奖品或者是 <code>Mystery Award</code>（神秘大奖）、或者是 <code>Minion</code>（小黄人）、或者是 <code>Chocolate</code>（巧克力）。如果所查 ID 根本不在排名里，打印 <code>Are you kidding?</code>（耍我呢？）。如果该 ID 已经查过了（即奖品已经领过了），打印<code> ID: Checked</code>（不能多吃多占）。</p>
+<p><font size=5 face="Courier New" color=red>输入样例：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">6</span><br><span class="line">1111</span><br><span class="line">6666</span><br><span class="line">8888</span><br><span class="line">1234</span><br><span class="line">5555</span><br><span class="line">0001</span><br><span class="line">6</span><br><span class="line">8888</span><br><span class="line">0001</span><br><span class="line">1111</span><br><span class="line">2222</span><br><span class="line">8888</span><br><span class="line">2222</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier New" color=red>输出样例：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">8888: Minion</span><br><span class="line">0001: Chocolate</span><br><span class="line">1111: Mystery Award</span><br><span class="line">2222: Are you kidding?</span><br><span class="line">8888: Checked</span><br><span class="line">2222: Are you kidding?</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier New" color=blue>题目分析：读取时用map表将学生ID和对应名次作为映射方便后续的查找使用，ID-&gt;名次。查询时，将查询过的ID在查询hash数组中标记为true，这样就可以检测重复查找，如果在map表中未存储此ID的信息，则说明此学生未参加比赛。最后注意输出的格式为%04d。<br></font><br><font size=5 face="Courier New" color=black>AC代码：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;cmath&gt;</span><br><span class="line">#include &lt;map&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">map&lt;int, int&gt; mp;</span><br><span class="line">const int max_n &#x3D; 10010;</span><br><span class="line">bool is_appear[max_n] &#x3D; &#123;false&#125;;</span><br><span class="line"></span><br><span class="line">bool is_prime(int n)&#123;</span><br><span class="line">    if(n&lt;&#x3D;1)return false;</span><br><span class="line">    for(int i&#x3D;2; i&lt;&#x3D;sqrt(1.0*n); ++i)&#123;</span><br><span class="line">        if(n%i&#x3D;&#x3D;0)return false;</span><br><span class="line">    &#125;</span><br><span class="line">    return true;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    int n, m, tmp;</span><br><span class="line">    scanf(&quot;%d&quot;, &amp;n);</span><br><span class="line">    for(int i&#x3D;1; i&lt;&#x3D;n; ++i)&#123;</span><br><span class="line">        scanf(&quot;%d&quot;, &amp;tmp);</span><br><span class="line">        mp.insert(make_pair(tmp, i));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    scanf(&quot;%d&quot;, &amp;m);</span><br><span class="line">    for(int query&#x3D;0; query&lt;m; ++query)&#123;</span><br><span class="line">        scanf(&quot;%d&quot;, &amp;tmp);</span><br><span class="line">        if(mp.find(tmp)&#x3D;&#x3D;mp.end())&#123;</span><br><span class="line">            printf(&quot;%04d: Are you kidding?\n&quot;, tmp);</span><br><span class="line">            continue;</span><br><span class="line">        &#125;</span><br><span class="line">        if(is_appear[tmp])&#123;</span><br><span class="line">            printf(&quot;%04d: Checked\n&quot;,tmp);</span><br><span class="line">            continue;</span><br><span class="line">        &#125;</span><br><span class="line">        else if(mp[tmp]&#x3D;&#x3D;1)&#123;</span><br><span class="line">            printf(&quot;%04d: Mystery Award\n&quot;, tmp);</span><br><span class="line">            is_appear[tmp] &#x3D; true;</span><br><span class="line">        &#125;</span><br><span class="line">        else if(is_prime(mp[tmp]))&#123;</span><br><span class="line">            printf(&quot;%04d: Minion\n&quot;, tmp);</span><br><span class="line">            is_appear[tmp] &#x3D; true;</span><br><span class="line">        &#125;</span><br><span class="line">        else&#123;</span><br><span class="line">            printf(&quot;%04d: Chocolate\n&quot;, tmp);</span><br><span class="line">            is_appear[tmp] &#x3D; true; </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/PAT乙级题解//" class="article-tag-list-link color3">PAT乙级题解</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2019/03/27/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891059.C%E8%AF%AD%E8%A8%80%E7%AB%9E%E8%B5%9B%EF%BC%8820%EF%BC%89/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2019/03/27/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891090.%E5%8D%B1%E9%99%A9%E5%93%81%E8%A3%85%E7%AE%B1%EF%BC%8825%EF%BC%89/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          PAT（乙级）1090.危险品装箱（25）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/03/27/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891065.%E5%8D%95%E8%BA%AB%E7%8B%97%EF%BC%8825%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">PAT（乙级）1065.单身狗（25）</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>

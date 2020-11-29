@@ -159,29 +159,215 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-C++11-forward&amp;move&amp;引用折叠" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       C++11-forward&amp;move&amp;引用折叠
     </h1>
   
 
-  
-  <a href="/2020/11/22/C++11-forward&move&%E5%BC%95%E7%94%A8%E6%8A%98%E5%8F%A0/" class="archive-article-date">
+        
+        <a href="/2020/11/22/C++11-forward&move&%E5%BC%95%E7%94%A8%E6%8A%98%E5%8F%A0/" class="archive-article-date">
   	<time datetime="2020-11-21T23:22:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-22</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face=consolas color=black>一、move</font><br><font size=4 face=consolas>C++11引入了右值引用，方便处理临时对象，临时量，没有内存的值，字面量等。早在之前的常引用也可对对左值引用，但是仅仅能够提升左值的生命周期，不能对其进行修改。</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span>&amp; a=<span class="number">10</span>;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">int tmp=10;</span></span><br><span class="line"><span class="comment">const int&amp; a=tmp;</span></span><br><span class="line"><span class="comment">但是这里的a所引用的值是不能被修改的</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<p><font size=4 face=consolas>C++11，提出右值引用。不仅能够提升临时量的声明周期，还能够对临时进行修改。</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> &amp;&amp;d=<span class="number">10</span>;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">int tmp=10;</span></span><br><span class="line"><span class="comment">int &amp;&amp;d=tmp;</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<p><font size=4 face=consolas color=red>tips：右值引用变量本身是一个左值。</font><br><font size=4 face=consolas>在实际开发中，当我们需要对一个左值进行操作时间，函数参数会写成这种形式<code>T &amp;&amp; x</code>，但是在函数内部，由于右值引用变量本身还是一个左值，此时操作x，x还是被认为是一个左值。但是我们需要x是一个右值，如何处理呢？</font><br><font size=4 face=consolas>C++11提出了std::move移动语义，将x强制转换为一个右值，方便后序的处理！！！</font><br><font size=4 face=consolas>下面是move的源码实现：</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> _Tp&gt;</span><br><span class="line"><span class="keyword">constexpr</span> <span class="keyword">typename</span> <span class="built_in">std</span>::remove_reference&lt;_Tp&gt;::type&amp;&amp;</span><br><span class="line">move(_Tp&amp;&amp; <span class="keyword">__t</span>) <span class="keyword">noexcept</span></span><br><span class="line">    &#123; <span class="keyword">return</span> <span class="keyword">static_cast</span>&lt;<span class="keyword">typename</span> <span class="built_in">std</span>::remove_reference&lt;_Tp&gt;::type&amp;&amp;&gt;(<span class="keyword">__t</span>); &#125;</span><br></pre></td></tr></table></figure>
+<p><font size=4 face=consolas>通过源码可以看到，move实际上做的事情就是进行强制转换，强制转换为一个右值。</font><br><font size=4 face=consolas>如在vector的push_back操作中</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Allocator</span> &#123;</span></span><br><span class="line">	<span class="function">T* <span class="title">allocate</span><span class="params">(<span class="keyword">size_t</span> size)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> (T*)<span class="built_in">malloc</span>(size * T);</span><br><span class="line">	&#125;</span><br><span class="line">		</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">deallocate</span><span class="params">(T *p)</span> </span>&#123;</span><br><span class="line">		<span class="built_in">free</span>(p);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/* void construct(T *p, const T &amp;x) &#123;</span></span><br><span class="line"><span class="comment">		new (p) T(val);</span></span><br><span class="line"><span class="comment">	   &#125;</span></span><br><span class="line"><span class="comment">	</span></span><br><span class="line"><span class="comment">	void construct(T *p, T &amp;&amp;x) &#123;</span></span><br><span class="line"><span class="comment">		new (p) T(std::move(val));</span></span><br><span class="line"><span class="comment">	&#125;</span></span><br><span class="line"><span class="comment">	*/</span></span><br><span class="line">	<span class="comment">// 统一处理</span></span><br><span class="line">	<span class="keyword">template</span> &lt;<span class="keyword">typename</span> Ty&gt;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">construct</span> <span class="params">(T *p, Ty &amp;&amp;x)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">new</span> (p) T(<span class="built_in">std</span>::forward&lt;Ty&gt;(x));</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">destruct</span><span class="params">(T *p)</span> </span>&#123;</span><br><span class="line">		p-&gt;~T();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">push_back</span><span class="params">(T &amp;&amp;x)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (full()) &#123;</span><br><span class="line">		resize();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">	这样调用，x认为是一个左值，直接调用构造函数</span></span><br><span class="line"><span class="comment">	而事实上，我们希望x是一个右值，去调用带有右值的构造函数</span></span><br><span class="line"><span class="comment">	*/</span></span><br><span class="line">	<span class="comment">// _allocator.construct(x);</span></span><br><span class="line">	<span class="comment">// 修改一下</span></span><br><span class="line">	<span class="comment">// 使用std::move()强制转换为右值，便可调用带右值的构造函数</span></span><br><span class="line">	_allocator.construct(_last, <span class="built_in">std</span>::move(x));</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><font size=5 face=consolas color=black>二、forward</font><br><font size=4 face=consolas>个人理解forward的产生一方面是为了配和右值引用的使用，另一方面是为了更好的进行模板编程。</font><br><font size=4 face=consolas color=red>这里还是要提一句，左值引用变量本身是一个右值，这样就造成了一个事实。如下：</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">construct</span><span class="params">(T *p, <span class="keyword">const</span> T &amp;x)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">construct</span><span class="params">(T *p, T &amp;&amp;x)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">push_back</span><span class="params">(<span class="keyword">const</span> T &amp;x)</span> </span>&#123;</span><br><span class="line">...</span><br><span class="line">	construct(x);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">push_back</span><span class="params">(T &amp;&amp;x)</span> </span>&#123;</span><br><span class="line">...</span><br><span class="line">	construct(x);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=4 face=consolas>不管是实际参数传入的是一个左值还是右值，都会被当成左值处理。</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Test</span> &#123;</span>&#125;;</span><br><span class="line">Test t1;</span><br><span class="line">push_back(t1); <span class="comment">// t1本身就是左值一定会调用 push_back(const T&amp;)</span></span><br><span class="line">push_back(Test());<span class="comment">// Test()是一个临时对象，是右值，调用push_back(T &amp;&amp;x)</span></span><br><span class="line"><span class="comment">// 但是在push_back函数内部x还是被当作了一个右值</span></span><br><span class="line"><span class="comment">// 最终他们都是调用construct(T *p, const T&amp; x)</span></span><br></pre></td></tr></table></figure>
+<p><font size=4 face=consolas>为了解决上述问题，C++11提出了forward类型的完美转发。使用函数模板类型推演+引用折叠是的左值引用参数和右值引用参数函数得到统一化。</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> Ty&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">push_back</span><span class="params">(Ty &amp;&amp;x)</span> </span>&#123;</span><br><span class="line">	....</span><br><span class="line">	_allocator.construt(_last, <span class="built_in">std</span>::forward&lt;Ty&gt;(x));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=4 face=consolas>引用折叠</font><br><font size=4 face=consolas>T&amp; + &amp;&amp; = T&amp;</font><br><font size=4 face=consolas>T&amp;&amp; + &amp;&amp; = T&amp;&amp;</font><br><img src="https://img-blog.csdnimg.cn/20201122072216329.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">c++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/c-c//" class="article-tag-list-link color1">c/c++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2020/11/22/C++11-forward&move&%E5%BC%95%E7%94%A8%E6%8A%98%E5%8F%A0/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2020/11/22/C++STL-vector%E5%AE%9E%E7%8E%B0%20%E7%A9%BA%E9%97%B4%E9%85%8D%E7%BD%AE%E5%99%A8/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          C++STL-vector实现 空间配置器
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/11/22/%E5%B8%A6%E5%8F%B3%E5%80%BC%E5%BC%95%E7%94%A8%E7%9A%84%E6%8B%B7%E8%B4%9D%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD%E5%87%BD%E6%95%B0/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">带右值引用的拷贝构造函数和运算符重载函数</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>

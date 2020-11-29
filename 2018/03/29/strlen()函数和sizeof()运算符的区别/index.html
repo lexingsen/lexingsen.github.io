@@ -158,29 +158,197 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-strlen()函数和sizeof()运算符的区别" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       strlen()函数和sizeof()运算符的区别
     </h1>
   
 
-  
-  <a href="/2018/03/29/strlen()%E5%87%BD%E6%95%B0%E5%92%8Csizeof()%E8%BF%90%E7%AE%97%E7%AC%A6%E7%9A%84%E5%8C%BA%E5%88%AB/" class="archive-article-date">
+        
+        <a href="/2018/03/29/strlen()%E5%87%BD%E6%95%B0%E5%92%8Csizeof()%E8%BF%90%E7%AE%97%E7%AC%A6%E7%9A%84%E5%8C%BA%E5%88%AB/" class="archive-article-date">
   	<time datetime="2018-03-29T11:41:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-29</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><strong>strlen函数原型</strong><br>size_t strlen(const char *string)</p>
+<p>size_t 是无符号整数的别名，在vs2008编译器中可以查看其宏定义</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">typedef unsigned int size_t;</span><br></pre></td></tr></table></figure>
+<p>这样定义的原因一方面是字符串的长度不可能是负数，另一方面是不可能为实数。<br><strong>功能</strong><br>其功能是获取字符串的长度。<br><strong>返回值</strong><br>在MSDN文档中查看strlen函数的返回值，叙述如下。</p>
+<p>Each of these functions returns the number of characters in string, excluding the terminal NULL. No return value is reserved to indicate an error.</p>
+<p>每个函数都返回字符串中的字符数，不包括终端NULL。不保留返回值以指示错误。<br><strong>参数</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Null-terminated string</span><br></pre></td></tr></table></figure>
+<p>空终止字符串， 字符串标准库提供的头文件中包含操作<strong>以空字符结尾</strong>的字符串(null-terminated string)的函数。</p>
+<p><strong>sizeof（）运算符</strong><br>很对人以为sizeof是用来计算数据类型大小的一个函数，这其实是一个误区，它同加减乘除一样是运算符。</p>
+<p>在MSDN文档查阅sizeof得到如下相关信息：<br>sizeof Operator<br>sizeof expression</p>
+<p>The sizeof keyword gives the amount of storage, in bytes, associated with a variable or a type (including aggregate types). This keyword returns a value of type size_t.</p>
+<p>The expression is either an identifier or a type-cast expression (a type specifier enclosed in parentheses).</p>
+<p>When applied to a structure type or variable, sizeof returns the actual size, which may include padding bytes inserted for alignment. When applied to a statically dimensioned array, sizeof returns the size of the entire array. The sizeof operator cannot return the size of dynamically allocated arrays or external arrays.</p>
+<p>sizeof运算符<br>运算符表达式<br>sizeof关键字提供了与变量或类型(包括聚合类型)相关的存储空间。该关键字返回类型size_t的值。<br>表达式要么是标识符，要么是类型转换表达式(括号中包含的类型说明符)。<br>当应用到结构类型或变量时，sizeof返回实际大小，其中可能包括插入用于对齐的填充字节。当应用到静态尺寸数组时，sizeof返回整个数组的大小。sizeof运算符不能返回动态分配的数组或外部数组的大小。</p>
+<p>了解了以上的相关知识，我们可以总结出两者不同。</p>
+<p>下面用代码验证：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">#include &lt;string.h&gt;</span><br><span class="line">void main()</span><br><span class="line">&#123;</span><br><span class="line">	char str1[10] &#x3D; &#123;&#39;h&#39;,&#39;e&#39;,0,&#39;l&#39;,&#39;l&#39;,&#39;o&#39;&#125;;</span><br><span class="line">	char str2[10] &#x3D; &quot;he0llo&quot;;</span><br><span class="line"></span><br><span class="line">	printf(&quot;%d\n&quot;,sizeof(str1)); &#x2F;&#x2F;6   10</span><br><span class="line">	printf(&quot;%d\n&quot;,sizeof(str2)); &#x2F;&#x2F;10</span><br><span class="line">	printf(&quot;%d\n&quot;,strlen(str1)); &#x2F;&#x2F;6    2</span><br><span class="line">	printf(&quot;%d\n&quot;,strlen(str2)); &#x2F;&#x2F;6</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行代码得到的结果如下：<br><img src="https://img-blog.csdn.net/20180329193355710?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>分析上图得到的结果，定义两个长度为10个字节的字符数组，由上文可知，sizeof(）运算符是计算整个数组的大小，所以输出均为10</p>
+<p>而经过strlen计算字符串长度，由其函数特性，在str1数组中，当遇到第一个数字0是strlen函数就已经结束。所以输出的结果为2.<br>在str2数组中，在字符串中有0的存在，但实际上这时的0为字符字符0（‘0’），并不是字符串结束的标志，知道遇到结尾的空字符，才进行返回。</p>
+<p>大家也可自行验证。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2018/03/29/strlen()%E5%87%BD%E6%95%B0%E5%92%8Csizeof()%E8%BF%90%E7%AE%97%E7%AC%A6%E7%9A%84%E5%8C%BA%E5%88%AB/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2018/03/29/memcpy%E5%87%BD%E6%95%B0%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8F%8A%E5%86%85%E5%AD%98%E9%87%8D%E5%8F%A0%E9%97%AE%E9%A2%98%E7%9A%84%E5%88%86%E6%9E%90/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          memcpy函数的实现及内存重叠问题的分析
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/03/29/C%E8%AF%AD%E8%A8%80%E4%B8%8D%E5%81%9A%E6%95%B0%E7%BB%84%E4%B8%8B%E6%A0%87%E5%AE%89%E5%85%A8%E6%80%A7%E6%A3%80%E6%9F%A5/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">C语言不做数组下标安全性检查</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>

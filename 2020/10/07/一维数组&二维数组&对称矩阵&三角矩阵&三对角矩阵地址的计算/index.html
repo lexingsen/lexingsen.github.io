@@ -160,29 +160,198 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-一维数组&amp;二维数组&amp;对称矩阵&amp;三角矩阵&amp;三对角矩阵地址的计算" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       一维数组&amp;二维数组&amp;对称矩阵&amp;三角矩阵&amp;三对角矩阵地址的计算
     </h1>
   
 
-  
-  <a href="/2020/10/07/%E4%B8%80%E7%BB%B4%E6%95%B0%E7%BB%84&%E4%BA%8C%E7%BB%B4%E6%95%B0%E7%BB%84&%E5%AF%B9%E7%A7%B0%E7%9F%A9%E9%98%B5&%E4%B8%89%E8%A7%92%E7%9F%A9%E9%98%B5&%E4%B8%89%E5%AF%B9%E8%A7%92%E7%9F%A9%E9%98%B5%E5%9C%B0%E5%9D%80%E7%9A%84%E8%AE%A1%E7%AE%97/" class="archive-article-date">
+        
+        <a href="/2020/10/07/%E4%B8%80%E7%BB%B4%E6%95%B0%E7%BB%84&%E4%BA%8C%E7%BB%B4%E6%95%B0%E7%BB%84&%E5%AF%B9%E7%A7%B0%E7%9F%A9%E9%98%B5&%E4%B8%89%E8%A7%92%E7%9F%A9%E9%98%B5&%E4%B8%89%E5%AF%B9%E8%A7%92%E7%9F%A9%E9%98%B5%E5%9C%B0%E5%9D%80%E7%9A%84%E8%AE%A1%E7%AE%97/" class="archive-article-date">
   	<time datetime="2020-10-07T12:39:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-07</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><strong>一维数组的地址计算</strong><br>设每个元素的大小是size，首元素的地址是a[1]，则<br><code>a[i] = a[1] + (i-1)*size</code></p>
+<p>若首元素的地址是a[0]<br>则<code>a[i] = a[0] + i*size</code></p>
+<p>*<em>二维数组的地址计算  (m</em>n的矩阵)**<br><font color=red>行优先</font><br>设每个元素的大小是size，首元素的地址是a[1][1]，则a[i][j]?<br>分析：a[i][j]位于第i行，第j列。它之前有i-1行，在第i行它之前有j-1个元素。<br>即<code>a[i][j] = a[1][1] + [n*(i-1) + (j-1)]*size</code></p>
+<p><strong>三维数组的地址计算 (r<em>m</em>n)  r行m列n纵</strong><br><font color=red>行优先</font><br>首元素的地址a[1,1,1]</p>
+<p><code>a[i,j,k] = a[1,1,1] + [(i-1)*n*m + (j-1)*n + (k-1)]*size</code></p>
+<p><strong>压缩存储</strong>：指为多个值相同的元素只分配一个存储空间，对零元素不分配存储空间，其目的是为了节省存储空间。</p>
+<p><strong>二维数组通常用来存储矩阵，特殊矩阵分为两类</strong>：<br>（1）元素分布没有规律的矩阵，按照规律对用的公式实现压缩。<br>（2）无规律，但非零元素很少的稀疏矩阵，只存储非零元素实现压缩。</p>
+<p><strong>一、三角矩阵</strong><br>包括上三角矩阵，下三角矩阵和对称矩阵<br>(1)若i&lt;j时，ai,j=0，则称此矩阵为下三角矩阵。<br>(2)若i&gt;j时，ai,j=0，则称此矩阵为上三角矩阵。<br>(3)若矩阵中的所有元素满足ai,j=aj,i，则称此矩阵为对称矩阵。<br><strong>下三角</strong><br><img src="https://img-blog.csdnimg.cn/20201007123052587.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br><strong>上三角</strong><br><img src="https://img-blog.csdnimg.cn/20201007124037814.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<p><strong>二、三对角矩阵</strong><br><img src="https://img-blog.csdnimg.cn/20201008003403126.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br>带状矩阵的压缩方法：将非零元素按照行优先存入一维数组。<br>（1）确定一维数组的存储空间大小：2+(n-2)<em>3+2 = 3n-2<br>（2）确定非零元素在一维数组中的地址<br>loc(i,j) = loc(1,1) + 前i-1行非零元素个数+第i行中ai,j前非零元素的个数<br>前i-1行：3 * (i-1) - 1，因为第一行只有两个，所以要减去1<br>第i行中ai,j前非零元素的个数=(j-i)+1,<br>j-i有三种情况：<br>（1）j&lt;i   **j-i=-1**<br>（2）j==i **j-i=0**<br>（3）j&gt;i   *</em>j-i=1**</p>
+<p>loc(i,j) = loc(1,1) + 3(i-1)-1 + j-i+1 = loc(1,1) + 2(i-1) + j-1 = loc(1,1) + 2i+j-3</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/数据结构-算法基础//" class="article-tag-list-link color5">数据结构 算法基础</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2020/10/07/%E4%B8%80%E7%BB%B4%E6%95%B0%E7%BB%84&%E4%BA%8C%E7%BB%B4%E6%95%B0%E7%BB%84&%E5%AF%B9%E7%A7%B0%E7%9F%A9%E9%98%B5&%E4%B8%89%E8%A7%92%E7%9F%A9%E9%98%B5&%E4%B8%89%E5%AF%B9%E8%A7%92%E7%9F%A9%E9%98%B5%E5%9C%B0%E5%9D%80%E7%9A%84%E8%AE%A1%E7%AE%97/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2020/10/07/%E5%B9%B6%E6%9F%A5%E9%9B%86(%E8%B7%AF%E5%BE%84%E5%8E%8B%E7%BC%A9)C++%E5%AE%9E%E7%8E%B0/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          并查集(路径压缩)C++实现
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/10/07/kmp%E7%AE%97%E6%B3%95/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">kmp算法</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>

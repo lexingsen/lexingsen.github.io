@@ -154,205 +154,780 @@
           <div id="js-content" class="content-ll">
             
   
-    <header class="article-header">
-  
+    <article id="post-数据结构：三元组的定义(考研)" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2019/11/08/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%9A%E4%B8%89%E5%85%83%E7%BB%84%E7%9A%84%E5%AE%9A%E4%B9%89(%E8%80%83%E7%A0%94)/">数据结构：三元组的定义(考研)</a>
     </h1>
   
 
-  
-  <a href="/2019/11/08/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%9A%E4%B8%89%E5%85%83%E7%BB%84%E7%9A%84%E5%AE%9A%E4%B9%89(%E8%80%83%E7%A0%94)/" class="archive-article-date">
+        
+        <a href="/2019/11/08/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%9A%E4%B8%89%E5%85%83%E7%BB%84%E7%9A%84%E5%AE%9A%E4%B9%89(%E8%80%83%E7%A0%94)/" class="archive-article-date">
   	<time datetime="2019-11-08T02:17:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-08</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;非零元素的节点类的定义</span><br><span class="line">struct triple &#123;</span><br><span class="line">	int e;</span><br><span class="line">	int col, row;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">#define maxsize 100</span><br><span class="line">struct tripleMatrix &#123;</span><br><span class="line">	triple data[maxsize + 1]; &#x2F;&#x2F;下标为0的位置不使用 </span><br><span class="line">	int m;&#x2F;&#x2F;m行</span><br><span class="line">	int n;&#x2F;&#x2F;n列</span><br><span class="line">	int size;&#x2F;&#x2F;三元组中非零元素的总个数</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><font size=5 face=consolas color=blue>注意：三元组在存储稀疏矩阵时，只有当稀疏矩阵的稀疏因子小于33%时，采用三元组存储才是节省空间的。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/数据结构//" class="article-tag-list-link color5">数据结构</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/11/08/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%9A%E4%B8%89%E5%85%83%E7%BB%84%E7%9A%84%E5%AE%9A%E4%B9%89(%E8%80%83%E7%A0%94)/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-二叉树：二叉树的最大路径和" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2019/11/07/%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BC%9A%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%9C%80%E5%A4%A7%E8%B7%AF%E5%BE%84%E5%92%8C/">二叉树：二叉树的最大路径和</a>
     </h1>
   
 
-  
-  <a href="/2019/11/07/%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BC%9A%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%9C%80%E5%A4%A7%E8%B7%AF%E5%BE%84%E5%92%8C/" class="archive-article-date">
+        
+        <a href="/2019/11/07/%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BC%9A%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%9C%80%E5%A4%A7%E8%B7%AF%E5%BE%84%E5%92%8C/" class="archive-article-date">
   	<time datetime="2019-11-07T12:23:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-07</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=4 color=red face=consolas>二叉树的最大路径和，枚举二叉树的每一个节点，通过当前节点最大路径和是， 当前节点左子树的最大路径和+root-&gt;val+当前节点右子树的最大路径。</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">struct node &#123;</span><br><span class="line">	int val;</span><br><span class="line">	node *left, *right;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">int ans &#x3D; MIN_MAX;&#x2F;&#x2F;用于维护最大路径和</span><br><span class="line">int dfs(node *root) &#123;</span><br><span class="line">	if (!root) return 0;</span><br><span class="line">	int left  &#x3D; dfs(root-&gt;left);</span><br><span class="line">	int right &#x3D; dfs(root-&gt;right);</span><br><span class="line">	ans &#x3D; max(ans, max(root-&gt;val+left+right);</span><br><span class="line">	return max(0, root-&gt;val + max(0, max(left, right)));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int maxPathSum(node* root) &#123;</span><br><span class="line">	dfs(root);</span><br><span class="line">	return ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/数据结构//" class="article-tag-list-link color5">数据结构</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/11/07/%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BC%9A%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%9C%80%E5%A4%A7%E8%B7%AF%E5%BE%84%E5%92%8C/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-二叉树：二叉树的直径" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2019/11/07/%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BC%9A%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E7%9B%B4%E5%BE%84/">二叉树：二叉树的直径</a>
     </h1>
   
 
-  
-  <a href="/2019/11/07/%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BC%9A%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E7%9B%B4%E5%BE%84/" class="archive-article-date">
+        
+        <a href="/2019/11/07/%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BC%9A%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E7%9B%B4%E5%BE%84/" class="archive-article-date">
   	<time datetime="2019-11-07T12:08:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-07</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face=consolas>二叉树直径的定义：二叉树中路径的最大长度<br><font size=4 face=consolas color=red>二叉树中路径的最大长度，可以理解所有节点的左右子树高度之和的最大值。假设二叉树有n个节点，编号为{a1,a2,…,an}, 其对应的左右子树的高度之和为H = {h1,h2,h3,…,hn}, 则该二叉树的直径为max(H)。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">struct node &#123;</span><br><span class="line">	int val;</span><br><span class="line">	node *left, *right;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">int ans  &#x3D; 0;&#x2F;&#x2F; 用于维护任意节点左右子树高度和的最大值</span><br><span class="line">&#x2F;&#x2F;dfs()函数的返回值是当前节点的高度</span><br><span class="line"></span><br><span class="line">int dfs(node *root) &#123;</span><br><span class="line">	if (!root) return 0;</span><br><span class="line">	int left &#x3D; dfs(root-&gt;left);</span><br><span class="line">	int right &#x3D; dfs(root-&gt;right);</span><br><span class="line">	ans &#x3D; max(ans, left+right);</span><br><span class="line">	return max(right, left) + 1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int diameterOfBinaryTree(node *root) &#123;</span><br><span class="line">	dfs(root);</span><br><span class="line">	return ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/数据结构//" class="article-tag-list-link color5">数据结构</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/11/07/%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BC%9A%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E7%9B%B4%E5%BE%84/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-算法：判断字符串是否为回文串的三种方法（递归，循环，使用栈模拟递归）（考研）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2019/11/07/%E7%AE%97%E6%B3%95%EF%BC%9A%E5%88%A4%E6%96%AD%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%98%AF%E5%90%A6%E4%B8%BA%E5%9B%9E%E6%96%87%E4%B8%B2%E7%9A%84%E4%B8%89%E7%A7%8D%E6%96%B9%E6%B3%95%EF%BC%88%E9%80%92%E5%BD%92%EF%BC%8C%E5%BE%AA%E7%8E%AF%EF%BC%8C%E4%BD%BF%E7%94%A8%E6%A0%88%E6%A8%A1%E6%8B%9F%E9%80%92%E5%BD%92%EF%BC%89%EF%BC%88%E8%80%83%E7%A0%94%EF%BC%89/">算法：判断字符串是否为回文串的三种方法（递归，循环，使用栈模拟递归）（考研）</a>
     </h1>
   
 
-  
-  <a href="/2019/11/07/%E7%AE%97%E6%B3%95%EF%BC%9A%E5%88%A4%E6%96%AD%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%98%AF%E5%90%A6%E4%B8%BA%E5%9B%9E%E6%96%87%E4%B8%B2%E7%9A%84%E4%B8%89%E7%A7%8D%E6%96%B9%E6%B3%95%EF%BC%88%E9%80%92%E5%BD%92%EF%BC%8C%E5%BE%AA%E7%8E%AF%EF%BC%8C%E4%BD%BF%E7%94%A8%E6%A0%88%E6%A8%A1%E6%8B%9F%E9%80%92%E5%BD%92%EF%BC%89%EF%BC%88%E8%80%83%E7%A0%94%EF%BC%89/" class="archive-article-date">
+        
+        <a href="/2019/11/07/%E7%AE%97%E6%B3%95%EF%BC%9A%E5%88%A4%E6%96%AD%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%98%AF%E5%90%A6%E4%B8%BA%E5%9B%9E%E6%96%87%E4%B8%B2%E7%9A%84%E4%B8%89%E7%A7%8D%E6%96%B9%E6%B3%95%EF%BC%88%E9%80%92%E5%BD%92%EF%BC%8C%E5%BE%AA%E7%8E%AF%EF%BC%8C%E4%BD%BF%E7%94%A8%E6%A0%88%E6%A8%A1%E6%8B%9F%E9%80%92%E5%BD%92%EF%BC%89%EF%BC%88%E8%80%83%E7%A0%94%EF%BC%89/" class="archive-article-date">
   	<time datetime="2019-11-07T06:01:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-07</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face=consolas color=red>一、递归</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">bool ispalindrome(string s, int i, int j) &#123;</span><br><span class="line">	if (i &gt;&#x3D; j) return true;</span><br><span class="line">	if (s[i] &#x3D;&#x3D; s[j]) return ispalindrome(s, i+1, j-1);</span><br><span class="line">	else return false;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><font size=5 face=consolas color=red>二、使用栈模拟递归</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">bool ispalindrome(string s） &#123;</span><br><span class="line">	int n &#x3D; s.length();</span><br><span class="line">	stack&lt;char&gt; st;</span><br><span class="line">	for (int i&#x3D;0; i&lt;n; ++i)  st.push(s[i]);</span><br><span class="line">	for (int i&#x3D;0; i&lt;n&#x2F;2; ++i) &#123;</span><br><span class="line">		char c &#x3D; st.top(); st.pop();</span><br><span class="line">		if (s[i] !&#x3D; c) return false;</span><br><span class="line">	&#125;</span><br><span class="line">	return true;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=5 face=consolas color=red>三、迭代</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">bool ispalindrome(string s) &#123;</span><br><span class="line">	int n &#x3D; s.length();</span><br><span class="line">	for (int i&#x3D;0; i&lt;n&#x2F;2; ++i) &#123;</span><br><span class="line">		if (s[i] !&#x3D; s[n-1-i]) return false;</span><br><span class="line">	&#125;</span><br><span class="line">	return true;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/数据结构//" class="article-tag-list-link color5">数据结构</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/11/07/%E7%AE%97%E6%B3%95%EF%BC%9A%E5%88%A4%E6%96%AD%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%98%AF%E5%90%A6%E4%B8%BA%E5%9B%9E%E6%96%87%E4%B8%B2%E7%9A%84%E4%B8%89%E7%A7%8D%E6%96%B9%E6%B3%95%EF%BC%88%E9%80%92%E5%BD%92%EF%BC%8C%E5%BE%AA%E7%8E%AF%EF%BC%8C%E4%BD%BF%E7%94%A8%E6%A0%88%E6%A8%A1%E6%8B%9F%E9%80%92%E5%BD%92%EF%BC%89%EF%BC%88%E8%80%83%E7%A0%94%EF%BC%89/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-二叉树：前序、中序和后序遍历的方便记忆和应试非递归写法（考研）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2019/11/07/%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BC%9A%E5%89%8D%E5%BA%8F%E3%80%81%E4%B8%AD%E5%BA%8F%E5%92%8C%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86%E7%9A%84%E6%96%B9%E4%BE%BF%E8%AE%B0%E5%BF%86%E5%92%8C%E5%BA%94%E8%AF%95%E9%9D%9E%E9%80%92%E5%BD%92%E5%86%99%E6%B3%95%EF%BC%88%E8%80%83%E7%A0%94%EF%BC%89/">二叉树：前序、中序和后序遍历的方便记忆和应试非递归写法（考研）</a>
     </h1>
   
 
-  
-  <a href="/2019/11/07/%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BC%9A%E5%89%8D%E5%BA%8F%E3%80%81%E4%B8%AD%E5%BA%8F%E5%92%8C%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86%E7%9A%84%E6%96%B9%E4%BE%BF%E8%AE%B0%E5%BF%86%E5%92%8C%E5%BA%94%E8%AF%95%E9%9D%9E%E9%80%92%E5%BD%92%E5%86%99%E6%B3%95%EF%BC%88%E8%80%83%E7%A0%94%EF%BC%89/" class="archive-article-date">
+        
+        <a href="/2019/11/07/%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BC%9A%E5%89%8D%E5%BA%8F%E3%80%81%E4%B8%AD%E5%BA%8F%E5%92%8C%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86%E7%9A%84%E6%96%B9%E4%BE%BF%E8%AE%B0%E5%BF%86%E5%92%8C%E5%BA%94%E8%AF%95%E9%9D%9E%E9%80%92%E5%BD%92%E5%86%99%E6%B3%95%EF%BC%88%E8%80%83%E7%A0%94%EF%BC%89/" class="archive-article-date">
   	<time datetime="2019-11-07T00:48:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-07</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face=consolas color=red>前序遍历：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">struct node &#123;</span><br><span class="line">	int val;</span><br><span class="line">	node *left,*right; </span><br><span class="line">&#125;;</span><br><span class="line">vector&lt;int&gt; preorder(node *root) &#123;</span><br><span class="line">	vector&lt;int&gt; res;</span><br><span class="line">	if (!root) return res;</span><br><span class="line">	stack&lt;node*&gt; st;</span><br><span class="line">	auto p &#x3D; root;</span><br><span class="line">	while (p || st.size()) &#123;</span><br><span class="line">		if (p) &#123;</span><br><span class="line">			st.push(p);</span><br><span class="line">			res.push_back(p-&gt;val);</span><br><span class="line">			p &#x3D; p-&gt;left;</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			auto top &#x3D; st.top(); st.pop();</span><br><span class="line">			p &#x3D; top-&gt;right;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><font size=5 face=consolas color=red>中序遍历：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;int&gt; inorder(node *root) &#123;</span><br><span class="line">	vector&lt;int&gt; res;</span><br><span class="line">	if (!root) return res;</span><br><span class="line">	auto p &#x3D; root;</span><br><span class="line">	stack&lt;node*&gt; st;</span><br><span class="line">	while (p || st.size()) &#123;</span><br><span class="line">		while (p) &#123;</span><br><span class="line">			st.push(p);</span><br><span class="line">			p &#x3D; p-&gt;left;</span><br><span class="line">		&#125;</span><br><span class="line">		p &#x3D; st.top(); st.pop();</span><br><span class="line">		res.push_back(p-&gt;val);</span><br><span class="line">		p &#x3D; p-&gt;right;</span><br><span class="line">	&#125;</span><br><span class="line">	return res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=5 face=consolas color=red>后序遍历：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;int&gt; postorder(node *root) &#123;</span><br><span class="line">	vector&lt;int&gt; res;</span><br><span class="line">	if (!root) return res; </span><br><span class="line">	stack&lt;node*&gt; st;</span><br><span class="line">	auto p &#x3D; root;</span><br><span class="line">	node *tag;</span><br><span class="line">	while (p || st.size()) &#123;</span><br><span class="line">		while (p) &#123;</span><br><span class="line">			st.push(p);</span><br><span class="line">			p &#x3D; p-&gt;left;</span><br><span class="line">		&#125;</span><br><span class="line">		p &#x3D; st.top(); st.pop();</span><br><span class="line">		if (!p-&gt;right || p-&gt;right &#x3D;&#x3D; tag) &#123;</span><br><span class="line">			res.push_back(p-&gt;val);</span><br><span class="line">			tag &#x3D; p;</span><br><span class="line">			p &#x3D; NULL; </span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			st.push(p);</span><br><span class="line">			p &#x3D; p-&gt;right;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return res;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/数据结构//" class="article-tag-list-link color5">数据结构</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/11/07/%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BC%9A%E5%89%8D%E5%BA%8F%E3%80%81%E4%B8%AD%E5%BA%8F%E5%92%8C%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86%E7%9A%84%E6%96%B9%E4%BE%BF%E8%AE%B0%E5%BF%86%E5%92%8C%E5%BA%94%E8%AF%95%E9%9D%9E%E9%80%92%E5%BD%92%E5%86%99%E6%B3%95%EF%BC%88%E8%80%83%E7%A0%94%EF%BC%89/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-合并两个有序数组，要求时间复杂度为O(n),空间复杂度为O(1)" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2019/11/03/%E5%90%88%E5%B9%B6%E4%B8%A4%E4%B8%AA%E6%9C%89%E5%BA%8F%E6%95%B0%E7%BB%84%EF%BC%8C%E8%A6%81%E6%B1%82%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E4%B8%BAO(n),%E7%A9%BA%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E4%B8%BAO(1)/">合并两个有序数组，要求时间复杂度为O(n),空间复杂度为O(1)</a>
     </h1>
   
 
-  
-  <a href="/2019/11/03/%E5%90%88%E5%B9%B6%E4%B8%A4%E4%B8%AA%E6%9C%89%E5%BA%8F%E6%95%B0%E7%BB%84%EF%BC%8C%E8%A6%81%E6%B1%82%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E4%B8%BAO(n),%E7%A9%BA%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E4%B8%BAO(1)/" class="archive-article-date">
+        
+        <a href="/2019/11/03/%E5%90%88%E5%B9%B6%E4%B8%A4%E4%B8%AA%E6%9C%89%E5%BA%8F%E6%95%B0%E7%BB%84%EF%BC%8C%E8%A6%81%E6%B1%82%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E4%B8%BAO(n),%E7%A9%BA%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E4%B8%BAO(1)/" class="archive-article-date">
   	<time datetime="2019-11-03T12:50:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-03</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face=consolas><font color=red>思路</font>：因为数组已经是有序的，因此我们可以直接从两个数组的末位开始比较，将大的一个直接放到第一个数组的末尾，此时必须要求a数组的空间大小能够同时填充a数组和b数组的有效元素，然后依次比较两个数组元素的大小即可。</p>
+<p><font size=5 face=consolas color=blue>代码实现：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;bits&#x2F;stdc++.h&gt;</span><br><span class="line"></span><br><span class="line">void merge(int *a, int n, int *b, int m) &#123;</span><br><span class="line">	int i &#x3D; n-1;&#x2F;&#x2F;a数组的最后一个有效元素的下标</span><br><span class="line">	int j &#x3D; m-1;&#x2F;&#x2F;b数组的最后一个有效元素的下标</span><br><span class="line">	int index &#x3D; n+m-1; &#x2F;&#x2F;合并数组的最后一位的下标</span><br><span class="line">	while (index) &#123;</span><br><span class="line">		if (i &amp;&amp; a[i]&gt;a[j]) a[index --] &#x3D; a[i --];</span><br><span class="line">		else a[index --] &#x3D; b[j --];</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">	int a[] &#x3D; &#123;1,3,5,7,9,0,0,0,0,0&#125;;</span><br><span class="line">	int n &#x3D; sizeof(a)&#x2F;sizeof(int);</span><br><span class="line">	int b[] &#x3D; &#123;2,4,6,8,10&#125;;</span><br><span class="line">	int m &#x3D; sizeof(b)&#x2F;sizeof(int);	</span><br><span class="line">	merge(a, 5, b, m);</span><br><span class="line">	for_each(a, a+n, [](int x) &#123;cout &lt;&lt; x &lt;&lt; &quot; &quot;;&#125;);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/数据结构//" class="article-tag-list-link color5">数据结构</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/11/03/%E5%90%88%E5%B9%B6%E4%B8%A4%E4%B8%AA%E6%9C%89%E5%BA%8F%E6%95%B0%E7%BB%84%EF%BC%8C%E8%A6%81%E6%B1%82%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E4%B8%BAO(n),%E7%A9%BA%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E4%B8%BAO(1)/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-二叉树：将二叉树中的所有节点的左右子树进行交换" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2019/11/03/%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BC%9A%E5%B0%86%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%AD%E7%9A%84%E6%89%80%E6%9C%89%E8%8A%82%E7%82%B9%E7%9A%84%E5%B7%A6%E5%8F%B3%E5%AD%90%E6%A0%91%E8%BF%9B%E8%A1%8C%E4%BA%A4%E6%8D%A2/">二叉树：将二叉树中的所有节点的左右子树进行交换</a>
     </h1>
   
 
-  
-  <a href="/2019/11/03/%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BC%9A%E5%B0%86%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%AD%E7%9A%84%E6%89%80%E6%9C%89%E8%8A%82%E7%82%B9%E7%9A%84%E5%B7%A6%E5%8F%B3%E5%AD%90%E6%A0%91%E8%BF%9B%E8%A1%8C%E4%BA%A4%E6%8D%A2/" class="archive-article-date">
+        
+        <a href="/2019/11/03/%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BC%9A%E5%B0%86%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%AD%E7%9A%84%E6%89%80%E6%9C%89%E8%8A%82%E7%82%B9%E7%9A%84%E5%B7%A6%E5%8F%B3%E5%AD%90%E6%A0%91%E8%BF%9B%E8%A1%8C%E4%BA%A4%E6%8D%A2/" class="archive-article-date">
   	<time datetime="2019-11-03T11:37:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-03</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face=consolas>二叉树遍历的简单应用</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">struct node &#123;</span><br><span class="line">	int val;</span><br><span class="line">	node *left, *right;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">node *swapSubTree(node *root) &#123;</span><br><span class="line">	if (!root) return NULL;</span><br><span class="line">	else &#123;</span><br><span class="line">		&#x2F;&#x2F;交换的过程</span><br><span class="line">		node *tmp &#x3D; root-&gt;left;</span><br><span class="line">		root-&gt;left &#x3D; root-&gt;right;</span><br><span class="line">		root-&gt;right &#x3D; tmp;</span><br><span class="line">		swapSubTree(root-&gt;left);</span><br><span class="line">		swapSubTree(root-&gt;right);</span><br><span class="line">	&#125;</span><br><span class="line">	return root;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/数据结构//" class="article-tag-list-link color5">数据结构</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/11/03/%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BC%9A%E5%B0%86%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%AD%E7%9A%84%E6%89%80%E6%9C%89%E8%8A%82%E7%82%B9%E7%9A%84%E5%B7%A6%E5%8F%B3%E5%AD%90%E6%A0%91%E8%BF%9B%E8%A1%8C%E4%BA%A4%E6%8D%A2/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-单链表：在带头节点单链表中删除(minv, maxv)中的所有节点" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2019/11/03/%E5%8D%95%E9%93%BE%E8%A1%A8%EF%BC%9A%E5%9C%A8%E5%B8%A6%E5%A4%B4%E8%8A%82%E7%82%B9%E5%8D%95%E9%93%BE%E8%A1%A8%E4%B8%AD%E5%88%A0%E9%99%A4(minv,%20maxv)%E4%B8%AD%E7%9A%84%E6%89%80%E6%9C%89%E8%8A%82%E7%82%B9/">单链表：在带头节点单链表中删除(minv, maxv)中的所有节点</a>
     </h1>
   
 
-  
-  <a href="/2019/11/03/%E5%8D%95%E9%93%BE%E8%A1%A8%EF%BC%9A%E5%9C%A8%E5%B8%A6%E5%A4%B4%E8%8A%82%E7%82%B9%E5%8D%95%E9%93%BE%E8%A1%A8%E4%B8%AD%E5%88%A0%E9%99%A4(minv,%20maxv)%E4%B8%AD%E7%9A%84%E6%89%80%E6%9C%89%E8%8A%82%E7%82%B9/" class="archive-article-date">
+        
+        <a href="/2019/11/03/%E5%8D%95%E9%93%BE%E8%A1%A8%EF%BC%9A%E5%9C%A8%E5%B8%A6%E5%A4%B4%E8%8A%82%E7%82%B9%E5%8D%95%E9%93%BE%E8%A1%A8%E4%B8%AD%E5%88%A0%E9%99%A4(minv,%20maxv)%E4%B8%AD%E7%9A%84%E6%89%80%E6%9C%89%E8%8A%82%E7%82%B9/" class="archive-article-date">
   	<time datetime="2019-11-03T11:20:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-03</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face=consolas>链表节点删除，只有标记待删除节点的前驱节点即可;<br>[注]：如果不是带有节点设置一个虚拟节点即可，返回时返回dummy-&gt;next。</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">struct node &#123;</span><br><span class="line">	int val;</span><br><span class="line">	node *next;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">void delInterval(node *head, int minx, int maxx) &#123;</span><br><span class="line">	if (!head) return head;</span><br><span class="line">	node *pre &#x3D; head;</span><br><span class="line">	node *p &#x3D; pre-&gt;next; &#x2F;&#x2F;工作指针</span><br><span class="line">	while (p) &#123;</span><br><span class="line">		if (minx &lt; p-&gt;val &amp;&amp; p-&gt;val &lt; maxx) &#123;</span><br><span class="line">			&#x2F;&#x2F;满足条件，p为待删除节点</span><br><span class="line">			node *del &#x3D; p;</span><br><span class="line">			pre-&gt;next &#x3D; p-&gt;next;</span><br><span class="line">			p &#x3D; p-&gt;next;</span><br><span class="line">			delete del;</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			pre &#x3D; pre-&gt;next;</span><br><span class="line">			p &#x3D; p-&gt;next;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return head;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/数据结构//" class="article-tag-list-link color5">数据结构</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/11/03/%E5%8D%95%E9%93%BE%E8%A1%A8%EF%BC%9A%E5%9C%A8%E5%B8%A6%E5%A4%B4%E8%8A%82%E7%82%B9%E5%8D%95%E9%93%BE%E8%A1%A8%E4%B8%AD%E5%88%A0%E9%99%A4(minv,%20maxv)%E4%B8%AD%E7%9A%84%E6%89%80%E6%9C%89%E8%8A%82%E7%82%B9/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-二叉树：计算叶子节点个数" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2019/11/03/%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BC%9A%E8%AE%A1%E7%AE%97%E5%8F%B6%E5%AD%90%E8%8A%82%E7%82%B9%E4%B8%AA%E6%95%B0/">二叉树：计算叶子节点个数</a>
     </h1>
   
 
-  
-  <a href="/2019/11/03/%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BC%9A%E8%AE%A1%E7%AE%97%E5%8F%B6%E5%AD%90%E8%8A%82%E7%82%B9%E4%B8%AA%E6%95%B0/" class="archive-article-date">
+        
+        <a href="/2019/11/03/%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BC%9A%E8%AE%A1%E7%AE%97%E5%8F%B6%E5%AD%90%E8%8A%82%E7%82%B9%E4%B8%AA%E6%95%B0/" class="archive-article-date">
   	<time datetime="2019-11-03T11:04:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-03</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face=consolas>叶子节点的特征：左右孩子均为NULL</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">struct node &#123;</span><br><span class="line">	int val;</span><br><span class="line">	node *left, *right;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">int countLeaf(node *root) &#123;</span><br><span class="line">	if (!root)  return 0;</span><br><span class="line">	else &#123;</span><br><span class="line">		if (!root-&gt;left &amp;&amp; !root-&gt;right) return 1;</span><br><span class="line">		return countLeaf(root-&gt;left) + countLeaf(root-&gt;right);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/数据结构//" class="article-tag-list-link color5">数据结构</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/11/03/%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BC%9A%E8%AE%A1%E7%AE%97%E5%8F%B6%E5%AD%90%E8%8A%82%E7%82%B9%E4%B8%AA%E6%95%B0/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-二叉树：前序与后序、前序与中序以及中序与后序相同、相反的特征" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2019/11/02/%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BC%9A%E5%89%8D%E5%BA%8F%E4%B8%8E%E5%90%8E%E5%BA%8F%E3%80%81%E5%89%8D%E5%BA%8F%E4%B8%8E%E4%B8%AD%E5%BA%8F%E4%BB%A5%E5%8F%8A%E4%B8%AD%E5%BA%8F%E4%B8%8E%E5%90%8E%E5%BA%8F%E7%9B%B8%E5%90%8C%E3%80%81%E7%9B%B8%E5%8F%8D%E7%9A%84%E7%89%B9%E5%BE%81/">二叉树：前序与后序、前序与中序以及中序与后序相同、相反的特征</a>
     </h1>
   
 
-  
-  <a href="/2019/11/02/%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BC%9A%E5%89%8D%E5%BA%8F%E4%B8%8E%E5%90%8E%E5%BA%8F%E3%80%81%E5%89%8D%E5%BA%8F%E4%B8%8E%E4%B8%AD%E5%BA%8F%E4%BB%A5%E5%8F%8A%E4%B8%AD%E5%BA%8F%E4%B8%8E%E5%90%8E%E5%BA%8F%E7%9B%B8%E5%90%8C%E3%80%81%E7%9B%B8%E5%8F%8D%E7%9A%84%E7%89%B9%E5%BE%81/" class="archive-article-date">
+        
+        <a href="/2019/11/02/%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BC%9A%E5%89%8D%E5%BA%8F%E4%B8%8E%E5%90%8E%E5%BA%8F%E3%80%81%E5%89%8D%E5%BA%8F%E4%B8%8E%E4%B8%AD%E5%BA%8F%E4%BB%A5%E5%8F%8A%E4%B8%AD%E5%BA%8F%E4%B8%8E%E5%90%8E%E5%BA%8F%E7%9B%B8%E5%90%8C%E3%80%81%E7%9B%B8%E5%8F%8D%E7%9A%84%E7%89%B9%E5%BE%81/" class="archive-article-date">
   	<time datetime="2019-11-01T23:35:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-02</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    
-    
-</header>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=6 face=consolas color=red>一、前序序列与后序序列</font><br><font size=5 face=consolas>1.前序序列和后序序列相同</font><br><font size=5 face=consolas color=blue>空树或者只有根节点的二叉树。</font></p>
+<p><font size=5 face=consolas>2.前序序列和后序序列相反</font><br><font size=5 face=consolas color=blue>(1)当且仅当二叉树中只有一个叶子节点。<br>(2)二叉树的高度和其节点个数相同。</font></p>
+<p><font size=6 face=consolas color=red>二、前序序列与中序序列</font><br><font size=5 face=consolas>1.前序序列和中序序列相同</font><br><font size=5 face=consolas color=blue>空树或缺左子树的单支二叉树。</p>
+<p><font size=5 face=consolas>2.前序序列和中序序列相反</font><br><font size=5 face=consolas color=blue>(1)二叉树为空或者只有一个节点。<br>(2)若二叉树不为空，则任意节点不能同时用于左孩子和右孩子。<br>(3)若二叉树不为空，则任意节点没有右孩子。</p>
+<p><font size=6 face=consolas color=red>三、中序序列与后序序列</font><br><font size=5 face=consolas>1.中序序列和后序序列相同</font><br><font size=5 face=consolas color=blue>空树或者缺右子树的单支二叉树。</p>
+<p><font size=5 face=consolas>2.中序序列和后序序列相反</font><br><font size=5 face=consolas color=blue>任意节点没有左孩子节点。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/数据结构//" class="article-tag-list-link color5">数据结构</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/11/02/%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BC%9A%E5%89%8D%E5%BA%8F%E4%B8%8E%E5%90%8E%E5%BA%8F%E3%80%81%E5%89%8D%E5%BA%8F%E4%B8%8E%E4%B8%AD%E5%BA%8F%E4%BB%A5%E5%8F%8A%E4%B8%AD%E5%BA%8F%E4%B8%8E%E5%90%8E%E5%BA%8F%E7%9B%B8%E5%90%8C%E3%80%81%E7%9B%B8%E5%8F%8D%E7%9A%84%E7%89%B9%E5%BE%81/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
   
     <nav id="page-nav">

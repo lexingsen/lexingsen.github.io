@@ -169,29 +169,208 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-C语言 实现浮点数的整型强制转化" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       C语言 实现浮点数的整型强制转化
     </h1>
   
 
-  
-  <a href="/2018/03/11/C%E8%AF%AD%E8%A8%80%20%E5%AE%9E%E7%8E%B0%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E6%95%B4%E5%9E%8B%E5%BC%BA%E5%88%B6%E8%BD%AC%E5%8C%96/" class="archive-article-date">
+        
+        <a href="/2018/03/11/C%E8%AF%AD%E8%A8%80%20%E5%AE%9E%E7%8E%B0%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E6%95%B4%E5%9E%8B%E5%BC%BA%E5%88%B6%E8%BD%AC%E5%8C%96/" class="archive-article-date">
   	<time datetime="2018-03-11T12:09:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-11</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><strong>1.整型在内存中的存储形式</strong><br>    int 与 float 均是四个字节大小，即32位，但是他们在内存中的存储形式却是完全不相同的。</p>
+<p>下面举一个例子，在vs下通过查看内存验证一下以上的事实。<br><strong>1.1   int  a = 12;</strong><br>  由于是正数，所以符号位取0。<br>          (12) = 1010B<br>        所以其在内存中存储形式为 0101 0000 0000 0000 0000 0000 0000 0000<br>为了方便计算16进制数，将4位二进制数列为一组进行表示。<br><img src="http://img.blog.csdn.net/20180309161618332?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQVNKQkZKU0I=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>在监视窗口找到a的地址。<br><img src="http://img.blog.csdn.net/20180309161953214?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQVNKQkZKU0I=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>通过地址查看该地址存储的信息。<br><img src="http://img.blog.csdn.net/2018030916215994?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQVNKQkZKU0I=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>将其展开 0000 1010 0000 0000 0000 0000 0000 0000<br><strong>2.单精度浮点数在内存在内存的储存</strong><br>举例 float b = 12.125;<br><img src="http://img.blog.csdn.net/20180311193856818?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQVNKQkZKU0I=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<p>在监视窗口找到b的地址</p>
+<p><img src="http://img.blog.csdn.net/20180311194014635?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQVNKQkZKU0I=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<p>通过b的地址，查看一下b在内存中的存储形式。<br><img src="http://img.blog.csdn.net/20180311194228896?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQVNKQkZKU0I=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<p>可见，b在内存中4字节是按照 00 00 42 41存储，因为我的机器是小端模式，所以真正的存储形式是 41 42 00 00。接下来分析一下这32个位都是什么，大家都知道二进制的四位可以用十六进制的1位表示。<br><img src="http://img.blog.csdn.net/2018031119485178?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQVNKQkZKU0I=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<p>关于浮点数的由十进制到二进制的转换大家一定也清楚，整数部分除二取余，小数部分乘二取整。<br>最后的结果是：12.125（10） = 1100.001（2）</p>
+<p>浮点数共计占内存4个字节，即32位。这32位是按照这样的规则存储的：</p>
+<p>（1）一位符号位   整数为0     负数1。用0，1将符号数字化，因为计算机是不懂正负号，而0和1恰恰可以表示这两种状态。</p>
+<p>（2）指数位八位<br>比如 float  a = 12.125(10) = 1100.001(2)<br>其实就是科学计数法表示， 1.2125 * 10^1  (10)  =   1.1100001 * 2^3<br>所在其指数位就为   exp = 3,但是实际计算机在存储的过程中还给指数位加了一个偏移常数127，所以指数为最终的结果是130。以二进制表示就是1000 0010。</p>
+<p>（3）由二步骤可以知道12.125尾数为1.1100001,但是可以联想一下，任意一个单精度类型的数据转化成科学计数法的二进制数都是1.xxxxxxxxxx，因此实际上在存储中将第一位的略去不表示，这样一来。其实在尾数位，我们用23位保存了24的数据，这样进度就提高了一位。</p>
+<p>由上图可知，这样的事实成功的被验证了。</p>
+<p>洋洋洒洒，废话连篇。真正转化现在开始，了解了前面的知识，我们就知道了浮点数是如何计算机中存储的，将其转换成整型无非就是取到它的整数部分即可。</p>
+<p>下面实现这样的一个单精度浮点数到整型的强转函数:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">int float_to_int(float f)</span><br><span class="line">&#123;</span><br><span class="line">	int *p &#x3D; (int*)&amp;f;</span><br><span class="line">	&#x2F;&#x2F;由于指针访问内存是按照基类型进行的，首先进行强转访问浮点数f</span><br><span class="line">	int temp &#x3D; *p;</span><br><span class="line">	&#x2F;&#x2F;用中间变量接受f的值</span><br><span class="line">	&#x2F;&#x2F;提取符号位</span><br><span class="line">	int sign &#x3D; -1;</span><br><span class="line">	if((temp &amp; 0x80000000) &#x3D;&#x3D; 0)</span><br><span class="line">	&#123;</span><br><span class="line">		sign &#x3D; 1;</span><br><span class="line">	&#125;</span><br><span class="line">	&#x2F;&#x2F;条件表达式中进行了位与运算，其实就是提取指数位的值。前面已经讲过了，符号位为0，其为正值。若为1，其为负值。</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;提取指数位</span><br><span class="line">    int exp;</span><br><span class="line">    exp &#x3D; ( (  (temp &gt;&gt; 23) &amp; 0x0ff  )  ) - 127;</span><br><span class="line">    &#x2F;&#x2F;由于在存储的时候指数位加了偏置常数   现在相当于是计算指数位的逆过程 所以自然要减去</span><br><span class="line">	</span><br><span class="line">	&#x2F;&#x2F;提取尾数位</span><br><span class="line">	int tail;</span><br><span class="line">	tail &#x3D; ( ( temp &amp; 0x007fffff ) | 0x00800000 );</span><br><span class="line">	&#x2F;*和之前提取指数位和符号位的方法是一致的，要提取哪几位，在对应的位进行与1运算就可以了</span><br><span class="line">	现在我们要提取的是除符号位和指数位共计九位的其他23，即尾数为。只需要在对应的为与1即可*&#x2F;</span><br><span class="line">	&#x2F;*还记得在存储尾数的时候，因为任意一个单精度的二进制数以科学记数法表示时，第一位都是1，</span><br><span class="line">	所以存储的时间，为了能够提高精度，省略了改位。但是现在是在进行他的逆过程，所以我们要在</span><br><span class="line">	要进行或1位运算*&#x2F;</span><br><span class="line">	</span><br><span class="line">	int res &#x3D; (tail &gt;&gt; (23 - exp));</span><br><span class="line">	</span><br><span class="line">	return res * sign;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;进行验证</span><br><span class="line">int main（）</span><br><span class="line">&#123;</span><br><span class="line">	float a  &#x3D; 12.125; &#x2F;&#x2F;a &#x3D; -12.125 a &#x3D; 0.05 a &#x3D; -0.05</span><br><span class="line">	int b &#x3D; float_to_int(a);</span><br><span class="line">	printf(&quot;b &#x3D; %d\n&quot;,b);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="http://img.blog.csdn.net/20180311200418439?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQVNKQkZKU0I=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><img src="http://img.blog.csdn.net/20180311200427338?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQVNKQkZKU0I=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><img src="http://img.blog.csdn.net/20180311200439355?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQVNKQkZKU0I=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><img src="http://img.blog.csdn.net/20180311200447995?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQVNKQkZKU0I=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<p>大家也可自行验证，但是美中不足的是这样强转函数存在缺点，就是当我们将浮点数0传入函数进行强转，其结果却差强人意。<br>（关于这点，目前还在测试，一定会有一个满意的解释的）</p>
+<p>写到这里，差不多结束了，其实双精度浮点数的强转时类似，只要能完全掌握双精度浮点数在内存中的存数形式。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">c语言</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2018/03/11/C%E8%AF%AD%E8%A8%80%20%E5%AE%9E%E7%8E%B0%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E6%95%B4%E5%9E%8B%E5%BC%BA%E5%88%B6%E8%BD%AC%E5%8C%96/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2018/03/12/printf%E5%87%BD%E6%95%B0%E7%9A%84%E8%BF%94%E5%9B%9E%E5%80%BC%EF%BC%81/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          printf函数的返回值！
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/02/19/Windows%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%8B%E4%BD%BF%E7%94%A8%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E6%89%93%E5%BC%80%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Windows操作系统下使用环境变量打开应用程序</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>

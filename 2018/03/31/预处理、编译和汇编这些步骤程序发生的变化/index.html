@@ -160,29 +160,191 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-预处理、编译和汇编这些步骤程序发生的变化" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       预处理、编译和汇编这些步骤程序发生的变化
     </h1>
   
 
-  
-  <a href="/2018/03/31/%E9%A2%84%E5%A4%84%E7%90%86%E3%80%81%E7%BC%96%E8%AF%91%E5%92%8C%E6%B1%87%E7%BC%96%E8%BF%99%E4%BA%9B%E6%AD%A5%E9%AA%A4%E7%A8%8B%E5%BA%8F%E5%8F%91%E7%94%9F%E7%9A%84%E5%8F%98%E5%8C%96/" class="archive-article-date">
+        
+        <a href="/2018/03/31/%E9%A2%84%E5%A4%84%E7%90%86%E3%80%81%E7%BC%96%E8%AF%91%E5%92%8C%E6%B1%87%E7%BC%96%E8%BF%99%E4%BA%9B%E6%AD%A5%E9%AA%A4%E7%A8%8B%E5%BA%8F%E5%8F%91%E7%94%9F%E7%9A%84%E5%8F%98%E5%8C%96/" class="archive-article-date">
   	<time datetime="2018-03-31T14:00:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-31</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+
+<p>现在大多数的程序都是在IDE上进行开发的，预处理、编译、汇编和链接这些过程都有编译器已经设定完成，而实际程序在这个过程发生了什么，我们就无从得知了。但是作为程序员，我们有必要去了解在这个过程中我们的程序都发生了哪些变化。<br>下面就详细描述每一个步骤发生了什么。<br>参考《程序员的自我修养》<br><strong>预处理</strong><br>1.将所有的#define删除，宏定义进行替换。<br>2.处理所有条件预编译指令，比如#ifndef ,#define,#if,#elif等。<br>3.删除所有注释，包括单行注释 // 和 多行注释 /**/。<br>4.添加行号和文件名标识。<br>5.保留#program 编译器指令。<br>6.展开头文件</p>
+<p>下面验证上述提到的预处理阶段做的事情。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">#define PI  3.14   &#x2F;&#x2F;宏定义</span><br><span class="line">#if 1 </span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	&#x2F;&#x2F;单行注释</span><br><span class="line">	float a &#x3D; PI;</span><br><span class="line">	printf(&quot;helloworld\n&quot;);</span><br><span class="line">	printf(&quot;a &#x3D; %f\n&quot;,a);</span><br><span class="line">	&#x2F;*这里用来测试多行注释</span><br><span class="line">	这里用来测试多行注释</span><br><span class="line">	这里用来测试多行注释</span><br><span class="line">	*&#x2F;</span><br><span class="line">&#125;</span><br><span class="line">#endif</span><br></pre></td></tr></table></figure>
+
+<p>这是我们main.c源文件，在Linux操作系统下，使用gcc可以获取.i文件，即经过预处理得到的文件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc main.c -E -o main.i</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdn.net/20180331212328476?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>可以看到，此时的main.i文件相对main.c大了许多，这是因为预处理阶段展开了头文件，大量的库函数的声明即路径被写入到main.i文件中，由于main.i的内容过于庞大，在这里就不贴出来了，大家可以自行验证。我们重点关注一下，宏定义是否被替换、注释是否被删除、以及条件编译指令是否被删除。<br><img src="https://img-blog.csdn.net/20180331212830193?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>对照我们上边写出程序，可以看出。宏定义被替换、单行注释和多行注释均被删除、条件编译指令被删除、添加了行号和文件名。其实头文件#include&lt;stdio.h&gt;内容也进行了递归展开，但是由于太多，在这里不进行一一展示，大家可以自行验证。</p>
+<p><strong>编译</strong><br>编译过程其实就是把预处理得到的文件进行词法分析、语法分析、语义分析及优化后生成的相应的汇编文件。是整个程序构建过程中最核心的部分，最重要的部分。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc main.i -S -o main.s</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdn.net/20180331213844687?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>由main.i 生成的main.s文件，其内容是main.i程序的对应汇编程序。</p>
+<p><strong>汇编</strong><br>汇编器是将汇编代码转换成机器可以识别的二进制代码，每一条汇编语言几乎对应一条机器指令。所以汇编器的汇编过程相对于编译器来讲比价简单，它没有复杂的语法，也没有语义<br>，也不需要做指令的优化，只是需要根据汇编指令和机器指令的对照表一一翻译就可以了，”汇编”这个名词也来源于此。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc main.s -c -o main.o</span><br></pre></td></tr></table></figure>
+<p>最终生成main.o二进制文件，其内容是01序列，当然我们是看不懂的。但是机器能够理解。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2018/03/31/%E9%A2%84%E5%A4%84%E7%90%86%E3%80%81%E7%BC%96%E8%AF%91%E5%92%8C%E6%B1%87%E7%BC%96%E8%BF%99%E4%BA%9B%E6%AD%A5%E9%AA%A4%E7%A8%8B%E5%BA%8F%E5%8F%91%E7%94%9F%E7%9A%84%E5%8F%98%E5%8C%96/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2018/04/02/%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1%EF%BC%88%E4%B8%80%EF%BC%89%E6%97%A0%E5%90%8D%E7%AE%A1%E9%81%93%E5%92%8C%E6%9C%89%E5%90%8D%E7%AE%A1%E9%81%93/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          进程通信（一）无名管道和有名管道
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/03/31/%E8%99%9A%E6%8B%9F%E5%9C%B0%E5%9D%80%E7%A9%BA%E9%97%B4%E7%9A%84%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">虚拟地址空间的内存布局</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>

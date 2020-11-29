@@ -156,29 +156,197 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-PAT（甲级）1143. Lowest Common Ancestor（30）" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       PAT（甲级）1143. Lowest Common Ancestor（30）
     </h1>
   
 
-  
-  <a href="/2019/04/07/PAT%EF%BC%88%E7%94%B2%E7%BA%A7%EF%BC%891143.%20Lowest%20Common%20Ancestor%EF%BC%8830%EF%BC%89/" class="archive-article-date">
+        
+        <a href="/2019/04/07/PAT%EF%BC%88%E7%94%B2%E7%BA%A7%EF%BC%891143.%20Lowest%20Common%20Ancestor%EF%BC%8830%EF%BC%89/" class="archive-article-date">
   	<time datetime="2019-04-07T06:17:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-07</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face="Consolas">PAT 1143. Lowest Common Ancestor（30）</font><br><font size=4 face="Consolas">The lowest common ancestor (LCA) of two nodes U and V in a tree is the deepest node that has both U and V as descendants.<br>A binary search tree (BST) is recursively defined as a binary tree which has the following properties:<br><strong>1.The left subtree of a node contains only nodes with keys less than the node’s key.<br>2.The right subtree of a node contains only nodes with keys greater than or equal to the node’s key.<br>3.Both the left and right subtrees must also be binary search trees.<br>Given any two nodes in a BST, you are supposed to find their LCA.</strong><br><font size=4 face="Consolas"><br><font size=5 face="Consolas" color=red>输入格式：</font><br><font size=4 face="Consolas">Each input file contains one test case. For each case, the first line gives two positive integers: M (≤ 1,000), the number of pairs of nodes to be tested; and N (≤ 10,000), the number of keys in the BST, respectively. In the second line, N distinct integers are given as the preorder traversal sequence of the BST. Then M lines follow, each contains a pair of integer keys U and V. All the keys are in the range of int.</p>
+<p><font size=5 face="Consolas" color=red>输出格式：</font><br><font size=4 face="Consolas">For each given pair of U and V, print in a line <code>LCA of U and V is A.</code> if the LCA is found and <code>A</code> is the key. But if <code>A</code> is one of U and V, print <code>X is an ancestor of Y.</code> where X is A and Y is the other node. If U or V is not found in the BST, print in a line  <code>ERROR: U is not found. </code>or <code>ERROR: V is not found.</code> or <code>ERROR: U and V are not found.</code>.</p>
+<p><font size=5 face="Courier New" color=red>输入样例：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">6 8</span><br><span class="line">6 3 1 2 5 4 8 7</span><br><span class="line">2 5</span><br><span class="line">8 7</span><br><span class="line">1 9</span><br><span class="line">12 -3</span><br><span class="line">0 8</span><br><span class="line">99 99</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier New" color=red>输出样例：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">LCA of 2 and 5 is 3.</span><br><span class="line">8 is an ancestor of 7.</span><br><span class="line">ERROR: 9 is not found.</span><br><span class="line">ERROR: 12 and -3 are not found.</span><br><span class="line">ERROR: 0 is not found.</span><br><span class="line">ERROR: 99 and 99 are not found.</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Consolas" color=blue>题目分析：题目给出的是BST树，可以利用BST的中序遍历是顺序序列这一性质。由前序序列排序后获得中序序列，使用中序序列和前序序列重构二叉树即可。</font></p>
+<p><font size=5 face="Consolas" color=black>AC代码：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;algorithm&gt;</span><br><span class="line">#include &lt;map&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">const int maxn &#x3D; 10010;</span><br><span class="line">map&lt;int, bool&gt; mp;</span><br><span class="line">int in[maxn];</span><br><span class="line">int pre[maxn];</span><br><span class="line">int post[maxn];</span><br><span class="line">int preTemp[maxn];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">struct node&#123;</span><br><span class="line">    int data;</span><br><span class="line">    node* lchild;</span><br><span class="line">    node* rchild;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">node* build(int preL, int preR, int inL, int inR)&#123;</span><br><span class="line">    if(preL&gt;preR)return NULL;</span><br><span class="line">    node* root &#x3D; new node;</span><br><span class="line">    root-&gt;data &#x3D; pre[preL];</span><br><span class="line">    int k;</span><br><span class="line">    for(k&#x3D;inL; k&lt;&#x3D;inR; ++k)&#123;</span><br><span class="line">        if(in[k] &#x3D;&#x3D; pre[preL])break;</span><br><span class="line">    &#125;</span><br><span class="line">    int leftnum &#x3D; k-inL;</span><br><span class="line">    root-&gt;lchild &#x3D; build(preL+1, preL+leftnum, inL, k-1);</span><br><span class="line">    root-&gt;rchild &#x3D; build(preL+leftnum+1, preR, k+1, inR);</span><br><span class="line">    return root;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void postorder(node* root)&#123;</span><br><span class="line">    if(root)&#123;</span><br><span class="line">        postorder(root-&gt;lchild);</span><br><span class="line">        postorder(root-&gt;rchild);</span><br><span class="line">        cout&lt;&lt;root-&gt;data&lt;&lt;&quot; &quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">node* lca(node* root, int u, int v)&#123;</span><br><span class="line">    if(root&#x3D;&#x3D;NULL)return NULL;</span><br><span class="line">    if(root-&gt;data&#x3D;&#x3D;u || root-&gt;data&#x3D;&#x3D;v)return root;</span><br><span class="line"></span><br><span class="line">    node* left &#x3D; lca(root-&gt;lchild, u, v);</span><br><span class="line">    node* right &#x3D; lca(root-&gt;rchild, u, v);</span><br><span class="line">    if(left &amp;&amp; right)return root;</span><br><span class="line">    return left&#x3D;&#x3D;NULL?right:left;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    int m, n, u, v;</span><br><span class="line">    scanf(&quot;%d%d&quot;,&amp;m,&amp;n);</span><br><span class="line">    for(int i&#x3D;0; i&lt;n; ++i)&#123;</span><br><span class="line">        scanf(&quot;%d&quot;, &amp;pre[i]);</span><br><span class="line">        mp[pre[i]] &#x3D; true;</span><br><span class="line">        preTemp[i] &#x3D; pre[i];</span><br><span class="line">    &#125;</span><br><span class="line">    sort(preTemp,preTemp+n);</span><br><span class="line">    for(int i&#x3D;0; i&lt;n; ++i)&#123;in[i]&#x3D;preTemp[i];&#125;</span><br><span class="line">    node* root &#x3D; build(0, n-1, 0, n-1);</span><br><span class="line">    for(int i&#x3D;0; i&lt;m; ++i)&#123;</span><br><span class="line">        scanf(&quot;%d%d&quot;,&amp;u,&amp;v);</span><br><span class="line">        if(mp[u]&#x3D;&#x3D;false &amp;&amp; mp[v]&#x3D;&#x3D;false)</span><br><span class="line">            printf(&quot;ERROR: %d and %d are not found.\n&quot;, u, v);</span><br><span class="line">        else if(mp[u]&#x3D;&#x3D;false || mp[v]&#x3D;&#x3D;false)&#123;</span><br><span class="line">            if(mp[u]&#x3D;&#x3D;false)</span><br><span class="line">                printf(&quot;ERROR: %d is not found.\n&quot;,u);</span><br><span class="line">            else</span><br><span class="line">                printf(&quot;ERROR: %d is not found.\n&quot;,v);</span><br><span class="line">        &#125;</span><br><span class="line">        else&#123;</span><br><span class="line">            node* tmp &#x3D; lca(root, u, v);</span><br><span class="line">            if(tmp-&gt;data&#x3D;&#x3D;u || tmp-&gt;data&#x3D;&#x3D;v)&#123;</span><br><span class="line">                if(tmp-&gt;data &#x3D;&#x3D; u)</span><br><span class="line">                    printf(&quot;%d is an ancestor of %d.\n&quot;, u, v);</span><br><span class="line">                else</span><br><span class="line">                    printf(&quot;%d is an ancestor of %d.\n&quot;, v, u);</span><br><span class="line">            &#125;</span><br><span class="line">            else&#123;</span><br><span class="line">                printf(&quot;LCA of %d and %d is %d.\n&quot;, u, v, tmp-&gt;data);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/PAT甲级题解//" class="article-tag-list-link color3">PAT甲级题解</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2019/04/07/PAT%EF%BC%88%E7%94%B2%E7%BA%A7%EF%BC%891143.%20Lowest%20Common%20Ancestor%EF%BC%8830%EF%BC%89/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2019/04/07/PAT%EF%BC%88%E7%94%B2%E7%BA%A7%EF%BC%891036.Boys%20vs%20Girls%EF%BC%8825%EF%BC%89/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          PAT（甲级）1036.Boys vs Girls（25）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/04/07/PAT%EF%BC%88%E7%94%B2%E7%BA%A7%EF%BC%891051.LCA%20in%20a%20Binary%20Tree%EF%BC%8830%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">PAT（甲级）1051.LCA in a Binary Tree（30）</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>

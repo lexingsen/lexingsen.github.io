@@ -158,29 +158,204 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-PAT（甲级）1001. A+B Format (20)" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       PAT（甲级）1001. A+B Format (20)
     </h1>
   
 
-  
-  <a href="/2019/05/19/PAT%EF%BC%88%E7%94%B2%E7%BA%A7%EF%BC%891001.%20A+B%20Format%20(20)/" class="archive-article-date">
+        
+        <a href="/2019/05/19/PAT%EF%BC%88%E7%94%B2%E7%BA%A7%EF%BC%891001.%20A+B%20Format%20(20)/" class="archive-article-date">
   	<time datetime="2019-05-19T11:19:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-19</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face="Consolas">PAT 1001. A+B Format (20)</font><br><font size=4 face="Consolas">Calculate a+b and output the sum in standard format – that is, the digits must be separated into groups of three by commas (unless there are less than four digits).</p>
+<p><font size=5 face="Consolas" color=red>输入格式：</font><br><font size=4 face="Consolas">Each input file contains one test case. Each case contains a pair of integers a and b where <code>−10​^6 ≤ a , b ≤ 10​^6</code>​​.The numbers are separated by a space.</p>
+<p><font size=5 face="Consolas" color=red>输出格式：</font><br><font size=4 face="Consolas">For each test case, you should output the sum of a and b in one line. The sum must be written in the standard format.</p>
+<p><font size=5 face="Consolas" color=red>输入样例：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-1000000 9</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Consolas" color=red>输出样例：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-999,991</span><br></pre></td></tr></table></figure>
+
+<p><font size=5 face="Consolas" color=blue>题目分析：按照指定的格式输出a+b的和，每三个数字一组，中间用逗号隔开，<font color=red>注意：不能输出前导0。<font></font></p>
+<p><font size=5 face="Consolas" color=black>AC代码1（非递归）：</font><br><font size=4 face="Consolas" color=black>算是一种投机的方法，题目中给出的数据范围是<code>[10^-6, 10^6]</code>意味着abs(sum(a+b))这个最大值是2*10^6=2 000 000,也就是说在这个题目中sum最多分三组。所以直接根据规律输出即可</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;c&#x2F;1000000 取得第一组的三位</span><br><span class="line">&#x2F;&#x2F;(c&#x2F;1000)去掉低三位   (c&#x2F;1000)%1000  获得去掉第三位中所得到的数字的低三位</span><br><span class="line">&#x2F;&#x2F;c%1000  获取c的低三位</span><br><span class="line">&#x2F;&#x2F;如1234567   分成三组为 1，234，567 </span><br><span class="line">&#x2F;&#x2F;c&#x2F;1000000 得到1</span><br><span class="line">&#x2F;&#x2F;c&#x2F;1000即为 1234   （c&#x2F;1000）%1000即为234</span><br><span class="line">&#x2F;&#x2F;c%1000直接得到最低的三位</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">	int a &#x3D; 1234567;</span><br><span class="line">	cout &lt;&lt; &quot;a &#x3D; &quot; &lt;&lt; a &lt;&lt; endl;</span><br><span class="line">	cout &lt;&lt; &quot;a&#x2F;1000000 &#x3D; &quot; &lt;&lt; a&#x2F;1000000 &lt;&lt; endl;</span><br><span class="line">	cout &lt;&lt; &quot;a&#x2F;1000  &#x3D; &quot; &lt;&lt; a&#x2F;1000 &lt;&lt; endl;</span><br><span class="line">	cout &lt;&lt; &quot;(a&#x2F;1000)%1000 &#x3D; &quot; &lt;&lt; (a&#x2F;1000)%1000 &lt;&lt; endl;</span><br><span class="line">	cout &lt;&lt; &quot;a%1000 &#x3D; &quot; &lt;&lt; a%1000 &lt;&lt; endl;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=4 face="Consolas" color=black>执行结果：</font><br><img src="https://img-blog.csdnimg.cn/20190519191453358.png" alt="在这里插入图片描述"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;cstdio&gt;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">	int a, b, c;</span><br><span class="line">	scanf(&quot;%d%d&quot;, &amp;a, &amp;b);</span><br><span class="line">	c  &#x3D; a+b;</span><br><span class="line">	&#x2F;&#x2F;统一将a+b的和处理为正数，方便逻辑的判断</span><br><span class="line">	if(c &lt; 0)&#123;</span><br><span class="line">		printf(&quot;-&quot;);</span><br><span class="line">		c &#x3D; -c;</span><br><span class="line">	&#125;</span><br><span class="line">	if(c&gt;&#x3D;1000000)&#x2F;&#x2F;分三组</span><br><span class="line">		printf(&quot;%d,%03d,%03d&quot;, c&#x2F;1000000, (c&#x2F;1000)%1000, c%1000);</span><br><span class="line">	else if(c&gt;&#x3D;1000)&#x2F;&#x2F;分两组	</span><br><span class="line">		printf(&quot;%d,%03d&quot;, c&#x2F;1000, c%1000);</span><br><span class="line">	else&#x2F;&#x2F;分一组</span><br><span class="line">		printf(&quot;%d&quot;, c);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><font size=5 face="Consolas" color=black>AC代码2（递归）：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;cstdio&gt;</span><br><span class="line">void dfs(int n)&#123;</span><br><span class="line">	&#x2F;&#x2F;如果n&lt;1000则说明位数小于等于3位  [0,999]直接输出即可</span><br><span class="line">	&#x2F;&#x2F;n&lt;1000只有两种可能：（1）这个数字小于1000 （2）n是某个数字的高三位</span><br><span class="line">	&#x2F;&#x2F;注意不能输出前导0 如&quot;032&quot;, 这样是错误的</span><br><span class="line">	if(n &lt; 1000)&#123;</span><br><span class="line">		printf(&quot;%d&quot;, n);</span><br><span class="line">		return;</span><br><span class="line">	&#125;</span><br><span class="line">	else&#123;</span><br><span class="line">		&#x2F;&#x2F;如果一个数字大于三位  [1000, infinite)</span><br><span class="line">		&#x2F;&#x2F;分成两个部分   高三位和其余位置</span><br><span class="line">		&#x2F;&#x2F;高三位 n&#x2F;1000     最后三位 n%1000</span><br><span class="line">		dfs(n &#x2F; 1000);&#x2F;&#x2F;输出高三位</span><br><span class="line">		&#x2F;&#x2F;所有的高三位都输出了，回溯回来  输出低三位即可</span><br><span class="line">		printf(&quot;%3d&quot;, n % 1000);&#x2F;&#x2F;注意此时的输出格式 &quot;%03d&quot;, 不足三位需要用0补足</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">	int a, b, c;</span><br><span class="line">	c &#x3D; a+b;</span><br><span class="line">	if(c&lt;0)&#123;</span><br><span class="line">		printf(&quot;-&quot;);</span><br><span class="line">		c &#x3D; -c;</span><br><span class="line">	&#125;</span><br><span class="line">	dfs(c);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/PAT甲级题解//" class="article-tag-list-link color3">PAT甲级题解</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2019/05/19/PAT%EF%BC%88%E7%94%B2%E7%BA%A7%EF%BC%891001.%20A+B%20Format%20(20)/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2019/05/19/PAT%EF%BC%88%E7%94%B2%E7%BA%A7%EF%BC%891002.A+B%20for%20Polynomials%20(25)/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          PAT（甲级）1002.A+B for Polynomials (25)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/04/10/PAT%EF%BC%88%E7%94%B2%E7%BA%A7%EF%BC%891030.Travel%20Plan%EF%BC%8830%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">PAT（甲级）1030.Travel Plan（30）</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>

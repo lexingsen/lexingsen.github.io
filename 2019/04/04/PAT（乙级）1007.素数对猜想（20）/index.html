@@ -156,29 +156,198 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-PAT（乙级）1007.素数对猜想（20）" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       PAT（乙级）1007.素数对猜想（20）
     </h1>
   
 
-  
-  <a href="/2019/04/04/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891007.%E7%B4%A0%E6%95%B0%E5%AF%B9%E7%8C%9C%E6%83%B3%EF%BC%8820%EF%BC%89/" class="archive-article-date">
+        
+        <a href="/2019/04/04/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891007.%E7%B4%A0%E6%95%B0%E5%AF%B9%E7%8C%9C%E6%83%B3%EF%BC%8820%EF%BC%89/" class="archive-article-date">
   	<time datetime="2019-04-04T12:14:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-04</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face="Courier New">PAT 1007.素数对猜想（20）</font></p>
+<p><font size=4 face="Courier New">让我们定义d​n为：<code>dn=pn+1−p​n</code>，其中p​i是第i个素数。显然有d1=1，且对于n&gt;1有dn是偶数。”素数对猜想”认为 “存在无穷多对相邻且差为2的素数”。现给定任意正整数N(&lt;10^5​​ )，请计算不超过N的满足猜想的素数对的个数。<br><font size=4 face="Courier New"><br><font size=5 face="Courier New" color=red>输入格式：</font><br><font size=4 face="Courier New">输入在一行给出正整数N。</p>
+<p><font size=5 face="Courier New" color=red>输出格式：</font><br><font size=4 face="Courier New">在一行中输出不超过N的满足猜想的素数对的个数。</p>
+<p><font size=5 face="Courier New" color=red>输入样例：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">20</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier New" color=red>输出样例：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">4</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier New" color=blue>题目分析：素数筛选法，O(n^2)求解素数会超时。</p>
+<p><font size=5 face="Courier New" color=black>AC代码：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;cstdio&gt;</span><br><span class="line">#include&lt;cmath&gt;</span><br><span class="line"></span><br><span class="line">const int max_n &#x3D; 100010;</span><br><span class="line"></span><br><span class="line">bool p[max_n];</span><br><span class="line">int prime[max_n];</span><br><span class="line">int num &#x3D; 0;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line"> 	int n;</span><br><span class="line">  	scanf(&quot;%d&quot;,&amp;n);</span><br><span class="line">  	for(int i&#x3D;2;i&lt;&#x3D;n;++i)&#123;</span><br><span class="line">    	if(p[i]&#x3D;&#x3D;false)&#123;</span><br><span class="line">      		prime[num++] &#x3D; i;</span><br><span class="line">	  	&#125;</span><br><span class="line">      	for(int j&#x3D;i+i;j&lt;&#x3D;n;j+&#x3D;i)&#123;</span><br><span class="line">        	p[j] &#x3D; true;</span><br><span class="line">      	&#125;</span><br><span class="line">    &#125; </span><br><span class="line">  	int cnt &#x3D; 0;</span><br><span class="line">  	for(int i&#x3D;0;i&lt;num-1;++i)&#123;</span><br><span class="line">    	if(prime[i+1]-prime[i]&#x3D;&#x3D;2)&#123;</span><br><span class="line">      		cnt++; </span><br><span class="line">    	&#125;</span><br><span class="line">  	&#125;</span><br><span class="line">  	printf(&quot;%d&quot;,cnt);</span><br><span class="line">  	return 0;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/PAT乙级题解//" class="article-tag-list-link color3">PAT乙级题解</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2019/04/04/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891007.%E7%B4%A0%E6%95%B0%E5%AF%B9%E7%8C%9C%E6%83%B3%EF%BC%8820%EF%BC%89/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2019/04/05/PAT%20%E7%94%B2%E7%BA%A7%E5%B8%B8%E7%94%A8%E5%8D%95%E8%AF%8D%E7%BB%84%20%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          PAT 甲级常用单词组 （持续更新）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/04/04/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891004.%E6%88%90%E7%BB%A9%E6%8E%92%E5%90%8D%EF%BC%8820%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">PAT（乙级）1004.成绩排名（20）</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>

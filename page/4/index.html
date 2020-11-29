@@ -154,205 +154,908 @@
           <div id="js-content" class="content-ll">
             
   
-    <header class="article-header">
-  
+    <article id="post-01背包问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2020/09/16/01%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/">01背包问题</a>
     </h1>
   
 
-  
-  <a href="/2020/09/16/01%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/" class="archive-article-date">
+        
+        <a href="/2020/09/16/01%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/" class="archive-article-date">
   	<time datetime="2020-09-16T12:03:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-16</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><strong>有N件物品和一个容量为V的背包。放入第i件物品耗费的空间是vi，得到的价值是wi。求解将哪些物品装入背包可以使得价值之和最大。</strong></p>
+<p><strong>二维数组的暴力解法，未涉及空间优化。</strong><br>首先用子问题来定义状态，f[i][j]表示前i个物品放到容量为j的空间总价值最大。f[i][j]这个状态是由i-1推过来的，这里有两种考虑：第i中物品选择还是不选择，如果不选择f[i][j]==f[i-1][j]，如果选择f[i][j] = max(f[i-1][j], f[i-1][j-v[i]]+w[i])。<br><strong>max(f[i-1][j], f[i-1][j-v[i]]+w[i])的解释：</strong><br>第i件物品选择，第i件物品占据的空间是v[i]，价值为w[i]。那么前i-1件物品所占据的空间为j-v[i]，价值为f[i-1][j-v[i]]。而f[i][j]是f[i-1][j]和f[i-1][j-v[i]]+w[i]其中较大的一个。</p>
+<p><strong>代码部分：</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn=<span class="number">1010</span>;</span><br><span class="line"><span class="keyword">int</span> v[maxn], w[maxn];</span><br><span class="line"><span class="keyword">int</span> f[maxn][maxn];</span><br><span class="line"><span class="keyword">int</span> n, m; <span class="comment">//分别表示物品总数为n 背包容量为m</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; n &gt;&gt; m;</span><br><span class="line">	f[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">1</span>; i&lt;=n; ++i) <span class="built_in">cin</span> &gt;&gt; v[i] &gt;&gt; w[i];</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">1</span>; i&lt;=n; ++i) &#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j=<span class="number">1</span>; j&lt;=m; ++j) &#123;</span><br><span class="line">			f[i][j] = f[i<span class="number">-1</span>][j];</span><br><span class="line">			<span class="keyword">if</span> (j &gt;= v[i]) &#123;</span><br><span class="line">				f[i][j] = max(f[i][j], f[i<span class="number">-1</span>][j-v[i]]+w[i]);				</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;=m; ++i) &#123;</span><br><span class="line">		res = max(res, f[n][i]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/算法基础//" class="article-tag-list-link color5">算法基础</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/09/16/01%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-IO控制方式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2020/09/15/IO%E6%8E%A7%E5%88%B6%E6%96%B9%E5%BC%8F/">IO控制方式</a>
     </h1>
   
 
-  
-  <a href="/2020/09/15/IO%E6%8E%A7%E5%88%B6%E6%96%B9%E5%BC%8F/" class="archive-article-date">
+        
+        <a href="/2020/09/15/IO%E6%8E%A7%E5%88%B6%E6%96%B9%E5%BC%8F/" class="archive-article-date">
   	<time datetime="2020-09-14T16:02:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-15</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><strong>程序直接控制方式</strong><br>cpu干预程度：非常的频繁，IO操作开始前，完成后均需要cpu介入，并且在等待IO完成的过程中cpu需要不断的介入进行轮询检查，实际上是忙轮询，极大的浪费了cpu的资源，本质原因还是IO设备与cpu速度差异造成的矛盾，其次的原因是没有中断机制，IO设备无法向cpu报告自己的状态<br>数据流向: 读  IO设备-&gt;cpu-&gt;内存   写   内存-&gt;cpu-&gt;IO设备<br>传输单位: 一个字<br>缺点：cpu与IO设备只能串行工作，忙等IO完成，极大的浪费cpu资源，cpu利用率很低。<br>优点：简单易于实现。</p>
+<p><strong>中断驱动方式</strong><br>由于中断机制的产生，cpu不需要忙轮询检查IO设备是否完成IO，而是被动的等待IO设备向自己通知，cpu的利用率得到提高。<br>cpu干预程度：每次IO操作开始之前，完成之后需要cpu的介入。<br>数据流向:<br>传输单位: 一个字<br>缺点：1.虽然引入中断，进一步的解放了cpu，提高了cpu的使用率。但是中断处理的过程需要保护现场，恢复现场，这是需要一定时间开销，如果频繁的触发中断，也会降低系统的性能，甚至得不偿失。2.由于传输数据的每个字都在IO控制器和存储器之间的传输都会经过cpu，这会导致中断驱动方式任然会消耗较多的cpu时间。<br>优点：cpu利用率得到提高</p>
+<p><strong>DMA方式 direct memort access</strong><br>cpu干预程度：仅在传送一个或多个连续的数据块的开始和结束时，才需要cpu的干涉。<br>数据流向: 内存-&gt;IO设备  IO设备-&gt;内存<br>传输单位: 数据块<br>缺点：cpu每发出一条IO指令，只能读/写一块或多块<strong>连续的</strong>数据块。<br>优点：1.相对有中断驱动方式，DMA方式减少了中断cpu的次数，仅在所要求传送的一批数据全部传送结束时才会中断cpu。2.数据传送是在DMA控制器控制下完成，而中断驱动方式的数据传送是在cpu的控制下完成的。总结:1.减少中断cpu的次数 2.数据传送的过程交由DMA控制器控制。</p>
+<p><strong>通道方式</strong><br>通道方式进一步降低了cpu对于IO设备的控制，将对于IO控制的权力下放到通道，由通道负责cpu制定的IO任务，当完成数据传送后才向cpu发送中断请求。<br>cpu干预程度：<br>数据流向:<br>传输单位:<br>缺点：实现复杂，需要通道硬件支持。<br>优点：可以实现IO设备，cpu，通道三者的并行工作，资源利用率高，整个系统性能好。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">操作系统</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/操作系统//" class="article-tag-list-link color5">操作系统</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/09/15/IO%E6%8E%A7%E5%88%B6%E6%96%B9%E5%BC%8F/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-死锁" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2020/09/13/%E6%AD%BB%E9%94%81/">死锁</a>
     </h1>
   
 
-  
-  <a href="/2020/09/13/%E6%AD%BB%E9%94%81/" class="archive-article-date">
+        
+        <a href="/2020/09/13/%E6%AD%BB%E9%94%81/" class="archive-article-date">
   	<time datetime="2020-09-13T15:25:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-13</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p>死锁产生的原因有两个:<br>1.多进程或多线程对不可剥夺的软硬件资源进行的竞争<br>2.操作系统内核对于多个进程推进顺序的非法，多个进程对于资源的请求与释放的顺序不正确，造成资源的死锁。</p>
+<p>程序员对信号量的使用不当，造成应用程序内部多进程或多线程的死锁。<br>程序员对互斥锁的使用不当，也会造成死锁，自己锁自己，这里的死锁并不是操作系统意义上的死锁，而是编程层面未对互斥锁成对(lock unlock)使用造成的。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;semaphore.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">sem_t</span> s1, s2; <span class="comment">// 两个用于同步的信号量</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	sem_init(&amp;s1, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">	sem_init(&amp;s2, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">	<span class="function">thread <span class="title">t1</span><span class="params">([&amp;]()&#123;</span></span></span><br><span class="line"><span class="function"><span class="params">		sem_wait(&amp;s2);  <span class="comment">// 请求持有s2 陷入阻塞</span></span></span></span><br><span class="line"><span class="function"><span class="params">		<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;hello&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span></span></span><br><span class="line"><span class="function"><span class="params">		sem_post(&amp;s1);  <span class="comment">// 持有s1 但不能释放</span></span></span></span><br><span class="line"><span class="function"><span class="params">	&#125;)</span></span>;</span><br><span class="line">	</span><br><span class="line">	<span class="function">thread <span class="title">t2</span><span class="params">([&amp;]()&#123;</span></span></span><br><span class="line"><span class="function"><span class="params">		sem_wait(&amp;s1); <span class="comment">// 请求持有s1  陷入阻塞</span></span></span></span><br><span class="line"><span class="function"><span class="params">		<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;hello&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span></span></span><br><span class="line"><span class="function"><span class="params">		sem_post(&amp;s2); <span class="comment">// 持有s2 但不能释放</span></span></span></span><br><span class="line"><span class="function"><span class="params">	&#125;)</span></span>;</span><br><span class="line">	</span><br><span class="line">	sem_destroy(&amp;s1);</span><br><span class="line">	sem_destroy(&amp;s2);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/20200913225314710.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<p>上述两个两个线程分别持有一个信号量，但是又请求占用对方的信号量。<br>满足<strong>互斥条件</strong>，满足<strong>不可剥夺条件</strong>，满足<strong>请求保持条件</strong>，满足<strong>循环等待条件</strong>，最终造成两个线程死锁，在无外力条件的破坏的情况下，两线程将永远不会向前推进。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;pthread.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">pthread_mutex_t</span> mtx;</span><br><span class="line"><span class="keyword">int</span> x=<span class="number">10</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	pthread_mutex_init(&amp;mtx, <span class="literal">NULL</span>);</span><br><span class="line">	pthread_mutex_lock(&amp;mtx);<span class="comment">// 对mutex加锁成功 </span></span><br><span class="line">	pthread_mutex_lock(&amp;mtx);</span><br><span class="line">	<span class="comment">// 还未对mutex解锁 将会永久阻塞</span></span><br><span class="line">	x += <span class="number">100</span>;</span><br><span class="line">	pthread_mutex_unlock(&amp;mtx);</span><br><span class="line">	pthread_mutex_destroy(&amp;mtx);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p><strong>死锁预防</strong><br>死锁预防的本质就是釜底抽薪，直接从根本上干掉死锁，避免死锁的发生。破坏死锁的四个必要条件的一个或多个。<br>互斥条件：几乎不可行</p>
+<p>不可剥夺条件：强行剥夺，是要付出代价的。强行剥夺可能会造成进程或线程前一段工作的失效，只适用在一些易于保存和恢复的资源。</p>
+<p>请求和保持条件：代价太高，一次性分配完，系统没有那么多资源，造成资源的浪费。</p>
+<p>循环等待条件：顺序资源分配<br>资源递增编号 进程或线程按序申请使用资源</p>
+<p><strong>死锁避免</strong><br>银行家算法</p>
+<p><strong>死锁检测与解除</strong><br>死锁定理+资源分配图</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">操作系统</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/操作系统//" class="article-tag-list-link color5">操作系统</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/09/13/%E6%AD%BB%E9%94%81/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-Linux 信号量实现同步，实现互斥" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2020/09/12/Linux%20%E4%BF%A1%E5%8F%B7%E9%87%8F%E5%AE%9E%E7%8E%B0%E5%90%8C%E6%AD%A5%EF%BC%8C%E5%AE%9E%E7%8E%B0%E4%BA%92%E6%96%A5/">Linux 信号量实现同步，实现互斥</a>
     </h1>
   
 
-  
-  <a href="/2020/09/12/Linux%20%E4%BF%A1%E5%8F%B7%E9%87%8F%E5%AE%9E%E7%8E%B0%E5%90%8C%E6%AD%A5%EF%BC%8C%E5%AE%9E%E7%8E%B0%E4%BA%92%E6%96%A5/" class="archive-article-date">
+        
+        <a href="/2020/09/12/Linux%20%E4%BF%A1%E5%8F%B7%E9%87%8F%E5%AE%9E%E7%8E%B0%E5%90%8C%E6%AD%A5%EF%BC%8C%E5%AE%9E%E7%8E%B0%E4%BA%92%E6%96%A5/" class="archive-article-date">
   	<time datetime="2020-09-12T14:35:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-12</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+
+<p> <strong>一.实现同步</strong><br><strong>同步模板</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">使用信号量实现同步时，需要将信号量的初值设置为<span class="number">0</span></span><br><span class="line">semaphore s=<span class="number">0</span>;</span><br><span class="line">p1() &#123;</span><br><span class="line">	p(s);</span><br><span class="line">	具体的代码</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">p2() &#123;</span><br><span class="line">	具体的代码</span><br><span class="line">	v(s);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>1.假设p1先执行，执行到p(s), s-=1, 此时s=-1&lt;0,进程阻塞，主动放弃cpu使用权，cpu调度执行p2,执行p2的具体任务，然后进行v(s),，s+=1，s=0，p2执行完毕。cpu调度继续执行p1，此时s=0，p1被唤醒，因此就达到了先执行p2后执行p1的同步关系。<br>2.假设p2先执行，首先执行具体的代码，然后进行v(s)，s+=1，s=1&gt;0，然后p2执行完毕。cpu调度执行p1，p1首先p(s)，s-=1，s=0，然后执行具体的代码。同样也达到了先执行p2后执行p1的同步关系。<br><strong>二.Linux下信号量实现同步，线程2先执行输出”hello”，线程1后执行输出”world\n”的功能</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;pthread.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;semaphore.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> x = <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  sem_init(&amp;sem, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">  <span class="function">thread <span class="title">t1</span><span class="params">([&amp;]()&#123;</span></span></span><br><span class="line"><span class="function"><span class="params">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;hello&quot;</span>;</span></span></span><br><span class="line"><span class="function"><span class="params">    sem_post(&amp;sem);</span></span></span><br><span class="line"><span class="function"><span class="params">  &#125;)</span></span>;</span><br><span class="line">  <span class="function">thread <span class="title">t2</span><span class="params">([&amp;]()&#123;</span></span></span><br><span class="line"><span class="function"><span class="params">    sem_wait(&amp;sem);</span></span></span><br><span class="line"><span class="function"><span class="params">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;world&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span></span></span><br><span class="line"><span class="function"><span class="params">  &#125;)</span></span>;</span><br><span class="line">  t1.join();</span><br><span class="line">  t2.join();</span><br><span class="line">  sem_destroy(&amp;sem);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行结果：<br><img src="https://img-blog.csdnimg.cn/20200912221940123.png#pic_center" alt="在这里插入图片描述"></p>
+<p><strong>三.实现互斥<br>互斥模板</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">互斥是对临界资源的保护  所以互斥只需要在临界区之前和之后分别进行加锁和解锁</span><br><span class="line">需要注意的是，用信号量充当互斥锁实现互斥的时候，信号量的初值应设置为<span class="number">1</span>，表示</span><br><span class="line">临界资源的个数为<span class="number">1.</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> x=<span class="number">10</span>; 临界资源</span><br><span class="line">semaphore s=<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">p1() &#123;</span><br><span class="line">	p(s);</span><br><span class="line">	x ++; 访问临界资源</span><br><span class="line">	v(s);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">p2() &#123;</span><br><span class="line">	p(s);</span><br><span class="line">	x --; 访问临界资源</span><br><span class="line">	v(s);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>1.假设p1先执行，p(s)，s-=1，s=0，假设此时cpu时间片用完，cpu调度执行p2，p(s)，s-=1，s=-1 &lt; 0，此时p2阻塞，主动放弃cpu使用权，cpu调度执行p1，进行x++，v(s)<br>s+=1, s=0，p1执行完毕。cpu调度执行p2，由于s=0，p2唤醒，执行x –, v(s)，s+=1，s=1，p2执行完毕。此时信号量为1，表示可以临界资源个数为1。<br>2.假设p2先执行同上。<br><strong>四.使用Linux信号量实现互斥</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;pthread.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;semaphore.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  sem_init(&amp;sem, <span class="number">0</span>, <span class="number">1</span>);</span><br><span class="line">  <span class="function">thread <span class="title">t1</span><span class="params">([&amp;]()&#123;</span></span></span><br><span class="line"><span class="function"><span class="params">    sem_wait(&amp;sem);</span></span></span><br><span class="line"><span class="function"><span class="params">    x ++;</span></span></span><br><span class="line"><span class="function"><span class="params">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;x = &quot;</span> &lt;&lt; x &lt;&lt; <span class="string">&quot; this thread id:&quot;</span> &lt;&lt; this_thread::get_id() &lt;&lt; <span class="built_in">endl</span>;</span></span></span><br><span class="line"><span class="function"><span class="params">    sem_post(&amp;sem);</span></span></span><br><span class="line"><span class="function"><span class="params">  &#125;)</span></span>;</span><br><span class="line"></span><br><span class="line">  <span class="function">thread <span class="title">t2</span><span class="params">([&amp;]()&#123;</span></span></span><br><span class="line"><span class="function"><span class="params">    sem_wait(&amp;sem);</span></span></span><br><span class="line"><span class="function"><span class="params">    x --;</span></span></span><br><span class="line"><span class="function"><span class="params">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;x = &quot;</span> &lt;&lt; x &lt;&lt; <span class="string">&quot; this thread id:&quot;</span> &lt;&lt; this_thread::get_id() &lt;&lt; <span class="built_in">endl</span>;</span></span></span><br><span class="line"><span class="function"><span class="params">    sem_post(&amp;sem);</span></span></span><br><span class="line"><span class="function"><span class="params">  &#125;)</span></span>;</span><br><span class="line"></span><br><span class="line">  t1.join();</span><br><span class="line">  t2.join();</span><br><span class="line">  sem_destroy(&amp;sem);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>执行结果：</strong><br><img src="https://img-blog.csdnimg.cn/202009122232347.png#pic_center" alt="在这里插入图片描述"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">操作系统</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/操作系统//" class="article-tag-list-link color5">操作系统</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/09/12/Linux%20%E4%BF%A1%E5%8F%B7%E9%87%8F%E5%AE%9E%E7%8E%B0%E5%90%8C%E6%AD%A5%EF%BC%8C%E5%AE%9E%E7%8E%B0%E4%BA%92%E6%96%A5/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-信号量原理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2020/09/12/%E4%BF%A1%E5%8F%B7%E9%87%8F%E5%8E%9F%E7%90%86/">信号量原理</a>
     </h1>
   
 
-  
-  <a href="/2020/09/12/%E4%BF%A1%E5%8F%B7%E9%87%8F%E5%8E%9F%E7%90%86/" class="archive-article-date">
+        
+        <a href="/2020/09/12/%E4%BF%A1%E5%8F%B7%E9%87%8F%E5%8E%9F%E7%90%86/" class="archive-article-date">
   	<time datetime="2020-09-12T12:18:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-12</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p>信号量：信号量是基于软件互斥或硬件互斥方法实现的一种用于同步和互斥的机制。信号量只有两种操作原语：wait, signal</p>
+<p><strong>一.整型信号量</strong><br>整型信号量用于描述临界资源的个数。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">s=<span class="number">10</span>; 表示一个初始资源数量为<span class="number">10</span>的信号量</span><br><span class="line">wait(s) &#123;</span><br><span class="line">	<span class="keyword">while</span> (s &lt;= <span class="number">0</span>);</span><br><span class="line">	s --;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">signal(s) &#123;</span><br><span class="line">	s ++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>缺点：违背“让权等待”的同步原则，由于当信号量所表示的资源数目&lt;=0时，而此时该进程的时间片还未用完，便会不断运行while(s&lt;=0)，从而造成cpu资源的浪费，违背“让权等待”的原则。</p>
+<p><strong>二.记录型信号量</strong><br>为了解决整型信号量中在wait原语中违背“让权等待”的原则的问题，记录型信号量提出新的想法，设置一个阻塞队列，当s.value&lt;=0时，便将改成挂到阻塞队列队尾，以免造成对cpu时间的浪费。<br>记录型信号量是一个结构题，包含对临界资源数量的描述以及阻塞队列。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">semaphore</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> value; <span class="comment">// 描述临界资源的数量</span></span><br><span class="line">	<span class="built_in">queue</span>&lt;process*&gt; blockQue; <span class="comment">// 阻塞队列</span></span><br><span class="line">&#125;sem;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">wait</span><span class="params">(sem s)</span> </span>&#123;</span><br><span class="line">	s.value --;</span><br><span class="line">	<span class="keyword">if</span> (s.value &lt; <span class="number">0</span>) &#123;</span><br><span class="line">		blockQue.push(<span class="keyword">this</span> process);</span><br><span class="line">		block(blockQue);</span><br><span class="line">		调用block原语，进行自我阻塞，放弃CPU的使用权</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">signal</span><span class="params">(sem s)</span> </span>&#123;</span><br><span class="line">	s.value ++;</span><br><span class="line">	<span class="keyword">if</span> (s.value &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">		process* head=blockQue.front();blcokQue.pop();</span><br><span class="line">		wakeup(head);</span><br><span class="line">		使用wakeup原语唤醒进程   阻塞态-&gt;就绪态</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>三.用法</strong><br>对于整型信号量：<br>当用于同步时，信号量的初始值设置为0。同步是为了规定不同进程的执行的先后顺序，在实际开发中，可能会有两个进程需要相互合作完成某项任务，比如，前者执行的结果是后者的初始值。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">int</span> x=<span class="number">10</span>;</span><br><span class="line">sem s=<span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">A() &#123;</span><br><span class="line">	x ++;</span><br><span class="line">	v(s);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">B() &#123;</span><br><span class="line">	p(s);</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; x &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当用于互斥时，信号量的初始值设置为1。当信号量的初始值为1时，表示临界资源的格式为1个，当不同进程使用临界资源时，需要互斥的使用。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">int</span> x=<span class="number">10</span>;<span class="comment">//临界资源</span></span><br><span class="line">sem s=<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">A() &#123;</span><br><span class="line">	p(s);</span><br><span class="line">	x ++;</span><br><span class="line">	v(s);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">B() &#123;</span><br><span class="line">	p(s);</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; x &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	v(s);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">操作系统</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/操作系统//" class="article-tag-list-link color5">操作系统</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/09/12/%E4%BF%A1%E5%8F%B7%E9%87%8F%E5%8E%9F%E7%90%86/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-软件方法实现互斥" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2020/09/12/%E8%BD%AF%E4%BB%B6%E6%96%B9%E6%B3%95%E5%AE%9E%E7%8E%B0%E4%BA%92%E6%96%A5/">软件方法实现互斥</a>
     </h1>
   
 
-  
-  <a href="/2020/09/12/%E8%BD%AF%E4%BB%B6%E6%96%B9%E6%B3%95%E5%AE%9E%E7%8E%B0%E4%BA%92%E6%96%A5/" class="archive-article-date">
+        
+        <a href="/2020/09/12/%E8%BD%AF%E4%BB%B6%E6%96%B9%E6%B3%95%E5%AE%9E%E7%8E%B0%E4%BA%92%E6%96%A5/" class="archive-article-date">
   	<time datetime="2020-09-12T11:58:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-12</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><strong>一.单标志法</strong><br>轮流交替使用。<br>缺点:当有一个进程不再进入临界区，便不能修改公共变量的turn，来标识另外一个进程可以进入临界区。因此另外一个进程将永久不能进入临界区，违背“空则让进”的原则</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">A进程</span><br><span class="line"><span class="keyword">while</span> (turn != A);</span><br><span class="line">critical section 临界区</span><br><span class="line">turn = B</span><br><span class="line">remainder section 剩余区</span><br><span class="line"></span><br><span class="line">B进程</span><br><span class="line"><span class="keyword">while</span> (turn != B);</span><br><span class="line">critical section</span><br><span class="line">turn = A</span><br><span class="line">remainder section</span><br></pre></td></tr></table></figure>
+
+<p><strong>二.双标志先检查法</strong><br>为了解决在单标志法中出现的违背“空则让进”的原则的问题，增加一个变量用于检查对方的状态。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">bool</span> flag[<span class="number">2</span>] = &#123;<span class="literal">false</span>, <span class="literal">false</span>&#125;; </span><br><span class="line">flag[A]==<span class="literal">true</span> 表示A正在使用临界区</span><br><span class="line">flag[B]==<span class="literal">true</span> 表示B正在使用临界区</span><br><span class="line"></span><br><span class="line">A进程</span><br><span class="line"><span class="keyword">while</span> (flag[B]==<span class="literal">true</span>); 当B在临界区便一直循环检查 (<span class="number">1</span>) </span><br><span class="line">flag[A]=<span class="literal">true</span>; 表示A自己在临界区域中              (<span class="number">3</span>)</span><br><span class="line">critical section</span><br><span class="line">flag[A]=<span class="literal">false</span>; 表示A自己退出临界区</span><br><span class="line">remainder section</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">B进程</span><br><span class="line"><span class="keyword">while</span> (flag[A]==<span class="literal">true</span>); 当A在临界区便一直循环检查 (<span class="number">2</span>) </span><br><span class="line">flag[B]=<span class="literal">true</span>; 表示B自己在临界区域中              (<span class="number">4</span>)</span><br><span class="line">critical section</span><br><span class="line">flag[B]=<span class="literal">false</span>; 表示B自己退出临界区</span><br><span class="line">remainder section</span><br></pre></td></tr></table></figure>
+
+<p>优点：不需要交替进入临界区，可以连续使用<br>缺点：两个进程可能会同时进入临界区，初始状态，A与B进程均不在临界区内，所以flag[A]==flag[B]=false，此时按照CPU若按照，(1)(2)(3)(4)的顺序进行执行，A，B进程都能检查到对方不在临界区中，然后进入临界区，分别置自己的值为true，但此时临界区中有两个互斥的进程，违背“忙则等待”的原则。出现这种问题的原因是：检查对方的状态和置自己的状态这两步操作之间存在漏洞，不是原子的。</p>
+<p><strong>三.双标志后检查法</strong><br>为了解决在双标志先检查法中出现的违背“忙则等待”的原则的问题，双标志后检查法的做法是：首先更改自己的状态为进入临界区，然后再检查对方是否在临界区中。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">flag[<span class="number">2</span>] = &#123;<span class="literal">false</span>, <span class="literal">false</span>&#125;;</span><br><span class="line">A进程</span><br><span class="line">flag[A]=<span class="literal">true</span>;  (<span class="number">1</span>)</span><br><span class="line"><span class="keyword">while</span> (flag[B]==<span class="literal">true</span>); (<span class="number">3</span>)</span><br><span class="line">critical section</span><br><span class="line">flag[A]=<span class="literal">false</span>;</span><br><span class="line">remainder section;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">B进程</span><br><span class="line">flag[B]=<span class="literal">true</span>; (<span class="number">2</span>)</span><br><span class="line"><span class="keyword">while</span> (flag[A]==<span class="literal">true</span>); (<span class="number">4</span>) </span><br><span class="line">critical section</span><br><span class="line">flag[B]=<span class="literal">false</span>;</span><br><span class="line">remainder section;</span><br></pre></td></tr></table></figure>
+
+<p>优点：双标志后检查法解决了在双标志先检查法中出现的违背“忙则等待”原则的问题。<br>缺点：可能会造成饥饿现象，违背“有限等待”的原则。<br>原因：CPU可能是按照(1)(2)(3)(4)的顺序执行程序，此时A与B进程均将自己的状态修改为进入临界区，此时执行(3)(4)，A,B进程均检查到对方在临界区中，最终造成饥饿，违背“优先等待”的原则。</p>
+<p><strong>四.peterson算法</strong><br>为了解决双标志后检查出现的违背“有限等待”的原则，提出了peterson算法，该算法基于比较绅士友好的想法，A与B都声明自己对于临界区的占有权flag[A]=true，flag[B]=true，但是它们比较绅士，考虑到双方都要声明对临界区的占用权，最终会争吵的难分难舍，不分高低。所以双方都各自非常绅士的说到，虽然我对临界区有占有权，但是你要的话可以让你优先使用，不要客气，因此设置一个turn变量表示临界区让谁用。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">A进程</span><br><span class="line">flag[<span class="number">2</span>] = &#123;<span class="literal">false</span>, <span class="literal">false</span>&#125;;</span><br><span class="line"></span><br><span class="line">flag[A]=<span class="literal">true</span>;我有占有权 turn=B;你先用，不要客气</span><br><span class="line"><span class="keyword">while</span> (flag[B]==<span class="literal">true</span> &amp;&amp; turn==B);</span><br><span class="line">critical section</span><br><span class="line">flag[A]=<span class="literal">false</span>;</span><br><span class="line">remainder section</span><br><span class="line"></span><br><span class="line">B进程</span><br><span class="line">flag[<span class="number">2</span>] = &#123;<span class="literal">false</span>, <span class="literal">false</span>&#125;;</span><br><span class="line"></span><br><span class="line">flag[B]=<span class="literal">true</span>;我有占有权 turn=A;你先用，不要客气</span><br><span class="line"><span class="keyword">while</span> (flag[A]==<span class="literal">true</span> &amp;&amp; turn==A);</span><br><span class="line">critical section</span><br><span class="line">flag[B]=<span class="literal">false</span>;</span><br><span class="line">remainder section</span><br></pre></td></tr></table></figure>
+<p>优点：peterson算法完美的遵守了空则让进，有限等待，忙则等待的原则。但是，当A或B进程其一在临界区中，而此时处理机调度B或A时，while循环进行了忙轮询，浪费消耗处理机时间，违背“让权等待”的原则。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">c++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/操作系统//" class="article-tag-list-link color5">操作系统</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/09/12/%E8%BD%AF%E4%BB%B6%E6%96%B9%E6%B3%95%E5%AE%9E%E7%8E%B0%E4%BA%92%E6%96%A5/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-三重积分的球面坐标系的体积元素表示" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2020/09/05/%E4%B8%89%E9%87%8D%E7%A7%AF%E5%88%86%E7%9A%84%E7%90%83%E9%9D%A2%E5%9D%90%E6%A0%87%E7%B3%BB%E7%9A%84%E4%BD%93%E7%A7%AF%E5%85%83%E7%B4%A0%E8%A1%A8%E7%A4%BA/">三重积分的球面坐标系的体积元素表示</a>
     </h1>
   
 
-  
-  <a href="/2020/09/05/%E4%B8%89%E9%87%8D%E7%A7%AF%E5%88%86%E7%9A%84%E7%90%83%E9%9D%A2%E5%9D%90%E6%A0%87%E7%B3%BB%E7%9A%84%E4%BD%93%E7%A7%AF%E5%85%83%E7%B4%A0%E8%A1%A8%E7%A4%BA/" class="archive-article-date">
+        
+        <a href="/2020/09/05/%E4%B8%89%E9%87%8D%E7%A7%AF%E5%88%86%E7%9A%84%E7%90%83%E9%9D%A2%E5%9D%90%E6%A0%87%E7%B3%BB%E7%9A%84%E4%BD%93%E7%A7%AF%E5%85%83%E7%B4%A0%E8%A1%A8%E7%A4%BA/" class="archive-article-date">
   	<time datetime="2020-09-05T12:05:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-05</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><img src="https://img-blog.csdnimg.cn/20200905200443461.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/高等数学//" class="article-tag-list-link color5">高等数学</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/09/05/%E4%B8%89%E9%87%8D%E7%A7%AF%E5%88%86%E7%9A%84%E7%90%83%E9%9D%A2%E5%9D%90%E6%A0%87%E7%B3%BB%E7%9A%84%E4%BD%93%E7%A7%AF%E5%85%83%E7%B4%A0%E8%A1%A8%E7%A4%BA/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-Linux条件变量和互斥锁实现生产者消费者问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2020/08/28/Linux%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F%E5%92%8C%E4%BA%92%E6%96%A5%E9%94%81%E5%AE%9E%E7%8E%B0%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E9%97%AE%E9%A2%98/">Linux条件变量和互斥锁实现生产者消费者问题</a>
     </h1>
   
 
-  
-  <a href="/2020/08/28/Linux%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F%E5%92%8C%E4%BA%92%E6%96%A5%E9%94%81%E5%AE%9E%E7%8E%B0%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E9%97%AE%E9%A2%98/" class="archive-article-date">
+        
+        <a href="/2020/08/28/Linux%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F%E5%92%8C%E4%BA%92%E6%96%A5%E9%94%81%E5%AE%9E%E7%8E%B0%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E9%97%AE%E9%A2%98/" class="archive-article-date">
   	<time datetime="2020-08-28T09:30:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-08-28</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 conlas>生产者消费者问题作为多线程多进程同步互斥的经典问题，值得思考。本文使用Linux系统调用，通过互斥锁和条件变量模拟生产者消费者问题。</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;pthread.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Node</span> &#123;</span></span><br><span class="line">  <span class="keyword">int</span> _val;</span><br><span class="line">  Node *_next;</span><br><span class="line">  Node(<span class="keyword">int</span> val, Node *next):_val(val), _next(next) &#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">pthread_mutex_t</span> mtx;</span><br><span class="line"><span class="keyword">pthread_cond_t</span> cond;</span><br><span class="line"></span><br><span class="line">Node *head=<span class="literal">NULL</span>; <span class="comment">// 全局变量 为消费者和生产者的互斥共享资源</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span>* <span class="title">func1</span><span class="params">(<span class="keyword">void</span> *arg)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">    pthread_mutex_lock(&amp;mtx);  <span class="comment">// 涉及到访问临界区的访问都需要互斥锁保护</span></span><br><span class="line">    <span class="keyword">if</span> (!head) &#123;   <span class="comment">// head==NULL  缓冲区无内容可读</span></span><br><span class="line">      <span class="comment">// 阻塞当前线程 并对mutex进行解锁操作</span></span><br><span class="line">      pthread_cond_wait(&amp;cond, &amp;mtx);</span><br><span class="line">      <span class="comment">// 生产者通知消费者消费后 接触阻塞 并对mutex进行加锁操作</span></span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// 删除头节点</span></span><br><span class="line">      Node *p = head;</span><br><span class="line">      head = p-&gt;_next;</span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">&quot;consumer: %lu thread, consume %d\n&quot;</span>, pthread_self(), p-&gt;_val);</span><br><span class="line">      <span class="keyword">delete</span> p;</span><br><span class="line">      p = <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    pthread_mutex_unlock(&amp;mtx);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span>* <span class="title">func2</span><span class="params">(<span class="keyword">void</span> *arg)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">    pthread_mutex_lock(&amp;mtx);</span><br><span class="line">    Node* p = <span class="keyword">new</span> Node(rand()%<span class="number">100</span>, head);</span><br><span class="line">    head = p;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;producer: %lu thread, produce %d\n&quot;</span>, pthread_self(), p-&gt;_val);</span><br><span class="line">    pthread_mutex_unlock(&amp;mtx);</span><br><span class="line">    pthread_cond_signal(&amp;cond);<span class="comment">// 通知消费者线程缓冲区现在又内容可以读</span></span><br><span class="line"></span><br><span class="line">    sleep(rand() % <span class="number">3</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  srand(time(<span class="literal">NULL</span>));</span><br><span class="line">  pthread_mutex_init(&amp;mtx, <span class="literal">NULL</span>);</span><br><span class="line">  pthread_cond_init(&amp;cond, <span class="literal">NULL</span>);</span><br><span class="line">  <span class="keyword">pthread_t</span> consumer, producer;</span><br><span class="line">  pthread_create(&amp;consumer, <span class="literal">NULL</span>, func1, <span class="literal">NULL</span>);</span><br><span class="line">  pthread_create(&amp;producer, <span class="literal">NULL</span>, func2, <span class="literal">NULL</span>);</span><br><span class="line"></span><br><span class="line">  pthread_join(consumer, <span class="literal">NULL</span>);</span><br><span class="line">  pthread_join(producer, <span class="literal">NULL</span>);</span><br><span class="line">  pthread_cond_destroy(&amp;cond);</span><br><span class="line">  pthread_mutex_destroy(&amp;mtx);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">c++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/操作系统//" class="article-tag-list-link color5">操作系统</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/08/28/Linux%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F%E5%92%8C%E4%BA%92%E6%96%A5%E9%94%81%E5%AE%9E%E7%8E%B0%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E9%97%AE%E9%A2%98/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-极大连通子图、极小连通子图、极大强连通子图和极小强连通子图" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2020/08/26/%E6%9E%81%E5%A4%A7%E8%BF%9E%E9%80%9A%E5%AD%90%E5%9B%BE%E3%80%81%E6%9E%81%E5%B0%8F%E8%BF%9E%E9%80%9A%E5%AD%90%E5%9B%BE%E3%80%81%E6%9E%81%E5%A4%A7%E5%BC%BA%E8%BF%9E%E9%80%9A%E5%AD%90%E5%9B%BE%E5%92%8C%E6%9E%81%E5%B0%8F%E5%BC%BA%E8%BF%9E%E9%80%9A%E5%AD%90%E5%9B%BE/">极大连通子图、极小连通子图、极大强连通子图和极小强连通子图</a>
     </h1>
   
 
-  
-  <a href="/2020/08/26/%E6%9E%81%E5%A4%A7%E8%BF%9E%E9%80%9A%E5%AD%90%E5%9B%BE%E3%80%81%E6%9E%81%E5%B0%8F%E8%BF%9E%E9%80%9A%E5%AD%90%E5%9B%BE%E3%80%81%E6%9E%81%E5%A4%A7%E5%BC%BA%E8%BF%9E%E9%80%9A%E5%AD%90%E5%9B%BE%E5%92%8C%E6%9E%81%E5%B0%8F%E5%BC%BA%E8%BF%9E%E9%80%9A%E5%AD%90%E5%9B%BE/" class="archive-article-date">
+        
+        <a href="/2020/08/26/%E6%9E%81%E5%A4%A7%E8%BF%9E%E9%80%9A%E5%AD%90%E5%9B%BE%E3%80%81%E6%9E%81%E5%B0%8F%E8%BF%9E%E9%80%9A%E5%AD%90%E5%9B%BE%E3%80%81%E6%9E%81%E5%A4%A7%E5%BC%BA%E8%BF%9E%E9%80%9A%E5%AD%90%E5%9B%BE%E5%92%8C%E6%9E%81%E5%B0%8F%E5%BC%BA%E8%BF%9E%E9%80%9A%E5%AD%90%E5%9B%BE/" class="archive-article-date">
   	<time datetime="2020-08-26T01:55:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-08-26</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face=consolas color=blue>一、极大连通子图</font></p>
+<p><font size=5 face=consolas>（1）极大连通子图是连通图的一个连通分量，连通分量本身是一个连通图。<br>（2）连通图的极大连通子图只有一个就是其本身，是唯一的。<br>（3）非连通的极大连通子图有多个，每一个都是一个连通图。<br>为什么称为极大？如果将连通分量外的任意一个顶点添加进连通分量都会造成不连通。</font></p>
+<p><font size=5 face=consolas color=blue>二、极小连通子图</font><br><font size=5 face=consolas>（1）一个连通图的生成树是该连通图的极小连通子图。同一个连通图可以有不同的生成树，所以生成树不是唯一的。<br>（2）极小连通子图=生成树，则有n个顶点，必然有n-1条边。<br>（3）为什么称为最小？如果去极小连通子图的一条边就无法构成树，不满足树的定义。意味着在极小连通子图中每一条边都是必不可少的。如果给极小连通子图增加一条边，n个节点，n条边，则必然会构成环。意味只有能够连通图中所有顶点而又不会构成回路的任意的子图都是他的生成树。</font><br><font size=5 face=consolas></font><br><font size=5 face=consolas></font><br><font size=5 face=consolas color=blue></font><br><font size=5 face=consolas></font><br><font size=5 face=consolas></font><br><font size=5 face=consolas></font><br><font size=5 face=consolas></font></p>
+<p><font size=5 face=consolas color=blue></font><br><font size=5 face=consolas></font><br><font size=5 face=consolas></font><br><font size=5 face=consolas></font><br><font size=5 face=consolas></font></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/数据结构//" class="article-tag-list-link color5">数据结构</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/08/26/%E6%9E%81%E5%A4%A7%E8%BF%9E%E9%80%9A%E5%AD%90%E5%9B%BE%E3%80%81%E6%9E%81%E5%B0%8F%E8%BF%9E%E9%80%9A%E5%AD%90%E5%9B%BE%E3%80%81%E6%9E%81%E5%A4%A7%E5%BC%BA%E8%BF%9E%E9%80%9A%E5%AD%90%E5%9B%BE%E5%92%8C%E6%9E%81%E5%B0%8F%E5%BC%BA%E8%BF%9E%E9%80%9A%E5%AD%90%E5%9B%BE/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-protobuf的使用(三)" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2020/05/30/protobuf%E7%9A%84%E4%BD%BF%E7%94%A8(%E4%B8%89)/">protobuf的使用(三)</a>
     </h1>
   
 
-  
-  <a href="/2020/05/30/protobuf%E7%9A%84%E4%BD%BF%E7%94%A8(%E4%B8%89)/" class="archive-article-date">
+        
+        <a href="/2020/05/30/protobuf%E7%9A%84%E4%BD%BF%E7%94%A8(%E4%B8%89)/" class="archive-article-date">
   	<time datetime="2020-05-30T03:25:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-30</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    
-    
-</header>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=6 face=consolas color=black><strong>rpc方法的序列化和反序列化 rpc标签</strong></font></p>
+<p><font size=5 face=consolas>在protobuf中定义描述rpc方法的类型 - service</font></p>
+<p><font size=6 face=consolas color=black><strong>在proto文件中增加rpc服务的选项</strong></font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 表示生成service服务类和rpc方法描述，默认是不生成的</span><br><span class="line">option cc_generic_services &#x3D; true;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">message LoginRequest&#123;&#125;</span><br><span class="line">message LoginResponse&#123;&#125;</span><br><span class="line">message ExitRequest&#123;&#125;</span><br><span class="line">message ExitResponse&#123;&#125;</span><br><span class="line"></span><br><span class="line">service UserServiceRpc &#123;</span><br><span class="line">	rpc Login(LoginRequest) returns(LoginResponse);</span><br><span class="line">	rpc Exit(ExitRequest) returns(ExitResponse);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><font size=5 face=consolas>** **</font><br><font size=5 face=consolas></font></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/c-c//" class="article-tag-list-link color1">c/c++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/05/30/protobuf%E7%9A%84%E4%BD%BF%E7%94%A8(%E4%B8%89)/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
   
     <nav id="page-nav">

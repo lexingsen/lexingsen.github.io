@@ -156,29 +156,195 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-单链表归并排序" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       单链表归并排序
     </h1>
   
 
-  
-  <a href="/2019/10/30/%E5%8D%95%E9%93%BE%E8%A1%A8%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/" class="archive-article-date">
+        
+        <a href="/2019/10/30/%E5%8D%95%E9%93%BE%E8%A1%A8%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/" class="archive-article-date">
   	<time datetime="2019-10-30T09:03:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-30</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=6 face=consolas>单链表归并排序需要掌握的知识点。<br><font size=5 face=consolas color=blue>1.归并排序的思想<br>2.如何合并两个有序的单链表<br>3.如何找到一个链表的中间节点，这里是为了断链。将链表一分为二。</p>
+<p><font size=5 face=consolas color=red>（1）合并两个有序的链表，主要有两种思路。递归和迭代<br><font size=5 face=consolas color=blue>递归方法的代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">struct node &#123;</span><br><span class="line">	int val;</span><br><span class="line">	node *next;</span><br><span class="line">&#125;;</span><br><span class="line">&#x2F;&#x2F;注意此时链表a和链表b均为递增有序的单链表</span><br><span class="line">node *merge(node *a, node *b) &#123;</span><br><span class="line">	if (!a) return b;</span><br><span class="line">	if (!b) return a;</span><br><span class="line">	if (a-&gt;val &lt;&#x3D; b-&gt;val) &#123;</span><br><span class="line">		a-&gt;next &#x3D; merge(a-&gt;next, b);</span><br><span class="line">		return a;</span><br><span class="line">	&#125; else &#123;</span><br><span class="line">		b-&gt;next &#x3D; merge(b-&gt;next, a);</span><br><span class="line">		return b;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=5 face=consolas color=blue>迭代方法的代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">node *merge(node *a, node *b) &#123;</span><br><span class="line">	node *dummy &#x3D; new node(0);&#x2F;&#x2F;建立虚拟节点</span><br><span class="line">	node *p &#x3D; dummy;</span><br><span class="line">	while (a &amp;&amp; b) &#123;</span><br><span class="line">		if (a-&gt;val &lt;&#x3D; b-&gt;val) &#123;</span><br><span class="line">			p-&gt;next &#x3D; a;</span><br><span class="line">			a &#x3D; a-&gt;next;</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			p-&gt;next &#x3D; b;</span><br><span class="line">			b &#x3D; b-&gt;next;</span><br><span class="line">		&#125;</span><br><span class="line">		p &#x3D; p-&gt;next;</span><br><span class="line">	&#125;</span><br><span class="line">	&#x2F;&#x2F;退出while循环  可能是a&#x3D;&#x3D;NULL 或者 b&#x3D;&#x3D;NULL 或者  a&#x3D;&#x3D;NULL &amp;&amp; b&#x3D;&#x3D;NULL</span><br><span class="line">	&#x2F;&#x2F;但是我们需要把不空的那条链继续连上</span><br><span class="line">	p-&gt;next &#x3D; (a!&#x3D;NULL)?a:b;</span><br><span class="line">	return dummy-&gt;next;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=5 face=consolas color=red>（2) 链表的归并排序，其实也是递归的处理两个子链，最后合并两个有序的链表。这里主要的难点是如何找到链表的中点进行断链。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">node *_mergeSort(node *head) &#123;</span><br><span class="line">	if (!head-&gt;next) return head; &#x2F;&#x2F;如果链表中只有一个节点， 即为递归出口，直接返回</span><br><span class="line">	&#x2F;*</span><br><span class="line">	使用快慢指针，（1）慢指针规规矩矩每次只走一步</span><br><span class="line">				 （2）快指针每次走两步</span><br><span class="line">	*&#x2F;</span><br><span class="line">	node *slow &#x3D; head;&#x2F;&#x2F;最终指向第二条链的第一个节点</span><br><span class="line">	node *fast  &#x3D; head;</span><br><span class="line">	node *pre   &#x3D; NULL;&#x2F;&#x2F;最终指向第一条链的最后一个节点	</span><br><span class="line">	while (fast &amp;&amp; fast-&gt;next) &#123;</span><br><span class="line">		pre &#x3D; p;</span><br><span class="line">		slow &#x3D; slow-&gt;next;</span><br><span class="line">		fast &#x3D; fast-&gt;next-&gt;next;</span><br><span class="line">	&#125;</span><br><span class="line">	pre-&gt;next &#x3D; NULL;&#x2F;&#x2F;这一步很关键  就是在断链</span><br><span class="line">	node *left  &#x3D; mergeSort(head);&#x2F;&#x2F;递归的排序以head为头指针的第一条链</span><br><span class="line">	node *right &#x3D; mergeSort(slow);</span><br><span class="line">	return merge(left, right);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">node *mergeSort(node *head) &#123;</span><br><span class="line">	if (!head) return NULL;</span><br><span class="line">	else return _mergeSort(head); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/数据结构//" class="article-tag-list-link color5">数据结构</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2019/10/30/%E5%8D%95%E9%93%BE%E8%A1%A8%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2019/10/30/%E5%8D%95%E9%93%BE%E8%A1%A8%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          单链表插入排序
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/10/30/%E4%BD%BF%E7%94%A8C++%E4%BC%98%E5%85%88%E7%BA%A7%E9%98%9F%E5%88%97%E6%B1%82%E8%A7%A3Huffman%E6%A0%91%E5%B8%A6%E6%9D%83%E8%B7%AF%E5%BE%84%E9%95%BF%E5%BA%A6/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">使用C++优先级队列求解Huffman树带权路径长度</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>

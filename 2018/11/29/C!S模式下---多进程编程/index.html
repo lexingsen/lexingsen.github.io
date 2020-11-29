@@ -160,29 +160,197 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-C!S模式下---多进程编程" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       C/S模式下---多进程编程
     </h1>
   
 
-  
-  <a href="/2018/11/29/C!S%E6%A8%A1%E5%BC%8F%E4%B8%8B---%E5%A4%9A%E8%BF%9B%E7%A8%8B%E7%BC%96%E7%A8%8B/" class="archive-article-date">
+        
+        <a href="/2018/11/29/C!S%E6%A8%A1%E5%BC%8F%E4%B8%8B---%E5%A4%9A%E8%BF%9B%E7%A8%8B%E7%BC%96%E7%A8%8B/" class="archive-article-date">
   	<time datetime="2018-11-29T06:25:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-29</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face="Courier New">在单进程下进行socket的编程，服务器通过accept()获取到客户端的文件描述符，并且与该客户端进行交互。但是实际有两方面的因素都促使服务器应该能够同时与多个客户端进行交互。</p>
+<p><font size=4 face="Courier New" color=blue>1.listen()函数将已经完成三次握手和即将完成三次握手的客户端文件描述符存放到队列中。<br>2.在实际客户端与服务器进行交互时，服务器必须能够同时与多个客户端进行交互。</font></p>
+<p><font size=5 face="Courier New">多进程编程的优势：</font><br><font size=4 face="Courier New" color=red>1.能够处理同时处理多个客户端的连接，并且能够与客户端进行交互。<br>2.子进程可以共享fork()之间父进程打开的文件描述符，而不需要在进程之间传递文件描述符，简化了编程。<br>3.服务器处理的每个客户连接都是相互独立的，因为进程之间是相互独立的。。<br>4.任务分派明确，父进程只需处理客户端的连接，子进程只需要与客户端进程交互即可。</p>
+<p><font size=4 face="Courier New">多进程服务器端代码：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;sys&#x2F;scoket.h&gt;</span><br><span class="line">#include &lt;arpa&#x2F;inet&gt;  </span><br><span class="line">#include &lt;netinet&#x2F;in.h&gt;</span><br><span class="line">#include &lt;assert.h&gt;</span><br><span class="line">#Include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;unistd.h&gt;</span><br><span class="line">#include &lt;fcntl.h&gt;</span><br><span class="line">#include &lt;signal.h&gt;</span><br><span class="line">#include &lt;string.h&gt;</span><br><span class="line">#include &lt;stdlib.h&gt;</span><br><span class="line"></span><br><span class="line">void zmobie()&#123;</span><br><span class="line">	wait(NULL);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void communicateWithCli(int c)&#123;</span><br><span class="line">	char buff[128] &#x3D; &#123;0&#125;;</span><br><span class="line">	while(1)&#123;</span><br><span class="line">		int n &#x3D; recv(c,buff,127,0);</span><br><span class="line">		if(n&lt;&#x3D;0)&#123;</span><br><span class="line">			printf(&quot;one client quit!&quot;);</span><br><span class="line">			break;</span><br><span class="line">		&#125;</span><br><span class="line">		printf(&quot;%d : %s&quot;,c,buff);</span><br><span class="line">		send(c,&quot;OK&quot;,2,0);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">	signal(SIGCHLD,zmobie);</span><br><span class="line">	int fd &#x3D; socket(AF_INET,SOCK_STREAM,0);</span><br><span class="line">	assert(fd!&#x3D;-1);</span><br><span class="line">	</span><br><span class="line">	struct sockaddr_in cli,ser;</span><br><span class="line">	ser.sin_family &#x3D; AF_INET;</span><br><span class="line">	ser.sin_port &#x3D; htons(5000);</span><br><span class="line">	ser.sin_addr.s_addr &#x3D; inet_addr(&quot;127.0.0.1&quot;);</span><br><span class="line"></span><br><span class="line">	int res &#x3D; bind(fd,(struct sockaddr*)&amp;ser,sizeof(ser));</span><br><span class="line">	assert(res!&#x3D;-1);	</span><br><span class="line"></span><br><span class="line">	res &#x3D; listen(fd,5);</span><br><span class="line">	assert(res!&#x3D;-1);</span><br><span class="line"></span><br><span class="line">	while(1)&#123;</span><br><span class="line">		socklen_t len &#x3D; sizeof(cli);</span><br><span class="line">		int c &#x3D; accept(fd,(struct sockaddr*)&amp;cli,&amp;len);</span><br><span class="line">		if(c&#x3D;&#x3D;-1)&#123;</span><br><span class="line">			printf(&quot;link error!&quot;);</span><br><span class="line">			continue;&#x2F;&#x2F;继续进行连接</span><br><span class="line">		&#125;</span><br><span class="line">		pid_t pid &#x3D; fork();</span><br><span class="line">		assert(pid!&#x3D;-1);</span><br><span class="line">		&#x2F;&#x2F;子进程</span><br><span class="line">		if(pid&#x3D;&#x3D;0)&#123;</span><br><span class="line">			communicateWithCli(c);</span><br><span class="line">			exit(0);&#x2F;&#x2F;向父亲发出信号，避免成为僵死进程,因为父进程是一直启动的</span><br><span class="line">		&#125;</span><br><span class="line">		&#x2F;&#x2F;父进程</span><br><span class="line">		else&#123;</span><br><span class="line">			close(c);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	close(fd);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=4 face="Courier New">执行结果：</font><br><img src="https://img-blog.csdnimg.cn/20181129140209958.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20181129140427495.png" alt="在这里插入图片描述"><br><font size=5 face="Courier New">从执行结果可以看出，有四个客户端可以同时和服务器进行交互，通过多进程的方式就解决了在最前提出的问题。</font></p>
+<p><font size=5 face="Courier New" color=blue>值得探究的是为什么每次服务器端输出的客户端的文件描述符都是4?</font></p>
+<p><font size=5 face="Courier New" color=blue><img src="https://img-blog.csdnimg.cn/20181129141717767.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><font size=5 face="Courier New" color=red>为什么在父进程中需要关闭客户端的文件描述符？</font><br><font size=4  face="Courier New">文件描述符作为进程的资源是有限的，处于C/S的模式下，主进程只需要负责与客户端连接，而不需要去做具体的逻辑处理。连接之后就不需要该客户端的文件描述符了，具体与客户端进行交互的进程中已经拿到对应的文件描述符了。因此，在父进程中关闭客户端的文件描述符可以减少不必要的资源浪费。</p>
+<p><font size=5 face="Courier New" color=red>基于C/S模式，采用多进程编程的缺点</font><br><font size=4  face="Courier New">1.在系统可以打开的进程是有限个数的，为每一个客户端分配一个进程<font color=red>开销太大</font>,如果客户端占着不用，或者只有少量数据的传输，开进程是划不来的。<br>2.一个客户端独占一个进程，资源浪费。<br>3.当客户端退出时，子进程结束。<br>4.如果由大量的客户端同时连接服务器，服务器可能会崩溃。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/linux//" class="article-tag-list-link color1">linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2018/11/29/C!S%E6%A8%A1%E5%BC%8F%E4%B8%8B---%E5%A4%9A%E8%BF%9B%E7%A8%8B%E7%BC%96%E7%A8%8B/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2018/11/29/C!S%E6%A8%A1%E5%BC%8F%E4%B8%8B---%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%BC%96%E7%A8%8B/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          C/S模式下---多线程编程
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/11/25/Linux-%E8%A7%A3%E5%86%B3%E7%99%BB%E9%99%86mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E5%87%BA%E7%8E%B0%20%E2%80%9CAccess%20denied%20for%20user%20'root'@'localhost'%20(using%20password!%20YES)%E2%80%9D%E7%9A%84%E9%97%AE%E9%A2%98/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Linux-解决登陆mysql数据库出现 “Access denied for user &#39;root&#39;@&#39;localhost&#39; (using password: YES)”的问题</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>

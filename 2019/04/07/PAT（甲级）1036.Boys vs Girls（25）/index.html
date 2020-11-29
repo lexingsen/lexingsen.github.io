@@ -156,29 +156,202 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-PAT（甲级）1036.Boys vs Girls（25）" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       PAT（甲级）1036.Boys vs Girls（25）
     </h1>
   
 
-  
-  <a href="/2019/04/07/PAT%EF%BC%88%E7%94%B2%E7%BA%A7%EF%BC%891036.Boys%20vs%20Girls%EF%BC%8825%EF%BC%89/" class="archive-article-date">
+        
+        <a href="/2019/04/07/PAT%EF%BC%88%E7%94%B2%E7%BA%A7%EF%BC%891036.Boys%20vs%20Girls%EF%BC%8825%EF%BC%89/" class="archive-article-date">
   	<time datetime="2019-04-07T06:45:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-07</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face="Consolas">PAT 1036.Boys vs Girls（25）</font><br><font size=4 face="Consolas">This time you are asked to tell the difference between the lowest grade of all the male students and the highest grade of all the female students.</p>
+<p><font size=5 face="Consolas" color=red>输入格式：</font><br><font size=4 face="Consolas">Each input file contains one test case. Each case contains a positive integer N, followed by N lines of student information. Each line contains a student’s <code>name</code>, <code>gender</code>, <code>ID</code> and <code>grade</code>, separated by a space, where <code>name</code> and <code>ID</code> are strings of no more than 10 characters with no space, <code>gende</code>r is either <code>F (female)</code> or <code>M (male)</code>, and <code>grade</code> is an integer between 0 and 100. It is guaranteed that all the grades are distinct.</p>
+<p><font size=5 face="Consolas" color=red>输出格式：</font><br><font size=4 face="Consolas">For each test case, output in 3 lines. The first line gives the name and ID of the female student with the highest grade, and the second line gives that of the male student with the lowest grade. The third line gives the difference <code>grade​F−gradeM</code> . If one such kind of student is missing, output Absent in the corresponding line, and output NA in the third line instead.</p>
+<p><font size=5 face="Consolas" color=red>输入样例1：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">3</span><br><span class="line">Joe M Math990112 89</span><br><span class="line">Mike M CS991301 100</span><br><span class="line">Mary F EE990830 95</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Consolas" color=red>输出样例1：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Mary EE990830</span><br><span class="line">Joe Math990112</span><br><span class="line">6</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Consolas" color=red>输入样例2：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1</span><br><span class="line">Jean M AA980920 60</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Consolas" color=red>输出样例1：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Absent</span><br><span class="line">Jean AA980920</span><br><span class="line">NA</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Consolas" color=blue>题目分析：vector+排序，水题！。</font></p>
+<p><font size=5 face="Consolas" color=black>AC代码：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;bits&#x2F;stdc++.h&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">struct stu&#123;</span><br><span class="line">    string name;</span><br><span class="line">    string id;</span><br><span class="line">    int score;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">vector&lt;stu&gt; female;</span><br><span class="line">vector&lt;stu&gt; male;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">bool cmpfemale(stu a, stu b)&#123;return a.score &gt; b.score;&#125;</span><br><span class="line">bool cmpmale(stu a, stu b)&#123;return a.score &lt; b.score;&#125;</span><br><span class="line">void print(stu a)&#123;</span><br><span class="line">    cout&lt;&lt;a.name&lt;&lt;&quot; &quot;&lt;&lt;a.id&lt;&lt;&quot; &quot;&lt;&lt;a.score&lt;&lt;endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    int n;</span><br><span class="line">    scanf(&quot;%d&quot;, &amp;n);</span><br><span class="line">    string name,gender,id;</span><br><span class="line">    int score;</span><br><span class="line">    for(int i&#x3D;0; i&lt;n; ++i)&#123;</span><br><span class="line">        cin&gt;&gt;name&gt;&gt;gender&gt;&gt;id;</span><br><span class="line">        scanf(&quot;%d&quot;, &amp;score);</span><br><span class="line">        stu s;</span><br><span class="line">        s.name &#x3D; name;</span><br><span class="line">        s.id &#x3D; id;</span><br><span class="line">        s.score &#x3D; score;</span><br><span class="line">        if(gender[0]&#x3D;&#x3D;&#39;M&#39;)&#123;</span><br><span class="line">            male.push_back(s);</span><br><span class="line">        &#125;</span><br><span class="line">        else&#123;</span><br><span class="line">            female.push_back(s);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    sort(male.begin(), male.end(), cmpmale);</span><br><span class="line">    sort(female.begin(), female.end(), cmpfemale);</span><br><span class="line">    int maxScore, minScore;</span><br><span class="line">    bool flag &#x3D; false;</span><br><span class="line">    if(female.size()!&#x3D;0)&#123;</span><br><span class="line">        cout&lt;&lt;female[0].name&lt;&lt;&quot; &quot;&lt;&lt;female[0].id&lt;&lt;endl;</span><br><span class="line">        maxScore &#x3D; female[0].score;</span><br><span class="line">    &#125;</span><br><span class="line">    else&#123;</span><br><span class="line">        flag &#x3D; true;</span><br><span class="line">        cout&lt;&lt;&quot;Absent&quot;&lt;&lt;endl;</span><br><span class="line">    &#125;</span><br><span class="line">    if(male.size()!&#x3D;0)&#123;</span><br><span class="line">        cout&lt;&lt;male[0].name&lt;&lt;&quot; &quot;&lt;&lt;male[0].id&lt;&lt;endl;</span><br><span class="line">        minScore &#x3D; male[0].score;</span><br><span class="line">    &#125;</span><br><span class="line">    else&#123;</span><br><span class="line">        flag &#x3D; true;</span><br><span class="line">        cout&lt;&lt;&quot;Absent&quot;&lt;&lt;endl;</span><br><span class="line">    &#125;</span><br><span class="line">    if(flag)</span><br><span class="line">        cout&lt;&lt;&quot;NA&quot;&lt;&lt;endl;</span><br><span class="line">    else</span><br><span class="line">        cout&lt;&lt;maxScore-minScore&lt;&lt;endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/PAT甲级题解//" class="article-tag-list-link color3">PAT甲级题解</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2019/04/07/PAT%EF%BC%88%E7%94%B2%E7%BA%A7%EF%BC%891036.Boys%20vs%20Girls%EF%BC%8825%EF%BC%89/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2019/04/07/PAT%EF%BC%88%E7%94%B2%E7%BA%A7%EF%BC%891137.Fianl%20Grading%EF%BC%8825%EF%BC%89/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          PAT（甲级）1137.Fianl Grading（25）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/04/07/PAT%EF%BC%88%E7%94%B2%E7%BA%A7%EF%BC%891143.%20Lowest%20Common%20Ancestor%EF%BC%8830%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">PAT（甲级）1143. Lowest Common Ancestor（30）</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>

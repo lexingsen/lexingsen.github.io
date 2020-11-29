@@ -154,205 +154,844 @@
           <div id="js-content" class="content-ll">
             
   
-    <header class="article-header">
-  
+    <article id="post-PAT（甲级）1006.Sign In and Sign Out（25）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2019/04/06/PAT%EF%BC%88%E7%94%B2%E7%BA%A7%EF%BC%891006.Sign%20In%20and%20Sign%20Out%EF%BC%8825%EF%BC%89/">PAT（甲级）1006.Sign In and Sign Out（25）</a>
     </h1>
   
 
-  
-  <a href="/2019/04/06/PAT%EF%BC%88%E7%94%B2%E7%BA%A7%EF%BC%891006.Sign%20In%20and%20Sign%20Out%EF%BC%8825%EF%BC%89/" class="archive-article-date">
+        
+        <a href="/2019/04/06/PAT%EF%BC%88%E7%94%B2%E7%BA%A7%EF%BC%891006.Sign%20In%20and%20Sign%20Out%EF%BC%8825%EF%BC%89/" class="archive-article-date">
   	<time datetime="2019-04-06T05:25:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-06</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face="Consolas">PAT 1141.PAT Ranking of Institutions （25 分)</font></p>
+<p><font size=4 face="Consolas">At the beginning of every day, the first person who signs in the computer room will unlock the door, and the last one who signs out will lock the door. Given the records of signing in’s and out’s, you are supposed to find the ones who have unlocked and locked the door on that day.<br><font size=4 face="Consolas"><br><font size=5 face="Consolas" color=red>输入格式：</font><br><font size=4 face="Consolas">Each input file contains one test case. Each case contains the records for one day. The case starts with a positive integer M, which is the total number of records, followed by M lines, each in the format:<br><code>ID_number Sign_in_time Sign_out_time</code><br>where times are given in the format <code>HH:MM:SS</code>, and <code>ID_number</code> is a string with no more than 15 characters.</p>
+<p><font size=5 face="Consolas" color=red>输出格式：</font><br><font size=4 face="Consolas">For each test case, output in one line the ID numbers of the persons who have unlocked and locked the door on that day. The two ID numbers must be separated by one space.<br><font color=red>Note</font>: It is guaranteed that the records are consistent. That is, the sign in time must be earlier than the sign out time for each person, and there are no two persons sign in or out at the same moment.</p>
+<p><font size=5 face="Consolas" color=red>输入样例：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">3</span><br><span class="line">CS301111 15:30:28 17:00:10</span><br><span class="line">SC3021234 08:00:00 11:25:25</span><br><span class="line">CS301133 21:45:00 21:58:40</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Consolas" color=red>输出样例：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SC3021234 CS301133</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Consolas" color=blue>题目分析：sort的使用，求解最早签到时间和最晚签到离开时间。主要的难度在于签到和签到离开时间的处理，当成字符串处理会比较直接简单。</p>
+<p><font size=5 face="Consolas" font color=red>注意：由于题目可以转化为输出最早签到的人名和最晚签到离开的人，此题也也可以直接在输入时间比较。在一天中按照hh:mm:ss的形式，最早为00：00：00，最晚为23:59:59</font></p>
+<p><font size=5 face="Consolas" color=black>AC代码1：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;unordered_map&gt;</span><br><span class="line">#include &lt;string&gt;</span><br><span class="line">#include &lt;vector&gt;</span><br><span class="line">#include &lt;algorithm&gt;</span><br><span class="line">#include &lt;map&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">struct people&#123;</span><br><span class="line">    string id, sign_in, sign_out;</span><br><span class="line">    people(string id, string sign_in, string sign_out)&#123;</span><br><span class="line">        this-&gt;id &#x3D; id;</span><br><span class="line">        this-&gt;sign_in &#x3D; sign_in;</span><br><span class="line">        this-&gt;sign_out &#x3D; sign_out;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">vector&lt;people&gt; v;</span><br><span class="line"></span><br><span class="line">bool cmpin(people a, people b) &#123;return a.sign_in &lt; b.sign_in;&#125;</span><br><span class="line">bool cmpout(people a, people b)&#123;return a.sign_out &gt; b.sign_out;&#125;</span><br><span class="line">void print(people a)&#123;</span><br><span class="line">    cout&lt;&lt;a.id&lt;&lt;&quot; &quot;&lt;&lt;a.sign_in&lt;&lt;&quot; &quot;&lt;&lt;a.sign_out&lt;&lt;endl;</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    &#x2F;&#x2F;freopen(&quot;in.txt&quot;, &quot;r&quot;, stdin);</span><br><span class="line">    int n;</span><br><span class="line">    scanf(&quot;%d&quot;, &amp;n);</span><br><span class="line">    string id,sign_in,sign_out;</span><br><span class="line">    for(int i&#x3D;0; i&lt;n; ++i)&#123;</span><br><span class="line">        cin&gt;&gt;id&gt;&gt;sign_in&gt;&gt;sign_out;</span><br><span class="line">        v.push_back(people(id, sign_in, sign_out));</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F;for_each(v.begin(), v.end(), print);</span><br><span class="line">    sort(v.begin(), v.end(), cmpin);</span><br><span class="line">    cout&lt;&lt;v[0].id&lt;&lt;&quot; &quot;;</span><br><span class="line">    sort(v.begin(), v.end(), cmpout);</span><br><span class="line">    cout&lt;&lt;v[0].id&lt;&lt;endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Consolas" color=black>AC代码2：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;string&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    string earliest &#x3D; &quot;23:59:59&quot;;</span><br><span class="line">    string latest  &#x3D; &quot;00:00:00&quot;;</span><br><span class="line">    string earliestName, latestName;</span><br><span class="line">    int n;</span><br><span class="line">    scanf(&quot;%d&quot;, &amp;n);</span><br><span class="line">    string id, early, finally;</span><br><span class="line">    for(int i&#x3D;0; i&lt;n; ++i)&#123;</span><br><span class="line">        cin&gt;&gt;id&gt;&gt;early&gt;&gt;finally;</span><br><span class="line">        if(early &lt;&#x3D; earliest)&#123;</span><br><span class="line">            earliest &#x3D; early;</span><br><span class="line">            earliestName &#x3D; id;</span><br><span class="line">        &#125;</span><br><span class="line">        if(finally &gt;&#x3D; latest)&#123;</span><br><span class="line">            latest &#x3D; finally;</span><br><span class="line">            latestName &#x3D; id;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cout&lt;&lt;earliestName&lt;&lt;&quot; &quot;&lt;&lt;latestName&lt;&lt;endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/PAT甲级题解//" class="article-tag-list-link color3">PAT甲级题解</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/04/06/PAT%EF%BC%88%E7%94%B2%E7%BA%A7%EF%BC%891006.Sign%20In%20and%20Sign%20Out%EF%BC%8825%EF%BC%89/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-PAT（甲级）1141.PAT Ranking of Institutions （25 分)" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2019/04/06/PAT%EF%BC%88%E7%94%B2%E7%BA%A7%EF%BC%891141.PAT%20Ranking%20of%20Institutions%20%EF%BC%8825%20%E5%88%86)/">PAT（甲级）1141.PAT Ranking of Institutions （25 分)</a>
     </h1>
   
 
-  
-  <a href="/2019/04/06/PAT%EF%BC%88%E7%94%B2%E7%BA%A7%EF%BC%891141.PAT%20Ranking%20of%20Institutions%20%EF%BC%8825%20%E5%88%86)/" class="archive-article-date">
+        
+        <a href="/2019/04/06/PAT%EF%BC%88%E7%94%B2%E7%BA%A7%EF%BC%891141.PAT%20Ranking%20of%20Institutions%20%EF%BC%8825%20%E5%88%86)/" class="archive-article-date">
   	<time datetime="2019-04-05T17:09:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-06</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face="Consolas">PAT 1141.PAT Ranking of Institutions （25 分)</font></p>
+<p><font size=4 face="Consolas">After each PAT, the PAT Center will announce the ranking of institutions based on their students’ performances. Now you are asked to generate the ranklist.<br><font size=4 face="Consolas"><br><font size=5 face="Consolas" color=red>输入格式：</font><br><font size=4 face="Consolas">Each input file contains one test case. For each case, the first line gives a positive integer N (≤10^5), which is the number of testees. Then N lines follow, each gives the information of a testee in the following format:<br><code>ID Score School</code><br>where <code>ID</code> is a string of 6 characters with the first one representing the test level: <code>B</code> stands for the basic level,<code> A</code> the advanced level and<code>T</code>the top level; <code>Score</code> is an integer in [0, 100]; and <code>School</code> is the institution code which is a string of no more than 6 English letters (case insensitive). Note: it is guaranteed that ID is unique for each testee.</p>
+<p><font size=5 face="Consolas" color=red>输出格式：</font><br><font size=4 face="Consolas">For each case, first print in a line the total number of institutions. Then output the ranklist of institutions in nondecreasing order of their ranks in the following format:<br><code>Rank School TWS Ns</code><br>where <code>Rank</code> is the rank (start from 1) of the institution; <code>School</code> is the institution code (all in lower case); ; <code>TWS</code> is the total weighted score which is defined to be the integer part of <code>ScoreB/1.5 + ScoreA + ScoreT*1.5</code>, where <code>ScoreX</code> is the total score of the testees belong to this institution on level <code>X</code>; and <code>Ns</code> is the total number of testees who belong to this institution.<br>The institutions are ranked according to their <code>TWS</code>. If there is a tie, the institutions are supposed to have the same rank, and they shall be printed in ascending order of <code>Ns</code>. If there is still a tie, they shall be printed in alphabetical order of their codes.</p>
+<p><font size=5 face="Consolas" color=red>输入样例：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">10</span><br><span class="line">A57908 85 Au</span><br><span class="line">B57908 54 LanX</span><br><span class="line">A37487 60 au</span><br><span class="line">T28374 67 CMU</span><br><span class="line">T32486 24 hypu</span><br><span class="line">A66734 92 cmu</span><br><span class="line">B76378 71 AU</span><br><span class="line">A47780 45 lanx</span><br><span class="line">A72809 100 pku</span><br><span class="line">A03274 45 hypu</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Consolas" color=red>输出样例：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">5</span><br><span class="line">1 cmu 192 2</span><br><span class="line">1 au 192 3</span><br><span class="line">3 pku 100 1</span><br><span class="line">4 hypu 81 2</span><br><span class="line">4 lanx 81 2</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Consolas" color=blue>题目分析：sort的使用，测试点五是一个坑，因为每个学校的分数相当于一个加权的成绩，在前期处理的时候就应该按照浮点数处理，只有在排序的时候将其转换为整数即可。</font></p>
+<p><font size=5 color=red>其中使用C++11的unordered_map和unordered_set会大大提高效率，因为其底层是使用hash_table实现的，具体可以参阅C++11的新标准。</p>
+<p><font size=5 face="Consolas" color=black>AC代码：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;string&gt;</span><br><span class="line">#include &lt;vector&gt;</span><br><span class="line">#include &lt;unordered_map&gt;</span><br><span class="line">#include &lt;set&gt;</span><br><span class="line">#include &lt;algorithm&gt;</span><br><span class="line">#include &lt;cmath&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">const int maxn &#x3D; 100010;</span><br><span class="line"></span><br><span class="line">struct school&#123;</span><br><span class="line">    string name;</span><br><span class="line">    int score;</span><br><span class="line">    int sum;</span><br><span class="line"></span><br><span class="line">    school()&#123;&#125;</span><br><span class="line">    school(string name, int score, int sum):name(name), score(score), sum(sum)&#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">vector&lt;school&gt; v;</span><br><span class="line">unordered_map&lt;string, double&gt; nameToScore;</span><br><span class="line">unordered_map&lt;string, int&gt; nameToSumPeople;</span><br><span class="line">set&lt;string&gt; schoolName;</span><br><span class="line"></span><br><span class="line">void toLower(string&amp; s)&#123;</span><br><span class="line">    for(int i&#x3D;0; i&lt;s.length(); ++i)&#123;</span><br><span class="line">        if(s[i]&gt;&#x3D;&#39;A&#39; &amp;&amp; s[i]&lt;&#x3D;&#39;Z&#39;)s[i] +&#x3D; 32;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bool cmp(school a, school b)&#123;</span><br><span class="line">    if(a.score!&#x3D;b.score)return a.score&gt;b.score;</span><br><span class="line">    if(a.sum!&#x3D;b.sum)</span><br><span class="line">        return a.sum &lt; b.sum;</span><br><span class="line">    else</span><br><span class="line">        return a.name &lt; b.name;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    &#x2F;&#x2F;freopen(&quot;in.txt&quot;, &quot;r&quot;, stdin);</span><br><span class="line">    int n;</span><br><span class="line">    scanf(&quot;%d&quot;, &amp;n);</span><br><span class="line">    string id, name;</span><br><span class="line">    double score;</span><br><span class="line">    for(int i&#x3D;0; i&lt;n; ++i)&#123;</span><br><span class="line">        cin&gt;&gt;id;</span><br><span class="line">        scanf(&quot;%lf&quot;, &amp;score);</span><br><span class="line">        cin&gt;&gt;name;</span><br><span class="line">        toLower(name);</span><br><span class="line">        schoolName.insert(name);</span><br><span class="line">        nameToSumPeople[name] +&#x3D; 1;</span><br><span class="line">        if(&#39;A&#39;&#x3D;&#x3D;id[0])&#123;nameToScore[name] +&#x3D; score;&#125;</span><br><span class="line">        else if(&#39;B&#39;&#x3D;&#x3D;id[0])&#123;nameToScore[name] +&#x3D; (score &#x2F; 1.5);&#125;</span><br><span class="line">        else&#123;nameToScore[name] +&#x3D; (score * 1.5);&#125;</span><br><span class="line">    &#125;</span><br><span class="line">    for(auto it&#x3D;schoolName.begin(); it!&#x3D;schoolName.end(); ++it)&#123;</span><br><span class="line">        v.push_back(school(*it, (int)(nameToScore[*it]), nameToSumPeople[*it]));</span><br><span class="line">    &#125;</span><br><span class="line">    sort(v.begin(), v.end(), cmp);</span><br><span class="line">    cout&lt;&lt;v.size()&lt;&lt;endl;</span><br><span class="line">    int rank &#x3D; 1;</span><br><span class="line">    cout&lt;&lt;rank&lt;&lt;&quot; &quot;&lt;&lt;v[0].name&lt;&lt;&quot; &quot;&lt;&lt;v[0].score&lt;&lt;&quot; &quot;&lt;&lt;v[0].sum&lt;&lt;endl;</span><br><span class="line">    for(int i&#x3D;1; i&lt;v.size(); ++i)&#123;</span><br><span class="line">        if(!i || v[i].score!&#x3D;v[i-1].score)</span><br><span class="line">            rank &#x3D; i+1;</span><br><span class="line">        cout&lt;&lt;rank&lt;&lt;&quot; &quot;&lt;&lt;v[i].name&lt;&lt;&quot; &quot;&lt;&lt;v[i].score&lt;&lt;&quot; &quot;&lt;&lt;v[i].sum&lt;&lt;endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/PAT甲级题解//" class="article-tag-list-link color3">PAT甲级题解</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/04/06/PAT%EF%BC%88%E7%94%B2%E7%BA%A7%EF%BC%891141.PAT%20Ranking%20of%20Institutions%20%EF%BC%8825%20%E5%88%86)/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-PAT 甲级常用单词组 （持续更新）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2019/04/05/PAT%20%E7%94%B2%E7%BA%A7%E5%B8%B8%E7%94%A8%E5%8D%95%E8%AF%8D%E7%BB%84%20%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/">PAT 甲级常用单词组 （持续更新）</a>
     </h1>
   
 
-  
-  <a href="/2019/04/05/PAT%20%E7%94%B2%E7%BA%A7%E5%B8%B8%E7%94%A8%E5%8D%95%E8%AF%8D%E7%BB%84%20%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/" class="archive-article-date">
+        
+        <a href="/2019/04/05/PAT%20%E7%94%B2%E7%BA%A7%E5%B8%B8%E7%94%A8%E5%8D%95%E8%AF%8D%E7%BB%84%20%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/" class="archive-article-date">
   	<time datetime="2019-04-05T15:43:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-05</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">1.case insensitive   不区分大小写</span><br><span class="line">2.nodecreasing order  递增次序；非递减次序</span><br><span class="line">3.lower case 小写字母</span><br><span class="line">4.upper case 大写字母</span><br><span class="line">5.there is a tie 成绩并列</span><br><span class="line">6.alphabetical order 字典序</span><br><span class="line">7.simultaneously 同时地</span><br><span class="line">8.positive number</span><br><span class="line">9.negative number</span><br><span class="line">10.chronologically 按时间的先后顺序记录</span><br><span class="line">11.for the sake of simplicity   为了简单起见</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Consolas">图论：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1.directed grapg 有向图</span><br><span class="line">2.undirected graph 无向图</span><br><span class="line">3.directed edges  有向边</span><br><span class="line">4.topological order 拓扑序列</span><br><span class="line">5.vertices  vertex的复数形式 表示节点</span><br><span class="line">6.indices index的复数形式  一般表示下标</span><br><span class="line">7.connected components  连通分量</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/PAT乙级题解//" class="article-tag-list-link color3">PAT乙级题解</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/04/05/PAT%20%E7%94%B2%E7%BA%A7%E5%B8%B8%E7%94%A8%E5%8D%95%E8%AF%8D%E7%BB%84%20%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-PAT（乙级）1007.素数对猜想（20）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2019/04/04/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891007.%E7%B4%A0%E6%95%B0%E5%AF%B9%E7%8C%9C%E6%83%B3%EF%BC%8820%EF%BC%89/">PAT（乙级）1007.素数对猜想（20）</a>
     </h1>
   
 
-  
-  <a href="/2019/04/04/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891007.%E7%B4%A0%E6%95%B0%E5%AF%B9%E7%8C%9C%E6%83%B3%EF%BC%8820%EF%BC%89/" class="archive-article-date">
+        
+        <a href="/2019/04/04/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891007.%E7%B4%A0%E6%95%B0%E5%AF%B9%E7%8C%9C%E6%83%B3%EF%BC%8820%EF%BC%89/" class="archive-article-date">
   	<time datetime="2019-04-04T12:14:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-04</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face="Courier New">PAT 1007.素数对猜想（20）</font></p>
+<p><font size=4 face="Courier New">让我们定义d​n为：<code>dn=pn+1−p​n</code>，其中p​i是第i个素数。显然有d1=1，且对于n&gt;1有dn是偶数。”素数对猜想”认为 “存在无穷多对相邻且差为2的素数”。现给定任意正整数N(&lt;10^5​​ )，请计算不超过N的满足猜想的素数对的个数。<br><font size=4 face="Courier New"><br><font size=5 face="Courier New" color=red>输入格式：</font><br><font size=4 face="Courier New">输入在一行给出正整数N。</p>
+<p><font size=5 face="Courier New" color=red>输出格式：</font><br><font size=4 face="Courier New">在一行中输出不超过N的满足猜想的素数对的个数。</p>
+<p><font size=5 face="Courier New" color=red>输入样例：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">20</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier New" color=red>输出样例：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">4</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier New" color=blue>题目分析：素数筛选法，O(n^2)求解素数会超时。</p>
+<p><font size=5 face="Courier New" color=black>AC代码：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;cstdio&gt;</span><br><span class="line">#include&lt;cmath&gt;</span><br><span class="line"></span><br><span class="line">const int max_n &#x3D; 100010;</span><br><span class="line"></span><br><span class="line">bool p[max_n];</span><br><span class="line">int prime[max_n];</span><br><span class="line">int num &#x3D; 0;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line"> 	int n;</span><br><span class="line">  	scanf(&quot;%d&quot;,&amp;n);</span><br><span class="line">  	for(int i&#x3D;2;i&lt;&#x3D;n;++i)&#123;</span><br><span class="line">    	if(p[i]&#x3D;&#x3D;false)&#123;</span><br><span class="line">      		prime[num++] &#x3D; i;</span><br><span class="line">	  	&#125;</span><br><span class="line">      	for(int j&#x3D;i+i;j&lt;&#x3D;n;j+&#x3D;i)&#123;</span><br><span class="line">        	p[j] &#x3D; true;</span><br><span class="line">      	&#125;</span><br><span class="line">    &#125; </span><br><span class="line">  	int cnt &#x3D; 0;</span><br><span class="line">  	for(int i&#x3D;0;i&lt;num-1;++i)&#123;</span><br><span class="line">    	if(prime[i+1]-prime[i]&#x3D;&#x3D;2)&#123;</span><br><span class="line">      		cnt++; </span><br><span class="line">    	&#125;</span><br><span class="line">  	&#125;</span><br><span class="line">  	printf(&quot;%d&quot;,cnt);</span><br><span class="line">  	return 0;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/PAT乙级题解//" class="article-tag-list-link color3">PAT乙级题解</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/04/04/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891007.%E7%B4%A0%E6%95%B0%E5%AF%B9%E7%8C%9C%E6%83%B3%EF%BC%8820%EF%BC%89/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-PAT（乙级）1004.成绩排名（20）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2019/04/04/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891004.%E6%88%90%E7%BB%A9%E6%8E%92%E5%90%8D%EF%BC%8820%EF%BC%89/">PAT（乙级）1004.成绩排名（20）</a>
     </h1>
   
 
-  
-  <a href="/2019/04/04/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891004.%E6%88%90%E7%BB%A9%E6%8E%92%E5%90%8D%EF%BC%8820%EF%BC%89/" class="archive-article-date">
+        
+        <a href="/2019/04/04/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891004.%E6%88%90%E7%BB%A9%E6%8E%92%E5%90%8D%EF%BC%8820%EF%BC%89/" class="archive-article-date">
   	<time datetime="2019-04-04T12:03:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-04</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face="Courier New">PAT 1004.成绩排名（20）</font></p>
+<p><font size=4 face="Courier New">读入 n（&gt;0）名学生的姓名、学号、成绩，分别输出成绩最高和成绩最低学生的姓名和学号。<br><font size=4 face="Courier New"><br><font size=5 face="Courier New" color=red>输入格式：</font><br><font size=4 face="Courier New">每个测试输入包含 1 个测试用例，格式为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">第 1 行：正整数 n</span><br><span class="line">第 2 行：第 1 个学生的姓名 学号 成绩</span><br><span class="line">第 3 行：第 2 个学生的姓名 学号 成绩</span><br><span class="line">  ... ... ...</span><br><span class="line">第 n+1 行：第 n 个学生的姓名 学号 成绩</span><br></pre></td></tr></table></figure>
+<p><font size=4 face="Courier New">其中<code>姓名</code>和<code>学号</code>均为不超过 10 个字符的字符串，成绩为 0 到 100 之间的一个整数，这里保证在一组测试用例中没有两个学生的成绩是相同的。</p>
+<p><font size=5 face="Courier New" color=red>输出格式：</font><br><font size=4 face="Courier New">对每个测试用例输出 2 行，第 1 行是成绩最高学生的姓名和学号，第 2 行是成绩最低学生的姓名和学号，字符串间有 1 空格。</p>
+<p><font size=5 face="Courier New" color=red>输入样例：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">3</span><br><span class="line">Joe Math990112 89</span><br><span class="line">Mike CS991301 100</span><br><span class="line">Mary EE990830 95</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier New" color=red>输出样例：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Mike CS991301</span><br><span class="line">Joe Math990112</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier New" color=blue>题目分析：排序的使用。<br></font><br><font size=5 face="Courier New" color=black>AC代码：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;cstdio&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">#include&lt;cassert&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">typedef struct student&#123;</span><br><span class="line">  char name[11];</span><br><span class="line">  char num[11];</span><br><span class="line">  int score;</span><br><span class="line">&#125;Student;</span><br><span class="line"></span><br><span class="line">bool cmp(student a,student b)&#123;</span><br><span class="line">  return a.score &lt; b.score;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">  int n;</span><br><span class="line">  cin&gt;&gt;n;</span><br><span class="line">  int tmp &#x3D; n;</span><br><span class="line">  Student student[tmp];</span><br><span class="line">  while(tmp--)&#123;</span><br><span class="line">    cin&gt;&gt;student[tmp].name&gt;&gt;student[tmp].num&gt;&gt;student[tmp].score;</span><br><span class="line">    assert(student[tmp].score&gt;&#x3D;0 &amp;&amp; student[tmp].score&lt;&#x3D;100);</span><br><span class="line">  &#125;</span><br><span class="line">  sort(student,student+n,cmp);</span><br><span class="line">  printf(&quot;%s %s\n&quot;,student[n-1].name,student[n-1].num);</span><br><span class="line">  printf(&quot;%s %s\n&quot;,student[0].name,student[0].num);</span><br><span class="line">  return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/PAT乙级题解//" class="article-tag-list-link color3">PAT乙级题解</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/04/04/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891004.%E6%88%90%E7%BB%A9%E6%8E%92%E5%90%8D%EF%BC%8820%EF%BC%89/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-PAT（乙级）1002.写出这个数（20）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2019/04/04/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891002.%E5%86%99%E5%87%BA%E8%BF%99%E4%B8%AA%E6%95%B0%EF%BC%8820%EF%BC%89/">PAT（乙级）1002.写出这个数（20）</a>
     </h1>
   
 
-  
-  <a href="/2019/04/04/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891002.%E5%86%99%E5%87%BA%E8%BF%99%E4%B8%AA%E6%95%B0%EF%BC%8820%EF%BC%89/" class="archive-article-date">
+        
+        <a href="/2019/04/04/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891002.%E5%86%99%E5%87%BA%E8%BF%99%E4%B8%AA%E6%95%B0%EF%BC%8820%EF%BC%89/" class="archive-article-date">
   	<time datetime="2019-04-04T11:55:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-04</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face="Courier New">PAT 1002.写出这个数（20）</font></p>
+<p><font size=4 face="Courier New">读入一个正整数 n，计算其各位数字之和，用汉语拼音写出和的每一位数字。<br><font size=4 face="Courier New"><br><font size=5 face="Courier New" color=red>输入格式：</font><br><font size=4 face="Courier New">每个测试输入包含 1 个测试用例，即给出自然数<code>n</code>的值。这里保证 <code>n </code>小于<code> 10​^100</code>。</p>
+<p><font size=5 face="Courier New" color=red>输出格式：</font><br><font size=4 face="Courier New">在一行内输出 n 的各位数字之和的每一位，拼音数字间有 1 空格，但一行中最后一个拼音数字后没有空格。</p>
+<p><font size=5 face="Courier New" color=red>输入样例：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1234567890987654321123456789</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier New" color=red>输出样例：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yi san wu</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier New" color=blue>题目分析：因为数据的位数太大，long long也是存储不下的，使用大数类的模板解决。其次使用hash数组存储整型数字到拼音字符串的映射。<br></font><br><font size=5 face="Courier New" color=black>AC代码：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;cstring&gt;</span><br><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;cassert&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">string mp[10]&#x3D;&#123;&quot;ling&quot;,&quot;yi&quot;,&quot;er&quot;,&quot;san&quot;,&quot;si&quot;,&quot;wu&quot;,&quot;liu&quot;,&quot;qi&quot;,&quot;ba&quot;,&quot;jiu&quot;&#125;;</span><br><span class="line"></span><br><span class="line">struct bign&#123;</span><br><span class="line">    int d[101];</span><br><span class="line">    int len;</span><br><span class="line">    bign()&#123;</span><br><span class="line">      memset(d,0,sizeof(d));</span><br><span class="line">      len &#x3D; 0;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">bign change(string&amp; s)&#123;</span><br><span class="line">	bign a;</span><br><span class="line">  	for(int i&#x3D;0;i&lt;s.length();++i)&#123;</span><br><span class="line">    	a.d[a.len ++] &#x3D; s[s.length()-1-i]-&#39;0&#39;;</span><br><span class="line">  	&#125;</span><br><span class="line"> 	return a;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">	string s,t;</span><br><span class="line">	getline(cin, t); </span><br><span class="line">  	bign a &#x3D; change(t);</span><br><span class="line">  	int tmp &#x3D; 0;</span><br><span class="line">  	for(int i&#x3D;0;i&lt;a.len; ++i)&#123;</span><br><span class="line">    	tmp +&#x3D; a.d[i];</span><br><span class="line">  	&#125;</span><br><span class="line">  	s &#x3D; to_string(tmp);</span><br><span class="line">  	for(int i&#x3D;0; i&lt;s.length(); ++i)&#123;</span><br><span class="line">  		cout&lt;&lt;mp[s[i]-&#39;0&#39;];</span><br><span class="line">		if(i!&#x3D;s.length()-1)printf(&quot; &quot;);	</span><br><span class="line">	&#125;</span><br><span class="line">  	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/PAT乙级题解//" class="article-tag-list-link color3">PAT乙级题解</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/04/04/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891002.%E5%86%99%E5%87%BA%E8%BF%99%E4%B8%AA%E6%95%B0%EF%BC%8820%EF%BC%89/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-PAT（乙级）1001.害死人不偿命的(3n+1)猜想（15）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2019/04/04/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891001.%E5%AE%B3%E6%AD%BB%E4%BA%BA%E4%B8%8D%E5%81%BF%E5%91%BD%E7%9A%84(3n+1)%E7%8C%9C%E6%83%B3%EF%BC%8815%EF%BC%89/">PAT（乙级）1001.害死人不偿命的(3n+1)猜想（15）</a>
     </h1>
   
 
-  
-  <a href="/2019/04/04/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891001.%E5%AE%B3%E6%AD%BB%E4%BA%BA%E4%B8%8D%E5%81%BF%E5%91%BD%E7%9A%84(3n+1)%E7%8C%9C%E6%83%B3%EF%BC%8815%EF%BC%89/" class="archive-article-date">
+        
+        <a href="/2019/04/04/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891001.%E5%AE%B3%E6%AD%BB%E4%BA%BA%E4%B8%8D%E5%81%BF%E5%91%BD%E7%9A%84(3n+1)%E7%8C%9C%E6%83%B3%EF%BC%8815%EF%BC%89/" class="archive-article-date">
   	<time datetime="2019-04-04T11:13:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-04</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face="Courier New">PAT 1001.害死人不偿命的(3n+1)猜想（15） </font></p>
+<p><font size=4 face="Courier New">卡拉兹(Callatz)猜想：<br>对任何一个正整数 n，如果它是偶数，那么把它砍掉一半；如果它是奇数，那么把 (3n+1) 砍掉一半。这样一直反复砍下去，最后一定在某一步得到 n=1。卡拉兹在 1950 年的世界数学家大会上公布了这个猜想，传说当时耶鲁大学师生齐动员，拼命想证明这个貌似很傻很天真的命题，结果闹得学生们无心学业，一心只证 (3n+1)，以至于有人说这是一个阴谋，卡拉兹是在蓄意延缓美国数学界教学与科研的进展……<br>我们今天的题目不是证明卡拉兹猜想，而是对给定的任一不超过 1000 的正整数 n，简单地数一下，需要多少步（砍几下）才能得到 n=1？</p>
+<p><font size=5 face="Courier New" color=red>输入格式:</font><br><font size=4 face="Courier New">每个测试输入包含 1 个测试用例，即给出正整数 n 的值。</font></p>
+<p><font size=5 face="Courier New" color=red>输出格式:</font><br><font size=4 face="Courier New">出从 n 计算到 1 需要的步数。</p>
+<p><font size=5 face="Courier New" color=red>输入样例：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">3</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier New" color=red>输出样例：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">5</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier New" color=blue>题目分析：简单模拟</p>
+<p><font size=5 face="Courier New" color=black>AC代码:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;cstdio&gt;</span><br><span class="line">#include &lt;assert&gt;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">  int n;</span><br><span class="line">  scanf(&quot;%d&quot;,&amp;n);</span><br><span class="line">  int count &#x3D; 0;</span><br><span class="line">  while(n!&#x3D;1)&#123;</span><br><span class="line">      if(n%2&#x3D;&#x3D;1)&#123;</span><br><span class="line">        n &#x3D; (3*n+1)&#x2F;2;</span><br><span class="line">        count++;</span><br><span class="line">      &#125;</span><br><span class="line">      else&#123;</span><br><span class="line">        assert(n%2&#x3D;&#x3D;0);</span><br><span class="line">        n &#x2F;&#x3D; 2;</span><br><span class="line">        count++;</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  printf(&quot;%d&quot;,count);</span><br><span class="line">  return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/PAT乙级题解//" class="article-tag-list-link color3">PAT乙级题解</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/04/04/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891001.%E5%AE%B3%E6%AD%BB%E4%BA%BA%E4%B8%8D%E5%81%BF%E5%91%BD%E7%9A%84(3n+1)%E7%8C%9C%E6%83%B3%EF%BC%8815%EF%BC%89/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-PAT（乙级）1051.复数乘法（15）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2019/04/04/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891051.%E5%A4%8D%E6%95%B0%E4%B9%98%E6%B3%95%EF%BC%8815%EF%BC%89/">PAT（乙级）1051.复数乘法（15）</a>
     </h1>
   
 
-  
-  <a href="/2019/04/04/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891051.%E5%A4%8D%E6%95%B0%E4%B9%98%E6%B3%95%EF%BC%8815%EF%BC%89/" class="archive-article-date">
+        
+        <a href="/2019/04/04/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891051.%E5%A4%8D%E6%95%B0%E4%B9%98%E6%B3%95%EF%BC%8815%EF%BC%89/" class="archive-article-date">
   	<time datetime="2019-04-04T04:23:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-04</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face="Courier New">PAT 1051.复数乘法（15） </font></p>
+<p><font size=4 face="Courier New">复数可以写成 (A+Bi) 的常规形式，其中 A 是实部，B 是虚部，i 是虚数单位，满足 <code>i^2=−1</code>；也可以写成极坐标下的指数形式 <code>(R×e​(Pi))</code>，其中 <code>R</code> 是复数模，<code>P</code> 是辐角，<code>i </code>是虚数单位，其等价于三角形式 <code>R(cos(P)+isin(P))</code>。<br>现给定两个复数的 R 和 P，要求输出两数乘积的常规形式。<br><font size=4 face="Courier New"><br><font size=5 face="Courier New" color=red>输入格式：</font><br><font size=4 face="Courier New">输入在一行中依次给出两个复数的 R​1, P​1 , R​2​​ , P​2 ，数字间以空格分隔。</p>
+<p><font size=5 face="Courier New" color=red>输出格式：</font><br><font size=4 face="Courier New">在一行中按照 <code>A+Bi </code>的格式输出两数乘积的常规形式，实部和虚部均保留 2 位小数。注意：如果 B 是负数，则应该写成<code>A-|B|i</code>的形式。</p>
+<p><font size=5 face="Courier New" color=red>输入样例：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2.3 3.5 5.2 0.4</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier New" color=red>输出样例：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-8.68-8.23i</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier New" color=blue>题目分析：这道题目的主要难点在于输出格式的处理上。<br><font size=4 color=red face="Courier New">1.对于实部，因为题目要求保留两位有效数字，对于<code>real = -0.0032</code>类似的数字会舍为<code>-0.00</code>,这样的输出是不符合题意的，应该输出为<code>0.00</code>,所以当实部<code>real &lt; 0 &amp;&amp; real &gt;-0.005</code>输出<code>0.00</code>否则正常输出即可;<br>2.对于虚部，因为要添加正负号。所以要区分</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1.img &lt; 0 &amp;&amp; img &gt; -0.005原因同上，输出+.2lfi;</span><br><span class="line">2.img &lt;&#x3D; -0.005，正常输出即可， 输出.2lfi;</span><br><span class="line">3.img &gt;&#x3D;0, 需要添加正号+, 输出+.2lf;</span><br></pre></td></tr></table></figure>
+<p><font size=4 face="Courier New" color=blue>看到上边，其实对于任意保留位数，可以划分为3个区间，<code>（+无穷大，0]（0，某个数字）[某个数字，-无穷大）</code>,其中某个数字是这样计算而来，保留2小数，就用最小的保留两位数字除以二得到。如保留两位数字，最小为0.01，其对应的数字为0.01/2=0.005。</p>
+<p><font size=5 face="Courier New" color=black>AC代码:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;cmath&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    double r1,p1,r2,p2;</span><br><span class="line">    cin&gt;&gt;r1&gt;&gt;p1&gt;&gt;r2&gt;&gt;p2;</span><br><span class="line">    double real &#x3D; r1*r2*(cos(p1+p2));</span><br><span class="line">    double img  &#x3D; r1*r2*(sin(p1+p2));</span><br><span class="line">    </span><br><span class="line">    if(real&lt;0 &amp;&amp; real&gt;-0.005)</span><br><span class="line">        printf(&quot;0.00&quot;);</span><br><span class="line">    else</span><br><span class="line">        printf(&quot;%.2lf&quot;, real);</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    if(img&lt;0 &amp;&amp; img&gt;-0.005)</span><br><span class="line">       printf(&quot;+0.00i&quot;);</span><br><span class="line">        </span><br><span class="line">    else if(img&lt;&#x3D;-0.005)</span><br><span class="line">       printf(&quot;%.2lfi&quot;, img);</span><br><span class="line">    else</span><br><span class="line">       printf(&quot;+%.2lfi&quot;, img);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/PAT乙级题解//" class="article-tag-list-link color3">PAT乙级题解</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/04/04/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891051.%E5%A4%8D%E6%95%B0%E4%B9%98%E6%B3%95%EF%BC%8815%EF%BC%89/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-PAT（乙级）1017.A除以B（20）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2019/04/04/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891017.A%E9%99%A4%E4%BB%A5B%EF%BC%8820%EF%BC%89/">PAT（乙级）1017.A除以B（20）</a>
     </h1>
   
 
-  
-  <a href="/2019/04/04/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891017.A%E9%99%A4%E4%BB%A5B%EF%BC%8820%EF%BC%89/" class="archive-article-date">
+        
+        <a href="/2019/04/04/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891017.A%E9%99%A4%E4%BB%A5B%EF%BC%8820%EF%BC%89/" class="archive-article-date">
   	<time datetime="2019-04-04T02:25:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-04</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face="Courier New">PAT 1017.A除以B（20） </font></p>
+<p><font size=4 face="Courier New">本题要求计算 A/B，其中 A 是不超过 1000 位的正整数，B 是 1 位正整数。你需要输出商数 Q 和余数 R，使得 A=B×Q+R 成立。<br><font size=4 face="Courier New"><br><font size=5 face="Courier New" color=red>输入格式：</font><br><font size=4 face="Courier New">输入在一行中依次给出 A 和 B，中间以 1 空格分隔。</p>
+<p><font size=5 face="Courier New" color=red>输出格式：</font><br><font size=4 face="Courier New">在一行中依次输出 Q 和 R，中间以 1 空格分隔。</p>
+<p><font size=5 face="Courier New" color=red>输入样例：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">123456789050987654321 7</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier New" color=red>输出样例：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">17636684150141093474 3</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier New" color=blue>题目分析：算是一个高精度模拟的题目，用算法笔记高精度和低精度的除法，板子题，就当是练习练习高精度运算。柳神有更好的处理方式，传送门：<a target="_blank" rel="noopener" href="https://www.liuchuo.net/archives/537">1017</a></p>
+<p><font size=5 face="Courier New" color=black>AC代码:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;cstring&gt;</span><br><span class="line">#include &lt;string&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">struct bign&#123;</span><br><span class="line">    int d[1010];</span><br><span class="line">    int len;</span><br><span class="line"></span><br><span class="line">    bign()&#123;</span><br><span class="line">        memset(d, 0, sizeof(d));</span><br><span class="line">        len &#x3D; 0;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">bign change(string&amp; t)&#123;</span><br><span class="line">    bign tmp;</span><br><span class="line">    for(int i&#x3D;t.length()-1; i&gt;&#x3D;0; --i)&#123;</span><br><span class="line">        tmp.d[tmp.len ++] &#x3D; t[i]-&#39;0&#39;;</span><br><span class="line">    &#125;</span><br><span class="line">    return tmp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bign divide(bign a, int b, int&amp; r)&#123;</span><br><span class="line">    bign c;</span><br><span class="line">    c.len &#x3D; a.len;</span><br><span class="line">    for(int i&#x3D;a.len-1; i&gt;&#x3D;0; --i)&#123;</span><br><span class="line">        r &#x3D; r*10 + a.d[i];</span><br><span class="line">        if(r &lt; b)c.d[i] &#x3D; 0;</span><br><span class="line">        else&#123;</span><br><span class="line">            c.d[i] &#x3D; r&#x2F;b;</span><br><span class="line">            r &#x3D; r%b;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    while(c.len-1 &gt;&#x3D; 1 &amp;&amp; c.d[c.len-1] &#x3D;&#x3D; 0)</span><br><span class="line">        c.len --;</span><br><span class="line">    return c;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void show(bign a)&#123;</span><br><span class="line">    for(int i&#x3D;a.len-1; i&gt;&#x3D;0; --i)&#123;</span><br><span class="line">        cout&lt;&lt;a.d[i];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    string t;</span><br><span class="line">    bign a, q;</span><br><span class="line">    int b, r&#x3D;0;</span><br><span class="line">    cin&gt;&gt;t&gt;&gt;b;</span><br><span class="line">    a &#x3D; change(t);</span><br><span class="line">    q &#x3D; divide(a, b, r);</span><br><span class="line">    show(q);</span><br><span class="line">    cout&lt;&lt;&quot; &quot;&lt;&lt;r&lt;&lt;endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/PAT乙级题解//" class="article-tag-list-link color3">PAT乙级题解</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/04/04/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891017.A%E9%99%A4%E4%BB%A5B%EF%BC%8820%EF%BC%89/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-PAT（乙级）1063.计算谱半径（20）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2019/03/28/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891063.%E8%AE%A1%E7%AE%97%E8%B0%B1%E5%8D%8A%E5%BE%84%EF%BC%8820%EF%BC%89/">PAT（乙级）1063.计算谱半径（20）</a>
     </h1>
   
 
-  
-  <a href="/2019/03/28/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891063.%E8%AE%A1%E7%AE%97%E8%B0%B1%E5%8D%8A%E5%BE%84%EF%BC%8820%EF%BC%89/" class="archive-article-date">
+        
+        <a href="/2019/03/28/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891063.%E8%AE%A1%E7%AE%97%E8%B0%B1%E5%8D%8A%E5%BE%84%EF%BC%8820%EF%BC%89/" class="archive-article-date">
   	<time datetime="2019-03-28T08:12:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-28</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    
-    
-</header>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face="Courier New">PAT 1063.计算谱半径（20）</font></p>
+<p><font size=4 face="Courier New">在数学中，矩阵的“谱半径”是指其特征值的模集合的上确界。换言之，对于给定的 n 个复数空间的特征值 <code>&#123; a1+b​1i,⋯,an+b​n​​i &#125;</code>，它们的模为实部与虚部的平方和的开方，而“谱半径”就是最大模。<br>现在给定一些复数空间的特征值，请你计算并输出这些特征值的谱半径。<br><font size=4 face="Courier New"><br><font size=5 face="Courier New" color=red>输入格式：</font><br><font size=4 face="Courier New">输入第一行给出正整数 N（≤ 10 000）是输入的特征值的个数。随后 N 行，每行给出 1 个特征值的实部和虚部，其间以空格分隔。注意：题目保证实部和虚部均为绝对值不超过 1000 的整数。</p>
+<p><font size=5 face="Courier New" color=red>输出格式：</font><br><font size=4 face="Courier New">在一行中输出谱半径，四舍五入保留小数点后 2 位。</p>
+<p><font size=5 face="Courier New" color=red>输入样例：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">5</span><br><span class="line">0 1</span><br><span class="line">2 0</span><br><span class="line">-1 0</span><br><span class="line">3 3</span><br><span class="line">0 -3</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier New" color=red>输出样例：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">4.24</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier New" color=blue>题目分析：浮点数的比较，由于在计算机中浮点数不能精确表达，学过计算机组成原理的同学应该知道，在比较两个浮点数字的时候，需要设置一个精度来描述它们之间的大小关系。<br></font><br><font size=5 face="Courier New" color=black>AC代码：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;cmath&gt;</span><br><span class="line">#include &lt;cstdio&gt;</span><br><span class="line">const double eps&#x3D;1e-8;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    int n, rm, im;</span><br><span class="line">    double tmp, max &#x3D; 0;</span><br><span class="line">    scanf(&quot;%d&quot;, &amp;n);</span><br><span class="line">    for(int i&#x3D;0; i&lt;n; ++i)&#123;</span><br><span class="line">        scanf(&quot;%d %d&quot;, &amp;rm, &amp;im);</span><br><span class="line">        tmp &#x3D; sqrt(rm*rm + im*im);</span><br><span class="line">        if(tmp-max &gt; eps)max&#x3D;tmp;</span><br><span class="line">    &#125;</span><br><span class="line">    printf(&quot;%.2f\n&quot;,max);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/PAT乙级题解//" class="article-tag-list-link color3">PAT乙级题解</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/03/28/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891063.%E8%AE%A1%E7%AE%97%E8%B0%B1%E5%8D%8A%E5%BE%84%EF%BC%8820%EF%BC%89/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
   
     <nav id="page-nav">

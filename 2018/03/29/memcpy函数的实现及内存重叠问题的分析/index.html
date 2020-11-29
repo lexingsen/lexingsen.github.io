@@ -159,29 +159,192 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-memcpy函数的实现及内存重叠问题的分析" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       memcpy函数的实现及内存重叠问题的分析
     </h1>
   
 
-  
-  <a href="/2018/03/29/memcpy%E5%87%BD%E6%95%B0%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8F%8A%E5%86%85%E5%AD%98%E9%87%8D%E5%8F%A0%E9%97%AE%E9%A2%98%E7%9A%84%E5%88%86%E6%9E%90/" class="archive-article-date">
+        
+        <a href="/2018/03/29/memcpy%E5%87%BD%E6%95%B0%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8F%8A%E5%86%85%E5%AD%98%E9%87%8D%E5%8F%A0%E9%97%AE%E9%A2%98%E7%9A%84%E5%88%86%E6%9E%90/" class="archive-article-date">
   	<time datetime="2018-03-29T13:00:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-29</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><strong>函数原型</strong><br><code>void *memcpy(char *dest,const char *src,size_t n)</code></p>
+<p><strong>头文件</strong><br><code>#include&lt;string.h&gt;或#include&lt;memory.h&gt;</code><br><strong>参数</strong><br>1.memcpy中的三个参数分别为目标字符串 char *dest。</p>
+<p>2.源字符串 const char *src  const       这里const是对src所指向的静态常量区的字符串常量进行修饰，保护源字符串在内存拷贝的过程不被修改。</p>
+<p>3.需要拷贝的字节个数 size_t n<br><code>typedef unsigned int szie_t</code> 这里的<code>size_t</code>其实就是为无符号整型<code>unsigned int</code>进行别名，因为在内存拷贝函数中，一方面拷贝的字节数不可能是负整数，另一方面字节数不可能是实数，出于上面两个方面的考虑字节数的类型应定义为<code>size_t</code>.</p>
+<p><strong>返回值</strong><br>memcpy returns the value of dest.   返回目标字符串的地址</p>
+<p><strong>函数描述</strong><br>The memcpy function copies count bytes of src to dest. If the source and destination overlap, this function does not ensure that the original source bytes in the overlapping region are copied before being overwritten. Use memmove to handle overlapping regions.<br>memcpy函数将src的字节数复制到dest。如果源和目标重叠，这个函数不能确保重叠区域的原始源字节在被覆盖之前被复制。<br>这里已经提到了内存覆盖的问题，而在C语言却并没有对这种现象做相关的规定或检查，也就是说对于这种现象C语言是缺省。后边会详细分析如何处理在字符串拷贝函数中内存重叠的问题。</p>
+<p><strong>内存重叠</strong><br><img src="https://img-blog.csdn.net/20180329201717156?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>注意：在这里的内存重叠我们只考虑为了成功实现内存拷贝要排除的内存重叠的情况。<br>当然也可能出现目标字符串覆盖源字符串的情况，但如果其满足成功拷贝的条件即可。</p>
+<p>可以把src、dest、src+n比作数轴上的三个数字，当进行内存拷贝是。如果dest处于src和src+n之间时，一定会出现内存覆盖的现象，而且还会改变源字符串的内容，进行错误的拷贝。因此为了能够合理进行拷贝，提出如下的解决方案。<br><strong>一.</strong> <strong>高地址向低地址进行拷贝</strong><br>由于在虚拟地址空间中，栈空间的生长方向是高地址向低地址生长，首先采用这种方式。简略的讲就是源字符串中的字符从前往后向目标字符串按给定字节的大小依此进行拷贝。<br>观察上图，可以得到两个合理的区间即不会出现内存覆盖的区间。<br><strong>(1)dest&lt;=src</strong></p>
+<p>第一种情况dest=src,此时源字符串与目标字符串指针指向同一个位置，拷贝的过程相当自己给自己赋值，因此拷贝结束 后源字符串并没有发生变化。</p>
+<p>第二种情况dest <strong>&lt;</strong> src,这样的拷贝尽管会覆盖src的内容，出现了内存重叠，但其可以完成内存拷贝的功能，并没有将错误的信息拷贝过来。</p>
+<p><strong>(2)dest&gt;=src+n</strong><br><img src="https://img-blog.csdn.net/20180329204103790?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>由上图可见，当dest&gt;=src+n，无论如何都不会出现内存重叠的问题。</p>
+<p><strong>二.</strong> <strong>低地址向高地址拷贝</strong><br>这种拷贝方式是为了处理，dest处于src和src+n之间，即一定会出现内存重叠的问题。<br>为了避免出现这种情况，我们可以将src和dest都移动  n-1个位置，这样我们就可以从地址值向高地址进行拷贝，这样尽管也有可能目标字符串覆盖源字符串的情况，但是定影可以得到一个正确的拷贝。<br>大家可以自行进行验证！</p>
+<p><strong>memcpy函数的实现</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">#include&lt;assert.h&gt;</span><br><span class="line">#include &lt;stddef.h&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void *my_memcpy(char *dest,const char *src,size_t n)</span><br><span class="line">&#123;</span><br><span class="line">	assert(NULL !&#x3D; dest);</span><br><span class="line">	assert(NULL !&#x3D; src);</span><br><span class="line">	char *res &#x3D; (char*)dest;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	char *p &#x3D; (char*)dest;</span><br><span class="line">	const char *q &#x3D; (const char*)src;</span><br><span class="line">	if(p &lt;&#x3D; q || p &gt;&#x3D; q+n)</span><br><span class="line">	&#123;</span><br><span class="line">		while(n--)</span><br><span class="line">		&#123;</span><br><span class="line">			*p++ &#x3D; *q++;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	else</span><br><span class="line">	&#123;</span><br><span class="line">		p &#x3D; p+n-1;</span><br><span class="line">		q &#x3D; q+n-1;</span><br><span class="line">		while(n--)</span><br><span class="line">		&#123;</span><br><span class="line">			*p-- &#x3D; *q--;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>来源于网上的测试用例</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">void Test()</span><br><span class="line">&#123;</span><br><span class="line">    char p1[256] &#x3D; &quot;hello,world!&quot;;</span><br><span class="line">    char p2[256] &#x3D; &#123;0&#125;;</span><br><span class="line">    MyMemMove(p2,p1,strlen(p1)+1);</span><br><span class="line">    printf(&quot;%s\n&quot;,p2);</span><br><span class="line">    MyMemMove(NULL,p1,strlen(p1)+1);</span><br><span class="line">    MyMemMove(p2,NULL,strlen(p1)+1);</span><br><span class="line">    MyMemMove(p1+1,p1,strlen(p1)+1);</span><br><span class="line">    printf(&quot;%s\n&quot;,p1);</span><br><span class="line">    MyMemMove(p1,p1+1,strlen(p1)+1);</span><br><span class="line">    printf(&quot;%s\n&quot;,p1);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2018/03/29/memcpy%E5%87%BD%E6%95%B0%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8F%8A%E5%86%85%E5%AD%98%E9%87%8D%E5%8F%A0%E9%97%AE%E9%A2%98%E7%9A%84%E5%88%86%E6%9E%90/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2018/03/31/%E8%99%9A%E6%8B%9F%E5%9C%B0%E5%9D%80%E7%A9%BA%E9%97%B4%E7%9A%84%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          虚拟地址空间的内存布局
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/03/29/strlen()%E5%87%BD%E6%95%B0%E5%92%8Csizeof()%E8%BF%90%E7%AE%97%E7%AC%A6%E7%9A%84%E5%8C%BA%E5%88%AB/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">strlen()函数和sizeof()运算符的区别</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>

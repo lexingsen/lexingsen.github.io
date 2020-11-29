@@ -164,29 +164,202 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-泛型算法：堆算法" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       泛型算法：堆算法
     </h1>
   
 
-  
-  <a href="/2019/01/06/%E6%B3%9B%E5%9E%8B%E7%AE%97%E6%B3%95%EF%BC%9A%E5%A0%86%E7%AE%97%E6%B3%95/" class="archive-article-date">
+        
+        <a href="/2019/01/06/%E6%B3%9B%E5%9E%8B%E7%AE%97%E6%B3%95%EF%BC%9A%E5%A0%86%E7%AE%97%E6%B3%95/" class="archive-article-date">
   	<time datetime="2019-01-06T08:01:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-06</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face="Courier New">堆算法是泛型算法的一种，通过<font color=red>迭代器</font>搭建泛型算法与容器联系的桥梁。<br><font size=5 face="Courier New"><br>堆算法支持的四个操作：make_heap(),push_heap(),pop_heap()和sort_heap()。</p>
+<p><font size=5 face="Courier New" color=red>注意：迭代器必须使用支持随机访问的迭代器容器类，否则不能使用该算法。</font></p>
+<p><font size=5 face="Courier New"><font color=blue>(1)make_heap</font><br><img src="https://img-blog.csdnimg.cn/201901061413591.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>在[fisrt,last)左闭右开的区间构建一个堆。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;vector&gt;</span><br><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">	vector&lt;int&gt; vec&#123;2,1,4,7,3,8&#125;;</span><br><span class="line">	cout&lt;&lt;&quot;make_heap()之前：&quot;;</span><br><span class="line">	for(auto i:vec)&#123;</span><br><span class="line">		cout&lt;&lt;i&lt;&lt;&quot; &quot;;</span><br><span class="line">	&#125;</span><br><span class="line">	cout&lt;&lt;endl;</span><br><span class="line">	</span><br><span class="line">	make_heap(vec.begin(),vec.end());</span><br><span class="line">	cout&lt;&lt;&quot;make_heap()之后：&quot;</span><br><span class="line">	for(auto i:vec)&#123;</span><br><span class="line">		cout&lt;&lt;i&lt;&lt;&quot; &quot;;</span><br><span class="line">	&#125;</span><br><span class="line">	cout&lt;&lt;endl;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier New">执行结果:</font><br><img src="https://img-blog.csdnimg.cn/20190106143815616.png" alt="在这里插入图片描述"></p>
+<p><font size=5 face="Courier New"><font color=blue>(2)push_heap()</font></font><br><img src="https://img-blog.csdnimg.cn/20190106142744847.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><font size=5 face="Courier New">push_heap()在执行前必须向支持随机访问的容器里添加进去一个元素，如vector&lt; T &gt;的push_back()操作。<br>在此之前,[first,last-1)是一个已经做好的堆，添加元素之后，堆[first,last)这个区间做堆，使用push_heap()即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;vector&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">	vector&lt;int&gt; vec&#123;3,5,1,2&#125;;</span><br><span class="line"></span><br><span class="line">	make_heap(vec.bein(), vec.end());</span><br><span class="line">	</span><br><span class="line">	&#x2F;&#x2F;此时vec容器元素之间的关系是一个堆</span><br><span class="line">	cout&lt;&lt;&quot;make_heap之后:&quot;;</span><br><span class="line">	for(auto i:vec)&#123;</span><br><span class="line">		cout&lt;&lt;i&lt;&lt;&quot; &quot;;</span><br><span class="line">	&#125;</span><br><span class="line">	cout&lt;&lt;endl;</span><br><span class="line">	vec.push_back(4);</span><br><span class="line">	push_heap(vec.begin(), vec.end());</span><br><span class="line">	cout&lt;&lt;&quot;push_heap之后:&quot;;</span><br><span class="line">	for(auto i:vec)&#123;</span><br><span class="line">		cout&lt;&lt;i&lt;&lt;&quot; &quot;;</span><br><span class="line">	&#125;</span><br><span class="line">	cout&lt;&lt;endl;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier New">执行结果:</font></p>
+<p><img src="https://img-blog.csdnimg.cn/20190106144525522.png" alt="在这里插入图片描述"><br><font size=5 face="Courier New" color=blue>(3)pop_heap()</font><br><img src="https://img-blog.csdnimg.cn/20190106152138311.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><font size=5 face="Courier New">pop_heap()操作并不是真的将堆顶元素从容器中弹出，而是将容器最后一个元素交换到栈顶，进行shiftDown(1)操作，维持堆的性质。之后可以使用back()获取原堆顶元素，或者使用pop_bakc()操作将原堆顶元素从容器中删除。这里堆从操作可以查看这篇博客：<a target="_blank" rel="noopener" href="https://blog.csdn.net/ASJBFJSB/article/details/84075322">二叉堆的实现</a><br></font><br><font size=5 face="Courier New">代码测试：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;vector&gt;</span><br><span class="line">#include &lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">	vector&lt;int&gt; vec&#123;4, 1, 3, 2, 5&#125;;</span><br><span class="line">	make_heap(vec.begin(), vec.end());</span><br><span class="line">	cout&lt;&lt;&quot;make_heap之后:&quot;;</span><br><span class="line">	for(auto i:vec)&#123;</span><br><span class="line">		cout&lt;&lt;i&lt;&lt;&quot; &quot;;</span><br><span class="line">	&#125;</span><br><span class="line">	cout&lt;&lt;endl;</span><br><span class="line">	</span><br><span class="line">	pop_heap(vec.begin(), vec.end());</span><br><span class="line">	cout&lt;&lt;&quot;pop_heap()之后:&quot;</span><br><span class="line">	for(auto i:vec)&#123;</span><br><span class="line">		cout&lt;&lt;i&lt;&lt;&quot; &quot;;</span><br><span class="line">	&#125;</span><br><span class="line">	cout&lt;&lt;endl;</span><br><span class="line"></span><br><span class="line">	cout&lt;&lt;&quot;vec.back() &#x3D; &quot;&lt;&lt;vec.back();</span><br><span class="line">	</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier New">执行结果:</font><br><img src="https://img-blog.csdnimg.cn/2019010615404481.png" alt="在这里插入图片描述"></p>
+<p><font size=5 face="Courier New"><font color=blue>(1)sort_heap</font><br><font size=5 face="Courier New">sort_heap算法可以对一个堆进行排序，排序之后也就不是一个堆了。但是如果[first,last)本身不是一个堆，这样的sort_heap是没有定义的。</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;vector&gt;</span><br><span class="line">#include &lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">	vector&lt;int&gt; vec&#123;4, 1, 3, 5, 2&#125;;</span><br><span class="line">	make_heap(vec.begin(), vec.end());</span><br><span class="line">	cout&lt;&lt;&quot;make_heap之后:&quot;;</span><br><span class="line">	for(auto i:vec)&#123;</span><br><span class="line">		cout&lt;&lt;i&lt;&lt;&quot; &quot;;</span><br><span class="line">	&#125;</span><br><span class="line">	cout&lt;&lt;endl;</span><br><span class="line">	sort_heap(vec.begin(), vec.end());</span><br><span class="line">	cout&lt;&lt;&quot;sort_heap之后:&quot;;</span><br><span class="line">	for(auto i:vec)&#123;</span><br><span class="line">		cout&lt;&lt;i&lt;&lt;&quot; &quot;;</span><br><span class="line">	&#125;</span><br><span class="line">	cout&lt;&lt;endl;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier New">执行结果:</font><br><img src="https://img-blog.csdnimg.cn/20190106160102404.png" alt="在这里插入图片描述"></p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/c-c//" class="article-tag-list-link color1">c/c++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2019/01/06/%E6%B3%9B%E5%9E%8B%E7%AE%97%E6%B3%95%EF%BC%9A%E5%A0%86%E7%AE%97%E6%B3%95/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2019/01/13/linux%E4%B8%8B%E4%BD%BF%E7%94%A8core%E6%96%87%E4%BB%B6%E5%AF%B9%E7%A8%8B%E5%BA%8F%E8%BF%9B%E8%A1%8Cdebug/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          linux下使用core文件对程序进行debug
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/01/05/python%E5%AE%9E%E7%8E%B0%E7%AE%97%E6%B3%95%EF%BC%9A%E5%B9%B6%E6%9F%A5%E9%9B%86/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">python实现算法：并查集</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>

@@ -159,29 +159,194 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-C!S模式下---多线程编程" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       C/S模式下---多线程编程
     </h1>
   
 
-  
-  <a href="/2018/11/29/C!S%E6%A8%A1%E5%BC%8F%E4%B8%8B---%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%BC%96%E7%A8%8B/" class="archive-article-date">
+        
+        <a href="/2018/11/29/C!S%E6%A8%A1%E5%BC%8F%E4%B8%8B---%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%BC%96%E7%A8%8B/" class="archive-article-date">
   	<time datetime="2018-11-29T07:27:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-29</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face="Courier New">服务器采用单进程/线程编程，在同一时刻，服务器只能与一个客户端进行交互。只有与当前客户端的通信结束后，才能为下一个客户端进行服务。所以，如果采用线程，让主线程连接客户端，而函数线程为每个客户端进行服务，这样就可以保证服务器可以同时为多个客户端提供服务，实现并发。</p>
+<p><font size=5 face="Courier New" color=red>采用多线程的优势</font><br><font size=4 face="Courier New" color=blue>1.线程占用资源少。<br>2.从CPU的工作角度上看，线程的切换速度要比进程快。<br>3.资源共享，线程之间的通信更加简单。<br>4.编码实现相对简单。</font></p>
+<p><font size=5 face="Courier New">代码：ser.c</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;sys&#x2F;scoket.h&gt;</span><br><span class="line">#include &lt;arpa&#x2F;inet&gt;  </span><br><span class="line">#include &lt;netinet&#x2F;in.h&gt;</span><br><span class="line">#include &lt;assert.h&gt;</span><br><span class="line">#Include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;unistd.h&gt;</span><br><span class="line">#include &lt;fcntl.h&gt;</span><br><span class="line">#include &lt;signal.h&gt;</span><br><span class="line">#include &lt;string.h&gt;</span><br><span class="line">#include &lt;stdlib.h&gt;</span><br><span class="line">#include &lt;pthread.h&gt;</span><br><span class="line"></span><br><span class="line">void* fun(void* arg)&#123;</span><br><span class="line">	int c &#x3D; (int)arg;</span><br><span class="line">	char buff[128] &#x3D; &#123;0&#125;;</span><br><span class="line">	while(1)&#123;</span><br><span class="line">		int n &#x3D; recv(c,buff,127,0);</span><br><span class="line">		if(n&lt;&#x3D;0)&#123;</span><br><span class="line">			printf(&quot;client quit!\n&quot;);</span><br><span class="line">			close(c);</span><br><span class="line">			break;</span><br><span class="line">		&#125;</span><br><span class="line">		printf(&quot;%d : %s&quot;,c,buff);</span><br><span class="line">		send(c,&quot;OK&quot;,2,0);</span><br><span class="line">	&#125;</span><br><span class="line">	pthread_exit(NULL);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">	int fd &#x3D; socket(AF_INET,SOCK_STREAM,0);</span><br><span class="line">	assert(fd!&#x3D;-1);</span><br><span class="line">	struct sockaddr_in cli,ser;</span><br><span class="line">	ser.sin_family &#x3D; AF_INET;</span><br><span class="line">	ser.sin_port &#x3D; htons(6000);</span><br><span class="line">	ser.sin_addr.s_addr &#x3D; inet_addr(&quot;127.0.0.1&quot;);</span><br><span class="line">	</span><br><span class="line">	int res &#x3D; binf(fd,(struct sockaddr*)&amp;ser,sizeof(ser));</span><br><span class="line">	assert(res!&#x3D;-1);</span><br><span class="line">	</span><br><span class="line">	res &#x3D; listen(fd,5);</span><br><span class="line">	assert(res!&#x3D;-1);</span><br><span class="line"></span><br><span class="line">	while(1)&#123;</span><br><span class="line">		socklen_t len &#x3D; sizeof(cli);</span><br><span class="line">		int c &#x3D; accept(fd,(struct sockaddr*)&amp;cli,&amp;len);</span><br><span class="line">		if(c&#x3D;&#x3D;-1)&#123;</span><br><span class="line">			printf(&quot;link error!\n&quot;);</span><br><span class="line">			continue;</span><br><span class="line">		&#125;</span><br><span class="line">		pthread_t id;</span><br><span class="line">		pthread_create(&amp;id,NULL,fun,(void*)c);&#x2F;&#x2F;值传递，不能地址传递</span><br><span class="line">	&#125;</span><br><span class="line">	close(fd);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier New">执行结果：<br><img src="https://img-blog.csdnimg.cn/20181129150529458.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><font size=5 face="Courier New" color=red>查看线程数量：</font><br><img src="https://img-blog.csdnimg.cn/20181129152719598.png" alt="在这里插入图片描述"><br><font size=5 face="Courier New" color=red>需要注意的问题：</font><br><font size=4 face="Courier New" color=blue>在向函数线程传递文件描述符的参数必须以值传递的形式进行传递，因为进程中的各个线程共享进程的PCB，如果以传地址或传引用的形式传输文件描述符，之前的正在被服务的客户端文件描述符可能被修改造成程序出错。</p>
+<p><font size=5 face="Courier New" color=red>采用服务器端多线程编程的缺点：</font><br><font size=4 face="Courier New" color=blue>1.要考虑线程安全问题。<br>2.线程之间不是相互独立的。<br>3.进程中的栈帧的大小是有限的，只能启动有限个数的线程。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/linux//" class="article-tag-list-link color1">linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2018/11/29/C!S%E6%A8%A1%E5%BC%8F%E4%B8%8B---%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%BC%96%E7%A8%8B/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2018/12/02/C++11%E6%96%B0%E7%89%B9%E6%80%A7--%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          C++11新特性--智能指针
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/11/29/C!S%E6%A8%A1%E5%BC%8F%E4%B8%8B---%E5%A4%9A%E8%BF%9B%E7%A8%8B%E7%BC%96%E7%A8%8B/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">C/S模式下---多进程编程</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>

@@ -161,29 +161,203 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-java中的异常" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       java中的异常
     </h1>
   
 
-  
-  <a href="/2018/09/17/java%E4%B8%AD%E7%9A%84%E5%BC%82%E5%B8%B8/" class="archive-article-date">
+        
+        <a href="/2018/09/17/java%E4%B8%AD%E7%9A%84%E5%BC%82%E5%B8%B8/" class="archive-article-date">
   	<time datetime="2018-09-17T12:13:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-17</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 color=red>Java中的异常</font></p>
+<p><font size=4>异常：直观的理解就是不正常，不完全正确，可能存在某些问题。在实际编写程序的过程中，往往可能出于疏忽而导致程序出现bug。典型的有数组越界，除0等，在c语言中由于考虑到程序实际的效率而未考虑数组下标越界引起的程序错误，如果在编写程序涉及到数组的边界问题而未考虑，几乎100%会发生如下的bug。合理的处理异常，会使得程序的健壮性，可读性以及可维护性得到大大的提高。</p>
+<font size=4>
+在java中，提供了优秀的异常机制，当程序出现在运行时期的异常和编译阶段的异常，提供解决错误的方法。
+
+<p><font size=4 color=red >错误：</font><font size=4 color=blue face="Courier New">是指系统出现错误或运行环境出现的错误，此类错误非常严重。即使捕捉到也不能够有效的处理，由java虚拟机生成并抛出，通常这类型的错误是由系统错误引起的。<br><font size=4 color=red >运行时期异常：</font><font size=4 color=blue face="Courier New">是在运行时期可以被捕获的异常并能够做有效的处理，如果程序当中没有对这些可能存在的异常做处理，这些异常的处理通常由默认的异常处理程序进行处理。<br><font size=4 color=red face="Courier New">非运行时期异常：</font><font size=4 color=blue face="Courier New">通常是一些语法、语义错误，此类错误通常在编写代码时，由集成开发环境(IDE)提示错误。<br><font size=4 color=red><br>下图是java中异常的层次结构：</font></p>
+<p><img src="https://img-blog.csdn.net/20180917190804433?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="在这里插入图片描述"><br><font size=5 color=red>在程序中显式的进行异常的处理</font></p>
+<p><font size=4.5 face="Courier New" color=red>1.捕获可能存在的异常。</font><font size=4.5 face="Courier New">通过<code>try&#123;&#125;</code>和<code>catch(形式参数)&#123;&#125;</code>代码块，其中<code>catch(形式参数)&#123;&#125;</code>代码块可以有多个，但是<code>try&#123;&#125;</code>代码块只有一个。也就是说一个try代码块可以搭配多个catch代码块，因为在可能存在异常的代码块中，可能存在各种不同类型的异常，但是每个catch代码块只能够捕捉到特定类型的异常，所以为了去处理每种类型的异常，就需要增加相应的catch块。<font color=red>注意：catch代码块的参数列表需要写对应类型的异常。</font>当我们忘记可能发生异常的具体类型时间，可以使用Exception基类，因为在java中所有肯能出现的异常都继承Exception类，当然基类的引用是可以指向子类的方法的。(向上造型)，<font color=blue>注意：在实际的编程中，并不推荐使用Exception的对象作为catch的实参，当有多个catch块时，只能有一个catch块可以使用Exception,否则若所有的catch块都使用Exception,当程序中有多个异常时，根本找不多异常到底是哪一个，正如前边所说的，一个catch块只处理对应的异常。如果所有的catch都想用Exception，那岂不是所有的问题都可以由一个catch来处理了，这显然是矛盾的。</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">try&#123;</span><br><span class="line">	&#x2F;&#x2F;书写可能出些异常的代码块</span><br><span class="line">&#125;</span><br><span class="line">catch(某种类型的异常)&#123;</span><br><span class="line">	&#x2F;&#x2F;当出现异常时，对异常进行处理的代码块</span><br><span class="line">&#125;</span><br><span class="line">catch(另外一种类型的异常)&#123;</span><br><span class="line">&#125;</span><br><span class="line">finally&#123;&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=4 face="Courier New">在catch代码块中，异常对象可以使用的两个比较有用的方法。<br>(1)getMassage()方法，是Throwable类提供的一个方法，通过该方法的调用，可以得到有关异常的信息。<br><img src="https://img-blog.csdn.net/20180917200615394?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="在这里插入图片描述"><br>(2)printStackTrace()方法，也是由Throwable提供的一个重载的方法，用于输跟踪异常事件发生时堆栈的内容。<br><img src="https://img-blog.csdn.net/20180917201031472?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="在这里插入图片描述"><br>由于异常类都是直接或间接的继承Throwable类，因此子类中都是可以调用这两个方法的。<br><font size=4 face="Courier New">值得一提的是<code>finally</code>代码块也是非常重要，尤其是在<code>finally</code>代码块中释放资源。<code>finally</code>代码块中的内容，无论之前的·catch·块是否对一场进行了处理，它都一定会执行。如对数据库的连接，若将数据库关闭的操作写在catch块中，但是并没有出现catch所能处理的异常。此时，数据库的连接并没有关闭，而数据库的连接是由上限的，当到达一定数量时，就不允许创建新的连接了。此时，如果将关闭数据库的代码在finally代码块中，就可以解决上边存在的问题。<br><font size=4.5 face="Courier New" color=red>2.声明异常 <font size=4.5 face="Courier New"  color=black><br>（1）<code>throws</code>关键字，将方法执行时可能会出现的异常写在方法的头部，throws关键字后边声明多个异常，它们之间使用逗号隔开，这样调用该方法时就知道应该写什么样的代码来处理这些可能存在的异常，<font color=red>如果调用了声明的异常的方法，却并没有相应的catch块，这样的代码是不能编译通过的。</font>一旦在编写代码的过程中调用了声明异常的方法，调用方就必须做相应的处理，否则编译是不能通过的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">class Test&#123;</span><br><span class="line">	void fun() throws Exception&#123;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Main&#123;</span><br><span class="line">	public static void main(String[] args)&#123;</span><br><span class="line">		Test t &#x3D; new Test();</span><br><span class="line">		t.fun();&#x2F;&#x2F;不能编译通过</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=4.5 face="Courier New" color=black>（2）并不是所有可能出现的异常的方法对所有的异常进行异常的声明，如运行时异常RuntimeException异常，它和它的子类不需要进行异常声明。在处理的异常的过程中，如果当前调用方不对异常进行处理，那么由它的上一级调用者处理，沿着调用的层次向上传递。</p>
+<p><font size=5 color=red>使用自定义的异常</font><br><font size=4.5 face="Courier New">有时候，系统的提高的异常并不能完全够实际的开发使用，由于java的继承机制，可以很好的提高代码复用。可以通过继承基类Exception,编译自己的异常，以处理这些实际开发中可能存在的异常。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">class MyException extends Exception&#123;</span><br><span class="line">	MyException(String str)&#123;</span><br><span class="line">		System.out.println(str);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Salary&#123;</span><br><span class="line">	void fun(int n) throws MyException&#123;</span><br><span class="line">		if(n &gt; 100000)&#123;</span><br><span class="line">			  throw new MyException(&quot;工资大于10000!&quot;)</span><br><span class="line">			  &#x2F;&#x2F;MyException e &#x3D; new MyException(&quot;工资大于10000!&quot;);</span><br><span class="line">			  &#x2F;&#x2F;throw e;</span><br><span class="line">			  &#x2F;&#x2F;以上的两种写法是等价的</span><br><span class="line">		 &#125;		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Main&#123;</span><br><span class="line">	public static void main(String[] args)&#123;</span><br><span class="line">		Salary  s &#x3D; new Salary;</span><br><span class="line">		try&#123;</span><br><span class="line">			s.fun(10010);</span><br><span class="line">		&#125;</span><br><span class="line">		catch(MyException e)&#123;</span><br><span class="line">			e.printStackTrace;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdn.net/20180918103802313?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="在这里插入图片描述"></p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/java//" class="article-tag-list-link color5">java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2018/09/17/java%E4%B8%AD%E7%9A%84%E5%BC%82%E5%B8%B8/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2018/09/19/java%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%88%87%E5%89%B2%E5%B0%8F%E8%AE%B0/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          java字符串切割小记
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/09/13/java%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">java素数筛选法</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>

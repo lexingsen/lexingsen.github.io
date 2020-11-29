@@ -156,29 +156,191 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-中缀表达式转后缀表达式以及计算后缀表达式的值(C++)" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       中缀表达式转后缀表达式以及计算后缀表达式的值(C++)
     </h1>
   
 
-  
-  <a href="/2019/09/06/%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%BD%AC%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%BB%A5%E5%8F%8A%E8%AE%A1%E7%AE%97%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E5%80%BC(C++)/" class="archive-article-date">
+        
+        <a href="/2019/09/06/%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%BD%AC%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%BB%A5%E5%8F%8A%E8%AE%A1%E7%AE%97%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E5%80%BC(C++)/" class="archive-article-date">
   	<time datetime="2019-09-06T01:05:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-06</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face="Consolas">1.中缀转后缀的要点</font><br><font size=4 face="Consolas">(1)遇到数字需要直接输出，但是有时数字可能不只是一个个位数，因此需要遍历表达式，获取该值。<br>(2)如果运算符栈为空，如果遇到运算符，直接入栈。<br>(3)如果遇到”(“，直接入栈。<br>(4)如果遇到”)”，连续出栈，一直到栈顶元素是”(“，然后出栈”(“。<br>(5)如果遇到运算符且运算符栈不为空，此时需要比较当前运算符和栈顶运算符的优先级。<font color=blue>分两种情况：1.当前运算符优先级大于栈顶运算符优先级，直接入栈。2.当前运算符优先小于栈顶运算符优先级，需要一直出栈，直到栈顶运算符优先小于当前运算符，将当前运算符入栈。</font></p>
+<p><font size=5 face="Consolas">2.代码实现</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;vector&gt;</span><br><span class="line">#include &lt;stack&gt;</span><br><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;algorithm&gt;</span><br><span class="line">#include &lt;sstream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">#define ERROR 0x3f3f</span><br><span class="line"></span><br><span class="line">string cto_string(char c) &#123;</span><br><span class="line">	stringstream stream;</span><br><span class="line">	stream &lt;&lt; c;</span><br><span class="line">	return stream.str();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int cmp(char a, char b) &#123;</span><br><span class="line">	if (a&#x3D;&#x3D;&#39;+&#39;) &#123;</span><br><span class="line">		if (b &#x3D;&#x3D; &#39;-&#39; || b &#x3D;&#x3D; &#39;+&#39;) return 0;</span><br><span class="line">		else if (b &#x3D;&#x3D; &#39;*&#39; || b &#x3D;&#x3D; &#39;&#x2F;&#39;) return -1;</span><br><span class="line">		else if (b &#x3D;&#x3D; &#39;(&#39;) return 1; </span><br><span class="line">	&#125; else if (a &#x3D;&#x3D; &#39;-&#39;) &#123;</span><br><span class="line">		if (b &#x3D;&#x3D; &#39;-&#39; || b &#x3D;&#x3D; &#39;+&#39;) return 0;</span><br><span class="line">		else if (b &#x3D;&#x3D; &#39;*&#39; || b &#x3D;&#x3D; &#39;&#x2F;&#39;) return -1;</span><br><span class="line">		else if (b &#x3D;&#x3D; &#39;(&#39;) return 1; </span><br><span class="line">	&#125; else if (a &#x3D;&#x3D; &#39;*&#39;) &#123;</span><br><span class="line">		if (b &#x3D;&#x3D; &#39;*&#39; || b &#x3D;&#x3D; &#39;&#x2F;&#39;) return 0;</span><br><span class="line">		else if(b &#x3D;&#x3D; &#39;+&#39; || b &#x3D;&#x3D; &#39;-&#39; || b &#x3D;&#x3D; &#39;(&#39;) return 1;</span><br><span class="line">	&#125; else if (a &#x3D;&#x3D; &#39;&#x2F;&#39;) &#123;</span><br><span class="line">		if (b &#x3D;&#x3D; &#39;*&#39; || b &#x3D;&#x3D; &#39;&#x2F;&#39;) return 0;</span><br><span class="line">		else if(b &#x3D;&#x3D; &#39;+&#39; || b &#x3D;&#x3D; &#39;-&#39; || b &#x3D;&#x3D; &#39;(&#39;) return 1;</span><br><span class="line">	&#125; else &#123;</span><br><span class="line">		cout &lt;&lt; &quot;invalid sign&quot; &lt;&lt; endl; </span><br><span class="line">		return ERROR;</span><br><span class="line">	&#125;</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">vector&lt;string&gt; res;</span><br><span class="line">vector&lt;string&gt; InfixToSuffix(string infix) &#123;</span><br><span class="line">	stack&lt;char&gt; st;</span><br><span class="line">	int i &#x3D; 0;</span><br><span class="line">	while (i &lt; infix.length()) &#123;</span><br><span class="line">		if (infix[i] &#x3D;&#x3D; &#39;(&#39;) &#123;</span><br><span class="line">			st.push(infix[i]);</span><br><span class="line">			i ++;</span><br><span class="line">		&#125; else if (infix[i] &#x3D;&#x3D; &#39;)&#39;) &#123;</span><br><span class="line">			while (!st.empty()) &#123;</span><br><span class="line">				char op &#x3D; st.top();st.pop();</span><br><span class="line">				if (op &#x3D;&#x3D; &#39;(&#39;) break;</span><br><span class="line">				else res.push_back(cto_string(op));</span><br><span class="line">				i ++;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; else if (isdigit(infix[i])) &#123;</span><br><span class="line">			int n &#x3D; infix[i ++] - &#39;0&#39;;</span><br><span class="line">			while (i &lt; infix.length() &amp;&amp; isdigit(infix[i])) &#123;</span><br><span class="line">				n &#x3D; n * 10 + (infix[i ++] - &#39;0&#39;); </span><br><span class="line">			&#125;</span><br><span class="line">			res.push_back(to_string(n));</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			if (st.empty()) st.push(infix[i]);</span><br><span class="line">			else &#123;</span><br><span class="line">				if (cmp(infix[i], st.top()) &gt; 0) st.push(infix[i]);</span><br><span class="line">				else if (cmp(infix[i], st.top()) &lt;&#x3D; 0) &#123;</span><br><span class="line">					while (!st.empty()) &#123;</span><br><span class="line">						char op &#x3D; st.top();st.pop();</span><br><span class="line">						res.push_back(cto_string(op));</span><br><span class="line">						if (cmp(infix[i], op) &gt; 0) break;</span><br><span class="line">					&#125;</span><br><span class="line">					st.push(infix[i]); </span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			i ++;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	while (!st.empty()) &#123;</span><br><span class="line">		res.push_back(cto_string(st.top())); st.pop();</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	return res;</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;计算后缀表达式的值 </span><br><span class="line">int calculate(vector&lt;string&gt;&amp; a) &#123;</span><br><span class="line">    stack&lt;int&gt; st;</span><br><span class="line">    for (auto x : a) &#123;</span><br><span class="line">        if (x &#x3D;&#x3D; &quot;+&quot;) &#123;</span><br><span class="line">            int a &#x3D; st.top();st.pop();</span><br><span class="line">            int b &#x3D; st.top();st.pop();</span><br><span class="line">            st.push(b + a);</span><br><span class="line">        &#125;</span><br><span class="line">        else if (x &#x3D;&#x3D; &quot;-&quot;) &#123;</span><br><span class="line">            int a &#x3D; st.top();st.pop();</span><br><span class="line">            int b &#x3D; st.top();st.pop();</span><br><span class="line">        	st.push(b - a);</span><br><span class="line">        &#125;</span><br><span class="line">        else if (x &#x3D;&#x3D; &quot;*&quot;) &#123;</span><br><span class="line">            int a &#x3D; st.top();st.pop();</span><br><span class="line">            int b &#x3D; st.top();st.pop();</span><br><span class="line">            st.push(b * a);</span><br><span class="line">        &#125;</span><br><span class="line">        else if (x &#x3D;&#x3D; &quot;&#x2F;&quot;) &#123;</span><br><span class="line">            int a &#x3D; st.top();st.pop();</span><br><span class="line">            int b &#x3D; st.top();st.pop();</span><br><span class="line">            st.push(b &#x2F; a);</span><br><span class="line">        &#125; </span><br><span class="line">        else &#123;</span><br><span class="line">            st.push(stoi(x));</span><br><span class="line">        &#125;</span><br><span class="line">            </span><br><span class="line">	&#125;</span><br><span class="line">    return st.top();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void print(string a) &#123;cout &lt;&lt; a &lt;&lt; &quot; &quot;;&#125;</span><br><span class="line">    </span><br><span class="line">int main() &#123;;</span><br><span class="line">	string s;</span><br><span class="line">	cin &gt;&gt; s;</span><br><span class="line">	vector&lt;string&gt; t &#x3D; InfixToSuffix(s);</span><br><span class="line">	for_each(t.begin(), t.end(), print);cout &lt;&lt; endl;</span><br><span class="line">	int ans &#x3D; calculate(t);</span><br><span class="line">	cout &lt;&lt; ans &lt;&lt; endl;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/数据结构//" class="article-tag-list-link color5">数据结构</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2019/09/06/%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%BD%AC%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%BB%A5%E5%8F%8A%E8%AE%A1%E7%AE%97%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E5%80%BC(C++)/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2019/09/06/%E6%A0%88%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%9A%E6%8B%AC%E5%8F%B7%E5%8C%B9%E9%85%8D(C++)/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          栈的应用：括号匹配(C++)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/08/28/%E6%8E%A8%E5%AF%BCB%E6%A0%91%E7%9A%84%E6%9C%80%E5%A4%A7%E9%AB%98%E5%BA%A6%E5%92%8C%E6%9C%80%E5%B0%8F%E9%AB%98%E5%BA%A6%E5%BE%97%E5%87%BAB%E6%A0%91%E7%9A%84%E9%AB%98%E5%BA%A6%E8%8C%83%E5%9B%B4/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">推导B树的最大高度和最小高度得出B树的高度范围</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>

@@ -156,29 +156,198 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-PAT（乙级）1080. MOOC期终成绩（25）" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       PAT（乙级）1080. MOOC期终成绩（25）
     </h1>
   
 
-  
-  <a href="/2019/03/21/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891080.%20MOOC%E6%9C%9F%E7%BB%88%E6%88%90%E7%BB%A9%EF%BC%8825%EF%BC%89/" class="archive-article-date">
+        
+        <a href="/2019/03/21/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891080.%20MOOC%E6%9C%9F%E7%BB%88%E6%88%90%E7%BB%A9%EF%BC%8825%EF%BC%89/" class="archive-article-date">
   	<time datetime="2019-03-21T13:37:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-21</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face="Courier New">1083.是否存在相等的差</font></p>
+<p><font size=4 face="Courier New">对于在中国大学MOOC（<a target="_blank" rel="noopener" href="http://www.icourse163.org/">http://www.icourse163.org/</a> ）学习“数据结构”课程的学生，想要获得一张合格证书，必须首先获得不少于200分的在线编程作业分，然后总评获得不少于60分（满分100）。总评成绩的计算公式为 G=(Gmid−term×40%+G​final×60%)，如果 G​mid−term&gt;G​final;否则总评 G 就是 G​final。这里 G​mid−term 和 G​final分别为学生的期中和期末成绩。<br>现在的问题是，每次考试都产生一张独立的成绩单。本题就请你编写程序，把不同的成绩单合为一张。</p>
+<p><font size=5 face="Courier New" color=red>输入格式：</font><br><font size=4 face="Courier New">输入在第一行给出3个整数，分别是 P（做了在线编程作业的学生数）、M（参加了期中考试的学生数）、N（参加了期末考试的学生数）。每个数都不超过10000。<br>接下来有三块输入。第一块包含 P 个在线编程成绩 G​p；第二块包含 M 个期中考试成绩 Gmid−term；第三块包含 N 个期末考试成绩 G​final​​ 。每个成绩占一行，格式为：<code>学生学号 分数</code>。其中<code>学生学号</code>为不超过20个字符的英文字母和数字；<code>分数</code>是非负整数（编程总分最高为900分，期中和期末的最高分为100分）。</p>
+<p><font size=5 face="Courier New" color=red>输出格式：</font><br><font size=4 face="Courier New">打印出获得合格证书的学生名单。每个学生占一行，格式为：<br>学生学号 <code>G​p G​mid−term G​final G</code><br>如果有的成绩不存在（例如某人没参加期中考试），则在相应的位置输出<code>−1</code>。输出顺序为按照总评分数（四舍五入精确到整数）递减。若有并列，则按学号递增。题目保证学号没有重复，且至少存在1个合格的学生。</p>
+<p><font size=5 face="Courier New" color=blue>题目分析：使用map存储学生的在线编程成绩，期中成绩以及期末成绩。由于有同学可能只参加部分考试，需要一个set保存所有参与课程同学的姓名，方便后边使用。读入数据后，将满足条件的学生信息存储到vector中， 条件:if(gp&gt;=200 &amp;&amp; G&gt;=60)。这里涉及到一个变成小技巧四舍五入。之后按照输出条件对vector排序即可。</font></p>
+<p><font size=4 face="Courier New">四舍五入：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int a;</span><br><span class="line">double b &#x3D; (int)(a+0.5);</span><br><span class="line">cout&lt;&lt;b&lt;&lt;endl;</span><br></pre></td></tr></table></figure>
+
+<p><font size=4 face="Courier New">代码实现：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;cstdio&gt;</span><br><span class="line">#include &lt;unordered_map&gt;</span><br><span class="line">#include &lt;set&gt;</span><br><span class="line">#include &lt;cstdio&gt;</span><br><span class="line">#include &lt;vector&gt;</span><br><span class="line">#include &lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">struct Stu&#123;</span><br><span class="line">    string name;</span><br><span class="line">    int gp, gmid, gfinal, G;</span><br><span class="line">    Stu(string name, int gp, int gmid, int gfinal, int G)&#123;</span><br><span class="line">        this-&gt;name &#x3D; name;</span><br><span class="line">        this-&gt;gp &#x3D; gp;</span><br><span class="line">        this-&gt;gmid &#x3D; gmid;</span><br><span class="line">        this-&gt;gfinal &#x3D; gfinal;</span><br><span class="line">        this-&gt;G &#x3D; G;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">bool cmp(Stu a, Stu b)&#123;</span><br><span class="line">    if(a.G !&#x3D; b.G)</span><br><span class="line">        return a.G &gt; b.G;</span><br><span class="line">    else</span><br><span class="line">        return a.name &lt; b.name;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">set&lt;string&gt; st;</span><br><span class="line">vector&lt;Stu&gt; vec;</span><br><span class="line">unordered_map&lt;string, int&gt; gp;</span><br><span class="line">unordered_map&lt;string, int&gt; gmid;</span><br><span class="line">unordered_map&lt;string, int&gt; gfinal;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    &#x2F;&#x2F;freopen(&quot;in.txt&quot;, &quot;r&quot;, stdin);</span><br><span class="line">    string id;</span><br><span class="line">    int p, m, n, score;</span><br><span class="line">    scanf(&quot;%d%d%d&quot;, &amp;p, &amp;m, &amp;n);</span><br><span class="line">    for(int i&#x3D;0; i&lt;p; ++i)&#123;</span><br><span class="line">        cin&gt;&gt;id;</span><br><span class="line">        st.insert(id);</span><br><span class="line">        scanf(&quot;%d&quot;, &amp;score);</span><br><span class="line">        gp[id] &#x3D; score;</span><br><span class="line">    &#125;</span><br><span class="line">    for(int i&#x3D;0; i&lt;m; ++i)&#123;</span><br><span class="line">        cin&gt;&gt;id;</span><br><span class="line">        st.insert(id);</span><br><span class="line">        scanf(&quot;%d&quot;, &amp;score);</span><br><span class="line">        gmid[id] &#x3D; score;</span><br><span class="line">    &#125;</span><br><span class="line">    for(int i&#x3D;0; i&lt;n; ++i)&#123;</span><br><span class="line">        cin&gt;&gt;id;</span><br><span class="line">        st.insert(id);</span><br><span class="line">        scanf(&quot;%d&quot;, &amp;score);</span><br><span class="line">        gfinal[id] &#x3D; score;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    int Gp, Gmid, Gfinal;</span><br><span class="line">    for(auto it&#x3D;st.begin(); it!&#x3D;st.end(); ++it)&#123;</span><br><span class="line">        if(gp.find(*it)!&#x3D;gp.end())</span><br><span class="line">            Gp &#x3D; gp[*it];</span><br><span class="line">        else</span><br><span class="line">            Gp &#x3D; -1;</span><br><span class="line"></span><br><span class="line">        if(gmid.find(*it)!&#x3D;gmid.end())</span><br><span class="line">            Gmid &#x3D; gmid[*it];</span><br><span class="line">        else</span><br><span class="line">            Gmid &#x3D; -1;</span><br><span class="line"></span><br><span class="line">        if(gfinal.find(*it)!&#x3D;gfinal.end())</span><br><span class="line">            Gfinal &#x3D; gfinal[*it];</span><br><span class="line">        else</span><br><span class="line">            Gfinal &#x3D; -1;</span><br><span class="line"></span><br><span class="line">        double G;</span><br><span class="line">        if(Gmid &gt; Gfinal)</span><br><span class="line">            G &#x3D; (int)(Gmid*0.4 + Gfinal*0.6 + 0.5);</span><br><span class="line">        else</span><br><span class="line">            G  &#x3D; Gfinal;</span><br><span class="line"></span><br><span class="line">        if(Gp&gt;&#x3D;200 &amp;&amp; G&gt;&#x3D;60)</span><br><span class="line">            vec.push_back(Stu(*it, Gp, Gmid, Gfinal, G));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    sort(vec.begin(), vec.end(), cmp);</span><br><span class="line"></span><br><span class="line">    for(int i&#x3D;0; i&lt;vec.size(); ++i)&#123;</span><br><span class="line">        cout&lt;&lt;vec[i].name;</span><br><span class="line">        printf(&quot; %d %d %d %d\n&quot;, vec[i].gp, vec[i].gmid, vec[i].gfinal, vec[i].G);</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/PAT乙级题解//" class="article-tag-list-link color3">PAT乙级题解</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2019/03/21/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891080.%20MOOC%E6%9C%9F%E7%BB%88%E6%88%90%E7%BB%A9%EF%BC%8825%EF%BC%89/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2019/03/21/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891042.%E7%BB%9F%E8%AE%A1%E5%AD%97%E7%AC%A6%EF%BC%8820%EF%BC%89/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          PAT（乙级）1042.统计字符（20）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/03/21/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891083.%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8%E7%9B%B8%E7%AD%89%E7%9A%84%E5%B7%AE%EF%BC%8820%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">PAT（乙级）1083.是否存在相等的差（20）</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>

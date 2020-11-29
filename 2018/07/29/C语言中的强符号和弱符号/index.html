@@ -159,29 +159,201 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-C语言中的强符号和弱符号" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       C语言中的强符号和弱符号
     </h1>
   
 
-  
-  <a href="/2018/07/29/C%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%9A%84%E5%BC%BA%E7%AC%A6%E5%8F%B7%E5%92%8C%E5%BC%B1%E7%AC%A6%E5%8F%B7/" class="archive-article-date">
+        
+        <a href="/2018/07/29/C%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%9A%84%E5%BC%BA%E7%AC%A6%E5%8F%B7%E5%92%8C%E5%BC%B1%E7%AC%A6%E5%8F%B7/" class="archive-article-date">
   	<time datetime="2018-07-29T01:30:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-29</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 color=black>一、强弱符号</font></p>
+<p><font size=4.5>强弱符号针对的是<font color=red>处于同一工程下在不同源文件下定义的全局变量符号</font>，链接器只处理global的符号而不处理local的符号。链接的核心是<font color=red>符号的重定位</font>，在符号引用的地方找到符号定义的地方，包括函数产生的符号和全局变量产生的符号。</font></p>
+<p><font  color=black>强符号：函数和初始化的全局变量所生成的符号。<br>弱符号：未初始化的全局变量所生成的符号。</font></p>
+<p>很多情况下写出的代码会出现<font color=red>链接的错误，符号重定义</font>，这是因为在不同的源文件中定义了同名的全局变量并且都进行了初始化。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;a.c</span><br><span class="line">int gdata &#x3D; 10;</span><br><span class="line">&#x2F;&#x2F;b.c</span><br><span class="line">int gdata &#x3D; 20;</span><br><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">int main()&#123;</span><br><span class="line">	printf(&quot;gdata &#x3D; %d\n&quot;,gdata);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdn.net/20180729083320759?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>这是很多新手容易犯的错误，若将a.c或b.c中全局变量<code>gdata</code>只初始化一次，则不会出现链接错误，并且会链接成功。那么新的问题是：<br><font  color=black>（1）出现强符号和弱符号，选择哪一个？<br>（2）若出现多个同名的强符号，最终怎么选择？<br>（3）若出现多个同名的弱符号，最终会怎么选择？</font><br>显然需要这样的一套规则来约束这些可能存在的问题。</p>
+<p><font size=5 color=black>二、强弱符号的使用规则</font></p>
+<p>（1）如果出现多个强符号，最终会出现链接错误即符号的重定义。<br>（2）如果出现强符号和弱符号，编译器最终会选择强符号。<br>（3）如果出现多个同名弱符号，编译器最终会选择内存占用量最大的那个符号。</p>
+<p>一个有趣的小例子再看强弱符号：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;a.c</span><br><span class="line">int x;</span><br><span class="line">void func()&#123;</span><br><span class="line">	x &#x3D; 20;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F;b.c</span><br><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">short x &#x3D; 10;</span><br><span class="line">short y &#x3D; 10;</span><br><span class="line">extern void func();</span><br><span class="line">int main()&#123;</span><br><span class="line">	func();</span><br><span class="line">	printf(&quot;x &#x3D; %d,y &#x3D; %d\n&quot;,x,y);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F;试问输出的x和y分别是多少，大家可以自己先想一下，看看自己的答案。</span><br></pre></td></tr></table></figure>
+<p>执行结果：<br><img src="https://img-blog.csdn.net/20180729090334789?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>和大家心中的答案是否一致呢？<br>有很多人会有疑问，为什么y输出的不是10，而是0呢？<br><font color=red>源文件是独立进行编译的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;a.c</span><br><span class="line">int x;&#x2F;&#x2F;弱符号</span><br><span class="line">void func()&#123;</span><br><span class="line">	x &#x3D; 20; &#x2F;&#x2F;往x的内存上写20,写4个字节   编译阶段就完成的</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F;b.c</span><br><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">short x &#x3D; 10;&#x2F;&#x2F;强符号   14 00 00 00最终将y覆盖为0</span><br><span class="line">short y &#x3D; 10;</span><br><span class="line">extern void func();</span><br><span class="line">int main()&#123;</span><br><span class="line">	func();&#x2F;&#x2F;链接的完成选择强符号</span><br><span class="line">	printf(&quot;x &#x3D; %d,y &#x3D; %d\n&quot;,x,y);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在 gcc中，可以通过<code>__attribute__((weak))</code>来强制定义任何一个符号为弱符号。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/c-c//" class="article-tag-list-link color1">c/c++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2018/07/29/C%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%9A%84%E5%BC%BA%E7%AC%A6%E5%8F%B7%E5%92%8C%E5%BC%B1%E7%AC%A6%E5%8F%B7/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2018/08/01/c++%20typeid().name()%E8%BE%93%E5%87%BA%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          c++ typeid().name()输出变量类型
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/07/28/linux%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%87%BD%E6%95%B0%20mmap--%E5%88%9B%E5%BB%BA%E5%86%85%E5%AD%98%E6%98%A0%E5%B0%84%E5%8C%BA%EF%BC%88%E5%9C%A8%E8%99%9A%E6%8B%9F%E5%9C%B0%E5%9D%80%E7%A9%BA%E9%97%B4%E4%B8%8A)!munmap--%E9%87%8A%E6%94%BE%E5%86%85%E5%AD%98%E6%98%A0%E5%B0%84%E5%8C%BA/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">linux系统调用函数 mmap--创建内存映射区（在虚拟地址空间上)/munmap--释放内存映射区</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>

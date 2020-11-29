@@ -158,29 +158,197 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-LeetCode 120.三角形的最小路径和（二维DP）" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       LeetCode 120.三角形的最小路径和（二维DP）
     </h1>
   
 
-  
-  <a href="/2018/09/03/LeetCode%20120.%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84%E6%9C%80%E5%B0%8F%E8%B7%AF%E5%BE%84%E5%92%8C%EF%BC%88%E4%BA%8C%E7%BB%B4DP%EF%BC%89/" class="archive-article-date">
+        
+        <a href="/2018/09/03/LeetCode%20120.%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84%E6%9C%80%E5%B0%8F%E8%B7%AF%E5%BE%84%E5%92%8C%EF%BC%88%E4%BA%8C%E7%BB%B4DP%EF%BC%89/" class="archive-article-date">
   	<time datetime="2018-09-03T04:13:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-03</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font face="Courier New" size=5>题目描述</font><br><font face="Courier New" size=4>给定一个三角形，找出自顶向下的最小路径和。每一步只能移动到下一行中相邻的结点上。</p>
+<p><font face="Courier New" size=4>例如，给定三角形</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">     [2],</span><br><span class="line">    [3,4],</span><br><span class="line">   [6,5,7],</span><br><span class="line">  [4,1,8,3]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p><font face="Courier New" size=4>自顶向下的最小路径和为 11（即，2 + 3 + 5 + 1 = 11）。</p>
+<p><font face="Courier New" size=4>说明：</p>
+<p><font face="Courier New" size=4>如果你可以只使用 O(n) 的额外空间（n 为三角形的总行数）来解决这个问题，那么你的算法会很加分。<font></p>
+<p><font size=5 color=red face="Courier New">分析：</font><font face="Courier New" size=4 >从题目中看出，第n行三角形中有n个数字。可以用一个二维数组存储数字三角形。需要找出自顶向下的最小路径和，则需要找到每一行的最小值。<br><font color=red>用dp[1][1]表示最小路径和。</font><br>要找前两行的最小路径和,则需要找到与（1，1）下一行相邻的两个点（2，1）到底的最小路劲和（2，2），决策出最小的路径和，dp[1][1] = min(dp[2][1]，dp[2][2]) + f[1][1];<br>对于dp[i][j]，则其求解为:<br><font color=red size= 4.5>dp[i][j] = min{dp[i+1][j],dp[i+1][j+1]}+f[i][j]</font>。<br>即为<font color=red>状态转移方程</font>，将dp[i][j]称为状态。<br>边界条件：对于最后一行，最小路径和即为元素自身的值。<br><font size=4 face="Courier New"><br>AC代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;cstdio&gt;</span><br><span class="line">#include &lt;cassert&gt;</span><br><span class="line">#include &lt;cstring&gt;</span><br><span class="line">#include &lt;algorithm&gt;</span><br><span class="line"></span><br><span class="line">const int maxn &#x3D; 1000;</span><br><span class="line">int f[maxn][maxn];</span><br><span class="line">int dp[maxn][maxn];</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">	int n;</span><br><span class="line">	scanf(&quot;%d&quot;,&amp;n);</span><br><span class="line">	for(int i&#x3D;1;i &lt;&#x3D; n;++i)&#123;</span><br><span class="line">		for(int j&#x3D;1;j &lt;&#x3D; i;++j)&#123;</span><br><span class="line">			scanf(&quot;%d&quot;,&amp;f[i][j]);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	for(int j&#x3D;1;j &lt;&#x3D; n;++j)&#123;</span><br><span class="line">		dp[n][j] &#x3D; f[n][j];</span><br><span class="line">	&#125;</span><br><span class="line">	for(int i&#x3D;n-1;i &gt;&#x3D; 1;--i)&#123;</span><br><span class="line">		for(int j&#x3D;1;j &lt;&#x3D; i;++j)&#123;			</span><br><span class="line">			dp[i][j] &#x3D; f[i][j] + std::min(dp[i+1][j],dp[i+1][j+1]);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	printf(&quot;%d\n&quot;,dp[1][1]);</span><br><span class="line">	for(int i&#x3D;1;i&lt;&#x3D;n;++i)&#123;</span><br><span class="line">		for(int j&#x3D;1;j &lt;&#x3D; i;++j)&#123;</span><br><span class="line">			printf(&quot;dp[%d][%d]&#x3D;%d &quot;,i,j,dp[i][j]);</span><br><span class="line">		&#125;</span><br><span class="line">		printf(&quot;\n&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><font size=4 face="Courier New">执行结果：</font><br><img src="https://img-blog.csdn.net/2018090312205712?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/算法基础-Leetcode//" class="article-tag-list-link color4">算法基础 Leetcode</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2018/09/03/LeetCode%20120.%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84%E6%9C%80%E5%B0%8F%E8%B7%AF%E5%BE%84%E5%92%8C%EF%BC%88%E4%BA%8C%E7%BB%B4DP%EF%BC%89/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2018/09/06/java%E6%8C%87%E4%BB%A4%E9%9B%86/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          java指令集
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/09/02/fibonacci%E6%95%B0%E5%88%97%E9%80%92%E5%BD%92%EF%BC%8C%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%EF%BC%8C%E5%BE%AA%E7%8E%AF+%E9%80%92%E6%8E%A8%E4%B8%89%E7%A7%8D%E6%96%B9%E6%B3%95%E7%9A%84%E6%80%A7%E8%83%BD%E6%AF%94%E8%BE%83/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">fibonacci数列递归，动态规划，循环+递推三种方法的性能比较</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>

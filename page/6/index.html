@@ -154,205 +154,845 @@
           <div id="js-content" class="content-ll">
             
   
-    <header class="article-header">
-  
+    <article id="post-fork与缓冲区的问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2020/02/14/fork%E4%B8%8E%E7%BC%93%E5%86%B2%E5%8C%BA%E7%9A%84%E9%97%AE%E9%A2%98/">fork与缓冲区的问题</a>
     </h1>
   
 
-  
-  <a href="/2020/02/14/fork%E4%B8%8E%E7%BC%93%E5%86%B2%E5%8C%BA%E7%9A%84%E9%97%AE%E9%A2%98/" class="archive-article-date">
+        
+        <a href="/2020/02/14/fork%E4%B8%8E%E7%BC%93%E5%86%B2%E5%8C%BA%E7%9A%84%E9%97%AE%E9%A2%98/" class="archive-article-date">
   	<time datetime="2020-02-14T06:42:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-14</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face=courier New>(1)在分析这个问题之前，先得熟悉一下缓冲区以及标准I/O中printf相关的问题。<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/ASJBFJSB/article/details/80152139?ops_request_misc=%7B%22request_id%22:%22158165962419726874048771%22,%22scm%22:%2220140713.130056874..%22%7D&request_id=158165962419726874048771&biz_id=0&utm_source=distribute.pc_search_result.none-task">printf行缓冲的概念以及刷新缓冲区的条件</a></font></p>
+<p><font size=5 face=courier New>(2)关于fork,在本例分析中只需要记住一点，fork之后子进程的地址空间中是拷贝了父进程的<font color=red>缓冲区</font>的。</font></p>
+<p><font size=6 face=courier New>例1：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;unistd.h&gt;</span><br><span class="line">#include &lt;sys&#x2F;types.h&gt;</span><br><span class="line">#include &lt;assert.h&gt;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">	for (int i&#x3D;0; i&lt;2; ++i) &#123;</span><br><span class="line">		fork();</span><br><span class="line">		printf(&quot;A\n&quot;); &#x2F;&#x2F;注意此处有\n, 直接刷新到标准输出中</span><br><span class="line">	&#125;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=5 face=courier New color=blue>执行结果：</font><br><img src="https://img-blog.csdnimg.cn/20200214140035717.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><font size=5 face=courier New>由执行结果，上述例1共输出六个A。下面我们来分析一下：</font><br><img src="https://img-blog.csdnimg.cn/20200214140435298.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><font size=5 face=courier New>由上图能够很直观看到为什么会输出六个A。</font></p>
+<p><font size=6 face=courier New>例2：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;unistd.h&gt;</span><br><span class="line">#include &lt;sys&#x2F;types.h&gt;</span><br><span class="line">#include &lt;assert.h&gt;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">	for (int i&#x3D;0; i&lt;2; ++i) &#123;</span><br><span class="line">		fork();</span><br><span class="line">		printf(&quot;A&quot;); \\注意此处未加换行符</span><br><span class="line">	&#125;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=5 face=courier New color=blue>执行结果：</font><br><img src="https://img-blog.csdnimg.cn/20200214141617269.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><font size=5 face=courier New color=red>看执行结果，相对于增加换行符的printf多输出了两个A，这是为什么？</font></p>
+<p><font size=5 face=courier New>文章的开头已经提及，fork出来的子进程会拷贝父进程的缓冲区。只要能把握住这一点，就能分析出原因来。</font></p>
+<p><img src="https://img-blog.csdnimg.cn/20200214144239605.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/linux//" class="article-tag-list-link color1">linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/02/14/fork%E4%B8%8E%E7%BC%93%E5%86%B2%E5%8C%BA%E7%9A%84%E9%97%AE%E9%A2%98/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-记录Linux编程中遇到的问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2020/02/13/%E8%AE%B0%E5%BD%95Linux%E7%BC%96%E7%A8%8B%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/">记录Linux编程中遇到的问题</a>
     </h1>
   
 
-  
-  <a href="/2020/02/13/%E8%AE%B0%E5%BD%95Linux%E7%BC%96%E7%A8%8B%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" class="archive-article-date">
+        
+        <a href="/2020/02/13/%E8%AE%B0%E5%BD%95Linux%E7%BC%96%E7%A8%8B%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" class="archive-article-date">
   	<time datetime="2020-02-13T13:47:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-13</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+
+<p><font size=5 face=consolas>vim支持系统剪贴板</font><br><code>sudo apt-get intall vim-gui-common</code></p>
+<p><font size=5 face=consolas>gcc编译mysql程序</font><br><code>gcc test.c -o test -L /usr/lib/mysql -lmysqlclient</code></p>
+<p><font size=5 face=consolas>ubuntu安装MySQL开发的库和头文件</font><br><code>sudo apt-get install libmysqlclient-dev</code></p>
+<p><font size=5 face=consolas>vs查看类的内存布局</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cl -d1reportSingleClassLayout[类名称] xxx.cpp</span><br><span class="line">例如：cl -d1reportSingleClassLayoutB 继承和多态.cpp</span><br></pre></td></tr></table></figure>
+
+<p><font size=5 face=consolas>ubuntu查找需要按照的软件</font><br><code>apt-cache search xxx</code></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/linux//" class="article-tag-list-link color1">linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/02/13/%E8%AE%B0%E5%BD%95Linux%E7%BC%96%E7%A8%8B%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-SGI STL二级空间配置器--内存池源码剖析" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2020/02/11/SGI%20STL%E4%BA%8C%E7%BA%A7%E7%A9%BA%E9%97%B4%E9%85%8D%E7%BD%AE%E5%99%A8--%E5%86%85%E5%AD%98%E6%B1%A0%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/">SGI STL二级空间配置器--内存池源码剖析</a>
     </h1>
   
 
-  
-  <a href="/2020/02/11/SGI%20STL%E4%BA%8C%E7%BA%A7%E7%A9%BA%E9%97%B4%E9%85%8D%E7%BD%AE%E5%99%A8--%E5%86%85%E5%AD%98%E6%B1%A0%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/" class="archive-article-date">
+        
+        <a href="/2020/02/11/SGI%20STL%E4%BA%8C%E7%BA%A7%E7%A9%BA%E9%97%B4%E9%85%8D%E7%BD%AE%E5%99%A8--%E5%86%85%E5%AD%98%E6%B1%A0%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/" class="archive-article-date">
   	<time datetime="2020-02-11T05:09:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-11</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=6 face=courier New>一、STL容器一级空间配置器</font></p>
+<p><font size=5 face=courier New>通过SGI STL vector底层源码逐步分析内存池。<br>事实上，在我们使用STL容器时，有一点没有关心到的是我们默认使用了标准库里边的空间配置器，当然标准这样的做法是为了减少学习成本，但是当我们深入学习时，就一定要明白这些容器底层是如何工作，才能注重效率，才能用好STL容器。正如侯捷先生所说”源码之后，了无秘密。”， 下面通过vector容器先看一级空间配置器：</font><br><img src="https://img-blog.csdnimg.cn/20200211123815884.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20200211123913691.png" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20200211124025192.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/20200211125651653.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><font size=5 face=courier New>在上图，可以看到在一级空间配置器中，construct和destroy,对容器对象的构造和析构，其中构造使用了定位new的方式，在指定的内存上进行对象的构造，construct调用了p-&gt;~T(),这是由于析构函数名和类型是一样的。而allocate和deallocate虽然又封装了一层_Alloc,但是通过源码我们可以发现，实际上一级空间配置器的底层还是malloc和free在做内存的开辟和释放。</font></p>
+<p><font size=6 face=courier New>二、二级空间配置器（内存池的分析）</font><br><img src="https://img-blog.csdnimg.cn/20200211130536293.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><font size=5 face=courier New>跟踪源码，到现在可以看到__default_alloc_template正是我们所要分析的二级空间配置器的管理类，下面首先给出管理类的源代码：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br></pre></td><td class="code"><pre><span class="line">template &lt;bool threads, int inst&gt;</span><br><span class="line">class __default_alloc_template &#123;</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">  &#x2F;&#x2F; Really we should use static const int x &#x3D; N</span><br><span class="line">  &#x2F;&#x2F; instead of enum &#123; x &#x3D; N &#125;, but few compilers accept the former.</span><br><span class="line">#if ! (defined(__SUNPRO_CC) || defined(__GNUC__))</span><br><span class="line">    enum &#123;_ALIGN &#x3D; 8&#125;;</span><br><span class="line">    enum &#123;_MAX_BYTES &#x3D; 128&#125;;</span><br><span class="line">    enum &#123;_NFREELISTS &#x3D; 16&#125;; &#x2F;&#x2F; _MAX_BYTES&#x2F;_ALIGN</span><br><span class="line"># endif</span><br><span class="line">  static size_t</span><br><span class="line">  _S_round_up(size_t __bytes) </span><br><span class="line">    &#123; return (((__bytes) + (size_t) _ALIGN-1) &amp; ~((size_t) _ALIGN - 1)); &#125;</span><br><span class="line"></span><br><span class="line">__PRIVATE:</span><br><span class="line">  union _Obj &#123;</span><br><span class="line">        union _Obj* _M_free_list_link;</span><br><span class="line">        char _M_client_data[1];    &#x2F;* The client sees this.        *&#x2F;</span><br><span class="line">  &#125;;</span><br><span class="line">private:</span><br><span class="line"># if defined(__SUNPRO_CC) || defined(__GNUC__) || defined(__HP_aCC)</span><br><span class="line">    static _Obj* __STL_VOLATILE _S_free_list[]; </span><br><span class="line">        &#x2F;&#x2F; Specifying a size results in duplicate def for 4.1</span><br><span class="line"># else</span><br><span class="line">    static _Obj* __STL_VOLATILE _S_free_list[_NFREELISTS]; </span><br><span class="line"># endif</span><br><span class="line">  static  size_t _S_freelist_index(size_t __bytes) &#123;</span><br><span class="line">        return (((__bytes) + (size_t)_ALIGN-1)&#x2F;(size_t)_ALIGN - 1);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  &#x2F;&#x2F; Returns an object of size __n, and optionally adds to size __n free list.</span><br><span class="line">  static void* _S_refill(size_t __n);</span><br><span class="line">  &#x2F;&#x2F; Allocates a chunk for nobjs of size size.  nobjs may be reduced</span><br><span class="line">  &#x2F;&#x2F; if it is inconvenient to allocate the requested number.</span><br><span class="line">  static char* _S_chunk_alloc(size_t __size, int&amp; __nobjs);</span><br><span class="line"></span><br><span class="line">  &#x2F;&#x2F; Chunk allocation state.</span><br><span class="line">  static char* _S_start_free;</span><br><span class="line">  static char* _S_end_free;</span><br><span class="line">  static size_t _S_heap_size;</span><br><span class="line"></span><br><span class="line"># ifdef __STL_THREADS</span><br><span class="line">    static _STL_mutex_lock _S_node_allocator_lock;</span><br><span class="line"># endif</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; It would be nice to use _STL_auto_lock here.  But we</span><br><span class="line">    &#x2F;&#x2F; don&#39;t need the NULL check.  And we do need a test whether</span><br><span class="line">    &#x2F;&#x2F; threads have actually been started.</span><br><span class="line">    class _Lock;</span><br><span class="line">    friend class _Lock;</span><br><span class="line">    class _Lock &#123;</span><br><span class="line">        public:</span><br><span class="line">            _Lock() &#123; __NODE_ALLOCATOR_LOCK; &#125;</span><br><span class="line">            ~_Lock() &#123; __NODE_ALLOCATOR_UNLOCK; &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">public:</span><br><span class="line"></span><br><span class="line">  &#x2F;* __n must be &gt; 0      *&#x2F;</span><br><span class="line">  static void* allocate(size_t __n)</span><br><span class="line">  &#123;</span><br><span class="line">    void* __ret &#x3D; 0;</span><br><span class="line"></span><br><span class="line">    if (__n &gt; (size_t) _MAX_BYTES) &#123;</span><br><span class="line">      __ret &#x3D; malloc_alloc::allocate(__n);</span><br><span class="line">    &#125;</span><br><span class="line">    else &#123;</span><br><span class="line">      _Obj* __STL_VOLATILE* __my_free_list</span><br><span class="line">          &#x3D; _S_free_list + _S_freelist_index(__n);</span><br><span class="line">      &#x2F;&#x2F; Acquire the lock here with a constructor call.</span><br><span class="line">      &#x2F;&#x2F; This ensures that it is released in exit or during stack</span><br><span class="line">      &#x2F;&#x2F; unwinding.</span><br><span class="line">#     ifndef _NOTHREADS</span><br><span class="line">      &#x2F;*REFERENCED*&#x2F;</span><br><span class="line">      _Lock __lock_instance;</span><br><span class="line">#     endif</span><br><span class="line">      _Obj* __RESTRICT __result &#x3D; *__my_free_list;</span><br><span class="line">      if (__result &#x3D;&#x3D; 0)</span><br><span class="line">        __ret &#x3D; _S_refill(_S_round_up(__n));</span><br><span class="line">      else &#123;</span><br><span class="line">        *__my_free_list &#x3D; __result -&gt; _M_free_list_link;</span><br><span class="line">        __ret &#x3D; __result;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return __ret;</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  &#x2F;* __p may not be 0 *&#x2F;</span><br><span class="line">  static void deallocate(void* __p, size_t __n)</span><br><span class="line">  &#123;</span><br><span class="line">    if (__n &gt; (size_t) _MAX_BYTES)</span><br><span class="line">      malloc_alloc::deallocate(__p, __n);</span><br><span class="line">    else &#123;</span><br><span class="line">      _Obj* __STL_VOLATILE*  __my_free_list</span><br><span class="line">          &#x3D; _S_free_list + _S_freelist_index(__n);</span><br><span class="line">      _Obj* __q &#x3D; (_Obj*)__p;</span><br><span class="line"></span><br><span class="line">      &#x2F;&#x2F; acquire lock</span><br><span class="line">#       ifndef _NOTHREADS</span><br><span class="line">      &#x2F;*REFERENCED*&#x2F;</span><br><span class="line">      _Lock __lock_instance;</span><br><span class="line">#       endif &#x2F;* _NOTHREADS *&#x2F;</span><br><span class="line">      __q -&gt; _M_free_list_link &#x3D; *__my_free_list;</span><br><span class="line">      *__my_free_list &#x3D; __q;</span><br><span class="line">      &#x2F;&#x2F; lock is released here</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  static void* reallocate(void* __p, size_t __old_sz, size_t __new_sz);</span><br><span class="line"></span><br><span class="line">&#125; ;</span><br></pre></td></tr></table></figure>
+<p><font size=7 face=courier New>未完待续。。。</font><br><font size=5 face=courier New></font><br><font size=5 face=courier New></font><br><font size=5 face=courier New></font><br><font size=5 face=courier New></font><br><font size=5 face=courier New></font><br><font size=5 face=courier New></font><br><font size=5 face=courier New></font><br><font size=5 face=courier New></font><br><font size=5 face=courier New></font><br><font size=5 face=courier New></font><br><font size=5 face=courier New></font></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/c-c//" class="article-tag-list-link color1">c/c++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/02/11/SGI%20STL%E4%BA%8C%E7%BA%A7%E7%A9%BA%E9%97%B4%E9%85%8D%E7%BD%AE%E5%99%A8--%E5%86%85%E5%AD%98%E6%B1%A0%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-C++空间配置器" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2020/02/11/C++%E7%A9%BA%E9%97%B4%E9%85%8D%E7%BD%AE%E5%99%A8/">C++空间配置器</a>
     </h1>
   
 
-  
-  <a href="/2020/02/11/C++%E7%A9%BA%E9%97%B4%E9%85%8D%E7%BD%AE%E5%99%A8/" class="archive-article-date">
+        
+        <a href="/2020/02/11/C++%E7%A9%BA%E9%97%B4%E9%85%8D%E7%BD%AE%E5%99%A8/" class="archive-article-date">
   	<time datetime="2020-02-11T04:11:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-11</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 facer=courier New>空间配置器的作用：<br><font color=red>（1）将对象构造和内存开辟进行分离。<br>（2）将对象析构和内存释放进行分离。</font></p>
+<p><font size=5 facer=courier New>空间配置器的主要函数：<font color=blue><br>1.allocate：进行内存的开辟，底层调用的就是malloc。<br>2.deallocate：进行内存的释放，底层调用的就是free。<br>3.construct ：使用定位new来负责给容器中的对象进行构造。<br>4.destroy：负责析构容器中的对象。<code>p-&gt;~T()</code>。</font> </font></p>
+<p><font size=5 facer=courier New>空间配置器的简单实现：<font color=blue></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">template &lt;typename T&gt;</span><br><span class="line">class Allocator &#123;</span><br><span class="line">public:</span><br><span class="line">	&#x2F;&#x2F; 负责内存开辟</span><br><span class="line">	T* allocate(size_t size) &#123;</span><br><span class="line">		return (T*)malloc(sizeof(T) * size);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	&#x2F;&#x2F; 负责内存释放</span><br><span class="line">	void deallocate(void* p) &#123;</span><br><span class="line">		free(p);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	&#x2F;&#x2F; 既可以接收左值也可以接收右值</span><br><span class="line">	template &lt;typename Ty&gt;</span><br><span class="line">	void construct(T* p, Ty&amp;&amp; val) &#123;</span><br><span class="line">		new (p) T(std::forward&lt;Ty&gt;(val));</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	&#x2F;&#x2F; 对象析构</span><br><span class="line">	void destroy(T* p) &#123;</span><br><span class="line">		p-&gt;~T(); &#x2F;&#x2F; ~T() 代表了T类型的析构函数</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/c-c//" class="article-tag-list-link color1">c/c++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/02/11/C++%E7%A9%BA%E9%97%B4%E9%85%8D%E7%BD%AE%E5%99%A8/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-TCP三次握手" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2020/02/06/TCP%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B/">TCP三次握手</a>
     </h1>
   
 
-  
-  <a href="/2020/02/06/TCP%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B/" class="archive-article-date">
+        
+        <a href="/2020/02/06/TCP%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B/" class="archive-article-date">
   	<time datetime="2020-02-06T08:22:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-06</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><img src="https://img-blog.csdnimg.cn/20200206162215627.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/linux//" class="article-tag-list-link color1">linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/02/06/TCP%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-Linux-errno合集，各种errno对应的出错问题，方便查询" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2020/02/06/Linux-errno%E5%90%88%E9%9B%86%EF%BC%8C%E5%90%84%E7%A7%8Derrno%E5%AF%B9%E5%BA%94%E7%9A%84%E5%87%BA%E9%94%99%E9%97%AE%E9%A2%98%EF%BC%8C%E6%96%B9%E4%BE%BF%E6%9F%A5%E8%AF%A2/">Linux-errno合集，各种errno对应的出错问题，方便查询</a>
     </h1>
   
 
-  
-  <a href="/2020/02/06/Linux-errno%E5%90%88%E9%9B%86%EF%BC%8C%E5%90%84%E7%A7%8Derrno%E5%AF%B9%E5%BA%94%E7%9A%84%E5%87%BA%E9%94%99%E9%97%AE%E9%A2%98%EF%BC%8C%E6%96%B9%E4%BE%BF%E6%9F%A5%E8%AF%A2/" class="archive-article-date">
+        
+        <a href="/2020/02/06/Linux-errno%E5%90%88%E9%9B%86%EF%BC%8C%E5%90%84%E7%A7%8Derrno%E5%AF%B9%E5%BA%94%E7%9A%84%E5%87%BA%E9%94%99%E9%97%AE%E9%A2%98%EF%BC%8C%E6%96%B9%E4%BE%BF%E6%9F%A5%E8%AF%A2/" class="archive-article-date">
   	<time datetime="2020-02-06T06:58:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-06</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br></pre></td><td class="code"><pre><span class="line">#define	EPERM		 1	&#x2F;* Operation not permitted *&#x2F;</span><br><span class="line">#define	ENOENT		 2	&#x2F;* No such file or directory *&#x2F;</span><br><span class="line">#define	ESRCH		 3	&#x2F;* No such process *&#x2F;</span><br><span class="line">#define	EINTR		 4	&#x2F;* Interrupted system call *&#x2F;</span><br><span class="line">#define	EIO		 5	&#x2F;* I&#x2F;O error *&#x2F;</span><br><span class="line">#define	ENXIO		 6	&#x2F;* No such device or address *&#x2F;</span><br><span class="line">#define	E2BIG		 7	&#x2F;* Arg list too long *&#x2F;</span><br><span class="line">#define	ENOEXEC		 8	&#x2F;* Exec format error *&#x2F;</span><br><span class="line">#define	EBADF		 9	&#x2F;* Bad file number *&#x2F;</span><br><span class="line">#define	ECHILD		10	&#x2F;* No child processes *&#x2F;</span><br><span class="line">#define	EAGAIN		11	&#x2F;* Try again *&#x2F;</span><br><span class="line">#define	ENOMEM		12	&#x2F;* Out of memory *&#x2F;</span><br><span class="line">#define	EACCES		13	&#x2F;* Permission denied *&#x2F;</span><br><span class="line">#define	EFAULT		14	&#x2F;* Bad address *&#x2F;</span><br><span class="line">#define	ENOTBLK		15	&#x2F;* Block device required *&#x2F;</span><br><span class="line">#define	EBUSY		16	&#x2F;* Device or resource busy *&#x2F;</span><br><span class="line">#define	EEXIST		17	&#x2F;* File exists *&#x2F;</span><br><span class="line">#define	EXDEV		18	&#x2F;* Cross-device link *&#x2F;</span><br><span class="line">#define	ENODEV		19	&#x2F;* No such device *&#x2F;</span><br><span class="line">#define	ENOTDIR		20	&#x2F;* Not a directory *&#x2F;</span><br><span class="line">#define	EISDIR		21	&#x2F;* Is a directory *&#x2F;</span><br><span class="line">#define	EINVAL		22	&#x2F;* Invalid argument *&#x2F;</span><br><span class="line">#define	ENFILE		23	&#x2F;* File table overflow *&#x2F;</span><br><span class="line">#define	EMFILE		24	&#x2F;* Too many open files *&#x2F;</span><br><span class="line">#define	ENOTTY		25	&#x2F;* Not a typewriter *&#x2F;</span><br><span class="line">#define	ETXTBSY		26	&#x2F;* Text file busy *&#x2F;</span><br><span class="line">#define	EFBIG		27	&#x2F;* File too large *&#x2F;</span><br><span class="line">#define	ENOSPC		28	&#x2F;* No space left on device *&#x2F;</span><br><span class="line">#define	ESPIPE		29	&#x2F;* Illegal seek *&#x2F;</span><br><span class="line">#define	EROFS		30	&#x2F;* Read-only file system *&#x2F;</span><br><span class="line">#define	EMLINK		31	&#x2F;* Too many links *&#x2F;</span><br><span class="line">#define	EPIPE		32	&#x2F;* Broken pipe *&#x2F;</span><br><span class="line">#define	EDOM		33	&#x2F;* Math argument out of domain of func *&#x2F;</span><br><span class="line">#define	ERANGE		34	&#x2F;* Math result not representable *&#x2F;</span><br><span class="line">#define	EDEADLK		35	&#x2F;* Resource deadlock would occur *&#x2F;</span><br><span class="line">#define	ENAMETOOLONG	36	&#x2F;* File name too long *&#x2F;</span><br><span class="line">#define	ENOLCK		37	&#x2F;* No record locks available *&#x2F;</span><br><span class="line">#define	ENOSYS		38	&#x2F;* Function not implemented *&#x2F;</span><br><span class="line">#define	ENOTEMPTY	39	&#x2F;* Directory not empty *&#x2F;</span><br><span class="line">#define	ELOOP		40	&#x2F;* Too many symbolic links encountered *&#x2F;</span><br><span class="line">#define	EWOULDBLOCK	EAGAIN	&#x2F;* Operation would block *&#x2F;</span><br><span class="line">#define	ENOMSG		42	&#x2F;* No message of desired type *&#x2F;</span><br><span class="line">#define	EIDRM		43	&#x2F;* Identifier removed *&#x2F;</span><br><span class="line">#define	ECHRNG		44	&#x2F;* Channel number out of range *&#x2F;</span><br><span class="line">#define	EL2NSYNC	45	&#x2F;* Level 2 not synchronized *&#x2F;</span><br><span class="line">#define	EL3HLT		46	&#x2F;* Level 3 halted *&#x2F;</span><br><span class="line">#define	EL3RST		47	&#x2F;* Level 3 reset *&#x2F;</span><br><span class="line">#define	ELNRNG		48	&#x2F;* Link number out of range *&#x2F;</span><br><span class="line">#define	EUNATCH		49	&#x2F;* Protocol driver not attached *&#x2F;</span><br><span class="line">#define	ENOCSI		50	&#x2F;* No CSI structure available *&#x2F;</span><br><span class="line">#define	EL2HLT		51	&#x2F;* Level 2 halted *&#x2F;</span><br><span class="line">#define	EBADE		52	&#x2F;* Invalid exchange *&#x2F;</span><br><span class="line">#define	EBADR		53	&#x2F;* Invalid request descriptor *&#x2F;</span><br><span class="line">#define	EXFULL		54	&#x2F;* Exchange full *&#x2F;</span><br><span class="line">#define	ENOANO		55	&#x2F;* No anode *&#x2F;</span><br><span class="line">#define	EBADRQC		56	&#x2F;* Invalid request code *&#x2F;</span><br><span class="line">#define	EBADSLT		57	&#x2F;* Invalid slot *&#x2F;</span><br><span class="line"></span><br><span class="line">#define	EDEADLOCK	EDEADLK</span><br><span class="line"></span><br><span class="line">#define	EBFONT		59	&#x2F;* Bad font file format *&#x2F;</span><br><span class="line">#define	ENOSTR		60	&#x2F;* Device not a stream *&#x2F;</span><br><span class="line">#define	ENODATA		61	&#x2F;* No data available *&#x2F;</span><br><span class="line">#define	ETIME		62	&#x2F;* Timer expired *&#x2F;</span><br><span class="line">#define	ENOSR		63	&#x2F;* Out of streams resources *&#x2F;</span><br><span class="line">#define	ENONET		64	&#x2F;* Machine is not on the network *&#x2F;</span><br><span class="line">#define	ENOPKG		65	&#x2F;* Package not installed *&#x2F;</span><br><span class="line">#define	EREMOTE		66	&#x2F;* Object is remote *&#x2F;</span><br><span class="line">#define	ENOLINK		67	&#x2F;* Link has been severed *&#x2F;</span><br><span class="line">#define	EADV		68	&#x2F;* Advertise error *&#x2F;</span><br><span class="line">#define	ESRMNT		69	&#x2F;* Srmount error *&#x2F;</span><br><span class="line">#define	ECOMM		70	&#x2F;* Communication error on send *&#x2F;</span><br><span class="line">#define	EPROTO		71	&#x2F;* Protocol error *&#x2F;</span><br><span class="line">#define	EMULTIHOP	72	&#x2F;* Multihop attempted *&#x2F;</span><br><span class="line">#define	EDOTDOT		73	&#x2F;* RFS specific error *&#x2F;</span><br><span class="line">#define	EBADMSG		74	&#x2F;* Not a data message *&#x2F;</span><br><span class="line">#define	EOVERFLOW	75	&#x2F;* Value too large for defined data type *&#x2F;</span><br><span class="line">#define	ENOTUNIQ	76	&#x2F;* Name not unique on network *&#x2F;</span><br><span class="line">#define	EBADFD		77	&#x2F;* File descriptor in bad state *&#x2F;</span><br><span class="line">#define	EREMCHG		78	&#x2F;* Remote address changed *&#x2F;</span><br><span class="line">#define	ELIBACC		79	&#x2F;* Can not access a needed shared library *&#x2F;</span><br><span class="line">#define	ELIBBAD		80	&#x2F;* Accessing a corrupted shared library *&#x2F;</span><br><span class="line">#define	ELIBSCN		81	&#x2F;* .lib section in a.out corrupted *&#x2F;</span><br><span class="line">#define	ELIBMAX		82	&#x2F;* Attempting to link in too many shared libraries *&#x2F;</span><br><span class="line">#define	ELIBEXEC	83	&#x2F;* Cannot exec a shared library directly *&#x2F;</span><br><span class="line">#define	EILSEQ		84	&#x2F;* Illegal byte sequence *&#x2F;</span><br><span class="line">#define	ERESTART	85	&#x2F;* Interrupted system call should be restarted *&#x2F;</span><br><span class="line">#define	ESTRPIPE	86	&#x2F;* Streams pipe error *&#x2F;</span><br><span class="line">#define	EUSERS		87	&#x2F;* Too many users *&#x2F;</span><br><span class="line">#define	ENOTSOCK	88	&#x2F;* Socket operation on non-socket *&#x2F;</span><br><span class="line">#define	EDESTADDRREQ	89	&#x2F;* Destination address required *&#x2F;</span><br><span class="line">#define	EMSGSIZE	90	&#x2F;* Message too long *&#x2F;</span><br><span class="line">#define	EPROTOTYPE	91	&#x2F;* Protocol wrong type for socket *&#x2F;</span><br><span class="line">#define	ENOPROTOOPT	92	&#x2F;* Protocol not available *&#x2F;</span><br><span class="line">#define	EPROTONOSUPPORT	93	&#x2F;* Protocol not supported *&#x2F;</span><br><span class="line">#define	ESOCKTNOSUPPORT	94	&#x2F;* Socket type not supported *&#x2F;</span><br><span class="line">#define	EOPNOTSUPP	95	&#x2F;* Operation not supported on transport endpoint *&#x2F;</span><br><span class="line">#define	EPFNOSUPPORT	96	&#x2F;* Protocol family not supported *&#x2F;</span><br><span class="line">#define	EAFNOSUPPORT	97	&#x2F;* Address family not supported by protocol *&#x2F;</span><br><span class="line">#define	EADDRINUSE	98	&#x2F;* Address already in use *&#x2F;</span><br><span class="line">#define	EADDRNOTAVAIL	99	&#x2F;* Cannot assign requested address *&#x2F;</span><br><span class="line">#define	ENETDOWN	100	&#x2F;* Network is down *&#x2F;</span><br><span class="line">#define	ENETUNREACH	101	&#x2F;* Network is unreachable *&#x2F;</span><br><span class="line">#define	ENETRESET	102	&#x2F;* Network dropped connection because of reset *&#x2F;</span><br><span class="line">#define	ECONNABORTED	103	&#x2F;* Software caused connection abort *&#x2F;</span><br><span class="line">#define	ECONNRESET	104	&#x2F;* Connection reset by peer *&#x2F;</span><br><span class="line">#define	ENOBUFS		105	&#x2F;* No buffer space available *&#x2F;</span><br><span class="line">#define	EISCONN		106	&#x2F;* Transport endpoint is already connected *&#x2F;</span><br><span class="line">#define	ENOTCONN	107	&#x2F;* Transport endpoint is not connected *&#x2F;</span><br><span class="line">#define	ESHUTDOWN	108	&#x2F;* Cannot send after transport endpoint shutdown *&#x2F;</span><br><span class="line">#define	ETOOMANYREFS	109	&#x2F;* Too many references: cannot splice *&#x2F;</span><br><span class="line">#define	ETIMEDOUT	110	&#x2F;* Connection timed out *&#x2F;</span><br><span class="line">#define	ECONNREFUSED	111	&#x2F;* Connection refused *&#x2F;</span><br><span class="line">#define	EHOSTDOWN	112	&#x2F;* Host is down *&#x2F;</span><br><span class="line">#define	EHOSTUNREACH	113	&#x2F;* No route to host *&#x2F;</span><br><span class="line">#define	EALREADY	114	&#x2F;* Operation already in progress *&#x2F;</span><br><span class="line">#define	EINPROGRESS	115	&#x2F;* Operation now in progress *&#x2F;</span><br><span class="line">#define	ESTALE		116	&#x2F;* Stale NFS file handle *&#x2F;</span><br><span class="line">#define	EUCLEAN		117	&#x2F;* Structure needs cleaning *&#x2F;</span><br><span class="line">#define	ENOTNAM		118	&#x2F;* Not a XENIX named type file *&#x2F;</span><br><span class="line">#define	ENAVAIL		119	&#x2F;* No XENIX semaphores available *&#x2F;</span><br><span class="line">#define	EISNAM		120	&#x2F;* Is a named type file *&#x2F;</span><br><span class="line">#define	EREMOTEIO	121	&#x2F;* Remote I&#x2F;O error *&#x2F;</span><br><span class="line">#define	EDQUOT		122	&#x2F;* Quota exceeded *&#x2F;</span><br><span class="line"></span><br><span class="line">#define	ENOMEDIUM	123	&#x2F;* No medium found *&#x2F;</span><br><span class="line">#define	EMEDIUMTYPE	124	&#x2F;* Wrong medium type *&#x2F;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Linux//" class="article-tag-list-link color1">Linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/02/06/Linux-errno%E5%90%88%E9%9B%86%EF%BC%8C%E5%90%84%E7%A7%8Derrno%E5%AF%B9%E5%BA%94%E7%9A%84%E5%87%BA%E9%94%99%E9%97%AE%E9%A2%98%EF%BC%8C%E6%96%B9%E4%BE%BF%E6%9F%A5%E8%AF%A2/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-进程通信（三）共享内存" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2020/02/02/%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1%EF%BC%88%E4%B8%89%EF%BC%89%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98/">进程通信（三）共享内存</a>
     </h1>
   
 
-  
-  <a href="/2020/02/02/%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1%EF%BC%88%E4%B8%89%EF%BC%89%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98/" class="archive-article-date">
+        
+        <a href="/2020/02/02/%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1%EF%BC%88%E4%B8%89%EF%BC%89%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98/" class="archive-article-date">
   	<time datetime="2020-02-02T03:26:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-02</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face=Courier new color=red>一、共享内存</font></p>
+<p><font size=5 face=Courier new>共享内存是操作系统直接在物理内存上开辟一段空间作为进程间通信的缓冲区域， 与管道、消息队列等其他进程通信方式相比较，共享内存拥有更高的效率，原因是共享内存的设计是基于物理内存的地址直接进行操作的，这样相比其他方式的IPC省去了重重的系统调用，因此在很大程度上提高了其效率。</font></p>
+<p><font size=5 face=Courier new color=red>二、共享内存原理</font><br><img src="https://img-blog.csdnimg.cn/20200131183254226.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p><font size=5 face=Courier new>当不同进程的虚拟地址空间按照页面的大小加载到内存时，CPU发出的虚拟地址经过MMU(内存管理单元）的地址转换之后，就可以得到对应的物理地址，然后就可以进行访存等一系列操作，而共享内存API就是让不同的进程虚拟地址空间的某部分经过加载然后映射到的是同一块物理内存上，这样就可以使得不同的进程访问同一块物理内存，从而进行不同进程间的进程通信。<font color=red>需要注意的是：</font>由于此时这块用于进程通信的物理内存成为<font color=blue>临界区</font>，因此当不同的进程访问时，可能会出现竞态条件，因此为了实现进程同步，当不同进程访问临区时，必须对进程实现互斥和同步操作。<font color=red>这点非常重要，希望能引起重视。</font></font></p>
+<p><font size=5 face=Courier new color=red>三、共享内存API分析</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">shm:share memory共享内存的简写</span><br><span class="line">1.shmget</span><br><span class="line">函数原型：int shmget(key_t key, size_t size, int shmflg);</span><br><span class="line">函数功能：创建新的或者已有的共享内存。</span><br><span class="line">参数key:key值，与消息队列所需要的key是一样的，如何得到？</span><br><span class="line">请看：(https:&#x2F;&#x2F;blog.csdn.net&#x2F;ASJBFJSB&#x2F;article&#x2F;details&#x2F;104122200)</span><br><span class="line">(1)如果key值没有对应的共享内存，创建出来一个新的共享内存，创建的过程实质上就是os在物理内存</span><br><span class="line">上划分出一块区域作为贡献内存的存储空间。</span><br><span class="line">(2)如果key值已经确定，说明已经有一个共享内存了，是由之前其他进程创建的，此时shmget就是获取</span><br><span class="line">该key对应的共享内存。</span><br><span class="line"></span><br><span class="line">参数size:指定共享内存的大小，一般是指定的是页面大小的整数倍(4k),如果不是，为了方便映射以及内存</span><br><span class="line">管理，api会自动将size调整为页面大小的整数倍。</span><br><span class="line"></span><br><span class="line">参数shmflg:指定权限以及IPC_CREAT。</span><br><span class="line"></span><br><span class="line">返回值：</span><br><span class="line">成功：返回共享内存的唯一标识符。</span><br><span class="line">失败：返回-1。</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">2.shmat</span><br><span class="line">函数原型：void *shmat(int shmid, const void *shmaddr, int shmflg);</span><br><span class="line"></span><br><span class="line">功能：将shmid指向的共享内存的空间映射到当前进程的虚拟地址空间上，</span><br><span class="line">并且返回映射后的起始地址。得到这个地址，就可以在此地址上进行读写操作。</span><br><span class="line"></span><br><span class="line">参数shmid：shmid是由shmget得到标识共享内存的唯一标识符。</span><br><span class="line">参数shmaddr：指定映射的起始地址。</span><br><span class="line">（1）自己设置映射的起始地址（虚拟地址空间的地址），建议不要使用，因为你是搞不懂在虚拟地址空间中</span><br><span class="line">哪里用了，哪里可能还没有使用。</span><br><span class="line">（2）传NULL，由操作系统填写映射的地址。因为只有os才知道哪里能够映射，哪里不能映射。</span><br><span class="line">参数shmflg：指定映射条件。</span><br><span class="line">（1）0：以可读可写的方式进行共享内存的映射。</span><br><span class="line">（2）SHM_RDONLY：以只读的方式进行映射。</span><br><span class="line"></span><br><span class="line">返回值：</span><br><span class="line">成功：返回映射地址</span><br><span class="line">失败：返回(void*)-1</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">3.shmdt</span><br><span class="line">函数原型：int shmdt(const void *shmaddr);</span><br><span class="line">功能：断开当前进程虚拟地址空间与shmaddr指向的共享内存的映射。</span><br><span class="line">参数shmaddr：指向共享内存的指针</span><br><span class="line">需要注意的是shmdt并不能进行共享内存区域的删除。需要使用shmctl或者ipcrm进行删除。</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">4.shmctl</span><br><span class="line">函数原型：int shmctl(int shmid, int cmd, struct shmid_ds* buf)；</span><br><span class="line">函数功能：与消息队列的msgctl功能几乎一样，shmctl也提供了三个命令。</span><br><span class="line">IPC_RMID:删除由shmid唯一标识的共享内存区。此时第三个参数不使用，传入NULL。</span><br><span class="line">IPC_SET:设置shmid_ds中的三个成员，分别是：shm_perm.uid,shm_perm.gid和shm_perm.mode。</span><br><span class="line">IPC_STAT:buf作为传出参数，获取shmid唯一标识的共享内存的shmid_ds结构。</span><br></pre></td></tr></table></figure>
+<p><font size=5 face=Courier new color=red>四、共享内存实战代码</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 发送端进程</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;assert.h&gt;</span><br><span class="line">#include &lt;sys&#x2F;ipc.h&gt;</span><br><span class="line">#include &lt;sys&#x2F;shm.h&gt;</span><br><span class="line">#include &lt;sys&#x2F;types.h&gt;</span><br><span class="line">#include &lt;unistd.h&gt;</span><br><span class="line">#include &lt;string.h&gt;</span><br><span class="line">#define PAGESIZE 4096</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">	int shmid &#x3D; shmget((key_t) 123, PAGESIZE, 0664|IPC_CREAT);</span><br><span class="line">	assert(shmid !&#x3D; -1);</span><br><span class="line">	</span><br><span class="line">	char * p &#x3D; (char*)shmat(shmid, NULL, 0);</span><br><span class="line">	assert(p !&#x3D; (char*)-1);</span><br><span class="line">	while (1) &#123;</span><br><span class="line">		printf(&quot;input: &quot;);</span><br><span class="line">		fgets(p, PAGESIZE-1, stdin);</span><br><span class="line">		if (strncmp(p, &quot;end&quot;, 3) &#x3D;&#x3D; 0) break;</span><br><span class="line">	&#125;</span><br><span class="line">	shmdt(p);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;接收端进程</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;assert.h&gt;</span><br><span class="line">#include &lt;sys&#x2F;ipc.h&gt;</span><br><span class="line">#include &lt;sys&#x2F;shm.h&gt;</span><br><span class="line">#include &lt;sys&#x2F;types.h&gt;</span><br><span class="line">#include &lt;unistd.h&gt;</span><br><span class="line">#include &lt;string.h&gt;</span><br><span class="line">#define PAGESIZE 4096</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">	int shmid &#x3D; shmget((key_t) 123, PAGESIZE, 0664|IPC_CREAT);</span><br><span class="line">	assert(shmid !&#x3D; -1);</span><br><span class="line">	</span><br><span class="line">	char * p &#x3D; (char*)shmat(shmid, NULL, 0);</span><br><span class="line">	assert(p !&#x3D; (char*)-1);</span><br><span class="line">	while (1) &#123;</span><br><span class="line">		if (strncmp(p, &quot;end&quot;, 3) &#x3D;&#x3D; 0) break;</span><br><span class="line">		printf(&quot;%s &quot;, p);</span><br><span class="line">		sleep(1);</span><br><span class="line">	&#125;</span><br><span class="line">	shmdt(p);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=5 face=Courier new color=red>五、进程安全的探讨</font></p>
+<p><font size=5 face=Courier new>在上述的代码中，由于未对共享内存临界区做不同进程互斥的操作，当操作系统分配给进程的CPU时间片使用完成后，可能会出现当前进程还未完成任务，而另外的进程已经从共享内存中拿走了未完成任务的数据，这样的问题在进程通信中是非常致命的，那么如何解决进程在共享内存的通信过程中实现数据的同步和互斥，避免数据发生混乱的情况呢，请看下篇博客，信号量的使用。</font></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/linux//" class="article-tag-list-link color1">linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/02/02/%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1%EF%BC%88%E4%B8%89%EF%BC%89%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-关于System V进程通信内核对象的删除" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2020/01/31/%E5%85%B3%E4%BA%8ESystem%20V%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1%E5%86%85%E6%A0%B8%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%88%A0%E9%99%A4/">关于System V进程通信内核对象的删除</a>
     </h1>
   
 
-  
-  <a href="/2020/01/31/%E5%85%B3%E4%BA%8ESystem%20V%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1%E5%86%85%E6%A0%B8%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%88%A0%E9%99%A4/" class="archive-article-date">
+        
+        <a href="/2020/01/31/%E5%85%B3%E4%BA%8ESystem%20V%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1%E5%86%85%E6%A0%B8%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%88%A0%E9%99%A4/" class="archive-article-date">
   	<time datetime="2020-01-31T07:35:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-31</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face=consolas><font color=red>System v ipc的缺点：</font></font></p>
+<p><font size=4 face=consolas>当进程结束时，不会自动删除进程通信的内核对象，并且能够使用ipcs命令查看内核对象，如下：</font><br><img src="https://img-blog.csdnimg.cn/20200131152140700.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>由于进程通信内核对象也属于操作系统的资源，如果长期占用并且不使用确实是对操作系统资源的浪费，因此对于不再使用的进程通信内核对象应当及时删除，那么如何删除呢？</p>
+<p><font size=5 face=consolas>（1）重启OS，没啥大毛病，但是不方便。<br>（2）当进程使用完毕后，调用相应的系统API进行删除，当然这里需要注意的是调用的时机，必须是使用完成后。<br>（3）使用ipcs命令，是相对简单可行的方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">(1)删除消息队列</span><br><span class="line">ipcrm -Q key       &#x2F;&#x2F;按照key删除</span><br><span class="line">ipcrm -q msgid     &#x2F;&#x2F;按照msgid删除</span><br><span class="line">(2)删除共享内存</span><br><span class="line">ipcrm -M key       &#x2F;&#x2F;按照key删除</span><br><span class="line">ipcrm -m msgid     &#x2F;&#x2F;按照标识符删除 </span><br><span class="line">(3)删除信号量</span><br><span class="line">ipcrm -S key       &#x2F;&#x2F;按照key删除</span><br><span class="line">ipcrm -s msgid     &#x2F;&#x2F;按照标识符删除</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<font size=5 face=consolao color=red>
+举例分别按key删除和按msgid删除的消息队列的过程:
+
+<p><img src="https://img-blog.csdnimg.cn/20200131153408885.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20200131153554482.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/linux//" class="article-tag-list-link color1">linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/01/31/%E5%85%B3%E4%BA%8ESystem%20V%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1%E5%86%85%E6%A0%B8%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%88%A0%E9%99%A4/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-Linux-ipcs命令,查看os进程通信的内核对象信息" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2020/01/31/Linux-ipcs%E5%91%BD%E4%BB%A4,%E6%9F%A5%E7%9C%8Bos%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1%E7%9A%84%E5%86%85%E6%A0%B8%E5%AF%B9%E8%B1%A1%E4%BF%A1%E6%81%AF/">Linux-ipcs命令，查看os进程通信的内核对象信息</a>
     </h1>
   
 
-  
-  <a href="/2020/01/31/Linux-ipcs%E5%91%BD%E4%BB%A4,%E6%9F%A5%E7%9C%8Bos%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1%E7%9A%84%E5%86%85%E6%A0%B8%E5%AF%B9%E8%B1%A1%E4%BF%A1%E6%81%AF/" class="archive-article-date">
+        
+        <a href="/2020/01/31/Linux-ipcs%E5%91%BD%E4%BB%A4,%E6%9F%A5%E7%9C%8Bos%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1%E7%9A%84%E5%86%85%E6%A0%B8%E5%AF%B9%E8%B1%A1%E4%BF%A1%E6%81%AF/" class="archive-article-date">
   	<time datetime="2020-01-31T06:43:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-31</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><code>ipcs --help</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">用法：</span><br><span class="line"> ipcs [资源选项...] [输出选项]</span><br><span class="line"> ipcs -m|-q|-s -i &lt;id&gt;</span><br><span class="line"></span><br><span class="line">显示 IPC 设施的信息。</span><br><span class="line"></span><br><span class="line">选项：</span><br><span class="line"> -i, --id &lt;id&gt;  打印由&lt;id&gt;标识的资源的详细信息</span><br><span class="line"> -h, --help     display this help</span><br><span class="line"> -V, --version  display version</span><br><span class="line"></span><br><span class="line">资源选项：</span><br><span class="line"> -m, --shmems      共享内存段</span><br><span class="line"> -q, --queues      消息队列</span><br><span class="line"> -s, --semaphores  信号量</span><br><span class="line"> -a, --all         全部(默认)</span><br><span class="line"></span><br><span class="line">输出选项：</span><br><span class="line"> -t, --time        显示附加、脱离和更改时间</span><br><span class="line"> -p, --pid         显示创建者和最后操作者的 PID</span><br><span class="line"> -c, --creator     显示创建者和拥有者</span><br><span class="line"> -l, --limits      显示资源限制</span><br><span class="line"> -u, --summary     显示状态摘要</span><br><span class="line">     --human       以易读格式显示大小</span><br><span class="line"> -b, --bytes       以字节数显示大小</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">linux系统编程</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/linux//" class="article-tag-list-link color1">linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/01/31/Linux-ipcs%E5%91%BD%E4%BB%A4,%E6%9F%A5%E7%9C%8Bos%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1%E7%9A%84%E5%86%85%E6%A0%B8%E5%AF%B9%E8%B1%A1%E4%BF%A1%E6%81%AF/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-进程通信（二）消息队列（System V 消息队列）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2020/01/31/%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1%EF%BC%88%E4%BA%8C%EF%BC%89%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%EF%BC%88System%20V%20%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%EF%BC%89/">进程通信（二）消息队列（System V 消息队列）</a>
     </h1>
   
 
-  
-  <a href="/2020/01/31/%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1%EF%BC%88%E4%BA%8C%EF%BC%89%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%EF%BC%88System%20V%20%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%EF%BC%89/" class="archive-article-date">
+        
+        <a href="/2020/01/31/%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1%EF%BC%88%E4%BA%8C%EF%BC%89%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%EF%BC%88System%20V%20%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%EF%BC%89/" class="archive-article-date">
   	<time datetime="2020-01-31T06:41:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-31</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    
-    
-</header>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face=consolas>一、System V 消息队列简介</font></p>
+<p><font size=4 face=consolas><font color=red>消息队列：</font>消息队列的本质是由Linux内核创建用于存放消息的链表，并且其功能是用来存放消息的，所以又称之为消息队列。<br>在Linux的不同进程中，包括有血缘的进程和无血缘的进程，都可以通过Linux消息队列API所得到的消息队列唯一标识符对消息队列进行操作。</font></p>
+<p><font size=5 face=consolas>二、分析消息队列的数据结构</font></p>
+<p><font size=4 face=consolas>Linux为了维护消息队列，为消息队列创建了数据结构，接下来我们来分析一下消息队列的结构以及消息队列节点的结构。</p>
+<p><font size=5 face=consolas>消息队列的结构:</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">struct msqid_ds &#123;</span><br><span class="line">	struct ipc_perm msg_perm;   &#x2F;&#x2F;消息队列的读写权限和所有者</span><br><span class="line">	struct msg *msg_first;		&#x2F;&#x2F;指向消息队列链表中的第一个节点</span><br><span class="line">	struct msg *msg_last;		&#x2F;&#x2F;指向消息队列链表中的最后一个节点</span><br><span class="line">	long msg_stime;	            &#x2F;&#x2F;最近一次从消息队列中取出消息的时间</span><br><span class="line">	long msg_rtime;	            &#x2F;&#x2F;最近一次从消息队列中放入消息的时间</span><br><span class="line">	long msg_ctime;	            &#x2F;&#x2F;最近一次修改消息队列的时间</span><br><span class="line">	unsigned long  msg_lcbytes;	&#x2F;* Reuse junk fields for 32 bit *&#x2F;</span><br><span class="line">	unsigned long  msg_lqbytes;	&#x2F;* ditto *&#x2F;</span><br><span class="line">	unsigned short msg_cbytes;      &#x2F;&#x2F;保存着队列总共占用内存的字节数</span><br><span class="line">	unsigned short msg_qnum; 		&#x2F;&#x2F;当前消息队列中消息的个数</span><br><span class="line">	unsigned short msg_qbytes;	    &#x2F;&#x2F;队列所占用内存的最大字节数。</span><br><span class="line">	int msg_lspid;  &#x2F;&#x2F;最近一次向消息队列发送消息进程的pid</span><br><span class="line">	int msg_lrpid;	&#x2F;&#x2F;最近一次从消息队列接受消息进程的pid</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><font size=5 face=consolas>消息队列节点的结构：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">struct msg &#123;</span><br><span class="line">	struct msg *msg_next; &#x2F;&#x2F;指向消息队列中下一个消息的指针</span><br><span class="line">	long msg_type;&#x2F;&#x2F;消息的类型</span><br><span class="line">	char *msg_spot; &#x2F;&#x2F;消息内容在内存中的地址</span><br><span class="line">	time_t msg_stime; </span><br><span class="line">	short msg_ts;  &#x2F;&#x2F;消息内容的长度</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><font size=5 face=consolas>struct ipc_perm msg_perm的结构：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">struct ipc_perm</span><br><span class="line">&#123;</span><br><span class="line">	__kernel_key_t	key;			&#x2F;&#x2F;消息队列的key值</span><br><span class="line">	__kernel_uid_t	uid;			&#x2F;&#x2F;当前这一刻正在使用消息队列的用户</span><br><span class="line">	__kernel_gid_t	gid;			&#x2F;&#x2F;正在使用的用户所在的用户组</span><br><span class="line">	__kernel_uid_t	cuid;		    &#x2F;&#x2F;创建消息队列的用户</span><br><span class="line">	__kernel_gid_t	cgid;		    &#x2F;&#x2F;创建消息队列用户所在的用户组</span><br><span class="line">	__kernel_mode_t	mode;           &#x2F;&#x2F;读写权限</span><br><span class="line">	unsigned short	seq;			&#x2F;&#x2F;序列号，保证消息队列ID不会被</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><font size=4 face=consolas>由上边的几个关于消息队列的结构体，我们可以大致画出消息队列的样子：<br><img src="https://img-blog.csdnimg.cn/20200131115157732.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>由上图可以直观的感受到Linux内核所设计消息队列的大致模样，这对于我们理解消息队列Linux API有着至关重要的作用。</font></p>
+<p><font size=5 face=consolas>三、消息队列API分析</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">msgget函数</span><br><span class="line">1.int msgget(key_t key, int oflag);</span><br><span class="line">返回值：唯一的标识符</span><br><span class="line">关于参数key和参数oflag,请看下图，参考与《Unix网络编程2.进程通信》</span><br><span class="line">key值的指定：</span><br><span class="line">(1)指定为IPC_PRIVATE，每次调用msgget都会创建一个新的消息队列，这样的开销比较大，一般情况下，</span><br><span class="line">只需要一个消息队列即可，因此此方法不建议使用。</span><br><span class="line">(2)指定一个(key_t)value,这个value只要未使用即可，可以通过ipcs -q命令查看已有消息队列的key值，</span><br><span class="line">以避免重复使用。</span><br><span class="line">(3)使用ftok生成key。</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">frok函数简介</span><br><span class="line">#include &lt;sys&#x2F;types.h&gt;</span><br><span class="line">#include &lt;sys&#x2F;ipc.h&gt;</span><br><span class="line">key_t frok(const char  *filename, int id);</span><br><span class="line">函数功能：ftok通过一个路径名和一个整型值，就可以返回一个唯一对应的key值。</span><br><span class="line">只要路径名和整形数不变，key就不变。</span><br><span class="line">filename+value(int) -&gt; key</span><br><span class="line"></span><br><span class="line">由于ftok只会使用整型数id的低八位，所以在使用时指定一个ascii码即可。</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/20200131130358971.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20200131120548168.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">msgsnd函数</span><br><span class="line">2.int msgsnd(int msqid, const void *ptr, size_t length, int flag);</span><br><span class="line">参数msqid是由msgget返回的消息队列的唯一标识符</span><br><span class="line">const void* ptr是一个消息包的指针，消息包可以：</span><br><span class="line">struct msgbuf&#123;</span><br><span class="line">	long mtype;&#x2F;&#x2F;消息类型必须大于0</span><br><span class="line">	char mtext[1];&#x2F;&#x2F;1个字节肯定是不够用的，因此可以自定义消息包</span><br><span class="line">&#125;;</span><br><span class="line">length:消息内容的大小</span><br><span class="line">flag:</span><br><span class="line">（1）0：阻塞发送消息，如果没有发送成功时，该函数会一直阻塞，直到发送成功。</span><br><span class="line">（2）IPC_NOWAIT：非阻塞的方式发送消息，无论是否发送成功，函数都会返回，即使</span><br><span class="line">发送不成功，函数也会返回。</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">msgrcv函数</span><br><span class="line">3.ssize_t msgrcv(int msqid, void *ptr, size_t length, long type, int flag);</span><br><span class="line">参数ptr: 指定接受消息存放的位置。</span><br><span class="line">参数length:指定了由ptr指向的缓冲区中数据部分的大小，这是该函数能返回的最大数据量，该长度不包含整型类型字段。</span><br><span class="line">参数type:指定希望从所给定的队列中读出什么样的消息。</span><br><span class="line">参数flag:指定所请求类型的消息不在指定的队列中应该作何处理。</span><br><span class="line">（1）0：阻塞接受消息</span><br><span class="line">（2）IPC_NOWAIT:非阻塞接受消息，没有消息时，不阻塞。</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">msgctl</span><br><span class="line">4.int msgctl(int msqid, int cmd, struct msqid_ds* buff);</span><br><span class="line">msgctl接口可以使得进程在msqid所标识的消息队列上进行各种控制操作。</span><br><span class="line">msgctl的三个命令cmd参数：</span><br><span class="line">（1）IPC_RMID：从系统中删除由msqid指定的消息队列。此时第三个参数缺省省略，这个命令可以理解为删除消息队列。</span><br><span class="line">（2）IPC_SET，给所指定的消息队列设置其msqid_ds结构体的以下4个成员：msg_perm.uid, msg_perm.gid,msg_perm.mode和msg_gbytes。此时需要自己创建msqid_ds结构体并初始化然后传入。</span><br><span class="line">（3）IPC_STAT，此时buff作为传出参数可以获取消息队列消息头中msg_perm结构体的在内核中的内容。</span><br></pre></td></tr></table></figure>
+
+<p><font size=5 face=consolas>四、代码实战</font></p>
+<p><font size=4 face=consolas color=red>（1）有血缘关系的进程间通信</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;unistd.h&gt;</span><br><span class="line">#include &lt;string.h&gt;</span><br><span class="line">#include &lt;sys&#x2F;ipc.h&gt;</span><br><span class="line">#include &lt;sys&#x2F;msg.h&gt;</span><br><span class="line">#include &lt;sys&#x2F;types.h&gt;</span><br><span class="line">#include &lt;assert.h&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">typedef struct msgbuf &#123;</span><br><span class="line">  long mtype;</span><br><span class="line">  char mtext[128];</span><br><span class="line">&#125; MSG;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">  int msgid &#x3D; msgget((key_t)1235, 0664|IPC_CREAT);</span><br><span class="line">  assert(msgid !&#x3D; -1);</span><br><span class="line">  pid_t pid &#x3D; fork();</span><br><span class="line">  assert(pid !&#x3D; -1);</span><br><span class="line">  if (pid &gt; 0) &#123;</span><br><span class="line">    MSG msg;</span><br><span class="line">    memset(&amp;msg, 0, sizeof(msg));</span><br><span class="line">    msg.mtype &#x3D; 100;</span><br><span class="line">    strcpy(msg.mtext, &quot;hello&quot;);</span><br><span class="line">    msgsnd(msgid, &amp;msg, strlen(msg.mtext), 0);</span><br><span class="line">  &#125; else if (pid &#x3D;&#x3D; 0) &#123;</span><br><span class="line">    MSG msg;</span><br><span class="line">    memset(&amp;msg, 0, sizeof(msg));</span><br><span class="line">    msgrcv(msgid, &amp;msg, 127, 100, 0);</span><br><span class="line">    printf(&quot;msg.mtype: %ld\n&quot;, msg.mtype);</span><br><span class="line">    printf(&quot;msg.mtext: %s\n&quot;, msg.mtext);</span><br><span class="line">  &#125;</span><br><span class="line">  return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><font size=4 face=consolas color=red>（2）无血缘关系的进程间通信</font><br><font size=4 face=consolas>msg_send.c</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;stdlib.h&gt;</span><br><span class="line">#include &lt;unistd.h&gt;</span><br><span class="line">#include &lt;string.h&gt;</span><br><span class="line">#include &lt;assert.h&gt;</span><br><span class="line">#include &lt;sys&#x2F;msg.h&gt;</span><br><span class="line"></span><br><span class="line">typedef struct msgdata&#123;</span><br><span class="line">  long mtype; &#x2F;&#x2F;消息类型</span><br><span class="line">  char mtext[128];</span><br><span class="line">&#125; MSG;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">  int id &#x3D; msgget((key_t)1234, IPC_CREAT | 0664);</span><br><span class="line">  assert(id !&#x3D; -1);</span><br><span class="line"></span><br><span class="line">  MSG msg;</span><br><span class="line">  memset(&amp;msg, 0, sizeof(msg));</span><br><span class="line">  msg.mtype &#x3D; 100;</span><br><span class="line">  strcpy(msg.mtext, &quot;hello world&quot;);</span><br><span class="line">  msgsnd(id, &amp;msg, strlen(msg.mtext), 0);</span><br><span class="line"> </span><br><span class="line">  memset(&amp;msg, 0, sizeof(msg));</span><br><span class="line">  msg.mtype &#x3D; 200;</span><br><span class="line">  strcpy(msg.mtext, &quot;ni hao, shi jian&quot;);</span><br><span class="line">  msgsnd(id, &amp;msg, strlen(msg.mtext), 0);</span><br><span class="line">  return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p><font size=4 face=consolas>msg_send.c</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;assert.h&gt;</span><br><span class="line">#include &lt;unistd.h&gt;</span><br><span class="line">#include &lt;sys&#x2F;msg.h&gt;</span><br><span class="line">#include &lt;string.h&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">typedef struct msgdata&#123;</span><br><span class="line">  long mtype;</span><br><span class="line">  char mtext[128];</span><br><span class="line">&#125;MSG;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">  int id &#x3D; msgget((key_t)1234, 0664|IPC_CREAT);</span><br><span class="line">  assert(id !&#x3D; -1);</span><br><span class="line"></span><br><span class="line">  MSG msg;</span><br><span class="line">  memset(&amp;msg, 0, sizeof(msg));</span><br><span class="line"></span><br><span class="line">  msgrcv(id, &amp;msg, 127, 200, 0);</span><br><span class="line">  printf(&quot;msg.mtype: %ld\n&quot;, msg.mtype);</span><br><span class="line">  printf(&quot;msg.mtext: %s\n&quot;, msg.mtext);</span><br><span class="line">  return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=4 face=consolas color=red>（3）删除消息队列内核对象</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">使用msgctl来删除消息队列内核对象</span><br><span class="line"></span><br><span class="line">void msgRemove(int msgid) &#123;</span><br><span class="line">	int res &#x3D; msgctl(msgid, IPC_RMID, NULL);</span><br><span class="line">	if (res &#x3D;&#x3D; -1) return -1;</span><br><span class="line">	else return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/linux-操作系统//" class="article-tag-list-link color1">linux 操作系统</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/01/31/%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1%EF%BC%88%E4%BA%8C%EF%BC%89%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%EF%BC%88System%20V%20%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%EF%BC%89/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
   
     <nav id="page-nav">

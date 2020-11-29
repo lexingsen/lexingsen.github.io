@@ -154,205 +154,789 @@
           <div id="js-content" class="content-ll">
             
   
-    <header class="article-header">
-  
+    <article id="post-C++中的new有几种？" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2020/01/25/C++%E4%B8%AD%E7%9A%84new%E6%9C%89%E5%87%A0%E7%A7%8D%EF%BC%9F/">C++中的new有几种？</a>
     </h1>
   
 
-  
-  <a href="/2020/01/25/C++%E4%B8%AD%E7%9A%84new%E6%9C%89%E5%87%A0%E7%A7%8D%EF%BC%9F/" class="archive-article-date">
+        
+        <a href="/2020/01/25/C++%E4%B8%AD%E7%9A%84new%E6%9C%89%E5%87%A0%E7%A7%8D%EF%BC%9F/" class="archive-article-date">
   	<time datetime="2020-01-25T01:51:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-25</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face="consolas">1.普通new<br><font color="red">形式：int* p = new int;</font><br>此时不能通过p是否为nullptr来判断内存是否开辟成功，而是需要通过bad_alloc来捕获异常。</font></p>
+<p><font size=5 face="consolas">2.(nothrow) new<br><font color="red">形式：int *p = new (nothrow) int(20);</font><br>此时指针已经退化为C语言中通过malloc开辟内存得到的指针，是可以通过判空来验证是否成功开辟内存。</font></p>
+<p><font size=5 face="consolas">3.申请指向常量内存的指针的new<br><font color="red">形式：const int* p = new const int(20);</font><br></font></p>
+<p><font size=5 face="consolas">4.定位new<br><font color="red">形式：int data  = 0;<br>int *p = new (&amp;data) int(20);</font><br>在已知的内存上进行new。<br></font></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/c-c//" class="article-tag-list-link color1">c/c++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/01/25/C++%E4%B8%AD%E7%9A%84new%E6%9C%89%E5%87%A0%E7%A7%8D%EF%BC%9F/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-具有n个节点的度为m的树的最大高度和最低高度推导" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2019/11/29/%E5%85%B7%E6%9C%89n%E4%B8%AA%E8%8A%82%E7%82%B9%E7%9A%84%E5%BA%A6%E4%B8%BAm%E7%9A%84%E6%A0%91%E7%9A%84%E6%9C%80%E5%A4%A7%E9%AB%98%E5%BA%A6%E5%92%8C%E6%9C%80%E4%BD%8E%E9%AB%98%E5%BA%A6%E6%8E%A8%E5%AF%BC/">具有n个节点的度为m的树的最大高度和最低高度推导</a>
     </h1>
   
 
-  
-  <a href="/2019/11/29/%E5%85%B7%E6%9C%89n%E4%B8%AA%E8%8A%82%E7%82%B9%E7%9A%84%E5%BA%A6%E4%B8%BAm%E7%9A%84%E6%A0%91%E7%9A%84%E6%9C%80%E5%A4%A7%E9%AB%98%E5%BA%A6%E5%92%8C%E6%9C%80%E4%BD%8E%E9%AB%98%E5%BA%A6%E6%8E%A8%E5%AF%BC/" class="archive-article-date">
+        
+        <a href="/2019/11/29/%E5%85%B7%E6%9C%89n%E4%B8%AA%E8%8A%82%E7%82%B9%E7%9A%84%E5%BA%A6%E4%B8%BAm%E7%9A%84%E6%A0%91%E7%9A%84%E6%9C%80%E5%A4%A7%E9%AB%98%E5%BA%A6%E5%92%8C%E6%9C%80%E4%BD%8E%E9%AB%98%E5%BA%A6%E6%8E%A8%E5%AF%BC/" class="archive-article-date">
   	<time datetime="2019-11-29T04:23:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-29</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=6 color=blue face=consolas>一、最大高度</font></p>
+<p><font size=5 face=consolas>试想一下，若有n个节点的度为m的树，当只有最后一层有m个节点，其余层均只有一个节点，在所有含有nn个节点的度为m的树中一定是最高的。</font><br><img src="https://img-blog.csdnimg.cn/20191129095401132.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p><font size=6 color=blue face=consolas>二、最低高度</font></p>
+<p><font size=5 face=consolas>当每个非终端节点均含有m个孩子节点时间，此时整棵树在所有含有n个节点的度为m的树中是最矮胖的，此时这棵树的高度也是含有n个节点度为m的树中高度最低。在极限的状态下可以称之为满m叉树，因此可以推导不等式，得出最低高度。</font><br><img src="https://img-blog.csdnimg.cn/20191129101437195.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p><font size=6 color=blue face=consolas>结论：综上分析，对于一个含有n个节点的度为m的树的高度范围为：ceil(logm((m-1)*n + 1) &lt;= h &lt;= n-m+1</font></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/数据结构//" class="article-tag-list-link color5">数据结构</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/11/29/%E5%85%B7%E6%9C%89n%E4%B8%AA%E8%8A%82%E7%82%B9%E7%9A%84%E5%BA%A6%E4%B8%BAm%E7%9A%84%E6%A0%91%E7%9A%84%E6%9C%80%E5%A4%A7%E9%AB%98%E5%BA%A6%E5%92%8C%E6%9C%80%E4%BD%8E%E9%AB%98%E5%BA%A6%E6%8E%A8%E5%AF%BC/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-单源最短路径--floyd算法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2019/11/27/%E5%8D%95%E6%BA%90%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84--floyd%E7%AE%97%E6%B3%95/">单源最短路径--floyd算法</a>
     </h1>
   
 
-  
-  <a href="/2019/11/27/%E5%8D%95%E6%BA%90%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84--floyd%E7%AE%97%E6%B3%95/" class="archive-article-date">
+        
+        <a href="/2019/11/27/%E5%8D%95%E6%BA%90%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84--floyd%E7%AE%97%E6%B3%95/" class="archive-article-date">
   	<time datetime="2019-11-27T14:12:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-27</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">void floyd() &#123;</span><br><span class="line">	for (int k&#x3D;1; k&lt;&#x3D;n; ++k) &#123;</span><br><span class="line">		for (int i&#x3D;1; i&lt;&#x3D;n; ++i) &#123;</span><br><span class="line">			for (int j&#x3D;1; j&lt;&#x3D;n; ++j) &#123;</span><br><span class="line">				if (i &#x3D;&#x3D; j || i &#x3D;&#x3D; k || j &#x3D;&#x3D; k) continue; &#x2F;&#x2F;避免不必要的判断 提高程序效率</span><br><span class="line">				else g[i][j] &#x3D; min(g[i][j], g[i][k]+g[k][j]);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/算法基础//" class="article-tag-list-link color5">算法基础</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/11/27/%E5%8D%95%E6%BA%90%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84--floyd%E7%AE%97%E6%B3%95/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-四大查找ASL的总结" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2019/11/26/%E5%9B%9B%E5%A4%A7%E6%9F%A5%E6%89%BEASL%E7%9A%84%E6%80%BB%E7%BB%93/">四大查找ASL的总结</a>
     </h1>
   
 
-  
-  <a href="/2019/11/26/%E5%9B%9B%E5%A4%A7%E6%9F%A5%E6%89%BEASL%E7%9A%84%E6%80%BB%E7%BB%93/" class="archive-article-date">
+        
+        <a href="/2019/11/26/%E5%9B%9B%E5%A4%A7%E6%9F%A5%E6%89%BEASL%E7%9A%84%E6%80%BB%E7%BB%93/" class="archive-article-date">
   	<time datetime="2019-11-26T12:54:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-26</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face=consolas>一、一般线性表的顺序查找<br><font size=5 face=consolas color=blue>ASL成功 = (n+1)/2<br>ASL失败 = （n+1)</p>
+<p><font size=5 face=consolas>二、有序线性表的顺序查找<br><font size=5 face=consolas color=blue>ASL成功 = (n+1)/2<br>ASL失败 = n/(n+1) + n/2</p>
+<p><font size=5 face=consolas>三、二分查找<br><font size=5 face=consolas color=blue>二分查找的ASL成功和ASL失败通过画出对应查找序列的判定树，进而进行计算。</p>
+<p><font size=5 face=consolas>四、索引查找<br>ASL = I块内 + I块间<br>其中块间可以使用二分查找。<font size=5 face=consolas color=blue><br>（1）ASL = (b+1)/2 + (s+1)/2  块内和块间均使用顺序查找，由于n = s*b,可以通过构建方程，得到当s = n^(1/2)。<br>ASL最小为n^(1/2)+1</p>
+<font size=5 face=consolas color=blue>
+（2）ASL = (s+1)/2 + ceil(log2(b+1))  块内顺序，块间二分
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/数据结构//" class="article-tag-list-link color5">数据结构</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/11/26/%E5%9B%9B%E5%A4%A7%E6%9F%A5%E6%89%BEASL%E7%9A%84%E6%80%BB%E7%BB%93/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-数据结构中“哨兵”的使用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2019/11/26/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%AD%E2%80%9C%E5%93%A8%E5%85%B5%E2%80%9D%E7%9A%84%E4%BD%BF%E7%94%A8/">数据结构中“哨兵”的使用</a>
     </h1>
   
 
-  
-  <a href="/2019/11/26/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%AD%E2%80%9C%E5%93%A8%E5%85%B5%E2%80%9D%E7%9A%84%E4%BD%BF%E7%94%A8/" class="archive-article-date">
+        
+        <a href="/2019/11/26/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%AD%E2%80%9C%E5%93%A8%E5%85%B5%E2%80%9D%E7%9A%84%E4%BD%BF%E7%94%A8/" class="archive-article-date">
   	<time datetime="2019-11-26T12:18:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-26</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face=consolas>1.顺序查找中的哨兵：通过引入哨兵，可以必满很多不必要的语句，从而提高程序效率。</p>
+<p><font size=5 face=consolas>2.直接插入排序的哨兵：<br>免去查找过程中每一步都要检测整个查找表是否查找完毕，提高查找效率。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/数据结构//" class="article-tag-list-link color5">数据结构</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/11/26/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%AD%E2%80%9C%E5%93%A8%E5%85%B5%E2%80%9D%E7%9A%84%E4%BD%BF%E7%94%A8/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-二叉树：在孩子兄弟链表表示的树中求叶子节点的个数" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2019/11/24/%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BC%9A%E5%9C%A8%E5%AD%A9%E5%AD%90%E5%85%84%E5%BC%9F%E9%93%BE%E8%A1%A8%E8%A1%A8%E7%A4%BA%E7%9A%84%E6%A0%91%E4%B8%AD%E6%B1%82%E5%8F%B6%E5%AD%90%E8%8A%82%E7%82%B9%E7%9A%84%E4%B8%AA%E6%95%B0/">二叉树：在孩子兄弟链表表示的树中求叶子节点的个数</a>
     </h1>
   
 
-  
-  <a href="/2019/11/24/%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BC%9A%E5%9C%A8%E5%AD%A9%E5%AD%90%E5%85%84%E5%BC%9F%E9%93%BE%E8%A1%A8%E8%A1%A8%E7%A4%BA%E7%9A%84%E6%A0%91%E4%B8%AD%E6%B1%82%E5%8F%B6%E5%AD%90%E8%8A%82%E7%82%B9%E7%9A%84%E4%B8%AA%E6%95%B0/" class="archive-article-date">
+        
+        <a href="/2019/11/24/%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BC%9A%E5%9C%A8%E5%AD%A9%E5%AD%90%E5%85%84%E5%BC%9F%E9%93%BE%E8%A1%A8%E8%A1%A8%E7%A4%BA%E7%9A%84%E6%A0%91%E4%B8%AD%E6%B1%82%E5%8F%B6%E5%AD%90%E8%8A%82%E7%82%B9%E7%9A%84%E4%B8%AA%E6%95%B0/" class="archive-article-date">
   	<time datetime="2019-11-24T08:16:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-24</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">typedef struct CSNode &#123;</span><br><span class="line">  int val;</span><br><span class="line">  CSNode *firstchild, *nextsibling;</span><br><span class="line">&#125; CSNode, *CSTree;</span><br><span class="line"></span><br><span class="line">int dfs(CSTree *root) &#123;</span><br><span class="line">  if (!root) return 0;</span><br><span class="line">  else if (!root-&gt;firstchild) return 1;</span><br><span class="line">  else &#123;</span><br><span class="line">    int left  &#x3D;  dfs(root-&gt;firstchild);</span><br><span class="line">    int right &#x3D; dfs(root-&gt;nextsibling);</span><br><span class="line">    return left + right;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/数据结构//" class="article-tag-list-link color5">数据结构</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/11/24/%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BC%9A%E5%9C%A8%E5%AD%A9%E5%AD%90%E5%85%84%E5%BC%9F%E9%93%BE%E8%A1%A8%E8%A1%A8%E7%A4%BA%E7%9A%84%E6%A0%91%E4%B8%AD%E6%B1%82%E5%8F%B6%E5%AD%90%E8%8A%82%E7%82%B9%E7%9A%84%E4%B8%AA%E6%95%B0/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-差分" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2019/11/20/%E5%B7%AE%E5%88%86/">差分</a>
     </h1>
   
 
-  
-  <a href="/2019/11/20/%E5%B7%AE%E5%88%86/" class="archive-article-date">
+        
+        <a href="/2019/11/20/%E5%B7%AE%E5%88%86/" class="archive-article-date">
   	<time datetime="2019-11-20T12:33:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-20</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face=consolas><font color=blue>题目描述</font>：输入一个长度为n的整数序列。<br>接下来输入m个操作，每个操作包含三个整数l, r, c，表示将序列中[l, r]之间的每个数加上c。<br>请你输出进行完所有操作后的序列。</font></p>
+<p><font size=5 face=consolas><font color=blue>输入格式</font>：第一行包含两个整数n和m。<br>第二行包含n个整数，表示整数序列。<br>接下来m行，每行包含三个整数l，r，c，表示一个操作。</font></p>
+<p><font size=5 face=consolas><font color=blue>输出格式</font>：共一行，包含n个整数，表示最终序列。</font></p>
+<p><font size=5 face=consolas><font color=blue>数据范围</font>：<br>1≤n,m≤100000,<br>1≤l≤r≤n,<br>−1000≤c≤1000,<br>−1000≤整数序列中元素的值≤1000</font></p>
+<p><font size=5 face=consolas><font color=blue>样例：</font></font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">输入样例：</span><br><span class="line">6 3</span><br><span class="line">1 2 2 1 2 1</span><br><span class="line">1 3 1</span><br><span class="line">3 5 1</span><br><span class="line">1 6 1</span><br><span class="line">输出样例：</span><br><span class="line">3 4 5 3 4 2</span><br></pre></td></tr></table></figure>
+
+
+<p><font size=5 face=consolas>AC代码：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;bits&#x2F;stdc++.h&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">const int N&#x3D;1e5+10;</span><br><span class="line">int a[N];</span><br><span class="line">int d[N];</span><br><span class="line"></span><br><span class="line">inline int read() &#123;</span><br><span class="line">  int x &#x3D; 0;</span><br><span class="line">  int f &#x3D; 1;</span><br><span class="line">  char ch &#x3D; getchar();</span><br><span class="line">  while (!isdigit(ch)) &#123;</span><br><span class="line">    if (ch &#x3D;&#x3D; &#39;-&#39;) f &#x3D; -1;</span><br><span class="line">    ch &#x3D; getchar();</span><br><span class="line">  &#125;</span><br><span class="line">  while (isdigit(ch)) &#123;</span><br><span class="line">    x &#x3D; x*10 + ch-&#39;0&#39;;</span><br><span class="line">    ch &#x3D; getchar();</span><br><span class="line">  &#125;</span><br><span class="line">  return x * f;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void show(int *a, int n) &#123;</span><br><span class="line">  for (int i&#x3D;1; i&lt;&#x3D;n; ++i) &#123;</span><br><span class="line">    cout &lt;&lt; a[i];</span><br><span class="line">    if (i!&#x3D;n) cout &lt;&lt; &quot; &quot;;</span><br><span class="line">  &#125;</span><br><span class="line">  cout &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">  int n&#x3D;read(), m&#x3D;read();</span><br><span class="line">  for (int i&#x3D;1; i&lt;&#x3D;n; ++i) a[i] &#x3D; read();</span><br><span class="line">  d[1] &#x3D; a[1];</span><br><span class="line">  for (int i&#x3D;1; i&lt;&#x3D;n; ++i) d[i] &#x3D; a[i] - a[i-1];</span><br><span class="line">  while (m --) &#123;</span><br><span class="line">    int l&#x3D;read(), r&#x3D;read(), c&#x3D;read();</span><br><span class="line">    d[l] +&#x3D; c;</span><br><span class="line">    d[r+1] -&#x3D; c;</span><br><span class="line">  &#125;</span><br><span class="line">  a[1] &#x3D; d[1];</span><br><span class="line">  for (int i&#x3D;2; i&lt;&#x3D;n; ++i)</span><br><span class="line">    a[i] &#x3D; a[i-1] + d[i];</span><br><span class="line">  show(a, n);</span><br><span class="line">  return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/算法基础//" class="article-tag-list-link color5">算法基础</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/11/20/%E5%B7%AE%E5%88%86/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-前缀和" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2019/11/20/%E5%89%8D%E7%BC%80%E5%92%8C/">前缀和</a>
     </h1>
   
 
-  
-  <a href="/2019/11/20/%E5%89%8D%E7%BC%80%E5%92%8C/" class="archive-article-date">
+        
+        <a href="/2019/11/20/%E5%89%8D%E7%BC%80%E5%92%8C/" class="archive-article-date">
   	<time datetime="2019-11-20T11:28:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-20</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face="consolas">问题描述，现在给定一个闭区间数组，求区间[l,r]的数据元素之和，询问m次，要求线性时间复杂度O(n)。</font><br><font size=5 face="consolas"><br>比较常规的思路是使用循环遍历相加，但是一次循环的时间复杂度为O(n),m次询问最终的时间复杂度为O(n*m),显然是不满足要求的。我们可以采用空间换时间的策略，设置一个前缀和数组d,数组中任意位置i表示的是d[i] = a[1] + a[2] + … + a[i],经过这样的预处理，询问任意位置的前缀和的时间复杂度变为O(1),经过m次询问，时间复杂度为O(m)，符合要求。</font></p>
+<p><font size=5 face="consolas">代码实现：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;bits&#x2F;stdc++.h&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">const int N&#x3D;1e5+10;</span><br><span class="line">int a[N];</span><br><span class="line">int d[N];</span><br><span class="line"></span><br><span class="line">inline int read() &#123;</span><br><span class="line">  int x &#x3D; 0;</span><br><span class="line">  int f &#x3D; 1;</span><br><span class="line">  char ch &#x3D; getchar();</span><br><span class="line">  while (!isdigit(ch)) &#123;</span><br><span class="line">    if (ch &#x3D;&#x3D; &#39;-&#39;) f &#x3D; -1;</span><br><span class="line">    ch&#x3D; getchar();</span><br><span class="line">  &#125;</span><br><span class="line">  while (isdigit(ch)) &#123;</span><br><span class="line">    x &#x3D; x*10 + ch-&#39;0&#39;;</span><br><span class="line">    ch &#x3D; getchar();</span><br><span class="line">  &#125;</span><br><span class="line">  return x * f;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">  int n &#x3D; read(), m &#x3D; read();</span><br><span class="line">  for (int i&#x3D;1; i&lt;&#x3D;n; ++i) a[i] &#x3D; read();</span><br><span class="line">  d[1] &#x3D; a[1];</span><br><span class="line">  for (int i&#x3D;2; i&lt;&#x3D;n; ++i) </span><br><span class="line">    d[i] &#x3D; d[i-1] + a[i];</span><br><span class="line">  while (m --) &#123;</span><br><span class="line">    int a&#x3D;read(), b&#x3D;read();</span><br><span class="line">    printf(&quot;%d\n&quot;, d[b]-d[a-1]);</span><br><span class="line">  &#125;</span><br><span class="line">  return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/算法基础//" class="article-tag-list-link color5">算法基础</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/11/20/%E5%89%8D%E7%BC%80%E5%92%8C/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-快速读入的技巧" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2019/11/20/%E5%BF%AB%E9%80%9F%E8%AF%BB%E5%85%A5%E7%9A%84%E6%8A%80%E5%B7%A7/">快速读入的技巧</a>
     </h1>
   
 
-  
-  <a href="/2019/11/20/%E5%BF%AB%E9%80%9F%E8%AF%BB%E5%85%A5%E7%9A%84%E6%8A%80%E5%B7%A7/" class="archive-article-date">
+        
+        <a href="/2019/11/20/%E5%BF%AB%E9%80%9F%E8%AF%BB%E5%85%A5%E7%9A%84%E6%8A%80%E5%B7%A7/" class="archive-article-date">
   	<time datetime="2019-11-20T06:37:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-20</time>
 </a>
-  
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face=consolas>在OJ上练习题目时，有些题目数据的输入非常大，即便是使用scanf()也会被卡常数，最后导致TLE。因此搜集网上的解决方案，常见的有以下两种：</p>
+<p><font size=5 face=consolas>一、当数据量不是特别大的时间，此时可以关闭stdio的同步，使得cin,cout与printf, scanf一样快。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">核心代码：</span><br><span class="line">ios::sync_with_stdio(false)</span><br><span class="line">&#x2F;&#x2F;此时注意在程序中不能再使用任何stdio的库函数，否则会造成混乱。</span><br></pre></td></tr></table></figure>
+<p><font size=5 face=consolas>二、当数据量比较大时候采用读字符的形式读取，注意要忽略空格、回车等字符。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;写为内联函数  建议编译器不做函数调用，直接展开</span><br><span class="line">&#x2F;*毕竟数量大的时，需要一直调用read()读取，如果能成为内联</span><br><span class="line">则可以减少函数调用的开销，提高程序的执行效率*&#x2F;</span><br><span class="line">inline int read() &#123;</span><br><span class="line">	int x &#x3D; 0;</span><br><span class="line">	int f &#x3D; 1;&#x2F;&#x2F;f表示的是整数x的正负  f&#x3D;&#x3D;1表示x为正  f&#x3D;&#x3D;-1表示x为负</span><br><span class="line">	char ch &#x3D; getchar();</span><br><span class="line">	while (!isdigit(ch)) &#123;</span><br><span class="line">		&#x2F;&#x2F;如果不是数字字符  只考虑其是否为符号，其他符号不考虑</span><br><span class="line">		if (ch &#x3D;&#x3D; &#39;-&#39;) f &#x3D; -1;</span><br><span class="line">		ch &#x3D; getchar();</span><br><span class="line">	&#125;</span><br><span class="line">	while (isdigit(ch) &#123;</span><br><span class="line">		&#x2F;&#x2F;说明ch是数字字符  但是有能不是一个只有个数数的数字</span><br><span class="line">		x &#x3D; x*10 + ch -&#39;0&#39;;</span><br><span class="line">		ch &#x3D; getchar();</span><br><span class="line">	&#125;</span><br><span class="line">	return x*f;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;函数功能同上，只是直接读取到了引用参数x中</span><br><span class="line">template &lt;typename T&gt;</span><br><span class="line">inline void read(T &amp;x) &#123;</span><br><span class="line">	int f &#x3D; 1;</span><br><span class="line">	x &#x3D; 0;</span><br><span class="line">	char ch &#x3D; getchar();</span><br><span class="line">	while (!isdigit(ch)) &#123;</span><br><span class="line">		if (ch &#x3D;&#x3D; &#39;-&#39;) &#123;</span><br><span class="line">			f &#x3D; -1;</span><br><span class="line">			ch &#x3D; getchar();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	while (isdigit(ch)) &#123;</span><br><span class="line">		x &#x3D; x * 10 + ch - &#39;0&#39;;</span><br><span class="line">		ch &#x3D; getchar();</span><br><span class="line">	&#125;</span><br><span class="line">	x &#x3D; x*f;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/算法基础//" class="article-tag-list-link color5">算法基础</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/11/20/%E5%BF%AB%E9%80%9F%E8%AF%BB%E5%85%A5%E7%9A%84%E6%8A%80%E5%B7%A7/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
+    <article id="post-求解逆序对的个数(由归并排序衍生出的O(nlogn)时间复杂度的算法)" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-</header>
-  
-    <header class="article-header">
-  
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
       <a class="article-title" href="/2019/11/19/%E6%B1%82%E8%A7%A3%E9%80%86%E5%BA%8F%E5%AF%B9%E7%9A%84%E4%B8%AA%E6%95%B0(%E7%94%B1%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F%E8%A1%8D%E7%94%9F%E5%87%BA%E7%9A%84O(nlogn)%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E7%9A%84%E7%AE%97%E6%B3%95)/">求解逆序对的个数(由归并排序衍生出的O(nlogn)时间复杂度的算法)</a>
     </h1>
   
 
-  
-  <a href="/2019/11/19/%E6%B1%82%E8%A7%A3%E9%80%86%E5%BA%8F%E5%AF%B9%E7%9A%84%E4%B8%AA%E6%95%B0(%E7%94%B1%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F%E8%A1%8D%E7%94%9F%E5%87%BA%E7%9A%84O(nlogn)%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E7%9A%84%E7%AE%97%E6%B3%95)/" class="archive-article-date">
+        
+        <a href="/2019/11/19/%E6%B1%82%E8%A7%A3%E9%80%86%E5%BA%8F%E5%AF%B9%E7%9A%84%E4%B8%AA%E6%95%B0(%E7%94%B1%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F%E8%A1%8D%E7%94%9F%E5%87%BA%E7%9A%84O(nlogn)%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E7%9A%84%E7%AE%97%E6%B3%95)/" class="archive-article-date">
   	<time datetime="2019-11-19T03:55:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-19</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    
-    
-</header>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face=consolas>逆序：在一个排列中，如果一对数的前后位置与大小顺序相反，即前面的数大于后面的数，那么它们就称为一个逆序。</font></p>
+<p><font size=5 face=consolas>一、暴力做法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">int count(int *a, int n) &#123;</span><br><span class="line">	int res &#x3D; 0;</span><br><span class="line">	for (int i&#x3D;0; i&lt;n-1; ++i) &#123;</span><br><span class="line">		for (int j&#x3D;1; j&lt;n; ++j) &#123;</span><br><span class="line">			if (a[i] &gt; a[j]) res ++;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=5 face=consolas>可以看到，上边算法的时间复杂度为O(n^2),有没有效率更高的算法呢，其实在归并排序中，当进行两个有序数组合并时就会两两元素的比较。此时会出现，当第一个数组的某元素a[i]大于第二数组中的某元素a[j]时，则一个数组处于[i, m]区间的所有元素都会大于第二个数组的当前元素a[j]。这样做的好处是不需要将数组中的元素依次进行两两比较，一次比较就能处理一个大区间，因此算法的效率得到了提升。</font></p>
+<p><font size=5 face=consolas>二、归并排序</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">typedef long long ll;</span><br><span class="line">const int N&#x3D;1e5+10;</span><br><span class="line">ll a[N], t[N];</span><br><span class="line">ll res &#x3D; 0;</span><br><span class="line"></span><br><span class="line">void mergeSort(ll *a, int l, int r) &#123;</span><br><span class="line">	if (l&gt;&#x3D;r) return;</span><br><span class="line">	int m &#x3D; (r-l)&#x2F;2 + l;</span><br><span class="line">	mergeSort(a, l, m);</span><br><span class="line">	mergeSort(a, m+1, r);</span><br><span class="line">	&#x2F;&#x2F;i为第一个区间的起始下标  第一个区间[l, m]</span><br><span class="line">	&#x2F;&#x2F;j为第二个区间的起始下标  第二个区间[m+1, r]</span><br><span class="line">	&#x2F;&#x2F;k为临时数组的起始下标</span><br><span class="line">	int i &#x3D; l, r &#x3D; m+1, k &#x3D; 0;</span><br><span class="line">	while (i &lt;&#x3D; m &amp;&amp; j &lt;&#x3D; r) &#123;</span><br><span class="line">		if (a[i] &lt;&#x3D; a[j]) t[k ++] &#x3D; a[i ++];</span><br><span class="line">		else &#123;</span><br><span class="line">			&#x2F;&#x2F;a[i] &gt; a[j] &amp;&amp; i &lt; j 构成了逆序对  而此时 a[i]到a[m]的所有元素均大于a[j]  </span><br><span class="line">			&#x2F;&#x2F;a[i,....,m]的长度为  m-i+1</span><br><span class="line">			res +&#x3D; m-i+1;</span><br><span class="line">			t[k ++] &#x3D; a[j ++];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;	</span><br><span class="line">	while (i &lt;&#x3D; m) t[k ++] &#x3D; a[i ++];</span><br><span class="line">	while (j &lt;&#x3D; r) t[k ++] &#x3D; a[j ++];</span><br><span class="line">	for (int i&#x3D;l, k&#x3D;0; i&lt;&#x3D;r; ++i, ++k) a[i] &#x3D; t[k];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">	ios::sync_with_stdio(false);</span><br><span class="line">	int n;</span><br><span class="line">	cin &gt;&gt; n;</span><br><span class="line">	for (int i&#x3D;0; i&lt;n; ++i) cin &gt;&gt; a[i];</span><br><span class="line">	mergeSort(a, 0, n-1);</span><br><span class="line">	cout &lt;&lt; res &lt;&lt; endl;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/趣味编程-算法基础//" class="article-tag-list-link color5">趣味编程 算法基础</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/11/19/%E6%B1%82%E8%A7%A3%E9%80%86%E5%BA%8F%E5%AF%B9%E7%9A%84%E4%B8%AA%E6%95%B0(%E7%94%B1%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F%E8%A1%8D%E7%94%9F%E5%87%BA%E7%9A%84O(nlogn)%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E7%9A%84%E7%AE%97%E6%B3%95)/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
   
     <nav id="page-nav">

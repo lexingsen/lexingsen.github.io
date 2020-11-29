@@ -159,29 +159,199 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-TCP协议的特点及TCP头部结构信息" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       TCP协议的特点及TCP头部结构信息
     </h1>
   
 
-  
-  <a href="/2018/05/14/TCP%E5%8D%8F%E8%AE%AE%E7%9A%84%E7%89%B9%E7%82%B9%E5%8F%8ATCP%E5%A4%B4%E9%83%A8%E7%BB%93%E6%9E%84%E4%BF%A1%E6%81%AF/" class="archive-article-date">
+        
+        <a href="/2018/05/14/TCP%E5%8D%8F%E8%AE%AE%E7%9A%84%E7%89%B9%E7%82%B9%E5%8F%8ATCP%E5%A4%B4%E9%83%A8%E7%BB%93%E6%9E%84%E4%BF%A1%E6%81%AF/" class="archive-article-date">
   	<time datetime="2018-05-14T03:17:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-14</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><strong>TCP协议的特点：</strong><br>（1）相对于传输层的UDP协议，TCP协议的特点是<strong>面向连接的、可靠的传输和字节流</strong>。<br>（2）使用TCP协议通信的双方必须首先建立连接，然后才能开始数据的读写。双方都必须为该连接分配必要的内核资源，以管理连接的状态和连接上的数据传输。TCP是全双工通信，即双方的数据读写可以通过一个连接进行。完成数据交换后，通信双方必须断开连接以释放系统资源。<br>（3）TCP是端对端的，所以基于广播和多播的应用程序不能使用TCP服务，而无连接的UDP协议则非常适合于广播和多播。</p>
+<p><strong>TCP的头部结构</strong><br><img src="https://img-blog.csdn.net/20180514103930194?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<p><strong>（1）16位端口号：</strong>告诉主机该报文段来自哪里以及传给哪个上层协议或应用程序（目的端口号）的。进行TCP通信时，客户端通常使用系统自动选择的临时端口号，而服务器则使用知名服务器端口号。在/etc/services中可以查看相关服务的端口。<br>如http，ftp等。<br>著名的http和ftp服务的端口号位80和21。<br><img src="https://img-blog.csdn.net/20180514105012702?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<p><strong>（2）32位序号：</strong>一次TCP通信（从TCP连接建立到断开）过程中某一个传输方向的字节流的每个字节的编号。（注意是每一个自己都由编号）。假设主机A和主机B进行TCP通信，A发送给B的第一个TCP报文段中，序号值被系统初始化为某个随机值ISN。那么在该传输方向上（A -&gt; B），后续的TCP报文段中序号值将被系统设置成ISN加上该报文段所携数据的第一个字节在整个字节流中的偏移。</p>
+<p><strong>（3）32位确认号：</strong>用作对另一方发送来的TCP报文段的响应。其值是收到的TCP报文段的序号值+1。现在假设主机A于主机B进行TCP通信，那么A发送出的TCP报文段不仅携带自己的序号，而且还包含对B发送来的TCP报文段的确认号。反之亦然。</p>
+<p><strong>（4）4位头部长度：</strong> 用来标识TCP头部有多少个32bit字（4字节）。因为四位二进制数最大是15，所以TCP头部最长有60字节。</p>
+<p><strong>（5）6位标志位：</strong><br>URG：紧急指针。<br>ACK：标识确认号是否有效。<br>PSH：提示接受端应用程序应该立即从TCP接受缓冲区中读走数据，为接受后续数据腾出空间（如果应用程序不将接受到的数据读走，它们就会一直停留在TCP缓冲区中）。<br>RST：表示要求对方重新建立连接。<strong>将携带RST标志的TCP报文段称为复位报文段。</strong><br>SYN：表示请求建立一个连接。<strong>将携带SYN标志的TCP报文段称为同步报文段。</strong><br>FIN：表示通知对方本端要关闭连接了。<strong>将携带FIN标志的TCP报文段称为结束报文段。</strong></p>
+<p><strong>（6）16位窗口大小：</strong>这是控制TCP流量的一个手段。这里的窗口，指的是接受通告窗口。它告诉对方本端的TCP缓冲区还能容纳多少位字节的数据，这样对方就可以控制发送数据的速度。</p>
+<p><strong>（7）16位校验和：</strong>由发送端填充，接受端对TCP报文段执行CRC算法以检验TCP报文段在传输过程中是否损坏。注意：这里的检验不仅包括TCP头部，也包括数据部分。这是TCP传输可靠的一个重要保障。</p>
+<p><strong>（8）16位紧急指针：</strong>是一个正的偏移量。它和序号字段的值相加表示最后一个紧急数据的下一个字节的序号。因此，确切的说，这个字段的紧急指针是相对于当前序号的偏移，不妨称之为紧急偏移。TCP的紧急指针是发送端向接受端发送紧急数据的方法。</p>
+<p>参考《Linux 高性能服务器编程》</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/linux//" class="article-tag-list-link color1">linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2018/05/14/TCP%E5%8D%8F%E8%AE%AE%E7%9A%84%E7%89%B9%E7%82%B9%E5%8F%8ATCP%E5%A4%B4%E9%83%A8%E7%BB%93%E6%9E%84%E4%BF%A1%E6%81%AF/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2018/05/14/linux%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%87%BD%E6%95%B0%20access--%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6%E5%B1%9E%E6%80%A7/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          linux系统调用函数 access--获取文件属性
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/05/13/linux%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%87%BD%E6%95%B0%20%20lstat--%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6%E5%B1%9E%E6%80%A7/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">linux系统调用函数  lstat--获取文件属性</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>

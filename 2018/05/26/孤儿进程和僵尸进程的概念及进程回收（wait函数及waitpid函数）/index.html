@@ -167,29 +167,222 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-孤儿进程和僵尸进程的概念及进程回收（wait函数及waitpid函数）" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       孤儿进程和僵尸进程的概念及进程回收（wait函数及waitpid函数）
     </h1>
   
 
-  
-  <a href="/2018/05/26/%E5%AD%A4%E5%84%BF%E8%BF%9B%E7%A8%8B%E5%92%8C%E5%83%B5%E5%B0%B8%E8%BF%9B%E7%A8%8B%E7%9A%84%E6%A6%82%E5%BF%B5%E5%8F%8A%E8%BF%9B%E7%A8%8B%E5%9B%9E%E6%94%B6%EF%BC%88wait%E5%87%BD%E6%95%B0%E5%8F%8Awaitpid%E5%87%BD%E6%95%B0%EF%BC%89/" class="archive-article-date">
+        
+        <a href="/2018/05/26/%E5%AD%A4%E5%84%BF%E8%BF%9B%E7%A8%8B%E5%92%8C%E5%83%B5%E5%B0%B8%E8%BF%9B%E7%A8%8B%E7%9A%84%E6%A6%82%E5%BF%B5%E5%8F%8A%E8%BF%9B%E7%A8%8B%E5%9B%9E%E6%94%B6%EF%BC%88wait%E5%87%BD%E6%95%B0%E5%8F%8Awaitpid%E5%87%BD%E6%95%B0%EF%BC%89/" class="archive-article-date">
   	<time datetime="2018-05-26T02:34:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-26</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><strong>一.孤儿进程</strong><br>孤儿进程可以理解为一个子进程的父进程英年早逝（父进程先于子进程退出），就将这样的一个进程称为孤儿进程，在<code>linux</code>操作系统上。孤儿进程被init进程收养，此时孤儿进程的<code>ppid==1</code>，即init进程的<code>pid == 1</code>。也就是说<strong>init进程</strong>变成孤儿进程的父进程（干爹）。</p>
+<p>下面举例说明什么是孤儿进程：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;unistd.h&gt;</span><br><span class="line">#include&lt;sys&#x2F;types.h&gt;</span><br><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	pid_t pid &#x3D; fork();</span><br><span class="line">	if(pid &#x3D;&#x3D; 0)&#x2F;&#x2F;子进程</span><br><span class="line">	&#123;</span><br><span class="line">		sleep(1);&#x2F;&#x2F;目的是让父进程先于子进程执行完毕</span><br><span class="line">		printf(&quot;son process start\n&quot;);</span><br><span class="line">		printf(&quot;my pid is %d,my ppid is %d\n&quot;,getpid(),getppid());</span><br><span class="line">		printf(&quot;son process end\n&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">	else</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;father process start\n&quot;);</span><br><span class="line">		printf(&quot;my pid is %d\n&quot;,getpid());	</span><br><span class="line">		printf(&quot;father process end\n&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">	return	0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdn.net/20180526085419667?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>从执行结果来看，此时由<code>pid == 3363</code>父进程创建的子进程，其输出的父进程<code>pid == 1</code>，说明当其为孤儿进程时被init进程回收。</p>
+<p><strong>我们查证一下init进程的pid是否为1</strong><br><img src="https://img-blog.csdn.net/2018052608591359?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<p><strong>操作系统为什么要给孤儿进程分配init进程收养孤儿进程？</strong><br>其目的只有一个，就是为了释放系统资源<br>进程结束之后，能够释放用户区空间。但不能释放pcb（进程控制块），即内核资源。pcb必须由子进程的父进程进行释放。</p>
+<p><strong>二.僵尸进程</strong><br>（1）父进程成功创建子进程，且子进程先于父进程退出。<br>（2）子进程需要父进程回收其所占资源，释放pcb。但是父进程不作为，不去释放已经退出子进程的pcb。<br>（3）这样的子进程变为僵尸进程。<br>（4）僵尸进程是一个已经死掉了的进程。</p>
+<p>下面举例验证什么是僵尸进程：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;unistd.h&gt;</span><br><span class="line">#include&lt;sys&#x2F;types.h&gt;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	pid_t pid &#x3D; fork();&#x2F;&#x2F;创建子进程</span><br><span class="line">	if(pid &#x3D;&#x3D; 0)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;my pid is %d\n&quot;,getpid());</span><br><span class="line">		printf(&quot;my ppid is %d\n&quot;,getppid());</span><br><span class="line">	&#125;</span><br><span class="line">	else</span><br><span class="line">	&#123;</span><br><span class="line">		while(1)</span><br><span class="line">		&#123;</span><br><span class="line">			;&#x2F;&#x2F;死循环，阻塞  不处理已经退出的子进程，致使子进程称为僵尸进程</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdn.net/2018052522303883?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<p>从图可以看出，子进程执行完毕。父进程处于阻塞状态（陷入死循环）。<br>再开启另外一个bash窗口，<strong>使用<code>ps -aux | grep 3749</code>命令查看僵尸进程的状态。</strong><br><img src="https://img-blog.csdn.net/2018052522364123?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><strong>defunct</strong>是已死的，僵尸的意思。<br>也就是说pid值为3749的进程为僵尸进程，是因为其父亲不对已经结束的子进程做进程回收。但是已经结束的子进程的资源必须由其父进程进行回收，因而产生了僵尸进程。</p>
+<p>试想一下，如果有大量的僵尸进程驻在系统之中，必然消耗大量的系统资源。但是系统资源是有限的，因此当僵尸进程达到一定数目时，系统因缺乏资源而导致奔溃。所以在实际编程中，避免和防范僵尸进程的产生显得尤为重要。</p>
+<p><strong>三.进程回收</strong><br>（1）回收僵尸进程的资源，一种比较暴力的做法是将其父进程杀死，那么子进程资源也将被回收。但是这种做法在大多数情况下都是不可取的，如父进程是一个服务器程序，如果为了回收其子进程的资源，而杀死服务器程序，那么将导致整个服务器崩溃，得不偿失。显然这种回收进程的方式是不可取的，但其也有一定的存在意义。那么有没有更好的解决方案呢，且看下边的两种方式。<br>注：<code>kipp -9  + (父进程的pid)</code>是第一种回收子进程资源的方式。</p>
+<p>（2）wait系统调用函数<br>所需头文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;sys&#x2F;types.h&gt;</span><br><span class="line">#include&lt;sys&#x2F;wait.h&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>函数原型：</strong> <code>pid_t wait(int* status)</code>，是一个阻塞函数。</p>
+<p><strong>返回值：</strong>如果为-1,回收失败，已经没有子进程可以回收了。<br>                    如果 &gt; 0,返回值为子进程对应的pid。</p>
+<p><strong>参数：</strong>子进程的退出状态，是一个传出参数。<br>判断子进程是如何死的      （1）正常退出    （2）被信号杀死</p>
+<p><strong>（1）<font color=red size=3>WIFEXITED（status）：为非0，进程正常结束</front>。</strong><br>        <strong>WEXITSTATUS（status）：如果上宏为真，使用此宏，获取进程的退出状态（exit/return的参数）。</strong><br><strong>（2）<font color=red size=3>WIFEXITEDWIFSIGNALED（status）：为非0，进程异常终止。</front></strong><br><strong>WTERMSIG（status）：如上宏为真，使用此宏，获取使进程终止的那个信号的编号。</strong></p>
+<p>注意：pid_t类型即为int类型。调用一次，只能回收一个子进程，如果回收多个子进程，就需要多次调用wait函数。<br><strong>函数功能：</strong><br>（1）阻塞并等待子进程退出。<br>（2）回收子进程残留资源。<br>（3）获取子进程结束状态（退出原因）。</p>
+<p><strong>实例一：不关心子进程的退出状态</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;unistd.h&gt;</span><br><span class="line">#include&lt;sys&#x2F;types.h&gt;</span><br><span class="line">#include&lt;sys&#x2F;wait.h&gt;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	pid_t pid &#x3D; fork();</span><br><span class="line">	if(0 &#x3D;&#x3D; pid)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;my pid is %d\n&quot;,getpid());</span><br><span class="line">	&#125;</span><br><span class="line">	else</span><br><span class="line">	&#123;</span><br><span class="line">		sleep(1);&#x2F;&#x2F;目的是让子进程先于父进程结束</span><br><span class="line">		&#x2F;*wait函数是阻塞函数，会等到子进程结束回收资源*&#x2F;</span><br><span class="line">		pid_t dpid &#x3D; wait(NULL);&#x2F;&#x2F;对子进程的退出状态不关心</span><br><span class="line">		printf(&quot;the died son process pid is %d\n&quot;,dpid);</span><br><span class="line">	&#125;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行结果：<br><img src="https://img-blog.csdn.net/20180526093711142?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<p><strong>实例二：利用参数<code>int* status</code>获取子进程的退出状态</strong></p>
+<p>1.获取正常退出的状态</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;sys&#x2F;types&#x2F;h&gt;</span><br><span class="line">#include&lt;sys&#x2F;wait.h&gt;</span><br><span class="line">#include&lt;unistd.h&gt;</span><br><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	pid_t pid &#x3D; fork();</span><br><span class="line">	if(0 &#x3D;&#x3D; pid)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;my pid is %d\n&quot;,getpid());</span><br><span class="line">	&#125;</span><br><span class="line">	else</span><br><span class="line">	&#123;</span><br><span class="line">		sleep(1);</span><br><span class="line">		int status &#x3D; 0;&#x2F;&#x2F;初始化为0</span><br><span class="line">		pid_t dpid &#x3D; wait(&amp;status);</span><br><span class="line">		if(WIFEXITED(status))</span><br><span class="line">		&#123;</span><br><span class="line">			printf(&quot;exit value:%d\n&quot;,WEXITSTATUS(status));</span><br><span class="line">		&#125;</span><br><span class="line">		printf(&quot;the died son process pid is %d\n&quot;,dpid);</span><br><span class="line">	&#125;</span><br><span class="line">	return 10;&#x2F;&#x2F;返回值为10  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行结果：<br><img src="https://img-blog.csdn.net/20180526100909835?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>2.获取异常退出的状态。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;sys&#x2F;types.h&gt;</span><br><span class="line">#include&lt;sys&#x2F;wait.h&gt;</span><br><span class="line">#include&lt;unistd.h&gt;</span><br><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	pid_t pd &#x3D; fork();</span><br><span class="line">	if(pid &#x3D;&#x3D; 0)</span><br><span class="line">	&#123;</span><br><span class="line">		while(1)</span><br><span class="line">		&#123;</span><br><span class="line">			printf(&quot;my pid is %d\n&quot;,getpid());</span><br><span class="line">			sleep(2);&#x2F;&#x2F;控制执行速度不要太快</span><br><span class="line">		&#125;</span><br><span class="line">		else</span><br><span class="line">		&#123;</span><br><span class="line">			sleep(1);</span><br><span class="line">			int status &#x3D; 0;&#x2F;&#x2F;初始化为0</span><br><span class="line">			wait(&amp;status);</span><br><span class="line">			if(WIFSIGNALED(status))</span><br><span class="line">			&#123;</span><br><span class="line">				printf(&quot;exit by signal : %d\n&quot;,WTEEMSIG(status));</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdn.net/20180526101637951?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><strong>查找子进程的pid值，并杀死。</strong><br><img src="https://img-blog.csdn.net/20180526101809249?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<p><strong>再次查看执行结果</strong><br><img src="https://img-blog.csdn.net/20180526101922359?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<p>使用<code>kill -l</code>命令可以擦看所有信号，其中编号为9的信号是<code>SIGKILL</code>。<br><img src="https://img-blog.csdn.net/20180526102233727?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<p>子进程被编号为9的信号杀死。<br>（3）waitpid系统调用函数<br><strong>函数功能：</strong>和wait函数相同。<br>所需头文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;sys&#x2F;types.h&gt;</span><br><span class="line">#include&lt;sys&#x2F;wait.h&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>函数原型：</strong> <code>pid_t waitpid(pid_t pid,int* status,int options)</code><br><strong>返回值：</strong><br>（1）&gt;0：返回清理掉的子进程的PID。<br>（2）-1：无子进程可以回收。<br>（3）=0：参数3为WNOHANG，且子进程正在运行。<br><strong>参数：</strong><br>1.pid  可以有选择的回收<br><font color=blue>（1）pid：pid == -1,等待任意子进程，与wait等效。<br>（2）pid &gt; 0,等待其进程ID与pid相等的子进程。<br>（3）pid == 0,等待其组ID等于调用进程的组ID的任一子进程。<br>（4）pid &lt; -1,等待其组ID等于pid的绝对值的任一子进程。</font><br>2.status：<font color=green>子进程的退出状态，用法同wait函数。</font><br>3.options：<font color=red>设置为WNOHANG,函数非阻塞。设置为0，阻塞函数。<font></p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/linux//" class="article-tag-list-link color1">linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2018/05/26/%E5%AD%A4%E5%84%BF%E8%BF%9B%E7%A8%8B%E5%92%8C%E5%83%B5%E5%B0%B8%E8%BF%9B%E7%A8%8B%E7%9A%84%E6%A6%82%E5%BF%B5%E5%8F%8A%E8%BF%9B%E7%A8%8B%E5%9B%9E%E6%94%B6%EF%BC%88wait%E5%87%BD%E6%95%B0%E5%8F%8Awaitpid%E5%87%BD%E6%95%B0%EF%BC%89/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2018/05/29/%E5%9B%BE%E7%A4%BA%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E7%9A%84%E6%9E%90%E6%9E%84%E9%A1%BA%E5%BA%8F%EF%BC%88%E9%BB%98%E8%AE%A4%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E3%80%81%E6%8B%B7%E8%B4%9D%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%92%8C%E8%B5%8B%E5%80%BC%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD%E5%87%BD%E6%95%B0%EF%BC%89/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          图示构造函数的析构顺序（默认构造函数、拷贝构造函数和赋值运算符重载函数）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/05/18/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%B9%E9%85%8D%E7%AE%97%E6%B3%95%20--%20%E6%9C%B4%E7%B4%A0%E5%8C%B9%E9%85%8D/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">字符串匹配算法 -- 朴素匹配</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>

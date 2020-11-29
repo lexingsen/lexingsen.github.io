@@ -158,29 +158,196 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-PAT（乙级）1018.锤子剪刀布（20）" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       PAT（乙级）1018.锤子剪刀布（20）
     </h1>
   
 
-  
-  <a href="/2019/03/28/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891018.%E9%94%A4%E5%AD%90%E5%89%AA%E5%88%80%E5%B8%83%EF%BC%8820%EF%BC%89/" class="archive-article-date">
+        
+        <a href="/2019/03/28/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891018.%E9%94%A4%E5%AD%90%E5%89%AA%E5%88%80%E5%B8%83%EF%BC%8820%EF%BC%89/" class="archive-article-date">
   	<time datetime="2019-03-28T03:09:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-28</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face="Courier New">PAT 1018.锤子剪刀布（20）</font><br><img src="https://img-blog.csdnimg.cn/20190328110634106.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><font size=4 face="Courier New">现给出两人的交锋记录，请统计双方的胜、平、负次数，并且给出双方分别出什么手势的胜算最大。<br><font size=4 face="Courier New"><br><font size=5 face="Courier New" color=red>输入格式：</font><br><font size=4 face="Courier New">输入第 1 行给出正整数 N（≤10^​5），即双方交锋的次数。随后 N 行，每行给出一次交锋的信息，即甲、乙双方同时给出的的手势。<code>C </code>代表“锤子”、<code>J</code> 代表“剪刀”、<code>B </code>代表“布”，第 1 个字母代表甲方，第 2 个代表乙方，中间有 1 个空格。</p>
+<p><font size=5 face="Courier New" color=red>输出格式：</font><br><font size=4 face="Courier New">输出第 1、2 行分别给出甲、乙的胜、平、负次数，数字间以 1 个空格分隔。第 3 行给出两个字母，分别代表甲、乙获胜次数最多的手势，中间有 1 个空格。如果解不唯一，则输出按字母序最小的解。</p>
+<p><font size=5 face="Courier New" color=red>输入样例：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">10</span><br><span class="line">C J</span><br><span class="line">J B</span><br><span class="line">C B</span><br><span class="line">B B</span><br><span class="line">B C</span><br><span class="line">C C</span><br><span class="line">C B</span><br><span class="line">J B</span><br><span class="line">B C</span><br><span class="line">J J</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier New" color=red>输出样例：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">5 3 2</span><br><span class="line">2 3 5</span><br><span class="line">B B</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier New" color=blue>题目分析：hash数组的使用+map的使用，简单的模拟题。<br></font><br><font size=5 face="Courier New" color=black>AC代码：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;map&gt;</span><br><span class="line">#include &lt;sstream&gt;</span><br><span class="line">#include &lt;vector&gt;</span><br><span class="line">#include &lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">map&lt;char, int&gt; mp&#123;&#123;&#39;C&#39;,0&#125;,&#123;&#39;J&#39;,1&#125;,&#123;&#39;B&#39;,2&#125;&#125;;</span><br><span class="line">map&lt;int, char&gt; mp1&#123;&#123;0,&#39;C&#39;&#125;,&#123;1,&#39;J&#39;&#125;,&#123;2,&#39;B&#39;&#125;&#125;;</span><br><span class="line">int arr[3] &#x3D; &#123;0&#125;;</span><br><span class="line">int brr[3] &#x3D; &#123;0&#125;;</span><br><span class="line">int awin&#x3D;0,bwin&#x3D;0,pin&#x3D;0,alose&#x3D;0,blose&#x3D;0;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">bool cmp(int a, int b)&#123;return a&gt;b;&#125;</span><br><span class="line">void print(int a)&#123;cout&lt;&lt;a&lt;&lt;&quot; &quot;;&#125;</span><br><span class="line">int main()&#123;</span><br><span class="line">    &#x2F;&#x2F;freopen(&quot;in.txt&quot;, &quot;r&quot;, stdin);</span><br><span class="line">    int n;</span><br><span class="line">    char a,b;</span><br><span class="line">    scanf(&quot;%d&quot;, &amp;n);</span><br><span class="line">    for(int i&#x3D;0; i&lt;n; ++i)&#123;</span><br><span class="line">        cin&gt;&gt;a&gt;&gt;b;</span><br><span class="line">        if((a&#x3D;&#x3D;&#39;C&#39;&amp;&amp;b&#x3D;&#x3D;&#39;J&#39;) || (a&#x3D;&#x3D;&#39;J&#39;&amp;&amp;b&#x3D;&#x3D;&#39;B&#39;) || (a&#x3D;&#x3D;&#39;B&#39;&amp;&amp;b&#x3D;&#x3D;&#39;C&#39;))&#123;</span><br><span class="line">            awin ++;</span><br><span class="line">            blose ++;</span><br><span class="line">            arr[mp[a]] ++;</span><br><span class="line">        &#125;</span><br><span class="line">        else if((b&#x3D;&#x3D;&#39;C&#39;&amp;&amp;a&#x3D;&#x3D;&#39;J&#39;) || (b&#x3D;&#x3D;&#39;J&#39;&amp;&amp;a&#x3D;&#x3D;&#39;B&#39;) || (b&#x3D;&#x3D;&#39;B&#39;&amp;&amp;a&#x3D;&#x3D;&#39;C&#39;))&#123;</span><br><span class="line">            bwin ++;</span><br><span class="line">            alose ++;</span><br><span class="line">            brr[mp[b]] ++;</span><br><span class="line">        &#125;</span><br><span class="line">        else&#123;</span><br><span class="line">            pin ++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cout&lt;&lt;awin&lt;&lt;&quot; &quot;&lt;&lt;pin&lt;&lt;&quot; &quot;&lt;&lt;alose&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;bwin&lt;&lt;&quot; &quot;&lt;&lt;pin&lt;&lt;&quot; &quot;&lt;&lt;blose&lt;&lt;endl;</span><br><span class="line"></span><br><span class="line">    int arr_max &#x3D; *max_element(arr, arr+3);</span><br><span class="line">    int brr_max &#x3D; *max_element(brr, brr+3);</span><br><span class="line"></span><br><span class="line">    vector&lt;char&gt; va, vb;</span><br><span class="line">    for(int i&#x3D;0; i&lt;3; ++i)&#123;</span><br><span class="line">        if(arr[i]&#x3D;&#x3D;arr_max)&#123;</span><br><span class="line">            va.push_back(mp1[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    for(int i&#x3D;0; i&lt;3; ++i)&#123;</span><br><span class="line">        if(brr[i]&#x3D;&#x3D;brr_max)</span><br><span class="line">            vb.push_back(mp1[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    sort(va.begin(), va.end());</span><br><span class="line">    sort(vb.begin(), vb.end());</span><br><span class="line">    cout&lt;&lt;va[0]&lt;&lt;&quot; &quot;&lt;&lt;vb[0]&lt;&lt;endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/PAT乙级题解//" class="article-tag-list-link color3">PAT乙级题解</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2019/03/28/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891018.%E9%94%A4%E5%AD%90%E5%89%AA%E5%88%80%E5%B8%83%EF%BC%8820%EF%BC%89/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2019/03/28/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891029.%E6%97%A7%E9%94%AE%E7%9B%98%EF%BC%8820%EF%BC%89/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          PAT（乙级）1029.旧键盘（20）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/03/27/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891090.%E5%8D%B1%E9%99%A9%E5%93%81%E8%A3%85%E7%AE%B1%EF%BC%8825%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">PAT（乙级）1090.危险品装箱（25）</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>

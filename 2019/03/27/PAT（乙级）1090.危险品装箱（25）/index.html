@@ -156,29 +156,202 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-PAT（乙级）1090.危险品装箱（25）" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       PAT（乙级）1090.危险品装箱（25）
     </h1>
   
 
-  
-  <a href="/2019/03/27/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891090.%E5%8D%B1%E9%99%A9%E5%93%81%E8%A3%85%E7%AE%B1%EF%BC%8825%EF%BC%89/" class="archive-article-date">
+        
+        <a href="/2019/03/27/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891090.%E5%8D%B1%E9%99%A9%E5%93%81%E8%A3%85%E7%AE%B1%EF%BC%8825%EF%BC%89/" class="archive-article-date">
   	<time datetime="2019-03-27T13:36:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-27</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face="Courier New">PAT 1090.危险品装箱（25）</font></p>
+<p><font size=4 face="Courier New">集装箱运输货物时，我们必须特别小心，不能把不相容的货物装在一只箱子里。比如氧化剂绝对不能跟易燃液体同箱，否则很容易造成爆炸。</p>
+<p>本题给定一张不相容物品的清单，需要你检查每一张集装箱货品清单，判断它们是否能装在同一只箱子里。</p>
+<p><font size=5 face="Courier New" color=red>输入格式：</font><br><font size=4 face="Courier New">输入第一行给出两个正整数：N (≤10^4) 是成对的不相容物品的对数；M (≤100) 是集装箱货品清单的单数。<br>随后数据分两大块给出。第一块有 N 行，每行给出一对不相容的物品。第二块有 M 行，每行给出一箱货物的清单，格式如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">K G[1] G[2] ... G[K]</span><br></pre></td></tr></table></figure>
+<p>其中<code> K</code> (≤1000) 是物品件数，<code>G[i] </code>是物品的编号。简单起见，每件物品用一个 5 位数的编号代表。两个数字之间用空格分隔。</p>
+<p><font size=5 face="Courier New" color=red>输出格式：</font><br><font size=4 face="Courier New">对每箱货物清单，判断是否可以安全运输。如果没有不相容物品，则在一行中输出<code> Yes</code>，否则输出<code> No</code>。</p>
+<p><font size=5 face="Courier New" color=red>输入样例：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">6 3</span><br><span class="line">20001 20002</span><br><span class="line">20003 20004</span><br><span class="line">20005 20006</span><br><span class="line">20003 20001</span><br><span class="line">20005 20004</span><br><span class="line">20004 20006</span><br><span class="line">4 00001 20004 00002 20003</span><br><span class="line">5 98823 20002 20003 20006 10010</span><br><span class="line">3 12345 67890 23333</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier New" color=red>输出样例：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">No</span><br><span class="line">Yes</span><br><span class="line">Yes</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier New" color=blue>题目分析：此题与乙级1065(单身狗)如出一辙，解题思想完全一致，甚至还要更简单，只是换了一个题目背景而已。<a target="_blank" rel="noopener" href="https://blog.csdn.net/ASJBFJSB/article/details/88854798">1065传送门</a>。</p>
+<p><font size=5 face="Courier New">AC代码：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;map&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">map&lt;int, int&gt; mp;</span><br><span class="line">const int max_n &#x3D; 100100;</span><br><span class="line">bool is_appear[max_n] &#x3D; &#123;false&#125;;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    int n, m, a, b;</span><br><span class="line">    scanf(&quot;%d%d&quot;, &amp;n, &amp;m);</span><br><span class="line">    for(int i&#x3D;0; i&lt;n; ++i)&#123;</span><br><span class="line">        scanf(&quot;%d%d&quot;, &amp;a,&amp;b);</span><br><span class="line">        mp.insert(make_pair(a,b));</span><br><span class="line">    &#125;</span><br><span class="line">    for(int i&#x3D;0; i&lt;m; ++i)&#123;</span><br><span class="line">        fill(is_appear, is_appear+max_n, false);</span><br><span class="line">        int num,tmp;</span><br><span class="line">        scanf(&quot;%d&quot;, &amp;num);</span><br><span class="line">        for(int j&#x3D;0; j&lt;num; ++j)&#123;</span><br><span class="line">            scanf(&quot;%d&quot;, &amp;tmp);</span><br><span class="line">            is_appear[tmp] &#x3D; true;</span><br><span class="line">        &#125;</span><br><span class="line">        bool flag &#x3D; false;</span><br><span class="line">        for(auto it&#x3D;mp.begin(); it!&#x3D;mp.end(); ++it)&#123;</span><br><span class="line">            if(is_appear[it-&gt;first] &amp;&amp; is_appear[it-&gt;second])&#123;</span><br><span class="line">                flag &#x3D; true;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        if(flag)</span><br><span class="line">            printf(&quot;No\n&quot;);</span><br><span class="line">        else</span><br><span class="line">            printf(&quot;Yes\n&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/PAT乙级题解//" class="article-tag-list-link color3">PAT乙级题解</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2019/03/27/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891090.%E5%8D%B1%E9%99%A9%E5%93%81%E8%A3%85%E7%AE%B1%EF%BC%8825%EF%BC%89/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2019/03/28/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891018.%E9%94%A4%E5%AD%90%E5%89%AA%E5%88%80%E5%B8%83%EF%BC%8820%EF%BC%89/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          PAT（乙级）1018.锤子剪刀布（20）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/03/27/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891059.C%E8%AF%AD%E8%A8%80%E7%AB%9E%E8%B5%9B%EF%BC%8820%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">PAT（乙级）1059.C语言竞赛（20）</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>

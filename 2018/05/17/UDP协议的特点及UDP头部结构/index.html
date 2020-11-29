@@ -158,29 +158,186 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-UDP协议的特点及UDP头部结构" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       UDP协议的特点及UDP头部结构
     </h1>
   
 
-  
-  <a href="/2018/05/17/UDP%E5%8D%8F%E8%AE%AE%E7%9A%84%E7%89%B9%E7%82%B9%E5%8F%8AUDP%E5%A4%B4%E9%83%A8%E7%BB%93%E6%9E%84/" class="archive-article-date">
+        
+        <a href="/2018/05/17/UDP%E5%8D%8F%E8%AE%AE%E7%9A%84%E7%89%B9%E7%82%B9%E5%8F%8AUDP%E5%A4%B4%E9%83%A8%E7%BB%93%E6%9E%84/" class="archive-article-date">
   	<time datetime="2018-05-17T14:32:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-17</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p>参考：王道《计算机网络复习指导》<br><strong>UDP协议的特点：</strong><br>（1）UDP无需建立连接。因此UDP不会引入建立连接的时延。试想如果DNS运行在TCP之上而不是UDP，则DNS的速度会满很多。HTTP使用TCP而不是UDP，是因为基于文本数据的Web网页来说，可靠性是至关重要的。<br><strong>什么是DNS？</strong> DNS（Domain Name System，域名系统），万维网上作为<strong>域名</strong>和<strong>IP地址</strong>相互映射的一个<strong>分布式数据库</strong>，能够使用户更方便的访问互联网，而不用去记住能够被机器直接读取的IP数串。通过域名，最终得到该域名对应的IP地址的过程叫做域名解析（或主机名解析）。</p>
+<p>（2）无连接状态。TCP需要在端系统中维护连接状态。此连接状态包括<strong>接受和发送缓存</strong>、<strong>拥塞控制参数</strong>和<strong>确认号和序号的参数</strong>。而UDP不维护连接状态，也不跟踪这些参数，因此某些专用应用服务器使用UDP时，一般都能支持更多的活动客户机。</p>
+<p>（3）分组首部开销更小。TCP有20字节的的首部开销，而UDP只有8个字节的首部开销。</p>
+<p>（4）应用层能够更地控制要发送的数据和发送时间。UDP没有拥塞控制，因此网络中的拥塞也不会影响主机的发送效率。某些实时应用（<strong>如直播</strong>）要求以稳定的速度发送，能容忍一些数据的丢失，但不允许有较大的时延，而UDP正好可以满足这些应用的需求。</p>
+<p>（5）UDP常用于一次性传输比较小数据的网络应用，如DNS、SNMP等，因为对于这些应用，若采用TCP，则将为创建连接、维护和拆除而带来不小的开销。UDP也常用于多媒体应用（如IP电话、实时视频会议、流媒体等），显然，可靠数据传输对于这些应用来说并不是最重要的，但TCP的拥塞控制会导致数据出现较大的延迟，这是它们不可容忍的。</p>
+<p>（6）UDP提供尽最大努力的交付，即不保证可靠交付，但并不意味着应用对数据的要求是不可靠的，因此需要维护传输可靠性的工作需要用户在应用层来完成。应用实体可以根据应用需求来灵活设计自己的可靠性机制。</p>
+<p>（7）UDP是面向报文的的。发送方UDP对应用层交下来的报文，在添加首部后就交付给IP层，既不合并，也不拆分，而是保留这些报文的边界；接受方UDP对IP层交上来的用户数据报，在去除首部后就原封不动的交付给上层的应用进程，一次交付一个完整的报文，因此报文不可分割，是UDP数据处理的最小单位。</p>
+<p><strong>UDP头部结构</strong><br><img src="https://img-blog.csdn.net/20180517222301867?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<p>头部结构中各部分的作用：<br>（1）16位源端口号    记录源端口号，在需要对方回信时选用。不需要时可用全0。<br>（2）16位目的端口号   记录目标端口号。这在终点交付报文时必须要使用到。<br>（3）长度    UDP数据报的长度（<strong>包括数据和首部</strong>），其最小值为8B（即仅有首部没有数据的情况）。<br>（4）校验和 检测UDP数据报在传输中是否有错，<strong>有错就丢弃</strong>。该字段时可选的，当源主机不想计算校验和，则直接令该字段为全0。当传输层从IP层收到UDP数据报时，就根据首部中的目的端口，把UDP数据报通过相应的端口，上交给进程。如果接收方UDP发现收到的报文中目的端口号不正确（即不存在对应端口号的应用进程），就丢弃该报文，并由ICMP发送“端口不可达”差错报文交给发送方。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2018/05/17/UDP%E5%8D%8F%E8%AE%AE%E7%9A%84%E7%89%B9%E7%82%B9%E5%8F%8AUDP%E5%A4%B4%E9%83%A8%E7%BB%93%E6%9E%84/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2018/05/18/printf%E8%A1%8C%E7%BC%93%E5%86%B2%E7%9A%84%E6%A6%82%E5%BF%B5%E4%BB%A5%E5%8F%8A%E5%88%B7%E6%96%B0%E7%BC%93%E5%86%B2%E5%8C%BA%E7%9A%84%E6%9D%A1%E4%BB%B6/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          printf行缓冲的概念以及刷新缓冲区的条件
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/05/17/%E5%BC%95%E7%94%A8%E7%9A%84%E6%9D%A1%E4%BB%B6%E5%8F%8A%E4%BB%8E%E6%B1%87%E7%BC%96%E8%A7%92%E5%BA%A6%E7%90%86%E8%A7%A3%E5%BC%95%E7%94%A8/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">引用的条件及从汇编角度理解引用</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>

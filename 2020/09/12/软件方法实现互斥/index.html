@@ -157,29 +157,213 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-软件方法实现互斥" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       软件方法实现互斥
     </h1>
   
 
-  
-  <a href="/2020/09/12/%E8%BD%AF%E4%BB%B6%E6%96%B9%E6%B3%95%E5%AE%9E%E7%8E%B0%E4%BA%92%E6%96%A5/" class="archive-article-date">
+        
+        <a href="/2020/09/12/%E8%BD%AF%E4%BB%B6%E6%96%B9%E6%B3%95%E5%AE%9E%E7%8E%B0%E4%BA%92%E6%96%A5/" class="archive-article-date">
   	<time datetime="2020-09-12T11:58:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-12</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><strong>一.单标志法</strong><br>轮流交替使用。<br>缺点:当有一个进程不再进入临界区，便不能修改公共变量的turn，来标识另外一个进程可以进入临界区。因此另外一个进程将永久不能进入临界区，违背“空则让进”的原则</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">A进程</span><br><span class="line"><span class="keyword">while</span> (turn != A);</span><br><span class="line">critical section 临界区</span><br><span class="line">turn = B</span><br><span class="line">remainder section 剩余区</span><br><span class="line"></span><br><span class="line">B进程</span><br><span class="line"><span class="keyword">while</span> (turn != B);</span><br><span class="line">critical section</span><br><span class="line">turn = A</span><br><span class="line">remainder section</span><br></pre></td></tr></table></figure>
+
+<p><strong>二.双标志先检查法</strong><br>为了解决在单标志法中出现的违背“空则让进”的原则的问题，增加一个变量用于检查对方的状态。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">bool</span> flag[<span class="number">2</span>] = &#123;<span class="literal">false</span>, <span class="literal">false</span>&#125;; </span><br><span class="line">flag[A]==<span class="literal">true</span> 表示A正在使用临界区</span><br><span class="line">flag[B]==<span class="literal">true</span> 表示B正在使用临界区</span><br><span class="line"></span><br><span class="line">A进程</span><br><span class="line"><span class="keyword">while</span> (flag[B]==<span class="literal">true</span>); 当B在临界区便一直循环检查 (<span class="number">1</span>) </span><br><span class="line">flag[A]=<span class="literal">true</span>; 表示A自己在临界区域中              (<span class="number">3</span>)</span><br><span class="line">critical section</span><br><span class="line">flag[A]=<span class="literal">false</span>; 表示A自己退出临界区</span><br><span class="line">remainder section</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">B进程</span><br><span class="line"><span class="keyword">while</span> (flag[A]==<span class="literal">true</span>); 当A在临界区便一直循环检查 (<span class="number">2</span>) </span><br><span class="line">flag[B]=<span class="literal">true</span>; 表示B自己在临界区域中              (<span class="number">4</span>)</span><br><span class="line">critical section</span><br><span class="line">flag[B]=<span class="literal">false</span>; 表示B自己退出临界区</span><br><span class="line">remainder section</span><br></pre></td></tr></table></figure>
+
+<p>优点：不需要交替进入临界区，可以连续使用<br>缺点：两个进程可能会同时进入临界区，初始状态，A与B进程均不在临界区内，所以flag[A]==flag[B]=false，此时按照CPU若按照，(1)(2)(3)(4)的顺序进行执行，A，B进程都能检查到对方不在临界区中，然后进入临界区，分别置自己的值为true，但此时临界区中有两个互斥的进程，违背“忙则等待”的原则。出现这种问题的原因是：检查对方的状态和置自己的状态这两步操作之间存在漏洞，不是原子的。</p>
+<p><strong>三.双标志后检查法</strong><br>为了解决在双标志先检查法中出现的违背“忙则等待”的原则的问题，双标志后检查法的做法是：首先更改自己的状态为进入临界区，然后再检查对方是否在临界区中。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">flag[<span class="number">2</span>] = &#123;<span class="literal">false</span>, <span class="literal">false</span>&#125;;</span><br><span class="line">A进程</span><br><span class="line">flag[A]=<span class="literal">true</span>;  (<span class="number">1</span>)</span><br><span class="line"><span class="keyword">while</span> (flag[B]==<span class="literal">true</span>); (<span class="number">3</span>)</span><br><span class="line">critical section</span><br><span class="line">flag[A]=<span class="literal">false</span>;</span><br><span class="line">remainder section;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">B进程</span><br><span class="line">flag[B]=<span class="literal">true</span>; (<span class="number">2</span>)</span><br><span class="line"><span class="keyword">while</span> (flag[A]==<span class="literal">true</span>); (<span class="number">4</span>) </span><br><span class="line">critical section</span><br><span class="line">flag[B]=<span class="literal">false</span>;</span><br><span class="line">remainder section;</span><br></pre></td></tr></table></figure>
+
+<p>优点：双标志后检查法解决了在双标志先检查法中出现的违背“忙则等待”原则的问题。<br>缺点：可能会造成饥饿现象，违背“有限等待”的原则。<br>原因：CPU可能是按照(1)(2)(3)(4)的顺序执行程序，此时A与B进程均将自己的状态修改为进入临界区，此时执行(3)(4)，A,B进程均检查到对方在临界区中，最终造成饥饿，违背“优先等待”的原则。</p>
+<p><strong>四.peterson算法</strong><br>为了解决双标志后检查出现的违背“有限等待”的原则，提出了peterson算法，该算法基于比较绅士友好的想法，A与B都声明自己对于临界区的占有权flag[A]=true，flag[B]=true，但是它们比较绅士，考虑到双方都要声明对临界区的占用权，最终会争吵的难分难舍，不分高低。所以双方都各自非常绅士的说到，虽然我对临界区有占有权，但是你要的话可以让你优先使用，不要客气，因此设置一个turn变量表示临界区让谁用。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">A进程</span><br><span class="line">flag[<span class="number">2</span>] = &#123;<span class="literal">false</span>, <span class="literal">false</span>&#125;;</span><br><span class="line"></span><br><span class="line">flag[A]=<span class="literal">true</span>;我有占有权 turn=B;你先用，不要客气</span><br><span class="line"><span class="keyword">while</span> (flag[B]==<span class="literal">true</span> &amp;&amp; turn==B);</span><br><span class="line">critical section</span><br><span class="line">flag[A]=<span class="literal">false</span>;</span><br><span class="line">remainder section</span><br><span class="line"></span><br><span class="line">B进程</span><br><span class="line">flag[<span class="number">2</span>] = &#123;<span class="literal">false</span>, <span class="literal">false</span>&#125;;</span><br><span class="line"></span><br><span class="line">flag[B]=<span class="literal">true</span>;我有占有权 turn=A;你先用，不要客气</span><br><span class="line"><span class="keyword">while</span> (flag[A]==<span class="literal">true</span> &amp;&amp; turn==A);</span><br><span class="line">critical section</span><br><span class="line">flag[B]=<span class="literal">false</span>;</span><br><span class="line">remainder section</span><br></pre></td></tr></table></figure>
+<p>优点：peterson算法完美的遵守了空则让进，有限等待，忙则等待的原则。但是，当A或B进程其一在临界区中，而此时处理机调度B或A时，while循环进行了忙轮询，浪费消耗处理机时间，违背“让权等待”的原则。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">c++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/操作系统//" class="article-tag-list-link color5">操作系统</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2020/09/12/%E8%BD%AF%E4%BB%B6%E6%96%B9%E6%B3%95%E5%AE%9E%E7%8E%B0%E4%BA%92%E6%96%A5/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2020/09/12/%E4%BF%A1%E5%8F%B7%E9%87%8F%E5%8E%9F%E7%90%86/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          信号量原理
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/09/05/%E4%B8%89%E9%87%8D%E7%A7%AF%E5%88%86%E7%9A%84%E7%90%83%E9%9D%A2%E5%9D%90%E6%A0%87%E7%B3%BB%E7%9A%84%E4%BD%93%E7%A7%AF%E5%85%83%E7%B4%A0%E8%A1%A8%E7%A4%BA/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">三重积分的球面坐标系的体积元素表示</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>

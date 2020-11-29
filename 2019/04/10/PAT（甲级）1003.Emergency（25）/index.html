@@ -156,29 +156,199 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <header class="article-header">
-  
+            <article id="post-PAT（甲级）1003.Emergency（25）" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       PAT（甲级）1003.Emergency（25）
     </h1>
   
 
-  
-  <a href="/2019/04/10/PAT%EF%BC%88%E7%94%B2%E7%BA%A7%EF%BC%891003.Emergency%EF%BC%8825%EF%BC%89/" class="archive-article-date">
+        
+        <a href="/2019/04/10/PAT%EF%BC%88%E7%94%B2%E7%BA%A7%EF%BC%891003.Emergency%EF%BC%8825%EF%BC%89/" class="archive-article-date">
   	<time datetime="2019-04-10T09:53:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-10</time>
 </a>
-  
+        
+      </header>
     
-    
-  
-    <span class="archive-article-date">
-        阅读量 <span id="busuanzi_value_page_pv"></span>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><font size=5 face="Consolas">PAT 1003.Emergency（25）</font><br><font size=4 face="Consolas">As an emergency rescue team leader of a city, you are given a special map of your country. The map shows several scattered cities connected by some roads. Amount of rescue teams in each city and the length of each road between any pair of cities are marked on the map. When there is an emergency call to you from some other city, your job is to lead your men to the place as quickly as possible, and at the mean time, call up as many hands on the way as possible.</p>
+<p><font size=5 face="Consolas" color=red>输入格式：</font><br><font size=4 face="Consolas">Each input file contains one test case. For each test case, the first line contains 4 positive integers: N (≤500) - the number of cities (and the cities are numbered from 0 to N−1), M - the number of roads, C​1​​  and C​2  - the cities that you are currently in and that you must save, respectively. The next line contains N integers, where the i-th integer is the number of rescue teams in the i-th city. Then M lines follow, each describes a road with three integers c​1​​ , c​2 and L, which are the pair of cities connected by a road and the length of that road, respectively. It is guaranteed that there exists at least one path from C​1 to C​2.</p>
+<p><font size=5 face="Consolas" color=red>输出格式：</font><br><font size=4 face="Consolas">For each test case, print in one line two numbers: the number of different shortest paths between C1  and C​2​​ , and the maximum amount of rescue teams you can possibly gather. All the numbers in a line must be separated by exactly one space, and there is no extra space allowed at the end of a line.</p>
+<p><font size=5 face="Consolas" color=red>输入样例：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">5 6 0 2</span><br><span class="line">1 2 1 5 3</span><br><span class="line">0 1 1</span><br><span class="line">0 2 2</span><br><span class="line">0 3 1</span><br><span class="line">1 2 1</span><br><span class="line">2 4 1</span><br><span class="line">3 4 1</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Consolas" color=red>输出样例：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Case #1:</span><br><span class="line">2 4</span><br></pre></td></tr></table></figure>
+
+<p><font size=5 face="Consolas" color=blue>题目分析：求解单源最短路径的条数，以及在某条路径上的最大点权之和。本题的图是无向图，如果代码里写成了有向图会出现测试点错误。代码参考晴神的模板。</font></p>
+<p><font size=5 face="Consolas" color=black>AC代码：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;cstdio&gt;</span><br><span class="line">#include &lt;string&gt;</span><br><span class="line">#include &lt;algorithm&gt;</span><br><span class="line">#include &lt;cstring&gt;</span><br><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;vector&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">const int maxv &#x3D; 510;</span><br><span class="line">const int inf &#x3D; 0x3fffffff;</span><br><span class="line">int weight[maxv];</span><br><span class="line">int d[maxv],num[maxv],w[maxv];</span><br><span class="line">bool visited[maxv] &#x3D; &#123;false&#125;;</span><br><span class="line">int n, m;</span><br><span class="line"></span><br><span class="line">struct Node&#123;</span><br><span class="line">    int v, dis;</span><br><span class="line">    Node(int v, int dis)&#123;</span><br><span class="line">        this-&gt;v &#x3D; v;</span><br><span class="line">        this-&gt;dis &#x3D; dis;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">vector&lt;Node&gt; G[maxv];</span><br><span class="line"></span><br><span class="line">void dijkstra(int s)&#123;</span><br><span class="line">    for(int i&#x3D;0; i&lt;maxv; ++i)&#123;</span><br><span class="line">        d[i] &#x3D; inf;</span><br><span class="line">        w[i] &#x3D; 0;</span><br><span class="line">        num[i] &#x3D; 0;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    d[s] &#x3D; 0;</span><br><span class="line">    w[s] &#x3D; weight[s];</span><br><span class="line">    num[s] &#x3D; 1; </span><br><span class="line">    for(int i&#x3D;0; i&lt;n; ++i)&#123;</span><br><span class="line">        int u&#x3D;-1,MIN&#x3D;inf;</span><br><span class="line">        for(int j&#x3D;0; j&lt;n; ++j)&#123;</span><br><span class="line">            if(visited[j]&#x3D;&#x3D;false &amp;&amp; d[j]&lt;MIN)&#123;</span><br><span class="line">                MIN &#x3D; d[j];</span><br><span class="line">                u &#x3D; j;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        if(u&#x3D;&#x3D;-1)return;</span><br><span class="line">        visited[u] &#x3D; true;</span><br><span class="line"></span><br><span class="line">        for(int j&#x3D;0; j&lt;G[u].size(); ++j)&#123;</span><br><span class="line">            int v &#x3D; G[u][j].v;</span><br><span class="line">            if(visited[v]&#x3D;&#x3D;false &amp;&amp; d[u] + G[u][j].dis &lt; d[v])&#123;</span><br><span class="line">                d[v] &#x3D; d[u]+G[u][j].dis;</span><br><span class="line">                w[v] &#x3D; w[u] + weight[v];</span><br><span class="line">                num[v] &#x3D; num[u];</span><br><span class="line">            &#125;</span><br><span class="line">            else if(visited[v]&#x3D;&#x3D;false &amp;&amp; d[u]+G[u][j].dis&#x3D;&#x3D;d[v])&#123;</span><br><span class="line">                if(w[u]+weight[v] &gt; w[v])</span><br><span class="line">                    w[v] &#x3D; w[u] + weight[v];</span><br><span class="line">                num[v] +&#x3D; num[u];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    int st,ed;&#x2F;&#x2F;源点和汇点</span><br><span class="line">    scanf(&quot;%d%d%d%d&quot;, &amp;n, &amp;m, &amp;st, &amp;ed);</span><br><span class="line">    for(int i&#x3D;0; i&lt;n; ++i)&#123;</span><br><span class="line">        scanf(&quot;%d&quot;, &amp;weight[i]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    int u,v,we;</span><br><span class="line">    for(int i&#x3D;0; i&lt;m; ++i)&#123;</span><br><span class="line">        scanf(&quot;%d%d%d&quot;,&amp;u,&amp;v,&amp;we);</span><br><span class="line">        G[u].push_back(Node(v,we));</span><br><span class="line">        G[v].push_back(Node(u,we));</span><br><span class="line">    &#125;</span><br><span class="line">    dijkstra(st);</span><br><span class="line">    printf(&quot;%d %d\n&quot;,num[ed], w[ed]);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinshoukuan.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/PAT甲级题解-图论//" class="article-tag-list-link color1">PAT甲级题解 图论</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
     </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2019/04/10/PAT%EF%BC%88%E7%94%B2%E7%BA%A7%EF%BC%891003.Emergency%EF%BC%8825%EF%BC%89/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
   
-    
-    
-</header>
+<nav id="article-nav">
+  
+    <a href="/2019/04/10/PAT%EF%BC%88%E7%94%B2%E7%BA%A7%EF%BC%891030.Travel%20Plan%EF%BC%8830%EF%BC%89/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          PAT（甲级）1030.Travel Plan（30）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/04/08/PAT%EF%BC%88%E7%94%B2%E7%BA%A7%EF%BC%891055.The%20World's%20Richest%EF%BC%8825%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">PAT（甲级）1055.The World&#39;s Richest（25）</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
+
           </div>
         </div>
       </div>
