@@ -18,7 +18,7 @@
 <meta property="og:image" content="https://img-blog.csdn.net/20180729083320759?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
 <meta property="og:image" content="https://img-blog.csdn.net/20180729090334789?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
 <meta property="article:published_time" content="2018-07-29T01:30:10.000Z">
-<meta property="article:modified_time" content="2020-11-29T19:35:27.455Z">
+<meta property="article:modified_time" content="2020-11-30T16:14:43.623Z">
 <meta property="article:author" content="lexingsen">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://img-blog.csdn.net/20180729083320759?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
@@ -71,7 +71,7 @@
 			</ul>
 			</nav>
 			<nav>
-			总文章数 300
+			总文章数 296
 			</nav>
 		<nav class="header-smart-menu">
     		
@@ -191,14 +191,14 @@
 <p><font size=4.5>强弱符号针对的是<font color=red>处于同一工程下在不同源文件下定义的全局变量符号</font>，链接器只处理global的符号而不处理local的符号。链接的核心是<font color=red>符号的重定位</font>，在符号引用的地方找到符号定义的地方，包括函数产生的符号和全局变量产生的符号。</font></p>
 <p><font  color=black>强符号：函数和初始化的全局变量所生成的符号。<br>弱符号：未初始化的全局变量所生成的符号。</font></p>
 <p>很多情况下写出的代码会出现<font color=red>链接的错误，符号重定义</font>，这是因为在不同的源文件中定义了同名的全局变量并且都进行了初始化。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;a.c</span><br><span class="line">int gdata &#x3D; 10;</span><br><span class="line">&#x2F;&#x2F;b.c</span><br><span class="line">int gdata &#x3D; 20;</span><br><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">int main()&#123;</span><br><span class="line">	printf(&quot;gdata &#x3D; %d\n&quot;,gdata);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//a.c</span></span><br><span class="line"><span class="keyword">int</span> gdata = <span class="number">10</span>;</span><br><span class="line"><span class="comment">//b.c</span></span><br><span class="line"><span class="keyword">int</span> gdata = <span class="number">20</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;gdata = %d\n&quot;</span>,gdata);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><img src="https://img-blog.csdn.net/20180729083320759?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>这是很多新手容易犯的错误，若将a.c或b.c中全局变量<code>gdata</code>只初始化一次，则不会出现链接错误，并且会链接成功。那么新的问题是：<br><font  color=black>（1）出现强符号和弱符号，选择哪一个？<br>（2）若出现多个同名的强符号，最终怎么选择？<br>（3）若出现多个同名的弱符号，最终会怎么选择？</font><br>显然需要这样的一套规则来约束这些可能存在的问题。</p>
 <p><font size=5 color=black>二、强弱符号的使用规则</font></p>
 <p>（1）如果出现多个强符号，最终会出现链接错误即符号的重定义。<br>（2）如果出现强符号和弱符号，编译器最终会选择强符号。<br>（3）如果出现多个同名弱符号，编译器最终会选择内存占用量最大的那个符号。</p>
 <p>一个有趣的小例子再看强弱符号：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;a.c</span><br><span class="line">int x;</span><br><span class="line">void func()&#123;</span><br><span class="line">	x &#x3D; 20;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F;b.c</span><br><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">short x &#x3D; 10;</span><br><span class="line">short y &#x3D; 10;</span><br><span class="line">extern void func();</span><br><span class="line">int main()&#123;</span><br><span class="line">	func();</span><br><span class="line">	printf(&quot;x &#x3D; %d,y &#x3D; %d\n&quot;,x,y);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F;试问输出的x和y分别是多少，大家可以自己先想一下，看看自己的答案。</span><br></pre></td></tr></table></figure>
-<p>执行结果：<br><img src="https://img-blog.csdn.net/20180729090334789?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>和大家心中的答案是否一致呢？<br>有很多人会有疑问，为什么y输出的不是10，而是0呢？<br><font color=red>源文件是独立进行编译的</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;a.c</span><br><span class="line">int x;&#x2F;&#x2F;弱符号</span><br><span class="line">void func()&#123;</span><br><span class="line">	x &#x3D; 20; &#x2F;&#x2F;往x的内存上写20,写4个字节   编译阶段就完成的</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F;b.c</span><br><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">short x &#x3D; 10;&#x2F;&#x2F;强符号   14 00 00 00最终将y覆盖为0</span><br><span class="line">short y &#x3D; 10;</span><br><span class="line">extern void func();</span><br><span class="line">int main()&#123;</span><br><span class="line">	func();&#x2F;&#x2F;链接的完成选择强符号</span><br><span class="line">	printf(&quot;x &#x3D; %d,y &#x3D; %d\n&quot;,x,y);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//a.c</span></span><br><span class="line"><span class="keyword">int</span> x;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">()</span></span>&#123;</span><br><span class="line">	x = <span class="number">20</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//b.c</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="keyword">short</span> x = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">short</span> y = <span class="number">10</span>;</span><br><span class="line"><span class="function"><span class="keyword">extern</span> <span class="keyword">void</span> <span class="title">func</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	func();</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;x = %d,y = %d\n&quot;</span>,x,y);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//试问输出的x和y分别是多少，大家可以自己先想一下，看看自己的答案。</span></span><br></pre></td></tr></table></figure>
+<p>执行结果：<br><img src="https://img-blog.csdn.net/20180729090334789?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>和大家心中的答案是否一致呢？<br>有很多人会有疑问，为什么y输出的不是10，而是0呢？<br><font color=red>源文件是独立进行编译的</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//a.c</span></span><br><span class="line"><span class="keyword">int</span> x;<span class="comment">//弱符号</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">()</span></span>&#123;</span><br><span class="line">	x = <span class="number">20</span>; <span class="comment">//往x的内存上写20,写4个字节   编译阶段就完成的</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//b.c</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="keyword">short</span> x = <span class="number">10</span>;<span class="comment">//强符号   14 00 00 00最终将y覆盖为0</span></span><br><span class="line"><span class="keyword">short</span> y = <span class="number">10</span>;</span><br><span class="line"><span class="function"><span class="keyword">extern</span> <span class="keyword">void</span> <span class="title">func</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	func();<span class="comment">//链接的完成选择强符号</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;x = %d,y = %d\n&quot;</span>,x,y);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>在 gcc中，可以通过<code>__attribute__((weak))</code>来强制定义任何一个符号为弱符号。</p>
 
       
@@ -283,7 +283,7 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/08/01/c++%20typeid().name()%E8%BE%93%E5%87%BA%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2018/08/01/C++%20typeid().name()%E8%BE%93%E5%87%BA%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
@@ -417,11 +417,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">动态规划</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">1024程序员节</a>
+                <a href="javascript:void(0)" class="js-tag color3">dp</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -429,7 +425,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">数据结构 算法</a>
+                <a href="javascript:void(0)" class="js-tag color3">查找</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -441,11 +437,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">c语言</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color4">STL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -453,7 +445,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">linux系统编程</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">linux命令</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -469,14 +465,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">c</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">c++11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">protobuf</a>
               </li>
              
@@ -489,7 +477,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color2">树</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">栈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">二分</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">堆</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -501,11 +501,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">堆</a>
+                <a href="javascript:void(0)" class="js-tag color2">c</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">回溯法</a>
+                <a href="javascript:void(0)" class="js-tag color3">排序</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -513,11 +513,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">最短路径</a>
+                <a href="javascript:void(0)" class="js-tag color4">回溯法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">进程通信</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">单链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">计算机组成</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">最短路径</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">单链表 排序</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -529,15 +545,31 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">排序</a>
+                <a href="javascript:void(0)" class="js-tag color5">Linux系统编程</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">1024程序员节 c++</a>
+                <a href="javascript:void(0)" class="js-tag color1">c++11</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">动态规划 算法 leetcode</a>
+                <a href="javascript:void(0)" class="js-tag color5">而擦函数</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">图论</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">稀疏矩阵</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">双链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">树 图</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -545,11 +577,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">递归</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">c++11算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">计算机组成</a>
+                <a href="javascript:void(0)" class="js-tag color5">堆栈调用</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -561,7 +597,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">递归</a>
+                <a href="javascript:void(0)" class="js-tag color5">进程基础</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">图的存储结构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">哈希</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">剑指offer</a>
               </li>
             
             <div class="clearfix"></div>

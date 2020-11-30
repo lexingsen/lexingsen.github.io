@@ -16,7 +16,7 @@
 <meta property="og:description" content="波兰表达式也称之为前缀表达式，即运算符放置于操作数之前。计算波兰表达式的值的方法:（1）从后往前遍历表达式。（2）遇到数字直接入栈。（3）遇到运算符，取出两个数字，第一个作为操作数，第二作为被操作数，执行相应的运算。将运算的结果继续入栈。（4）当表达式遍历完时，此时栈顶元素即为计算结果。 123456789101112131415161718192021222324252627282930in">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-11-09T01:55:27.000Z">
-<meta property="article:modified_time" content="2020-11-29T19:35:19.423Z">
+<meta property="article:modified_time" content="2020-11-30T13:24:03.894Z">
 <meta property="article:author" content="lexingsen">
 <meta name="twitter:card" content="summary">
   
@@ -68,7 +68,7 @@
 			</ul>
 			</nav>
 			<nav>
-			总文章数 300
+			总文章数 296
 			</nav>
 		<nav class="header-smart-menu">
     		
@@ -185,7 +185,7 @@
         <a id="more"></a>
 
 <p><font size=5 face=courier new>波兰表达式也称之为前缀表达式，即运算符放置于操作数之前。<br>计算波兰表达式的值的方法:<br>（1）从后往前遍历表达式。<br>（2）遇到数字直接入栈。<br>（3）遇到运算符，取出两个数字，第一个作为操作数，第二作为被操作数，执行相应的运算。将运算的结果继续入栈。<br>（4）当表达式遍历完时，此时栈顶元素即为计算结果。<br></font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">int cal(string s) &#123;</span><br><span class="line">	stack&lt;int&gt; st;</span><br><span class="line">	for (int i&#x3D;s.length()-1; i&gt;&#x3D;0; --i) &#123;</span><br><span class="line">		if (isdigit(s[i])) &#123; </span><br><span class="line">			st.push(s[i] - &#39;0&#39;);</span><br><span class="line">		&#125; else if (s[i] &#x3D;&#x3D; &#39;+&#39;) &#123;</span><br><span class="line">			int a &#x3D; st.top(); st.pop();</span><br><span class="line">			int b &#x3D; st.top(); st.pop();</span><br><span class="line">			st.push(a+b);</span><br><span class="line">		&#125; else if (s[i] &#x3D;&#x3D; &#39;-&#39;) &#123;</span><br><span class="line">			int a &#x3D; st.top(); st.pop();</span><br><span class="line">			int b &#x3D; st.top(); st.pop();</span><br><span class="line">			st.push(a-b);</span><br><span class="line">		&#125; else if (s[i] &#x3D;&#x3D; &#39;*&#39;) &#123;</span><br><span class="line">			int a &#x3D; st.top(); st.pop();</span><br><span class="line">			int b &#x3D; st.top(); st.pop();</span><br><span class="line">			st.push(a*b);</span><br><span class="line">		&#125; else if (s[i] &#x3D;&#x3D; &#39;&#x2F;&#39; ) &#123;</span><br><span class="line">			int a &#x3D; st.top(); st.pop();</span><br><span class="line">			int b &#x3D; st.top(); st.pop();</span><br><span class="line">			st.push(a&#x2F;b);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return st.top();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">	string s &#x3D; &quot;-+8*3-27&#x2F;42&quot;;</span><br><span class="line">	cout &lt;&lt; cal(s) &lt;&lt; endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">cal</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">	<span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; st;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i=s.length()<span class="number">-1</span>; i&gt;=<span class="number">0</span>; --i) &#123;</span><br><span class="line">		<span class="keyword">if</span> (<span class="built_in">isdigit</span>(s[i])) &#123; </span><br><span class="line">			st.push(s[i] - <span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (s[i] == <span class="string">&#x27;+&#x27;</span>) &#123;</span><br><span class="line">			<span class="keyword">int</span> a = st.top(); st.pop();</span><br><span class="line">			<span class="keyword">int</span> b = st.top(); st.pop();</span><br><span class="line">			st.push(a+b);</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (s[i] == <span class="string">&#x27;-&#x27;</span>) &#123;</span><br><span class="line">			<span class="keyword">int</span> a = st.top(); st.pop();</span><br><span class="line">			<span class="keyword">int</span> b = st.top(); st.pop();</span><br><span class="line">			st.push(a-b);</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (s[i] == <span class="string">&#x27;*&#x27;</span>) &#123;</span><br><span class="line">			<span class="keyword">int</span> a = st.top(); st.pop();</span><br><span class="line">			<span class="keyword">int</span> b = st.top(); st.pop();</span><br><span class="line">			st.push(a*b);</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (s[i] == <span class="string">&#x27;/&#x27;</span> ) &#123;</span><br><span class="line">			<span class="keyword">int</span> a = st.top(); st.pop();</span><br><span class="line">			<span class="keyword">int</span> b = st.top(); st.pop();</span><br><span class="line">			st.push(a/b);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> st.top();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="built_in">string</span> s = <span class="string">&quot;-+8*3-27/42&quot;</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; cal(s) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 
@@ -406,11 +406,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">动态规划</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">1024程序员节</a>
+                <a href="javascript:void(0)" class="js-tag color3">dp</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -418,7 +414,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">数据结构 算法</a>
+                <a href="javascript:void(0)" class="js-tag color3">查找</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -430,11 +426,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">c语言</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color4">STL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -442,7 +434,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">linux系统编程</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">linux命令</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -458,14 +454,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">c</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">c++11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">protobuf</a>
               </li>
              
@@ -478,7 +466,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color2">树</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">栈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">二分</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">堆</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -490,11 +490,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">堆</a>
+                <a href="javascript:void(0)" class="js-tag color2">c</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">回溯法</a>
+                <a href="javascript:void(0)" class="js-tag color3">排序</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -502,11 +502,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">最短路径</a>
+                <a href="javascript:void(0)" class="js-tag color4">回溯法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">进程通信</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">单链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">计算机组成</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">最短路径</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">单链表 排序</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -518,15 +534,31 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">排序</a>
+                <a href="javascript:void(0)" class="js-tag color5">Linux系统编程</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">1024程序员节 c++</a>
+                <a href="javascript:void(0)" class="js-tag color1">c++11</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">动态规划 算法 leetcode</a>
+                <a href="javascript:void(0)" class="js-tag color5">而擦函数</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">图论</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">稀疏矩阵</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">双链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">树 图</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -534,11 +566,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">递归</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">c++11算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">计算机组成</a>
+                <a href="javascript:void(0)" class="js-tag color5">堆栈调用</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -550,7 +586,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">递归</a>
+                <a href="javascript:void(0)" class="js-tag color5">进程基础</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">图的存储结构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">哈希</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">剑指offer</a>
               </li>
             
             <div class="clearfix"></div>

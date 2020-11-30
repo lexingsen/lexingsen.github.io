@@ -8,17 +8,17 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>面试题05. 替换空格 | 乐行僧的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="替换空格请实现一个函数，把字符串 s 中的每个空格替换成”%20”。 示例1： 12输入：s &#x3D; &quot;We are happy.&quot;输出：&quot;We%20are%20happy.&quot; 限制： 10 &lt;&#x3D; s 的长度 &lt;&#x3D; 10000  简单题，直接遍历时间复杂度为O(n),空间复杂度为O(n) 1234567891011c">
+  <meta name="description" content="替换空格请实现一个函数，把字符串 s 中的每个空格替换成”%20”。 示例1： 12输入：s &#x3D; &quot;We are happy.&quot;输出：&quot;We%20are%20happy.&quot; 限制： 10 &lt;&#x3D; s 的长度 &lt;&#x3D; 10000  简单题，直接遍历时间复杂度为O(n),空间复杂度为O(n) 1234567891011class Solution &amp;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="面试题05. 替换空格">
 <meta property="og:url" content="http://example.com/2020/05/05/%E9%9D%A2%E8%AF%95%E9%A2%9805.%20%E6%9B%BF%E6%8D%A2%E7%A9%BA%E6%A0%BC/index.html">
 <meta property="og:site_name" content="乐行僧的博客">
-<meta property="og:description" content="替换空格请实现一个函数，把字符串 s 中的每个空格替换成”%20”。 示例1： 12输入：s &#x3D; &quot;We are happy.&quot;输出：&quot;We%20are%20happy.&quot; 限制： 10 &lt;&#x3D; s 的长度 &lt;&#x3D; 10000  简单题，直接遍历时间复杂度为O(n),空间复杂度为O(n) 1234567891011c">
+<meta property="og:description" content="替换空格请实现一个函数，把字符串 s 中的每个空格替换成”%20”。 示例1： 12输入：s &#x3D; &quot;We are happy.&quot;输出：&quot;We%20are%20happy.&quot; 限制： 10 &lt;&#x3D; s 的长度 &lt;&#x3D; 10000  简单题，直接遍历时间复杂度为O(n),空间复杂度为O(n) 1234567891011class Solution &amp;">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-05-05T14:33:49.000Z">
-<meta property="article:modified_time" content="2020-11-29T19:35:18.343Z">
+<meta property="article:modified_time" content="2020-11-30T13:21:17.621Z">
 <meta property="article:author" content="lexingsen">
-<meta property="article:tag" content="c++">
+<meta property="article:tag" content="剑指offer">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="乐行僧的博客" type="application/atom+xml">
@@ -69,7 +69,7 @@
 			</ul>
 			</nav>
 			<nav>
-			总文章数 300
+			总文章数 296
 			</nav>
 		<nav class="header-smart-menu">
     		
@@ -185,14 +185,14 @@
       
         <a id="more"></a>
 
-<p><font size=5 face=cosonlas><strong>替换空格</strong></font><br><font size=4 face=cosonlas>请实现一个函数，把字符串 s 中的每个空格替换成”%20”。<br></font></p>
+<p><font size=5 face=cosonlas><strong>替换空格</strong></font><br><font size=4 face=cosonlas>请实现一个函数，把字符串 s 中的每个空格替换成”%20”。</font></p>
 <p><font size=5 face=cosonlas><strong>示例1：</strong></font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：s &#x3D; &quot;We are happy.&quot;</span><br><span class="line">输出：&quot;We%20are%20happy.&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：s = <span class="string">&quot;We are happy.&quot;</span></span><br><span class="line">输出：<span class="string">&quot;We%20are%20happy.&quot;</span></span><br></pre></td></tr></table></figure>
 <p><font size=5 face=cosonlas><strong>限制：</strong></font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0 &lt;&#x3D; s 的长度 &lt;&#x3D; 10000</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0</span> &lt;= s 的长度 &lt;= <span class="number">10000</span></span><br></pre></td></tr></table></figure>
 
 <p><font size=5 face=cosonlas color=blue><strong>简单题，直接遍历</strong></font><br>时间复杂度为O(n),空间复杂度为O(n)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    string replaceSpace(string s) &#123; </span><br><span class="line">      string res;</span><br><span class="line">      for (int i&#x3D;0; i&lt;s.size(); ++i) &#123;</span><br><span class="line">        if (s[i] &#x3D;&#x3D; &#39; &#39;) res +&#x3D; &quot;%20&quot;;</span><br><span class="line">        else res +&#x3D; s[i];</span><br><span class="line">      &#125;</span><br><span class="line">      return res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">replaceSpace</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123; </span><br><span class="line">      <span class="built_in">string</span> res;</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;s.size(); ++i) &#123;</span><br><span class="line">        <span class="keyword">if</span> (s[i] == <span class="string">&#x27; &#x27;</span>) res += <span class="string">&quot;%20&quot;</span>;</span><br><span class="line">        <span class="keyword">else</span> res += s[i];</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
       
 
@@ -206,7 +206,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">c++</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">剑指offer</a>
         		</li>
       		
 		</ul>
@@ -218,7 +218,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/剑指offer//" class="article-tag-list-link color3">剑指offer</a>
+        			<a href="/categories/笔试面试//" class="article-tag-list-link color5">笔试面试</a>
         		</li>
       		
 		</ul>
@@ -421,11 +421,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">动态规划</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">1024程序员节</a>
+                <a href="javascript:void(0)" class="js-tag color3">dp</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -433,7 +429,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">数据结构 算法</a>
+                <a href="javascript:void(0)" class="js-tag color3">查找</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -445,11 +441,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">c语言</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color4">STL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -457,7 +449,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">linux系统编程</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">linux命令</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -473,14 +469,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">c</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">c++11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">protobuf</a>
               </li>
              
@@ -493,7 +481,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color2">树</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">栈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">二分</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">堆</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -505,11 +505,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">堆</a>
+                <a href="javascript:void(0)" class="js-tag color2">c</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">回溯法</a>
+                <a href="javascript:void(0)" class="js-tag color3">排序</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -517,11 +517,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">最短路径</a>
+                <a href="javascript:void(0)" class="js-tag color4">回溯法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">进程通信</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">单链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">计算机组成</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">最短路径</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">单链表 排序</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -533,15 +549,31 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">排序</a>
+                <a href="javascript:void(0)" class="js-tag color5">Linux系统编程</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">1024程序员节 c++</a>
+                <a href="javascript:void(0)" class="js-tag color1">c++11</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">动态规划 算法 leetcode</a>
+                <a href="javascript:void(0)" class="js-tag color5">而擦函数</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">图论</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">稀疏矩阵</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">双链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">树 图</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -549,11 +581,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">递归</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">c++11算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">计算机组成</a>
+                <a href="javascript:void(0)" class="js-tag color5">堆栈调用</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -565,7 +601,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">递归</a>
+                <a href="javascript:void(0)" class="js-tag color5">进程基础</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">图的存储结构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">哈希</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">剑指offer</a>
               </li>
             
             <div class="clearfix"></div>

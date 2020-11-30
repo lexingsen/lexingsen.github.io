@@ -24,8 +24,9 @@
 <meta property="og:image" content="https://img-blog.csdn.net/20180402153432998?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
 <meta property="og:image" content="https://img-blog.csdn.net/20180402153546162?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
 <meta property="article:published_time" content="2018-04-02T07:36:22.000Z">
-<meta property="article:modified_time" content="2020-11-29T19:35:28.911Z">
+<meta property="article:modified_time" content="2020-11-30T13:07:19.558Z">
 <meta property="article:author" content="lexingsen">
+<meta property="article:tag" content="进程通信">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://img-blog.csdn.net/20180402144609688?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
   
@@ -77,7 +78,7 @@
 			</ul>
 			</nav>
 			<nav>
-			总文章数 300
+			总文章数 296
 			</nav>
 		<nav class="header-smart-menu">
     		
@@ -203,18 +204,20 @@
 <p><strong>适用范围:</strong> 有血缘关系的进程间通信,如父子进程，兄弟进程。</p>
 <p>下面举例分析如何使用无名管道在父子进程间进行通信：<br><img src="https://img-blog.csdn.net/20180402144609688?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
 <p>前面已经讲过，由于管道是半双工通信，即在某一时=时刻只能单向传输。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">#include&lt;stdlib.h&gt;</span><br><span class="line">#include&lt;unistd.h&gt;</span><br><span class="line">#include&lt;string.h&gt;</span><br><span class="line">#include&lt;assert.h&gt;</span><br><span class="line">#include&lt;fcntl.h&gt;</span><br><span class="line">#include&lt;sys&#x2F;types.h&gt;</span><br><span class="line">#include&lt;sys&#x2F;stat.h&gt;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	int fd[2];    &#x2F;&#x2F;创建文件描述符数组，fd[0]对应管道读端，fd[1]对应管道写端</span><br><span class="line">	int res &#x3D; pipe(fd);&#x2F;&#x2F;fd作为传出参数，以便对内核缓冲区进行操作</span><br><span class="line">	aasert(-1 !&#x3D; res);</span><br><span class="line">	pid_t pid &#x3D; fork();&#x2F;&#x2F;创建子进程</span><br><span class="line">	if(-1 &#x3D;&#x3D; pid)</span><br><span class="line">	&#123;</span><br><span class="line">		perror(&quot;fork()&quot;);</span><br><span class="line">		exit(0);</span><br><span class="line">	&#125;</span><br><span class="line">	&#x2F;&#x2F;子进程</span><br><span class="line">	if(pid &#x3D;&#x3D; 0)</span><br><span class="line">	&#123;</span><br><span class="line">		close(fd[0]);&#x2F;&#x2F;关闭读端</span><br><span class="line">		write(fd[1],&quot;hello&quot;,5);&#x2F;&#x2F;向内核缓冲区写入字符串hello</span><br><span class="line">	&#125;</span><br><span class="line">	else</span><br><span class="line">	&#123;</span><br><span class="line">		close(fd[1]);&#x2F;&#x2F;关闭写端</span><br><span class="line">		char buf[128] &#x3D; &#123;0&#125;;</span><br><span class="line">		read(fd[0],buf,sizeof(buf));&#x2F;&#x2F;将内核缓冲区的内容写入buf中</span><br><span class="line">		printf(&quot;%s \n&quot;,buf);&#x2F;&#x2F;将写入buf中的内容输出到屏幕上</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gcc pipe.c -o pipe</span><br><span class="line">.&#x2F;pipe</span><br><span class="line">hello</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;assert.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> fd[<span class="number">2</span>];    <span class="comment">//创建文件描述符数组，fd[0]对应管道读端，fd[1]对应管道写端</span></span><br><span class="line">	<span class="keyword">int</span> res = pipe(fd);<span class="comment">//fd作为传出参数，以便对内核缓冲区进行操作</span></span><br><span class="line">	aasert(<span class="number">-1</span> != res);</span><br><span class="line">	<span class="keyword">pid_t</span> pid = fork();<span class="comment">//创建子进程</span></span><br><span class="line">	<span class="keyword">if</span>(<span class="number">-1</span> == pid)</span><br><span class="line">	&#123;</span><br><span class="line">		perror(<span class="string">&quot;fork()&quot;</span>);</span><br><span class="line">		<span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//子进程</span></span><br><span class="line">	<span class="keyword">if</span>(pid == <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		close(fd[<span class="number">0</span>]);<span class="comment">//关闭读端</span></span><br><span class="line">		write(fd[<span class="number">1</span>],<span class="string">&quot;hello&quot;</span>,<span class="number">5</span>);<span class="comment">//向内核缓冲区写入字符串hello</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		close(fd[<span class="number">1</span>]);<span class="comment">//关闭写端</span></span><br><span class="line">		<span class="keyword">char</span> buf[<span class="number">128</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">		read(fd[<span class="number">0</span>],buf,<span class="keyword">sizeof</span>(buf));<span class="comment">//将内核缓冲区的内容写入buf中</span></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%s \n&quot;</span>,buf);<span class="comment">//将写入buf中的内容输出到屏幕上</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gcc pipe.c -o pipe</span><br><span class="line">./pipe</span><br><span class="line">hello</span><br></pre></td></tr></table></figure>
+
 <p><img src="https://img-blog.csdn.net/20180402145102290?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>可以看出，使用匿名管道完成了父子进程的通信，子进程作为写进程输入信息hello，父进程作为读进程读取信息并输出到屏幕上。</p>
 <p>2.有名管道</p>
 <p>由于无名管道的局限性，仅限于有血缘关系的进程间通信，所以当需要在不同进程（无血缘关系的进程）之间通信，pipe就不能被使用了。取而代之是有名管道（fifo）。<br><strong>特点：</strong><br>（1）在磁盘上有这样一个文件，使用<code>ls -l</code>命令可以查看管道文件的文件类型为p。<br>（2）伪文件，其大小永远为0。<br>（3）在内核中有一个对应的缓冲区。<br>（4）半双工的通信方式<br><img src="https://img-blog.csdn.net/20180402150613783?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
 <p><strong>使用场景</strong><br>（1）没有血缘关系的进程间通信</p>
 <p><strong>创建方式</strong><br>（1）mkfifo   管道名<br><img src="https://img-blog.csdn.net/20180402151020203?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>（2）调用函数 mkfifo<br>         函数原型：  int mkfifo(const char *pathname,mode_t mode);<br>         参数：路径     权限</p>
 <p>下面举例应用mkfifo实现两个无血缘关系进程之间的通信<br>简单描述：在A进程中向内核缓冲区输入字符串，输入end表示结束进程。<br>在B进程中将内核缓冲区的内容保存在命令行参数argv[1]指定的文件中。<br>进程A :    fifoa.c</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">#include&lt;stdlib.h&gt;</span><br><span class="line">#include&lt;unistd.h&gt;</span><br><span class="line">#include&lt;string.h&gt;</span><br><span class="line">#include&lt;assert.h&gt;</span><br><span class="line">#include&lt;fcntl.h&gt;</span><br><span class="line">#include&lt;sys&#x2F;types.h&gt;</span><br><span class="line">#include&lt;sys&#x2F;stat.h&gt;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	int fd &#x3D; open(&quot;FIFO&quot;,O_WRONLY);&#x2F;&#x2F;默认是阻塞的</span><br><span class="line">	if(fd &#x3D;&#x3D; -1)</span><br><span class="line">	&#123;</span><br><span class="line">		int n &#x3D; mkfifo(&quot;FIFO&quot;,0664);&#x2F;&#x2F;创建管道文件FIFO</span><br><span class="line">		if(-1 &#x3D;&#x3D; n)</span><br><span class="line">		&#123;</span><br><span class="line">			perror(&quot;mkfifo&quot;);</span><br><span class="line">			exit(0);</span><br><span class="line">		&#125;</span><br><span class="line">		fd &#x3D; open(&quot;FIFO&quot;,O_WRONLY);</span><br><span class="line">	&#125;</span><br><span class="line">	assert(-1 !&#x3D; fd);</span><br><span class="line">	printf(&quot;open success!\n&quot;);</span><br><span class="line">	while(1)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;please input:&quot;);</span><br><span class="line">		char buf[128] &#x3D; &#123;0&#125;;</span><br><span class="line">		fgets(buf,128,stdin);</span><br><span class="line"></span><br><span class="line">		if(strncmp(buf,&quot;end&quot;,3) &#x3D;&#x3D; 0)&#x2F;&#x2F;输入end用以结束进程</span><br><span class="line">		&#123;</span><br><span class="line">			break;</span><br><span class="line">		&#125;</span><br><span class="line">		write(fd,buf,strlen(buf) - 1);&#x2F;&#x2F;strlen(buf)-1减去回车符占用的一个字节长度，否则输出到屏幕上的值为乱码</span><br><span class="line">	&#125;</span><br><span class="line">	close(fd);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;assert.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> fd = open(<span class="string">&quot;FIFO&quot;</span>,O_WRONLY);<span class="comment">//默认是阻塞的</span></span><br><span class="line">	<span class="keyword">if</span>(fd == <span class="number">-1</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> n = mkfifo(<span class="string">&quot;FIFO&quot;</span>,<span class="number">0664</span>);<span class="comment">//创建管道文件FIFO</span></span><br><span class="line">		<span class="keyword">if</span>(<span class="number">-1</span> == n)</span><br><span class="line">		&#123;</span><br><span class="line">			perror(<span class="string">&quot;mkfifo&quot;</span>);</span><br><span class="line">			<span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		fd = open(<span class="string">&quot;FIFO&quot;</span>,O_WRONLY);</span><br><span class="line">	&#125;</span><br><span class="line">	assert(<span class="number">-1</span> != fd);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;open success!\n&quot;</span>);</span><br><span class="line">	<span class="keyword">while</span>(<span class="number">1</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;please input:&quot;</span>);</span><br><span class="line">		<span class="keyword">char</span> buf[<span class="number">128</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">		fgets(buf,<span class="number">128</span>,<span class="built_in">stdin</span>);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span>(<span class="built_in">strncmp</span>(buf,<span class="string">&quot;end&quot;</span>,<span class="number">3</span>) == <span class="number">0</span>)<span class="comment">//输入end用以结束进程</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		write(fd,buf,<span class="built_in">strlen</span>(buf) - <span class="number">1</span>);<span class="comment">//strlen(buf)-1减去回车符占用的一个字节长度，否则输出到屏幕上的值为乱码</span></span><br><span class="line">	&#125;</span><br><span class="line">	close(fd);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>进程B  fifob.c</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">#include&lt;stdlib.h&gt;</span><br><span class="line">#include&lt;unistd.h&gt;</span><br><span class="line">#include&lt;string.h&gt;</span><br><span class="line">#include&lt;assert.h&gt;</span><br><span class="line">#include&lt;fcntl.h&gt;</span><br><span class="line">#include&lt;sys&#x2F;types.h&gt;</span><br><span class="line">#include&lt;sys&#x2F;stat.h&gt;</span><br><span class="line"></span><br><span class="line">int main(int argc,char *argv[])</span><br><span class="line">&#123;</span><br><span class="line">	int fd &#x3D; open(&quot;FIFO&quot;,O_RDONLY);&#x2F;&#x2F;浼氶樆濉炶繍琛?</span><br><span class="line">	if(fd &lt; 0)</span><br><span class="line">	&#123;</span><br><span class="line">		int n &#x3D; mkfifo(&quot;FIFO&quot;,0664);</span><br><span class="line">		if(-1 &#x3D;&#x3D; n)</span><br><span class="line">		&#123;</span><br><span class="line">			perror(&quot;mkfifo&quot;);</span><br><span class="line">			exit(0);</span><br><span class="line">		&#125;</span><br><span class="line">		fd &#x3D; open(&quot;FIFO&quot;,O_RDONLY);</span><br><span class="line">		assert(-1 !&#x3D; fd);</span><br><span class="line">	&#125;</span><br><span class="line">	int fd1 &#x3D; open(argv[1],O_WRONLY | O_CREAT,0664);</span><br><span class="line">	assert(fd1 !&#x3D; -1);</span><br><span class="line">	while(1)</span><br><span class="line">	&#123;</span><br><span class="line">		char buf[128] &#x3D; &#123;0&#125;;</span><br><span class="line">		int n &#x3D; read(fd,buf,127);</span><br><span class="line">		if(0 &#x3D;&#x3D; n)</span><br><span class="line">		&#123;</span><br><span class="line">			break;</span><br><span class="line">		&#125;</span><br><span class="line">		write(fd1,buf,n);</span><br><span class="line">	&#125;</span><br><span class="line">	close(fd);</span><br><span class="line">	close(fd1);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;assert.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc,<span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> fd = open(<span class="string">&quot;FIFO&quot;</span>,O_RDONLY);<span class="comment">//浼氶樆濉炶繍琛?</span></span><br><span class="line">	<span class="keyword">if</span>(fd &lt; <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> n = mkfifo(<span class="string">&quot;FIFO&quot;</span>,<span class="number">0664</span>);</span><br><span class="line">		<span class="keyword">if</span>(<span class="number">-1</span> == n)</span><br><span class="line">		&#123;</span><br><span class="line">			perror(<span class="string">&quot;mkfifo&quot;</span>);</span><br><span class="line">			<span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		fd = open(<span class="string">&quot;FIFO&quot;</span>,O_RDONLY);</span><br><span class="line">		assert(<span class="number">-1</span> != fd);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> fd1 = open(argv[<span class="number">1</span>],O_WRONLY | O_CREAT,<span class="number">0664</span>);</span><br><span class="line">	assert(fd1 != <span class="number">-1</span>);</span><br><span class="line">	<span class="keyword">while</span>(<span class="number">1</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">char</span> buf[<span class="number">128</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">		<span class="keyword">int</span> n = read(fd,buf,<span class="number">127</span>);</span><br><span class="line">		<span class="keyword">if</span>(<span class="number">0</span> == n)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		write(fd1,buf,n);</span><br><span class="line">	&#125;</span><br><span class="line">	close(fd);</span><br><span class="line">	close(fd1);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">gcc fifoa.c -o fifoa</span><br><span class="line">gcc fifob.c -o fifob</span><br><span class="line">.&#x2F;fifoa</span><br><span class="line">.&#x2F;fifob a.txt</span><br></pre></td></tr></table></figure>
 <p>A,B进程必须同时执行，否则被执行的进程会出现阻塞。且看管道机制中的一条，必须确认对方的从在，否则就会阻塞，等待对方的到来。<br><img src="https://img-blog.csdn.net/20180402153213134?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><img src="https://img-blog.csdn.net/20180402153221482?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
 <p>在A进程中输入字符串：<br><img src="https://img-blog.csdn.net/20180402153432998?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>查看由B进程保存的a.txt文件：<br><img src="https://img-blog.csdn.net/20180402153546162?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
@@ -227,7 +230,29 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">进程通信</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Linux系统编程//" class="article-tag-list-link color5">Linux系统编程</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
       
 
@@ -291,7 +316,7 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/04/02/expected%20%60=%60,%60,%60,%60;%60,%60asm%60%20or%20%60attribute%60before/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2018/04/02/gcc%E7%BC%96%E8%AF%91%E5%87%BA%E9%94%99%E8%A7%A3%E5%86%B3/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
@@ -425,11 +450,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">动态规划</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">1024程序员节</a>
+                <a href="javascript:void(0)" class="js-tag color3">dp</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -437,7 +458,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">数据结构 算法</a>
+                <a href="javascript:void(0)" class="js-tag color3">查找</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -449,11 +470,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">c语言</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color4">STL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -461,7 +478,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">linux系统编程</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">linux命令</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -477,14 +498,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">c</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">c++11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">protobuf</a>
               </li>
              
@@ -497,7 +510,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color2">树</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">栈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">二分</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">堆</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -509,11 +534,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">堆</a>
+                <a href="javascript:void(0)" class="js-tag color2">c</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">回溯法</a>
+                <a href="javascript:void(0)" class="js-tag color3">排序</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -521,11 +546,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">最短路径</a>
+                <a href="javascript:void(0)" class="js-tag color4">回溯法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">进程通信</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">单链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">计算机组成</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">最短路径</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">单链表 排序</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -537,15 +578,31 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">排序</a>
+                <a href="javascript:void(0)" class="js-tag color5">Linux系统编程</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">1024程序员节 c++</a>
+                <a href="javascript:void(0)" class="js-tag color1">c++11</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">动态规划 算法 leetcode</a>
+                <a href="javascript:void(0)" class="js-tag color5">而擦函数</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">图论</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">稀疏矩阵</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">双链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">树 图</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -553,11 +610,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">递归</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">c++11算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">计算机组成</a>
+                <a href="javascript:void(0)" class="js-tag color5">堆栈调用</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -569,7 +630,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">递归</a>
+                <a href="javascript:void(0)" class="js-tag color5">进程基础</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">图的存储结构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">哈希</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">剑指offer</a>
               </li>
             
             <div class="clearfix"></div>

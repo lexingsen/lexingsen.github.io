@@ -16,7 +16,7 @@
 <meta property="og:description" content="题目描述：Given an array nums, write a function to move all 0’s to the end of it while maintaining the relative order of the non-zero elements.给定一个数组 nums，编写一个函数将所有 0 移动到数组的末尾，同时保持非零元素的相对顺序。 样例输入：[0,1,0,">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2018-08-27T02:28:06.000Z">
-<meta property="article:modified_time" content="2020-11-29T19:35:26.591Z">
+<meta property="article:modified_time" content="2020-11-30T16:34:14.835Z">
 <meta property="article:author" content="lexingsen">
 <meta name="twitter:card" content="summary">
   
@@ -68,7 +68,7 @@
 			</ul>
 			</nav>
 			<nav>
-			总文章数 300
+			总文章数 296
 			</nav>
 		<nav class="header-smart-menu">
     		
@@ -186,11 +186,11 @@
 
 <p><font size=5 face="Consolas">题目描述：Given an array nums, write a function to move all 0’s to the end of it while maintaining the relative order of the non-zero elements.</font><br>给定一个数组 <code>nums</code>，编写一个函数将所有 0 移动到数组的末尾，同时保持非零元素的相对顺序。</p>
 <p><font size=5 face="Courier New">样例输入：</font><code>[0,1,0,3,12]</code><br><font size=5 face="Courier New">样例输出：</font><code>[1,3,12,0,0]</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;直观的方法就是，开辟一个数组用于保存所有非零元素</span><br><span class="line">&#x2F;&#x2F;遍历完成后回写到原数组中，之后添加对应个数的0元素</span><br><span class="line">void moveZeroes(int* nums, int numsSize) &#123;</span><br><span class="line">    int nonzero[numsSize];</span><br><span class="line">    int k&#x3D;0;&#x2F;&#x2F;统计非零元素的个数</span><br><span class="line">    for(int i&#x3D;0; i&lt;numsSize; ++i)&#123;</span><br><span class="line">		if(nums[i])</span><br><span class="line">			nonzero[k++] &#x3D; nums[i];</span><br><span class="line">	&#125;</span><br><span class="line">	&#x2F;&#x2F;2.回写非零元素</span><br><span class="line">	int j&#x3D;0;&#x2F;&#x2F;记录新数组当前下标</span><br><span class="line">	for(int i&#x3D;0; i&lt;k; ++i)&#123;</span><br><span class="line">		nums[j++] &#x3D; nums[i];</span><br><span class="line">	&#125;</span><br><span class="line">	&#x2F;&#x2F;3.添加0,numsSize-k为零元素的个数</span><br><span class="line">	fpr(int i&#x3D;0; i&lt;numsSize-k; ++i)&#123;</span><br><span class="line">		nums[k++] &#x3D; 0;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//直观的方法就是，开辟一个数组用于保存所有非零元素</span></span><br><span class="line"><span class="comment">//遍历完成后回写到原数组中，之后添加对应个数的0元素</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">moveZeroes</span><span class="params">(<span class="keyword">int</span>* nums, <span class="keyword">int</span> numsSize)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> nonzero[numsSize];</span><br><span class="line">    <span class="keyword">int</span> k=<span class="number">0</span>;<span class="comment">//统计非零元素的个数</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;numsSize; ++i)&#123;</span><br><span class="line">		<span class="keyword">if</span>(nums[i])</span><br><span class="line">			nonzero[k++] = nums[i];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//2.回写非零元素</span></span><br><span class="line">	<span class="keyword">int</span> j=<span class="number">0</span>;<span class="comment">//记录新数组当前下标</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;k; ++i)&#123;</span><br><span class="line">		nums[j++] = nums[i];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//3.添加0,numsSize-k为零元素的个数</span></span><br><span class="line">	fpr(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;numsSize-k; ++i)&#123;</span><br><span class="line">		nums[k++] = <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><font face="Courier New">上述算法的时间复杂度为：O(n)，空间复杂度也为O(n)。</font><br><font color=red>上边的算法开辟了额外的数组用于存储非零元素，那么如何空间复杂度上进行优化，能能在原数组上直接操作即数据结构中的就地完成？</font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;two pointers思想</span><br><span class="line">void moveZeroes(int* nums, int numsSize)&#123;</span><br><span class="line">	int k&#x3D;0;&#x2F;&#x2F;标记非零元素</span><br><span class="line">	for(int i&#x3D;0;i&lt;numsSize;++i)&#123;</span><br><span class="line">		if(nums[i]!&#x3D;0)</span><br><span class="line">			nums[k++]&#x3D;nums[i]</span><br><span class="line">	&#125;</span><br><span class="line">	for(int i&#x3D;k;i&lt;numsSize;++i)&#123;</span><br><span class="line">		nums[i]&#x3D;0;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//two pointers思想</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">moveZeroes</span><span class="params">(<span class="keyword">int</span>* nums, <span class="keyword">int</span> numsSize)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> k=<span class="number">0</span>;<span class="comment">//标记非零元素</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;numsSize;++i)&#123;</span><br><span class="line">		<span class="keyword">if</span>(nums[i]!=<span class="number">0</span>)</span><br><span class="line">			nums[k++]=nums[i]</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=k;i&lt;numsSize;++i)&#123;</span><br><span class="line">		nums[i]=<span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>交换零元素和非零元素</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">void moveZeroes(int* nums, int numsSize)&#123;</span><br><span class="line">	int k&#x3D;0;</span><br><span class="line">	for(int i&#x3D;0;i&lt;numsSize;++i)&#123;</span><br><span class="line">		if(nums[i])&#123;</span><br><span class="line">				&#x2F;&#x2F;防止发生自交换，若数组中全为非零元素</span><br><span class="line">				if(i!&#x3D;k)&#123;</span><br><span class="line">						swap(nums[k++],nums[i]);</span><br><span class="line">					&#125;</span><br><span class="line">				else&#123;</span><br><span class="line">					k++;	</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">moveZeroes</span><span class="params">(<span class="keyword">int</span>* nums, <span class="keyword">int</span> numsSize)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> k=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;numsSize;++i)&#123;</span><br><span class="line">		<span class="keyword">if</span>(nums[i])&#123;</span><br><span class="line">				<span class="comment">//防止发生自交换，若数组中全为非零元素</span></span><br><span class="line">				<span class="keyword">if</span>(i!=k)&#123;</span><br><span class="line">						swap(nums[k++],nums[i]);</span><br><span class="line">					&#125;</span><br><span class="line">				<span class="keyword">else</span>&#123;</span><br><span class="line">					k++;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
 
@@ -408,11 +408,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">动态规划</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">1024程序员节</a>
+                <a href="javascript:void(0)" class="js-tag color3">dp</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -420,7 +416,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">数据结构 算法</a>
+                <a href="javascript:void(0)" class="js-tag color3">查找</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -432,11 +428,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">c语言</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color4">STL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -444,7 +436,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">linux系统编程</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">linux命令</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -460,14 +456,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">c</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">c++11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">protobuf</a>
               </li>
              
@@ -480,7 +468,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color2">树</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">栈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">二分</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">堆</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -492,11 +492,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">堆</a>
+                <a href="javascript:void(0)" class="js-tag color2">c</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">回溯法</a>
+                <a href="javascript:void(0)" class="js-tag color3">排序</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -504,11 +504,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">最短路径</a>
+                <a href="javascript:void(0)" class="js-tag color4">回溯法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">进程通信</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">单链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">计算机组成</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">最短路径</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">单链表 排序</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -520,15 +536,31 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">排序</a>
+                <a href="javascript:void(0)" class="js-tag color5">Linux系统编程</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">1024程序员节 c++</a>
+                <a href="javascript:void(0)" class="js-tag color1">c++11</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">动态规划 算法 leetcode</a>
+                <a href="javascript:void(0)" class="js-tag color5">而擦函数</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">图论</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">稀疏矩阵</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">双链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">树 图</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -536,11 +568,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">递归</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">c++11算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">计算机组成</a>
+                <a href="javascript:void(0)" class="js-tag color5">堆栈调用</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -552,7 +588,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">递归</a>
+                <a href="javascript:void(0)" class="js-tag color5">进程基础</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">图的存储结构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">哈希</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">剑指offer</a>
               </li>
             
             <div class="clearfix"></div>

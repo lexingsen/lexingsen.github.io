@@ -8,17 +8,17 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>数组指针和指针数组 | 乐行僧的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="一、数组指针初学C语言的朋友对数组指针这指针数组感到迷惑，分不清，包括我自己，其实是对概念的不清晰以及对数组和指针这两个概念理解的不够深入，下面谈谈我的理解。数组指针，是一个指针而不是数组。这个指针具有指向整个数组的能力，保存这个数组的其实地址。定义数组指针变量 123456789101112131415161718192021222324251.先定义数组类型，根据类型定义指针变量typed">
+  <meta name="description" content="一、数组指针初学C语言的朋友对数组指针这指针数组感到迷惑，分不清，包括我自己，其实是对概念的不清晰以及对数组和指针这两个概念理解的不够深入，下面谈谈我的理解。数组指针，是一个指针而不是数组。这个指针具有指向整个数组的能力，保存这个数组的其实地址。 定义数组指针变量 123456789101112131415161718192021222324251.先定义数组类型，根据类型定义指针变量type">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数组指针和指针数组">
 <meta property="og:url" content="http://example.com/2018/08/21/%E6%95%B0%E7%BB%84%E6%8C%87%E9%92%88%E5%92%8C%E6%8C%87%E9%92%88%E6%95%B0%E7%BB%84/index.html">
 <meta property="og:site_name" content="乐行僧的博客">
-<meta property="og:description" content="一、数组指针初学C语言的朋友对数组指针这指针数组感到迷惑，分不清，包括我自己，其实是对概念的不清晰以及对数组和指针这两个概念理解的不够深入，下面谈谈我的理解。数组指针，是一个指针而不是数组。这个指针具有指向整个数组的能力，保存这个数组的其实地址。定义数组指针变量 123456789101112131415161718192021222324251.先定义数组类型，根据类型定义指针变量typed">
+<meta property="og:description" content="一、数组指针初学C语言的朋友对数组指针这指针数组感到迷惑，分不清，包括我自己，其实是对概念的不清晰以及对数组和指针这两个概念理解的不够深入，下面谈谈我的理解。数组指针，是一个指针而不是数组。这个指针具有指向整个数组的能力，保存这个数组的其实地址。 定义数组指针变量 123456789101112131415161718192021222324251.先定义数组类型，根据类型定义指针变量type">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://img-blog.csdn.net/20180821194949768?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
 <meta property="og:image" content="https://img-blog.csdn.net/20180821202413425?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
 <meta property="article:published_time" content="2018-08-21T12:32:50.000Z">
-<meta property="article:modified_time" content="2020-11-29T19:35:26.595Z">
+<meta property="article:modified_time" content="2020-11-30T15:23:36.625Z">
 <meta property="article:author" content="lexingsen">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://img-blog.csdn.net/20180821194949768?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
@@ -71,7 +71,7 @@
 			</ul>
 			</nav>
 			<nav>
-			总文章数 300
+			总文章数 296
 			</nav>
 		<nav class="header-smart-menu">
     		
@@ -187,14 +187,15 @@
       
         <a id="more"></a>
 
-<p><font size=5 color=red>一、数组指针</font><br>初学C语言的朋友对数组指针这指针数组感到迷惑，分不清，包括我自己，其实是对概念的不清晰以及对数组和指针这两个概念理解的不够深入，下面谈谈我的理解。<br>数组指针，是一个<font color=blue>指针</font>而不是<font color=blue>数组。</font><br>这个指针具有<font color=red>指向整个数组</font>的能力，保存这个数组的其实地址。<br>定义数组指针变量</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">1.先定义数组类型，根据类型定义指针变量</span><br><span class="line">typedef int A[5];&#x2F;&#x2F;A是数组类型。元素类型为int，元素个数为10</span><br><span class="line">A* p &#x3D; NULL;&#x2F;&#x2F;p是数组指针类型变量</span><br><span class="line"></span><br><span class="line">int a[5] &#x3D; &#123;0&#125;;</span><br><span class="line">p &#x3D; &amp;a;&#x2F;&#x2F;注意，不能写成 p&#x3D;a,两者类型是不相同的</span><br><span class="line">&#x2F;&#x2F;a代表数组首元素的地址，&amp;a代表整个数组的地址</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;通过数组指针赋值</span><br><span class="line">for(int i&#x3D;0;i &lt; 5;++i)&#123;</span><br><span class="line">	(*p)[i] &#x3D; i;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F;sizeof</span><br><span class="line">sizeof(p);\\4   指针变量的大小，在32位下都是4</span><br><span class="line">sizeof(*p);\\20	指针指向空间的大小，即整个数组的大小</span><br><span class="line"></span><br><span class="line">2.先定义数组指针类型，根据类型定义变量</span><br><span class="line">typedef int (*A)[5];</span><br><span class="line">&#x2F;&#x2F;定义指向元素个数为5，元素类型为int的数组的指针类型A</span><br><span class="line">int a[5]; </span><br><span class="line">A q &#x3D; &amp;a;&#x2F;&#x2F;用类型定义变量</span><br><span class="line"></span><br><span class="line">3.直接定义数组指针变量</span><br><span class="line">int a[5] &#x3D; &#123;1,2,3,4,5&#125;;</span><br><span class="line">int (*q)[5] &#x3D; &amp;a;&#x2F;&#x2F;q是数组指针变量</span><br></pre></td></tr></table></figure>
+<p><font size=5 color=red>一、数组指针</font><br>初学C语言的朋友对数组指针这指针数组感到迷惑，分不清，包括我自己，其实是对概念的不清晰以及对数组和指针这两个概念理解的不够深入，下面谈谈我的理解。<br>数组指针，是一个<font color=blue>指针</font>而不是<font color=blue>数组。</font><br>这个指针具有<font color=red>指向整个数组</font>的能力，保存这个数组的其实地址。</p>
+<p>定义数组指针变量</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>先定义数组类型，根据类型定义指针变量</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> A[<span class="number">5</span>];<span class="comment">//A是数组类型。元素类型为int，元素个数为10</span></span><br><span class="line">A* p = <span class="literal">NULL</span>;<span class="comment">//p是数组指针类型变量</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> a[<span class="number">5</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">p = &amp;a;<span class="comment">//注意，不能写成 p=a,两者类型是不相同的</span></span><br><span class="line"><span class="comment">//a代表数组首元素的地址，&amp;a代表整个数组的地址</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//通过数组指针赋值</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i &lt; <span class="number">5</span>;++i)&#123;</span><br><span class="line">	(*p)[i] = i;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//sizeof</span></span><br><span class="line"><span class="keyword">sizeof</span>(p);\\<span class="number">4</span>   指针变量的大小，在<span class="number">32</span>位下都是<span class="number">4</span></span><br><span class="line"><span class="keyword">sizeof</span>(*p);\\<span class="number">20</span>	指针指向空间的大小，即整个数组的大小</span><br><span class="line"></span><br><span class="line"><span class="number">2.</span>先定义数组指针类型，根据类型定义变量</span><br><span class="line">typedef int (*A)[5];</span><br><span class="line"><span class="comment">//定义指向元素个数为5，元素类型为int的数组的指针类型A</span></span><br><span class="line"><span class="keyword">int</span> a[<span class="number">5</span>]; </span><br><span class="line">A q = &amp;a;<span class="comment">//用类型定义变量</span></span><br><span class="line"></span><br><span class="line"><span class="number">3.</span>直接定义数组指针变量</span><br><span class="line"><span class="keyword">int</span> a[<span class="number">5</span>] = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;;</span><br><span class="line"><span class="keyword">int</span> (*q)[<span class="number">5</span>] = &amp;a;<span class="comment">//q是数组指针变量</span></span><br></pre></td></tr></table></figure>
 
 
 <p><font size=5 color=red>二、指针数组</font><br>指针数组，是一个数组，而不是指针。数组中的每一个元素都是一个指针，这些元素构成的集合就是这个数组。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">char* str[] &#x3D; &#123;&quot;China&quot;,&quot;American&quot;,&quot;Russia&quot;&#125;;</span><br><span class="line">&#x2F;&#x2F;数组中的每一个都是字符串常量</span><br><span class="line">&#x2F;&#x2F;字符串常量保存在.data段中的.rodata段</span><br><span class="line">&#x2F;&#x2F;实际上常量字符串就是一个指针，这个指针指向.rodata对应的常量字符串</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span>* str[] = &#123;<span class="string">&quot;China&quot;</span>,<span class="string">&quot;American&quot;</span>,<span class="string">&quot;Russia&quot;</span>&#125;;</span><br><span class="line"><span class="comment">//数组中的每一个都是字符串常量</span></span><br><span class="line"><span class="comment">//字符串常量保存在.data段中的.rodata段</span></span><br><span class="line"><span class="comment">//实际上常量字符串就是一个指针，这个指针指向.rodata对应的常量字符串</span></span><br></pre></td></tr></table></figure>
 <p><img src="https://img-blog.csdn.net/20180821194949768?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><font size=4.5 color=blue>指针数组的应用</font><br><font face="Courier New">完整的main函数原型，<code>int main(int arc,char* argv[],char* envp[])</code><br>其中,两个数组分别保存命令行参数和环境变量(路径)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;cstdio&gt;</span><br><span class="line">int main(int argc,char* argv[],char* envp[])&#123;</span><br><span class="line">	for(int i&#x3D;0;i &lt; argc;++i)&#123;</span><br><span class="line">		printf(&quot;argv[%d] &#x3D; %s\n&quot;,i,argv[i]);</span><br><span class="line">		printf(&quot;envp[%d] &#x3D; %s\n&quot;,i,envp[i]);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc,<span class="keyword">char</span>* argv[],<span class="keyword">char</span>* envp[])</span></span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i &lt; argc;++i)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;argv[%d] = %s\n&quot;</span>,i,argv[i]);</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;envp[%d] = %s\n&quot;</span>,i,envp[i]);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><img src="https://img-blog.csdn.net/20180821202413425?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><font size=5 color=red>三、防止数组发生越界</font><br>数组作为函数参数传递时，会退化为指针。为了提高程序执行的效率，C语言不做数组下标的安全性检查。如果进行了检查当数组数据量非常大时候会显著减低程序的效率，在<font color=red>安全性</font>和<font color=red>高效率</font>之间，权衡利弊之下。C语言选择了效率，因此在实际使用的情况下，尤其是在有数组参与函数调用的情况下，数组的长度需要作为函数的参数传递进去，防止出现错误，损坏堆栈的数据。</p>
 
       
@@ -413,11 +414,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">动态规划</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">1024程序员节</a>
+                <a href="javascript:void(0)" class="js-tag color3">dp</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -425,7 +422,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">数据结构 算法</a>
+                <a href="javascript:void(0)" class="js-tag color3">查找</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -437,11 +434,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">c语言</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color4">STL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -449,7 +442,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">linux系统编程</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">linux命令</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -465,14 +462,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">c</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">c++11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">protobuf</a>
               </li>
              
@@ -485,7 +474,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color2">树</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">栈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">二分</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">堆</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -497,11 +498,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">堆</a>
+                <a href="javascript:void(0)" class="js-tag color2">c</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">回溯法</a>
+                <a href="javascript:void(0)" class="js-tag color3">排序</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -509,11 +510,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">最短路径</a>
+                <a href="javascript:void(0)" class="js-tag color4">回溯法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">进程通信</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">单链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">计算机组成</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">最短路径</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">单链表 排序</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -525,15 +542,31 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">排序</a>
+                <a href="javascript:void(0)" class="js-tag color5">Linux系统编程</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">1024程序员节 c++</a>
+                <a href="javascript:void(0)" class="js-tag color1">c++11</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">动态规划 算法 leetcode</a>
+                <a href="javascript:void(0)" class="js-tag color5">而擦函数</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">图论</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">稀疏矩阵</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">双链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">树 图</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -541,11 +574,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">递归</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">c++11算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">计算机组成</a>
+                <a href="javascript:void(0)" class="js-tag color5">堆栈调用</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -557,7 +594,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">递归</a>
+                <a href="javascript:void(0)" class="js-tag color5">进程基础</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">图的存储结构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">哈希</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">剑指offer</a>
               </li>
             
             <div class="clearfix"></div>

@@ -64,7 +64,7 @@
 			</ul>
 			</nav>
 			<nav>
-			总文章数 300
+			总文章数 296
 			</nav>
 		<nav class="header-smart-menu">
     		
@@ -146,177 +146,6 @@
           </div>
           <div id="js-content" class="content-ll">
             
-  
-    <article id="post-PAT（乙级）1082.射击比赛（数学题，距离求解）（20）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/03/21/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891082.%E5%B0%84%E5%87%BB%E6%AF%94%E8%B5%9B%EF%BC%88%E6%95%B0%E5%AD%A6%E9%A2%98%EF%BC%8C%E8%B7%9D%E7%A6%BB%E6%B1%82%E8%A7%A3%EF%BC%89%EF%BC%8820%EF%BC%89/">PAT（乙级）1082.射击比赛（数学题，距离求解）（20）</a>
-    </h1>
-  
-
-        <!--显示阅读次数-->
-        
-        <!--显示阅读次数完毕-->
-        
-        <a href="/2019/03/21/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891082.%E5%B0%84%E5%87%BB%E6%AF%94%E8%B5%9B%EF%BC%88%E6%95%B0%E5%AD%A6%E9%A2%98%EF%BC%8C%E8%B7%9D%E7%A6%BB%E6%B1%82%E8%A7%A3%EF%BC%89%EF%BC%8820%EF%BC%89/" class="archive-article-date">
-  	<time datetime="2019-03-21T11:35:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-21</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-      
-      
-        <a id="more"></a>
-
-<p><font size=5 face="Courier New">1082.射击比赛</font></p>
-<p><font size=4 face="Courier New">本题目给出的射击比赛的规则非常简单，谁打的弹洞距离靶心最近，谁就是冠军；谁差得最远，谁就是菜鸟。本题给出一系列弹洞的平面坐标(x,y)，请你编写程序找出冠军和菜鸟。我们假设靶心在原点(0,0)。</p>
-<p><font size=5 face="Courier New" color=red>输入格式：</font><br><font size=4 face="Courier New">输入在第一行中给出一个正整数 N（≤ 10 000）。随后 N 行，每行按下列格式给出：<br><code>D x y</code><br>其中 <code>ID </code>是运动员的编号（由 4 位数字组成）；<code>x </code>和 <code>y</code> 是其打出的弹洞的平面坐标(x,y)，均为整数，且 0 ≤ |<code>x</code>|, |<code>y</code>| ≤ 100。题目保证每个运动员的编号不重复，且每人只打 1 枪。</p>
-<p><font size=5 face="Courier New" color=red>输出格式：</font><br><font size=4 face="Courier New">输出冠军和菜鸟的编号，中间空 1 格。题目保证他们是唯一的。</p>
-<p><font size=6 face="Courier New" color=blue>题目分析：距离求解+排序</font></p>
-<p><font size=4 face="Courier New">代码实现：</font></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Person</span>&#123;</span></span><br><span class="line">    <span class="built_in">string</span> name;</span><br><span class="line">    <span class="keyword">double</span> distance;</span><br><span class="line"></span><br><span class="line">    Person(<span class="built_in">string</span> name, <span class="keyword">double</span> distance)&#123;</span><br><span class="line">        <span class="keyword">this</span>-&gt;name = name;</span><br><span class="line">        <span class="keyword">this</span>-&gt;distance = distance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">dis</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span></span>&#123;</span><br><span class="line">    <span class="keyword">double</span> d = <span class="built_in">sqrt</span>(x*x+y*y);</span><br><span class="line">    <span class="keyword">return</span> d;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">vector</span>&lt;Person&gt; vec;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">cmp</span><span class="params">(Person a, Person b)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a.distance &lt;  b.distance;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">   <span class="comment">// freopen(&quot;in.txt&quot;, &quot;r&quot;, stdin);</span></span><br><span class="line">    <span class="keyword">int</span> n, x, y;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;n);</span><br><span class="line">    <span class="built_in">string</span> name;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;n; ++i)&#123;</span><br><span class="line">        <span class="built_in">cin</span>&gt;&gt;name&gt;&gt;x&gt;&gt;y;</span><br><span class="line">        vec.push_back(Person(name, dis(x,y)));</span><br><span class="line">    &#125;</span><br><span class="line">    sort(vec.begin(), vec.end(), cmp);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%s %s\n&quot;</span>, vec[<span class="number">0</span>].name.c_str(), vec[vec.size()<span class="number">-1</span>].name.c_str());</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/PAT乙级题解//" class="article-tag-list-link color3">PAT乙级题解</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/03/21/PAT%EF%BC%88%E4%B9%99%E7%BA%A7%EF%BC%891082.%E5%B0%84%E5%87%BB%E6%AF%94%E8%B5%9B%EF%BC%88%E6%95%B0%E5%AD%A6%E9%A2%98%EF%BC%8C%E8%B7%9D%E7%A6%BB%E6%B1%82%E8%A7%A3%EF%BC%89%EF%BC%8820%EF%BC%89/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
-    <article id="post-归并排序merge函数的两种写法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/03/11/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8Fmerge%E5%87%BD%E6%95%B0%E7%9A%84%E4%B8%A4%E7%A7%8D%E5%86%99%E6%B3%95/">归并排序merge函数的两种写法</a>
-    </h1>
-  
-
-        <!--显示阅读次数-->
-        
-        <!--显示阅读次数完毕-->
-        
-        <a href="/2019/03/11/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8Fmerge%E5%87%BD%E6%95%B0%E7%9A%84%E4%B8%A4%E7%A7%8D%E5%86%99%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2019-03-11T13:01:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-      
-      
-        <a id="more"></a>
-
-<p><font size=4 face="Courier New">第一种：将[left, mid，right]划分为left和right两个子闭区间。其中将mid定义为右子区间的第一个元素的下标。</font><br><img src="https://img-blog.csdnimg.cn/20190311203929242.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><font size=4 face="Courier New">代码实现：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">template &lt;typename T&gt;</span><br><span class="line">void merge(T arr[], int l, int m, int r)&#123;</span><br><span class="line">	int LEFT_SIZE  &#x3D; m-l;&#x2F;&#x2F;左子区间的大小</span><br><span class="line">	int RIGHT_SIZE &#x3D; r-m+1;&#x2F;&#x2F;右子区间的大小</span><br><span class="line"></span><br><span class="line">	&#x2F;&#x2F;动态申请内存，否则数据量太大时，栈会溢出</span><br><span class="line">	T* left &#x3D; new T[LEFT_SIZE];</span><br><span class="line">	T* right &#x3D; new T[RIGHT_SIZE];</span><br><span class="line">	</span><br><span class="line">	&#x2F;&#x2F;合并两个有序数组的常规操作</span><br><span class="line">	int i &#x3D; 0,j &#x3D; 0,k &#x3D; l;&#x2F;&#x2F;注意k的起始下标为l而不是0</span><br><span class="line">	while(i&lt;LEFT_SIZE &amp;&amp; j&lt;RIGHT_SIZE)&#123;</span><br><span class="line">		if(left[i] &lt; right[j])&#123;</span><br><span class="line">			arr[k ++] &#x3D; left[i ++];</span><br><span class="line">		&#125;</span><br><span class="line">		else&#123;</span><br><span class="line">			arr[k ++] &#x3D; right[j ++];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	while(i &lt; LEFT_SIZE)&#123;arr[k ++] &#x3D; left[i ++];&#125;</span><br><span class="line">	while(j &lt; RIGHT_SIZE)&#123;arr[k ++] &#x3D; right[j ++];&#125;</span><br><span class="line"></span><br><span class="line">	delete[] left;</span><br><span class="line">	delete[] right;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><font size=4 face="Courier New">第二种：将[left, mid, right]复制到一个数组中，但此时mid是第一子区间的最后一个元素的下标。</font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">template &lt;typename T&gt;</span><br><span class="line">void merge(T arr[], int l, int mid, int r)&#123;</span><br><span class="line">	T* data &#x3D; new T[r-l+1]; &#x2F;&#x2F;[l..r]是一个闭区间所以申请空间时需加1</span><br><span class="line">	for(int i&#x3D;l; i&lt;&#x3D;r; ++i)&#123;</span><br><span class="line">		data[i-l] &#x3D; arr[i];</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	int i&#x3D;l, j&#x3D;mid+1; &#x2F;&#x2F;i和j代表两个子区间的下标  起始位置分别为i&#x3D;l和j&#x3D;mid+1</span><br><span class="line">	</span><br><span class="line">	for(int k&#x3D;l; k&lt;&#x3D;r; ++k)&#123;</span><br><span class="line">		if(i&gt;mid)&#123;</span><br><span class="line">			arr[k] &#x3D; data[j-l];</span><br><span class="line">			j ++;</span><br><span class="line">		&#125;</span><br><span class="line">		else if(j&gt;r)&#123;</span><br><span class="line">			arr[k] &#x3D; data[i-l];</span><br><span class="line">			i ++;</span><br><span class="line">		&#125;</span><br><span class="line">		else if(data[i-l] &lt; data[j-l)&#123;</span><br><span class="line">			arr[k] &#x3D; data[i-l];</span><br><span class="line">			i ++;</span><br><span class="line">		&#125;</span><br><span class="line">		else&#123;</span><br><span class="line">			arr[k] &#x3D; data[j-l];</span><br><span class="line">			j ++;	</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	delete[] data;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/数据结构//" class="article-tag-list-link color5">数据结构</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/03/11/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8Fmerge%E5%87%BD%E6%95%B0%E7%9A%84%E4%B8%A4%E7%A7%8D%E5%86%99%E6%B3%95/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
   
     <article id="post-python 记录欧几里得算法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -440,7 +269,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输出实例：</span><br><span class="line">		123456789 2</span><br><span class="line">		1345321898 3</span><br></pre></td></tr></table></figure>
 
 <p><font size=4 face="Course New" font=black>代码实现：</font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;string&gt;</span><br><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">bool check(string s)&#123;</span><br><span class="line">	for(int i&#x3D;0; i&lt;s.length(); ++i)&#123;</span><br><span class="line">		for(int j&#x3D;i; j&lt;s.length()-1-i; ++j)&#123;</span><br><span class="line">			if(s[j+1]&#x3D;&#x3D;s[j]+1 || s[j]&#x3D;&#x3D;s[j+1])&#123;</span><br><span class="line">				continue;</span><br><span class="line">			&#125;</span><br><span class="line">			else&#123;</span><br><span class="line">				return false;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return true;</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">int howManySub(string s, int k)&#123;</span><br><span class="line">	string t;</span><br><span class="line">	int cnt &#x3D; 0;</span><br><span class="line">	for(int i&#x3D;0; i&lt;&#x3D;s.length()-k; ++i)&#123;</span><br><span class="line">		t &#x3D; s.substr(i,k);</span><br><span class="line">		sort(t.begin(), t.end());</span><br><span class="line">		if(check(t)&#x3D;&#x3D;true)&#123;</span><br><span class="line">			cnt ++;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return cnt;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">	string s;cin&gt;&gt;s;</span><br><span class="line">	int k;cin&gt;&gt;k;</span><br><span class="line">	cout&lt;&lt;howManySub(s,k);</span><br><span class="line">	return 0;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">check</span><span class="params">(<span class="built_in">string</span> s)</span></span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;s.length(); ++i)&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=i; j&lt;s.length()<span class="number">-1</span>-i; ++j)&#123;</span><br><span class="line">			<span class="keyword">if</span>(s[j+<span class="number">1</span>]==s[j]+<span class="number">1</span> || s[j]==s[j+<span class="number">1</span>])&#123;</span><br><span class="line">				<span class="keyword">continue</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span>&#123;</span><br><span class="line">				<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">howManySub</span><span class="params">(<span class="built_in">string</span> s, <span class="keyword">int</span> k)</span></span>&#123;</span><br><span class="line">	<span class="built_in">string</span> t;</span><br><span class="line">	<span class="keyword">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;=s.length()-k; ++i)&#123;</span><br><span class="line">		t = s.substr(i,k);</span><br><span class="line">		sort(t.begin(), t.end());</span><br><span class="line">		<span class="keyword">if</span>(check(t)==<span class="literal">true</span>)&#123;</span><br><span class="line">			cnt ++;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> cnt;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="built_in">string</span> s;<span class="built_in">cin</span>&gt;&gt;s;</span><br><span class="line">	<span class="keyword">int</span> k;<span class="built_in">cin</span>&gt;&gt;k;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;howManySub(s,k);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
 
       
 
@@ -538,17 +367,17 @@
 综上，只需要使用<font color=red>ulimit -c unlimited</font>就可打开core文件了，注意需要在root用户下执行此命令，否则权限不足执行失败。而且这样的设置是一次性的，下次重启后就需要重新设置。一劳永逸的办法就是在配置文件写入上述的设置。此步设置好之后，当你的可执行程序再次出现core dumped的情况时，就会在当前目录下出现一个core文件。如下：
 
 <p><img src="https://img-blog.csdnimg.cn/2019011320495625.png" alt="在这里插入图片描述"><br><font size=5 face="Courier New" color=blue>三.设置core文件的生成路径以及core文件的名称格式。</font><font size=4 face="Courier New" ><br>（1）设置进程的pid作为core文件扩展名，这样的好处是当core文有很多时，可以区分是哪一个可执行程序产生的core文件，方便查找。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">1:添加pid作为扩展名，生成的core文件名称为core.pid</span><br><span class="line">0:不添加pid作为扩展名，生成的core文件名称为core</span><br><span class="line">	</span><br><span class="line">&#x2F;&#x2F;修改方法</span><br><span class="line">1.修改 &#x2F;proc&#x2F;sys&#x2F;kernel&#x2F;core_uses_pid 文件内容为: 1</span><br><span class="line">2.在终端执行如下两条命令的任意一条</span><br><span class="line">echo &quot;1&quot; &gt; &#x2F;proc&#x2F;sys&#x2F;kernel&#x2F;core_uses_pid</span><br><span class="line">sysctl -w kernel.core_uses_pid&#x3D;1 kernel.core_uses_pid &#x3D; 1</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>:添加pid作为扩展名，生成的core文件名称为core.pid</span><br><span class="line"><span class="number">0</span>:不添加pid作为扩展名，生成的core文件名称为core</span><br><span class="line">	</span><br><span class="line"><span class="comment">//修改方法</span></span><br><span class="line"><span class="number">1.</span>修改 /proc/sys/kernel/core_uses_pid 文件内容为: <span class="number">1</span></span><br><span class="line"><span class="number">2.</span>在终端执行如下两条命令的任意一条</span><br><span class="line">echo <span class="string">&quot;1&quot;</span> &gt; /proc/sys/kernel/core_uses_pid</span><br><span class="line">sysctl -w kernel.core_uses_pid=<span class="number">1</span> kernel.core_uses_pid = <span class="number">1</span></span><br></pre></td></tr></table></figure>
 <p><font size=4 face="Courier New" >(2)修改core文件的文件格式以及保存路径</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">执行如下两条命令中的一条即可</span><br><span class="line">1.echo &quot;&#x2F;corefile&#x2F;core-%e-%p-%t&quot; &gt; &#x2F;proc&#x2F;sys&#x2F;kernel&#x2F;core_pattern</span><br><span class="line">标识生成的core文件名格式是 core-%e-%p-%t，保存路径为&#x2F;corefile</span><br><span class="line">sysctl -w kernel.core_pattern&#x3D;&#x2F;corefile&#x2F;core-%e-%p-%t kernel.core_pattern &#x3D; &#x2F;corefile&#x2F;core-%e-%p-%t</span><br></pre></td></tr></table></figure>
 <p><font size=4 face="Courier New" >以下是参数列表:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">%p - insert pid into filename 添加pid(进程id)</span><br><span class="line">%u - insert current uid into filename 添加当前uid(用户id)</span><br><span class="line">%g - insert current gid into filename 添加当前gid(用户组id)</span><br><span class="line">%s - insert signal that caused the coredump into the filename 添加导致产生core的信号</span><br><span class="line">%t - insert UNIX time that the coredump occurred into filename 添加core文件生成时的unix时间</span><br><span class="line">%h - insert hostname where the coredump happened into filename 添加主机名</span><br><span class="line">%e - insert coredumping executable name into filename 添加导致产生core的命令名</span><br></pre></td></tr></table></figure>
 <p><font size=5 face="Courier New" color=blue>三.使用core文件进行简单debug。</font><br><font size=4 face="Courier New">测试程序一：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int main()&#123;</span><br><span class="line">	int *p;</span><br><span class="line">	*p &#x3D; 20;&#x2F;&#x2F;使用野指针</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> *p;</span><br><span class="line">	*p = <span class="number">20</span>;<span class="comment">//使用野指针</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <font size=4 face="Courier New">
 
 <p><img src="https://img-blog.csdnimg.cn/20190113210449965.png" alt="在这里插入图片描述"><br><font size=4 face="Courier New">对于上述这样的一个小程序很容易定位到错误的源头，但是对于一个成百上千行的代码来说定位一个错误就不容易了尤其是在运行之后发生的bug，但是使用core文件却很容易定位。<br>调试上述文件生成的core文件:<br><img src="https://img-blog.csdnimg.cn/20190113211011935.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><font size=4 face="Courier New">通过core文件可以清楚的定位到错误的根源，可见core文件的强大之处。</font><br><font size=4 face="Courier New">测试程序二：</font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">test1.cpp</span><br><span class="line">#include &lt;iosreram&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">	cout&lt;&lt;(10 &#x2F; 0)&lt;&lt;endl;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">test1.cpp</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iosreram&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;(<span class="number">10</span> / <span class="number">0</span>)&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><img src="https://img-blog.csdnimg.cn/20190113211334676.png" alt="在这里插入图片描述"><br><font size=4 face="Courier New">使用test1生成的core文件定位错误：<br><img src="https://img-blog.csdnimg.cn/20190113211630821.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
 
       
@@ -564,7 +393,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/linux//" class="article-tag-list-link color1">linux</a>
+        			<a href="/categories/Linux//" class="article-tag-list-link color1">Linux</a>
         		</li>
       		
 		</ul>
@@ -634,7 +463,7 @@
 <p><font size=5 face="Courier New"><font color=blue>(1)make_heap</font><br><img src="https://img-blog.csdnimg.cn/201901061413591.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>在[fisrt,last)左闭右开的区间构建一个堆。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; vec&#123;<span class="number">2</span>,<span class="number">1</span>,<span class="number">4</span>,<span class="number">7</span>,<span class="number">3</span>,<span class="number">8</span>&#125;;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;make_heap()之前：&quot;</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">auto</span> i:vec)&#123;</span><br><span class="line">		<span class="built_in">cout</span>&lt;&lt;i&lt;&lt;<span class="string">&quot; &quot;</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	</span><br><span class="line">	make_heap(vec.begin(),vec.end());</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;make_heap()之后：&quot;</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">auto</span> i:vec)&#123;</span><br><span class="line">		<span class="built_in">cout</span>&lt;&lt;i&lt;&lt;<span class="string">&quot; &quot;</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><font size=5 face="Courier New">执行结果:</font><br><img src="https://img-blog.csdnimg.cn/20190106143815616.png" alt="在这里插入图片描述"></p>
-<p><font size=5 face="Courier New"><font color=blue>(2)push_heap()</font></font><br><img src="https://img-blog.csdnimg.cn/20190106142744847.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><font size=5 face="Courier New">push_heap()在执行前必须向支持随机访问的容器里添加进去一个元素，如vector&lt; T &gt;的push_back()操作。<br>在此之前,[first,last-1)是一个已经做好的堆，添加元素之后，堆[first,last)这个区间做堆，使用push_heap()即可。</p>
+<p><font size=5 face="Courier New"><font color=blue>(2)push_heap()</font></font><br><img src="https://img-blog.csdnimg.cn/20190106142744847.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><font size=5 face="Courier New">push_heap()在执行前必须向支持随机访问的容器里添加进去一个元素，如vector&lt; T &gt;的push_back()操作。<br>在此之前,[first,last-1)是一个已经做好的堆，添加元素之后，堆[first,last)这个区间做堆，使用push_heap()即可。</font></p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; vec&#123;<span class="number">3</span>,<span class="number">5</span>,<span class="number">1</span>,<span class="number">2</span>&#125;;</span><br><span class="line"></span><br><span class="line">	make_heap(vec.bein(), vec.end());</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//此时vec容器元素之间的关系是一个堆</span></span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;make_heap之后:&quot;</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">auto</span> i:vec)&#123;</span><br><span class="line">		<span class="built_in">cout</span>&lt;&lt;i&lt;&lt;<span class="string">&quot; &quot;</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	vec.push_back(<span class="number">4</span>);</span><br><span class="line">	push_heap(vec.begin(), vec.end());</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;push_heap之后:&quot;</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">auto</span> i:vec)&#123;</span><br><span class="line">		<span class="built_in">cout</span>&lt;&lt;i&lt;&lt;<span class="string">&quot; &quot;</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><font size=5 face="Courier New">执行结果:</font></p>
 <p><img src="https://img-blog.csdnimg.cn/20190106144525522.png" alt="在这里插入图片描述"><br><font size=5 face="Courier New" color=blue>(3)pop_heap()</font><br><img src="https://img-blog.csdnimg.cn/20190106152138311.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><font size=5 face="Courier New">pop_heap()操作并不是真的将堆顶元素从容器中弹出，而是将容器最后一个元素交换到栈顶，进行shiftDown(1)操作，维持堆的性质。之后可以使用back()获取原堆顶元素，或者使用pop_bakc()操作将原堆顶元素从容器中删除。这里堆从操作可以查看这篇博客：<a target="_blank" rel="noopener" href="https://blog.csdn.net/ASJBFJSB/article/details/84075322">二叉堆的实现</a><br></font><br><font size=5 face="Courier New">代码测试：</font></p>
@@ -1044,6 +873,187 @@
 
 
   
+    <article id="post-C++11-lambda表达式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/12/31/C++11-lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/">C++11-lambda表达式</a>
+    </h1>
+  
+
+        <!--显示阅读次数-->
+        
+        <!--显示阅读次数完毕-->
+        
+        <a href="/2018/12/31/C++11-lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="archive-article-date">
+  	<time datetime="2018-12-31T02:52:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-31</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+      
+        <a id="more"></a>
+
+<p><font size=5 face="Courier New">在C++11以后，形如这样的语法。<br><font color=red size=4>[capture]</font><font color=red size=4>(parameters)mutable -&gt;return-type</font><font color=red size=4>{statment}</font>称为一个lambda表达式，表达一个匿名函数。从编程的角度上看，lambda是一种函数式编程。</font></p>
+<p><font size=5 face="Courier New"><strong>分析语法:</strong><br>1.capture,可以通过值传递或者引用传递的方式给匿名函数提供访问父作用域上下文的变量。特殊的两种情况：<font color=red>[=]和[&amp;]</font>分别表示，以值传递的形式捕捉所有父作用域的变量和以引用传递的形式捕捉所有父作用域的变量。<br>2.（）参数列表形如一般的函数的参数列表。没有参数时可以忽略不写。<br>3.<font color=blue>可选择项,mutable,-&gt;return type</font>,分别表示去除匿名函数的常量性，-&gt;return type是匿名函数的返回值类型，可以忽略由编译器自动推导。添加可选项必须在此之前增加()。<br>4.{statment}函数本体。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;thread&gt;</span><br><span class="line">#include &lt;iostream&gt;</span><br><span class="line">int main()&#123;</span><br><span class="line">	[]&#123;&#125;；&#x2F;&#x2F;最简单的表达方式</span><br><span class="line">	int a&#x3D;2,b&#x3D;2;</span><br><span class="line">	[&#x3D;]()-&gt;int&#123;return a+b;&#125;;</span><br><span class="line">	[a]()&#123;cout&lt;&lt;a&lt;&lt;endl;&#125;; &#x2F;&#x2F;[var]  以传值的方式捕获</span><br><span class="line">	[&amp;b]()&#123;++b;cout&lt;&lt;b&lt;&lt;endl;&#125;&#x2F;&#x2F; [&amp;b]  以传递引用的方式捕获</span><br><span class="line"></span><br><span class="line">	&#x2F;&#x2F;可以使用匿名函数与线程结合起来</span><br><span class="line">	thread t1([]&#123;cout&lt;&lt;&quot;hello world!&quot;&lt;&lt;endl;&#125;);</span><br><span class="line">	t1.join();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier New">使用mutable关键字的区别</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int main()&#123;</span><br><span class="line">	int id &#x3D; 10;</span><br><span class="line">	auto f &#x3D; [id]()mutable&#123;</span><br><span class="line">		++ id;</span><br><span class="line">		cout&lt;&lt;&quot;id:&quot;&lt;&lt;id&lt;&lt;endl;</span><br><span class="line">	&#125;;</span><br><span class="line">	f();</span><br><span class="line">	cout&lt;&lt;&quot;main id:&quot;&lt;&lt;id&lt;&lt;endl;</span><br><span class="line">	f();</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>（1）增加mutable关键字<br><img src="https://img-blog.csdnimg.cn/20181230191217275.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>（2）不增加mutable关键字</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int main()&#123;</span><br><span class="line">	int id &#x3D; 10;</span><br><span class="line">	auto f &#x3D; [id]&#123;++id;cout&lt;&lt;&quot;id:&quot;&lt;&lt;id&lt;&lt;endl;&#125;;</span><br><span class="line">	f();</span><br><span class="line">	cout&lt;&lt;&quot;main id:&quot;&lt;&lt;id&lt;&lt;endl;</span><br><span class="line">	f();</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/20181230191545497.png" alt="在这里插入图片描述"><br><font size=5 face="Courier New">匿名函数与仿函数有着本质的相似处</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">&#x2F;&#x2F;对(）进行重载的函数，在调用()时与调用函数有着相似之处，但是是通过对象名称调用的</span><br><span class="line">class Functor&#123;</span><br><span class="line">public:</span><br><span class="line">	Functor(int a&#x3D;0,int b&#x3D;0):_a(a),_b(b)&#123;&#125;</span><br><span class="line">	void operato()()&#123;cout&lt;&lt;_a+_b&lt;&lt;endl;&#125;</span><br><span class="line">private:</span><br><span class="line">	int _a;</span><br><span class="line">	int _b;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">	Functor sum(10,20);</span><br><span class="line">	sum();</span><br><span class="line"></span><br><span class="line">	auto sum1 &#x3D; [](int a,int b)&#123;cout&lt;&lt;a+b&lt;&lt;endl;&#125;;</span><br><span class="line">	sum1(20,20);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier New">通过上述例子，除去在语法层面上的不同，仿函数和lambda表达式都是通过捕捉一些变量作为初始值，之后进行传递参数并进行计算。在形式上，仿函数通过构造函数构造进行初始化，而lambda表达通过捕捉列表[capture]获取初始值。仿函数通过对operator()重载函数的参数列表进行传参，而lambda表达式通过(parameters)参数列表进行传递参数。最后，仿函数的执行体在operator()函数体中进行运算，而lambda表达式在{}进行运算。<br><font size=5     ></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/c-c-c-11//" class="article-tag-list-link color2">c/c++ c++11</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/12/31/C++11-lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+    <article id="post-linux下检测内存泄漏" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/12/27/linux%E4%B8%8B%E6%A3%80%E6%B5%8B%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/">linux下检测内存泄漏</a>
+    </h1>
+  
+
+        <!--显示阅读次数-->
+        
+        <!--显示阅读次数完毕-->
+        
+        <a href="/2018/12/27/linux%E4%B8%8B%E6%A3%80%E6%B5%8B%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/" class="archive-article-date">
+  	<time datetime="2018-12-27T09:28:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-27</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+      
+        <a id="more"></a>
+
+<p><font size=5 face="Courier New">使用开源工具<font color=red>valgrind</font></font><br><a target="_blank" rel="noopener" href="http://valgrind.org/downloads/old.html">下载请点击，发行版本链接</a></p>
+<p><font size=5 face="Courier New">安装步骤：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1.解压文件  tar -jxvf valgrind-x.x.x.tar.bz2</span><br><span class="line">2.进入文件目录  cd  valgrind-x.x.x</span><br><span class="line">3.在目录下执行 .&#x2F;configure</span><br><span class="line">4.使用make进行自动化编译  make</span><br><span class="line">5.安装 make install</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier new"><font color=purple>ubuntu</font>用户可以使用：<code>sudo apt-get install valgrind</code>进行安装</p>
+<p><font size=5 face="Courier new">在C/C++程序中，使用指针虽然是非常高效的，但是伴随而来的一旦使用方法不得当就会造成大量的内存碎片。而C++程序对（heap memory）的申请和释放都由程序员手工完成的。但是在大型程序中，一旦出现内存泄漏的问题也难以通过一行一行的逻辑判断进行查找，这是十分痛苦的。当然智能指针(smart pointer)的出现方便管理堆内存，有兴趣的朋友们可以下载boost库的源码学习智能指针是怎么管理堆内存的以及它的特性，但是今天我们讨论的重点是如何使用开源工具检测内存泄漏。<br><a target="_blank" rel="noopener" href="https://www.boost.org/">boost c++库链接</a></p>
+<p><font size=5 face="Courier new">下面使用valgrind检测常见的内存错误，首先对常见的内存错误进行分类</font><br><font size=4 face="Courier new" color=red>1.使用野指针<br>2.重复释放同一块内存<br>3.new和delete或malloc和free没有配对使用，造成内存泄漏<br>4.使用未进行初始化的对内存</font></p>
+<p><font size=5 face="Courier New">1.使用野指针</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">test.cpp</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> *pint = <span class="keyword">new</span> <span class="keyword">int</span>;<span class="comment">//动态申请内存</span></span><br><span class="line">	*pint = <span class="number">30</span>;</span><br><span class="line">	<span class="keyword">delete</span> pint;<span class="comment">//释放内存</span></span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;*pint&lt;&lt;<span class="built_in">endl</span>;<span class="comment">//使用野指针</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">g++ test.cpp -g -o test</span><br><span class="line">valgrind --tool=memcheck ./test进行检测</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/20181227171105788.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><font size=5 face="Courier New">2.重复释放内存</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span>* pint = <span class="keyword">new</span> <span class="keyword">int</span>;</span><br><span class="line">	<span class="keyword">delete</span> pint;</span><br><span class="line">	<span class="keyword">delete</span> pint;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">g++ test.cpp -g -o test</span><br><span class="line">valgrind --tool=memcheck ./test进行检测</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/20181227171748324.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><font size=5 face="Courier New">3.new和delete或malloc和free没有配对使用，造成内存泄漏</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">test.cpp</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span>* pint = <span class="keyword">new</span> <span class="keyword">int</span>;</span><br><span class="line">	*pint = <span class="number">30</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">g++ test.cpp -o test -g</span><br><span class="line">valgrind --tool=memcheck ./test</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/20181227172330516.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><font size=5 face="Courier New">4.使用未进行初始化的对内存</font><br><img src="https://img-blog.csdnimg.cn/20181227172743656.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Linux//" class="article-tag-list-link color1">Linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/12/27/linux%E4%B8%8B%E6%A3%80%E6%B5%8B%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/18/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><a class="page-number" href="/page/18/">18</a><span class="page-number current">19</span><a class="page-number" href="/page/20/">20</a><a class="page-number" href="/page/21/">21</a><span class="space">&hellip;</span><a class="page-number" href="/page/30/">30</a><a class="extend next" rel="next" href="/page/20/">下一页</a>
@@ -1139,11 +1149,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">动态规划</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">1024程序员节</a>
+                <a href="javascript:void(0)" class="js-tag color3">dp</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1151,7 +1157,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">数据结构 算法</a>
+                <a href="javascript:void(0)" class="js-tag color3">查找</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1163,11 +1169,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">c语言</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color4">STL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1175,7 +1177,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">linux系统编程</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">linux命令</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1191,14 +1197,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">c</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">c++11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">protobuf</a>
               </li>
              
@@ -1211,7 +1209,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color2">树</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">栈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">二分</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">堆</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1223,11 +1233,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">堆</a>
+                <a href="javascript:void(0)" class="js-tag color2">c</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">回溯法</a>
+                <a href="javascript:void(0)" class="js-tag color3">排序</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1235,11 +1245,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">最短路径</a>
+                <a href="javascript:void(0)" class="js-tag color4">回溯法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">进程通信</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">单链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">计算机组成</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">最短路径</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">单链表 排序</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1251,15 +1277,31 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">排序</a>
+                <a href="javascript:void(0)" class="js-tag color5">Linux系统编程</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">1024程序员节 c++</a>
+                <a href="javascript:void(0)" class="js-tag color1">c++11</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">动态规划 算法 leetcode</a>
+                <a href="javascript:void(0)" class="js-tag color5">而擦函数</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">图论</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">稀疏矩阵</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">双链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">树 图</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1267,11 +1309,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">递归</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">c++11算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">计算机组成</a>
+                <a href="javascript:void(0)" class="js-tag color5">堆栈调用</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1283,7 +1329,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">递归</a>
+                <a href="javascript:void(0)" class="js-tag color5">进程基础</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">图的存储结构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">哈希</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">剑指offer</a>
               </li>
             
             <div class="clearfix"></div>

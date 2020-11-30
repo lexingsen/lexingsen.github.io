@@ -64,7 +64,7 @@
 			</ul>
 			</nav>
 			<nav>
-			总文章数 300
+			总文章数 296
 			</nav>
 		<nav class="header-smart-menu">
     		
@@ -147,14 +147,14 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-C++11新特性--lambda表达式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-C++11-智能指针" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/31/C++11%E6%96%B0%E7%89%B9%E6%80%A7--lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/">C++11新特性--lambda表达式</a>
+      <a class="article-title" href="/2018/12/02/C++11-%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/">C++11-智能指针</a>
     </h1>
   
 
@@ -162,188 +162,7 @@
         
         <!--显示阅读次数完毕-->
         
-        <a href="/2018/12/31/C++11%E6%96%B0%E7%89%B9%E6%80%A7--lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="archive-article-date">
-  	<time datetime="2018-12-31T02:52:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-31</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-      
-      
-        <a id="more"></a>
-
-<p><font size=5 face="Courier New">在C++11以后，形如这样的语法。<br><font color=red size=4>[capture]</font><font color=red size=4>(parameters)mutable -&gt;return-type</font><font color=red size=4>{statment}</font>称为一个lambda表达式，表达一个匿名函数。从编程的角度上看，lambda是一种函数式编程。</font></p>
-<p><font size=5 face="Courier New"><strong>分析语法:</strong><br>1.capture,可以通过值传递或者引用传递的方式给匿名函数提供访问父作用域上下文的变量。特殊的两种情况：<font color=red>[=]和[&amp;]</font>分别表示，以值传递的形式捕捉所有父作用域的变量和以引用传递的形式捕捉所有父作用域的变量。<br>2.（）参数列表形如一般的函数的参数列表。没有参数时可以忽略不写。<br>3.<font color=blue>可选择项,mutable,-&gt;return type</font>,分别表示去除匿名函数的常量性，-&gt;return type是匿名函数的返回值类型，可以忽略由编译器自动推导。添加可选项必须在此之前增加()。<br>4.{statment}函数本体。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;thread&gt;</span><br><span class="line">#include &lt;iostream&gt;</span><br><span class="line">int main()&#123;</span><br><span class="line">	[]&#123;&#125;；&#x2F;&#x2F;最简单的表达方式</span><br><span class="line">	int a&#x3D;2,b&#x3D;2;</span><br><span class="line">	[&#x3D;]()-&gt;int&#123;return a+b;&#125;;</span><br><span class="line">	[a]()&#123;cout&lt;&lt;a&lt;&lt;endl;&#125;; &#x2F;&#x2F;[var]  以传值的方式捕获</span><br><span class="line">	[&amp;b]()&#123;++b;cout&lt;&lt;b&lt;&lt;endl;&#125;&#x2F;&#x2F; [&amp;b]  以传递引用的方式捕获</span><br><span class="line"></span><br><span class="line">	&#x2F;&#x2F;可以使用匿名函数与线程结合起来</span><br><span class="line">	thread t1([]&#123;cout&lt;&lt;&quot;hello world!&quot;&lt;&lt;endl;&#125;);</span><br><span class="line">	t1.join();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><font size=5 face="Courier New">使用mutable关键字的区别</font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int main()&#123;</span><br><span class="line">	int id &#x3D; 10;</span><br><span class="line">	auto f &#x3D; [id]()mutable&#123;</span><br><span class="line">		++ id;</span><br><span class="line">		cout&lt;&lt;&quot;id:&quot;&lt;&lt;id&lt;&lt;endl;</span><br><span class="line">	&#125;;</span><br><span class="line">	f();</span><br><span class="line">	cout&lt;&lt;&quot;main id:&quot;&lt;&lt;id&lt;&lt;endl;</span><br><span class="line">	f();</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>（1）增加mutable关键字<br><img src="https://img-blog.csdnimg.cn/20181230191217275.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>（2）不增加mutable关键字</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int main()&#123;</span><br><span class="line">	int id &#x3D; 10;</span><br><span class="line">	auto f &#x3D; [id]&#123;++id;cout&lt;&lt;&quot;id:&quot;&lt;&lt;id&lt;&lt;endl;&#125;;</span><br><span class="line">	f();</span><br><span class="line">	cout&lt;&lt;&quot;main id:&quot;&lt;&lt;id&lt;&lt;endl;</span><br><span class="line">	f();</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdnimg.cn/20181230191545497.png" alt="在这里插入图片描述"><br><font size=5 face="Courier New">匿名函数与仿函数有着本质的相似处</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">&#x2F;&#x2F;对(）进行重载的函数，在调用()时与调用函数有着相似之处，但是是通过对象名称调用的</span><br><span class="line">class Functor&#123;</span><br><span class="line">public:</span><br><span class="line">	Functor(int a&#x3D;0,int b&#x3D;0):_a(a),_b(b)&#123;&#125;</span><br><span class="line">	void operato()()&#123;cout&lt;&lt;_a+_b&lt;&lt;endl;&#125;</span><br><span class="line">private:</span><br><span class="line">	int _a;</span><br><span class="line">	int _b;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">	Functor sum(10,20);</span><br><span class="line">	sum();</span><br><span class="line"></span><br><span class="line">	auto sum1 &#x3D; [](int a,int b)&#123;cout&lt;&lt;a+b&lt;&lt;endl;&#125;;</span><br><span class="line">	sum1(20,20);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><font size=5 face="Courier New">通过上述例子，除去在语法层面上的不同，仿函数和lambda表达式都是通过捕捉一些变量作为初始值，之后进行传递参数并进行计算。在形式上，仿函数通过构造函数构造进行初始化，而lambda表达通过捕捉列表[capture]获取初始值。仿函数通过对operator()重载函数的参数列表进行传参，而lambda表达式通过(parameters)参数列表进行传递参数。最后，仿函数的执行体在operator()函数体中进行运算，而lambda表达式在{}进行运算。<br><font size=5     ></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c-c//" class="article-tag-list-link color1">c/c++</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/12/31/C++11%E6%96%B0%E7%89%B9%E6%80%A7--lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
-    <article id="post-linux下检测内存泄漏" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/27/linux%E4%B8%8B%E6%A3%80%E6%B5%8B%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/">linux下检测内存泄漏</a>
-    </h1>
-  
-
-        <!--显示阅读次数-->
-        
-        <!--显示阅读次数完毕-->
-        
-        <a href="/2018/12/27/linux%E4%B8%8B%E6%A3%80%E6%B5%8B%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/" class="archive-article-date">
-  	<time datetime="2018-12-27T09:28:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-27</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-      
-      
-        <a id="more"></a>
-
-<p><font size=5 face="Courier New">使用开源工具<font color=red>valgrind</font></font><br><a target="_blank" rel="noopener" href="http://valgrind.org/downloads/old.html">下载请点击，发行版本链接</a></p>
-<p><font size=5 face="Courier New">安装步骤：</font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1.解压文件  tar -jxvf valgrind-x.x.x.tar.bz2</span><br><span class="line">2.进入文件目录  cd  valgrind-x.x.x</span><br><span class="line">3.在目录下执行 .&#x2F;configure</span><br><span class="line">4.使用make进行自动化编译  make</span><br><span class="line">5.安装 make install</span><br></pre></td></tr></table></figure>
-<p><font size=5 face="Courier new"><font color=purple>ubuntu</font>用户可以使用：<code>sudo apt-get install valgrind</code>进行安装</p>
-<p><font size=5 face="Courier new">在C/C++程序中，使用指针虽然是非常高效的，但是伴随而来的一旦使用方法不得当就会造成大量的内存碎片。而C++程序对（heap memory）的申请和释放都由程序员手工完成的。但是在大型程序中，一旦出现内存泄漏的问题也难以通过一行一行的逻辑判断进行查找，这是十分痛苦的。当然智能指针(smart pointer)的出现方便管理堆内存，有兴趣的朋友们可以下载boost库的源码学习智能指针是怎么管理堆内存的以及它的特性，但是今天我们讨论的重点是如何使用开源工具检测内存泄漏。<br><a target="_blank" rel="noopener" href="https://www.boost.org/">boost c++库链接</a></p>
-<p><font size=5 face="Courier new">下面使用valgrind检测常见的内存错误，首先对常见的内存错误进行分类</font><br><font size=4 face="Courier new" color=red>1.使用野指针<br>2.重复释放同一块内存<br>3.new和delete或malloc和free没有配对使用，造成内存泄漏<br>4.使用未进行初始化的对内存</font></p>
-<p><font size=5 face="Courier New">1.使用野指针</font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">test.cpp</span><br><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">	int *pint &#x3D; new int;&#x2F;&#x2F;动态申请内存</span><br><span class="line">	*pint &#x3D; 30;</span><br><span class="line">	delete pint;&#x2F;&#x2F;释放内存</span><br><span class="line">	cout&lt;&lt;*pint&lt;&lt;endl;&#x2F;&#x2F;使用野指针</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br><span class="line">g++ test.cpp -g -o test</span><br><span class="line">valgrind --tool&#x3D;memcheck .&#x2F;test进行检测</span><br></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdnimg.cn/20181227171105788.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><font size=5 face="Courier New">2.重复释放内存</font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">	int* pint &#x3D; new int;</span><br><span class="line">	delete pint;</span><br><span class="line">	delete pint;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br><span class="line">g++ test.cpp -g -o test</span><br><span class="line">valgrind --tool&#x3D;memcheck .&#x2F;test进行检测</span><br></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdnimg.cn/20181227171748324.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><font size=5 face="Courier New">3.new和delete或malloc和free没有配对使用，造成内存泄漏</font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">test.cpp</span><br><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int main()&#123;</span><br><span class="line">	int* pint &#x3D; new int;</span><br><span class="line">	*pint &#x3D; 30;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br><span class="line">g++ test.cpp -o test -g</span><br><span class="line">valgrind --tool&#x3D;memcheck .&#x2F;test</span><br></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdnimg.cn/20181227172330516.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><font size=5 face="Courier New">4.使用未进行初始化的对内存</font><br><img src="https://img-blog.csdnimg.cn/20181227172743656.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/linux//" class="article-tag-list-link color1">linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/12/27/linux%E4%B8%8B%E6%A3%80%E6%B5%8B%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
-    <article id="post-C++11新特性--智能指针" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/02/C++11%E6%96%B0%E7%89%B9%E6%80%A7--%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/">C++11新特性--智能指针</a>
-    </h1>
-  
-
-        <!--显示阅读次数-->
-        
-        <!--显示阅读次数完毕-->
-        
-        <a href="/2018/12/02/C++11%E6%96%B0%E7%89%B9%E6%80%A7--%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/" class="archive-article-date">
+        <a href="/2018/12/02/C++11-%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/" class="archive-article-date">
   	<time datetime="2018-12-02T04:10:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-02</time>
 </a>
         
@@ -359,25 +178,25 @@
 <p><font size=5 face="Courier New">C++程序员在编写代码的过程往往都会涉及到<font color=blue>堆内存</font>的开辟和释放，使用new和delete关键字。特别是内存的释放是通过程序员手动完成的，而不像栈内存只要生存周期结束即可由系统自动回收。所在在实际的编码中，如果忘记手动释放内存或因其他一些细节原因而未进行堆内存的释放，最终导致产生大量的内存释放，造成资源浪费。</p>
 <p><font size=5 face="Courier New" color=red>一些特殊的情况导致堆内存没有机会得到释放</font></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">int main()&#123;</span><br><span class="line">	int* p &#x3D; new int;</span><br><span class="line">	if(条件表达式)&#123;</span><br><span class="line">		return 0;</span><br><span class="line">	&#125;</span><br><span class="line">	delete p;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><font size=5 face="Courier New">一般将堆内存的释放安排到程序的末尾，但是像上述例子，如果程序当中一些逻辑语句满足是就退出程序，最终导致堆内存资源未得到释放。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">void fun(int* p)&#123;</span><br><span class="line">	delete p;</span><br><span class="line">	p &#x3D; NULL;</span><br><span class="line">&#125;</span><br><span class="line">int main()&#123;</span><br><span class="line">	int* p &#x3D; new int;</span><br><span class="line">	fun(p);</span><br><span class="line">	delete p;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><font size=5 face="Courier New">在上述代码中，在fun函数中已经将指针p所指向的堆内存进行释放，当fun函数调用完毕后，再次执行<font color=red>delete p</font>，此时程序会崩溃，因为p已经为NULL，指向虚拟地址空间的(void*)0是不允许被访问的内存区域，而现在要对他进行释放，显然是错误的。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">int Div(int a,int b)&#123;</span><br><span class="line">	if(b&#x3D;&#x3D;0)&#123;</span><br><span class="line">		throw &quot;div by zero condition!&quot;;</span><br><span class="line">	&#125;</span><br><span class="line">	return a&#x2F;b;</span><br><span class="line">&#125;</span><br><span class="line">int main()&#123;</span><br><span class="line">	int *p &#x3D; new int;</span><br><span class="line">	try&#123;</span><br><span class="line">		Div(10,0);</span><br><span class="line">	&#125;</span><br><span class="line">	catch(const char* meg)&#123;</span><br><span class="line">		cerr&lt;&lt;msg&lt;&lt;endl;</span><br><span class="line">	&#125;</span><br><span class="line">	delete p;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier New">一般将堆内存的释放安排到程序的末尾，但是像上述例子，如果程序当中一些逻辑语句满足是就退出程序，最终导致堆内存资源未得到释放。</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fun</span><span class="params">(<span class="keyword">int</span>* p)</span></span>&#123;</span><br><span class="line">	<span class="keyword">delete</span> p;</span><br><span class="line">	p = <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span>* p = <span class="keyword">new</span> <span class="keyword">int</span>;</span><br><span class="line">	fun(p);</span><br><span class="line">	<span class="keyword">delete</span> p;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier New">在上述代码中，在fun函数中已经将指针p所指向的堆内存进行释放，当fun函数调用完毕后，再次执行<font> color=red&gt;delete p</font>，此时程序会崩溃，因为p已经为NULL，指向虚拟地址空间的(void*)0是不允许被访问的内存区域，而现在要对他进行释放，显然是错误的。</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Div</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> b)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(b==<span class="number">0</span>)&#123;</span><br><span class="line">		<span class="keyword">throw</span> <span class="string">&quot;div by zero condition!&quot;</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> a/b;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> *p = <span class="keyword">new</span> <span class="keyword">int</span>;</span><br><span class="line">	<span class="keyword">try</span>&#123;</span><br><span class="line">		Div(<span class="number">10</span>,<span class="number">0</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">catch</span>(<span class="keyword">const</span> <span class="keyword">char</span>* meg)&#123;</span><br><span class="line">		<span class="built_in">cerr</span>&lt;&lt;msg&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">delete</span> p;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><font size=5 face="Courier New">在上述的代码中，由于在try块中捕获到了异常，直接执行catch中的语句，而未进行堆内存的释放，最终也导致了内存泄漏。</p>
 <p><font size=5 face="Courier New" color=red>综上的三个例子，对于C++使用堆内存资源并造成内存泄漏的几率还是非常大的，即使你非常小心仔细的处理每一个可能会被泄漏的堆内存，也难免会出现一些问题。这无疑要求C++程序员对于对内存的使用要求之高，而<font color=blue>智能指针</font>的诞生解放了C++程序员对于堆内存的管理。</font></p>
 <p><font size=6 face="Courier New" color=black>智能指针</font></p>
 <p><font size=5 face="Courier New">智能指针是一个类，它将<font color=red>裸指针(带*的指针)</font>进行了封装，实现的指针的自动释放，它的高明之处就在于程序员只需要一次性的设计出一个具有良好功能的智能指针类，用它实例化出来的对象会自动对对象内存的堆资源进行管理，而不需要程序员去干涉，它自己就可以很好的完成对堆内存的管理。</p>
 <p><font size=5 face="Courier New" color=red>使用智能指针的前提是利用了当栈对象的生存周期结束时，会自动调用析构函数，来进行对对象的销毁。RAII技术。智能指针不能再堆上创建。</font></p>
-<p><font size=5 face="Courier New" color=red>设计智能指针的类模板</font><br><font size=4 face="Courier New">需要解决的问题：<br>（1）指针可以做的事情，智能指针也必须可以做。需要对<code>*</code>，<code>-&gt;</code>运算符进行重载。<br>（2）<code>*</code>运算符需返回引用，因为<code>*</code>可以连续使用。<br>（3）<code>*</code>和<code>-&gt;</code>的重载函数是没有形式参数的。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">template &lt;typename T&gt;</span><br><span class="line">class SmartPtr&#123;</span><br><span class="line">public:</span><br><span class="line">	SmartPtr(T* ptr&#x3D;NULL):_ptr(ptr)&#123;&#125;</span><br><span class="line">	~SmartPtr()&#123;delete _ptr;_ptr&#x3D;NULL;&#125;</span><br><span class="line">	T&amp; operator*()&#123;</span><br><span class="line">		return *_ptr;</span><br><span class="line">	&#125;</span><br><span class="line">	const T&amp; operator*() const&#123;</span><br><span class="line">		return *_ptr;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	T* operator-&gt;()&#123;</span><br><span class="line">		return _ptr;</span><br><span class="line">	&#125;</span><br><span class="line">	const T* operator-&gt;()const&#123;</span><br><span class="line">		return _ptr;</span><br><span class="line">	&#125;	</span><br><span class="line">private:</span><br><span class="line">	T* _ptr;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">	SmartPtr&lt;int&gt; p(new int);</span><br><span class="line">	*p &#x3D; 20;</span><br><span class="line">	cout&lt;&lt;&quot;*p&#x3D;&quot;&lt;&lt;*p&lt;&lt;endl;	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier New" color=red>设计智能指针的类模板</font><br><font size=4 face="Courier New">需要解决的问题：</font><br>（1）指针可以做的事情，智能指针也必须可以做。需要对<code>*</code>，<code>-&gt;</code>运算符进行重载。<br>（2）<code>*</code>运算符需返回引用，因为<code>*</code>可以连续使用。<br>（3）<code>*</code>和<code>-&gt;</code>的重载函数是没有形式参数的。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SmartPtr</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	SmartPtr(T* ptr=<span class="literal">NULL</span>):_ptr(ptr)&#123;&#125;</span><br><span class="line">	~SmartPtr()&#123;<span class="keyword">delete</span> _ptr;_ptr=<span class="literal">NULL</span>;&#125;</span><br><span class="line">	T&amp; <span class="keyword">operator</span>*()&#123;</span><br><span class="line">		<span class="keyword">return</span> *_ptr;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">const</span> T&amp; <span class="keyword">operator</span>*() <span class="keyword">const</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> *_ptr;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	T* <span class="keyword">operator</span>-&gt;()&#123;</span><br><span class="line">		<span class="keyword">return</span> _ptr;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">const</span> T* <span class="keyword">operator</span>-&gt;()<span class="keyword">const</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> _ptr;</span><br><span class="line">	&#125;	</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	T* _ptr;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="function">SmartPtr&lt;<span class="keyword">int</span>&gt; <span class="title">p</span><span class="params">(<span class="keyword">new</span> <span class="keyword">int</span>)</span></span>;</span><br><span class="line">	*p = <span class="number">20</span>;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;*p=&quot;</span>&lt;&lt;*p&lt;&lt;<span class="built_in">endl</span>;	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><img src="https://img-blog.csdnimg.cn/20181202102040487.png" alt="在这里插入图片描述"><br><font size=5 face="Courier New" color=red>智能指针的浅拷贝问题</font></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">int main()&#123;</span><br><span class="line">	SmartPtr&lt;int&gt; p(new int);</span><br><span class="line">	*p &#x3D; 20;</span><br><span class="line">	SmartPtr&lt;int&gt; p1(p);</span><br><span class="line">	&#x2F;&#x2F;程序意图使得p和p1指向同一块堆内存 new int</span><br><span class="line">	cout&lt;&lt;&quot;*p&#x3D;&quot;&lt;&lt;*p&lt;&lt;endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><font size=5 face="Courier New">然而执行结果出错，在linux直接检测出来了内存泄漏</font><br><img src="https://img-blog.csdnimg.cn/20181202102620551.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><font size=5 face="Courier New" color=red>错误的原因</font><br><font size=5 face="Courier New">两个智能指针对象中的_ptr指向了堆内存的同一块内存区域，但是p1对象析构时释放了该堆内存，而对象p析构时又对堆内存进行进行了释放。然而此时堆内存已经由上一个对象p1进行了释放，所以导致出错。</p>
 <p><font size=5 face="Courier New" color=red>解决智能指针浅拷贝的问题</font><br><font size=5 face="Courier New"><font color=blue>引用计数：引用计数实际上就是为了解决这种浅拷贝问题诞生，每当对资源（堆内存）引用一次就对计数器+1，每当删除一次，就对计数器-1,直到当资源的引用计数为0时，就证明没有对象对它进行引用了，此时调用析构函数对资源进行释放。</font></p>
 <p><font size=5 face="Courier New" color=red>管理资源的引用计数</font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;资源的引用计数表</span><br><span class="line">calss resCountMap&#123;</span><br><span class="line">public:</span><br><span class="line">	&#x2F;&#x2F;增加资源的引用计数</span><br><span class="line">	void addRef(void* ptr)&#123;</span><br><span class="line">		_resCntMap[ptr] +&#x3D; 1;&#x2F;&#x2F;要考虑线程安全  加锁</span><br><span class="line">	&#125;</span><br><span class="line">	&#x2F;&#x2F;减少资源的引用计数</span><br><span class="line">	void delRef(void* ptr)&#123;</span><br><span class="line">		&#x2F;&#x2F;要考虑线程安全  加锁</span><br><span class="line">		if(_resCntMap[ptr]&#x3D;&#x3D;0)</span><br><span class="line">			_resCntMap.erase(ptr);</span><br><span class="line">		else</span><br><span class="line">			_resCntMap[ptr] -&#x3D; 1;</span><br><span class="line">	&#125;</span><br><span class="line">	&#x2F;&#x2F;获取资源的引用计数</span><br><span class="line">	int getRef(void* ptr)&#123;</span><br><span class="line">		return _resCntMap[ptr];</span><br><span class="line">	&#125;</span><br><span class="line">private:</span><br><span class="line">	map&lt;void*,int&gt; _resCntMap;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//资源的引用计数表</span></span><br><span class="line">calss resCountMap&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="comment">//增加资源的引用计数</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">addRef</span><span class="params">(<span class="keyword">void</span>* ptr)</span></span>&#123;</span><br><span class="line">		_resCntMap[ptr] += <span class="number">1</span>;<span class="comment">//要考虑线程安全  加锁</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//减少资源的引用计数</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">delRef</span><span class="params">(<span class="keyword">void</span>* ptr)</span></span>&#123;</span><br><span class="line">		<span class="comment">//要考虑线程安全  加锁</span></span><br><span class="line">		<span class="keyword">if</span>(_resCntMap[ptr]==<span class="number">0</span>)</span><br><span class="line">			_resCntMap.erase(ptr);</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			_resCntMap[ptr] -= <span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//获取资源的引用计数</span></span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">getRef</span><span class="params">(<span class="keyword">void</span>* ptr)</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> _resCntMap[ptr];</span><br><span class="line">	&#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="built_in">map</span>&lt;<span class="keyword">void</span>*,<span class="keyword">int</span>&gt; _resCntMap;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p><font size=5 face="Courier New" color=red>具有引用计数的智能指针</font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">template &lt;typename T&gt;</span><br><span class="line">class SmatPtr&#123;</span><br><span class="line">public:</span><br><span class="line">	SmatPtr(T* ptr&#x3D;NULL):_ptr(ptr)&#123;</span><br><span class="line">		if(_ptr!&#x3D;NULL)&#123;</span><br><span class="line">			addRef();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	~SmartPtr()&#123;</span><br><span class="line">		delRef();</span><br><span class="line">		if(getRef()&#x3D;&#x3D;0)&#123;</span><br><span class="line">			delete _ptr;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	SmartPtr(const SmartPtr&lt;T&gt;&amp; src):_ptr(src._ptr)&#123;</span><br><span class="line">		if(_ptr!&#x3D;NULL)&#123;</span><br><span class="line">			addRef();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	SmartPtr&lt;T&gt;&amp; operator&#x3D;(const SmartPtr&lt;T&gt;&amp; src)&#123;</span><br><span class="line">		if(&amp;src&#x3D;&#x3D;this)</span><br><span class="line">			return *this;</span><br><span class="line">		delRef();&#x2F;&#x2F;将引用计数-1，因为当前智能指针要去引用其他资源</span><br><span class="line">		if(getRef()&#x3D;&#x3D;0)&#123;</span><br><span class="line">			delete this-&gt;_ptr;</span><br><span class="line">		&#125;</span><br><span class="line">		_ptr &#x3D; src._ptr;</span><br><span class="line">		if(_ptr!&#x3D;NULL)</span><br><span class="line">			addRef();</span><br><span class="line">		return *this;</span><br><span class="line">	&#125;</span><br><span class="line">	T&amp; operator*()&#123;</span><br><span class="line">		return *_ptr;</span><br><span class="line">	&#125;</span><br><span class="line">	const T&amp; operator*() const&#123;</span><br><span class="line">		return *_ptr;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	T* operator-&gt;()&#123;</span><br><span class="line">		return _ptr;</span><br><span class="line">	&#125;</span><br><span class="line">	const T* operator-&gt;()const&#123;</span><br><span class="line">		return _ptr;</span><br><span class="line">	&#125;	</span><br><span class="line"></span><br><span class="line">	void addRef()&#123;_countMap.add(_ptr);&#125;</span><br><span class="line">	void delRef()&#123;_countMap.delRef(_ptr);&#125;</span><br><span class="line">	int getRef()&#123;return _countMap.getRef(_ptr);&#125;</span><br><span class="line">private:</span><br><span class="line">	T* _ptr;</span><br><span class="line">	static resCountMap _countMap;&#x2F;&#x2F;是所有智能指针对象公有的，设置为static</span><br><span class="line">&#125;;</span><br><span class="line">&#x2F;&#x2F;在类外进行静态成员函数的初始化</span><br><span class="line">template &lt;typename T&gt;</span><br><span class="line">resCountMap SmatPtr&lt;T&gt;::_countMap；</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SmatPtr</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	SmatPtr(T* ptr=<span class="literal">NULL</span>):_ptr(ptr)&#123;</span><br><span class="line">		<span class="keyword">if</span>(_ptr!=<span class="literal">NULL</span>)&#123;</span><br><span class="line">			addRef();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	~SmartPtr()&#123;</span><br><span class="line">		delRef();</span><br><span class="line">		<span class="keyword">if</span>(getRef()==<span class="number">0</span>)&#123;</span><br><span class="line">			<span class="keyword">delete</span> _ptr;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	SmartPtr(<span class="keyword">const</span> SmartPtr&lt;T&gt;&amp; src):_ptr(src._ptr)&#123;</span><br><span class="line">		<span class="keyword">if</span>(_ptr!=<span class="literal">NULL</span>)&#123;</span><br><span class="line">			addRef();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	SmartPtr&lt;T&gt;&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> SmartPtr&lt;T&gt;&amp; src)&#123;</span><br><span class="line">		<span class="keyword">if</span>(&amp;src==<span class="keyword">this</span>)</span><br><span class="line">			<span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">		delRef();<span class="comment">//将引用计数-1，因为当前智能指针要去引用其他资源</span></span><br><span class="line">		<span class="keyword">if</span>(getRef()==<span class="number">0</span>)&#123;</span><br><span class="line">			<span class="keyword">delete</span> <span class="keyword">this</span>-&gt;_ptr;</span><br><span class="line">		&#125;</span><br><span class="line">		_ptr = src._ptr;</span><br><span class="line">		<span class="keyword">if</span>(_ptr!=<span class="literal">NULL</span>)</span><br><span class="line">			addRef();</span><br><span class="line">		<span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	T&amp; <span class="keyword">operator</span>*()&#123;</span><br><span class="line">		<span class="keyword">return</span> *_ptr;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">const</span> T&amp; <span class="keyword">operator</span>*() <span class="keyword">const</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> *_ptr;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	T* <span class="keyword">operator</span>-&gt;()&#123;</span><br><span class="line">		<span class="keyword">return</span> _ptr;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">const</span> T* <span class="keyword">operator</span>-&gt;()<span class="keyword">const</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> _ptr;</span><br><span class="line">	&#125;	</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">addRef</span><span class="params">()</span></span>&#123;_countMap.add(_ptr);&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">delRef</span><span class="params">()</span></span>&#123;_countMap.delRef(_ptr);&#125;</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">getRef</span><span class="params">()</span></span>&#123;<span class="keyword">return</span> _countMap.getRef(_ptr);&#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	T* _ptr;</span><br><span class="line">	<span class="keyword">static</span> resCountMap _countMap;<span class="comment">//是所有智能指针对象公有的，设置为static</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//在类外进行静态成员函数的初始化</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line">resCountMap SmatPtr&lt;T&gt;::_countMap；</span><br></pre></td></tr></table></figure>
 
 
       
@@ -393,7 +212,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/c-c//" class="article-tag-list-link color1">c/c++</a>
+        			<a href="/categories/c-c-c-11//" class="article-tag-list-link color2">c/c++ c++11</a>
         		</li>
       		
 		</ul>
@@ -402,7 +221,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/12/02/C++11%E6%96%B0%E7%89%B9%E6%80%A7--%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/12/02/C++11-%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/">展开全文 >></a>
         </p>
       
 
@@ -431,14 +250,14 @@
 
 
   
-    <article id="post-C!S模式下---多线程编程" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-CS模式-多线程编程" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/29/C!S%E6%A8%A1%E5%BC%8F%E4%B8%8B---%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%BC%96%E7%A8%8B/">C/S模式下---多线程编程</a>
+      <a class="article-title" href="/2018/11/29/CS%E6%A8%A1%E5%BC%8F-%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%BC%96%E7%A8%8B/">C/S模式-多线程编程</a>
     </h1>
   
 
@@ -446,7 +265,7 @@
         
         <!--显示阅读次数完毕-->
         
-        <a href="/2018/11/29/C!S%E6%A8%A1%E5%BC%8F%E4%B8%8B---%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%BC%96%E7%A8%8B/" class="archive-article-date">
+        <a href="/2018/11/29/CS%E6%A8%A1%E5%BC%8F-%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%BC%96%E7%A8%8B/" class="archive-article-date">
   	<time datetime="2018-11-29T07:27:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-29</time>
 </a>
         
@@ -487,7 +306,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/11/29/C!S%E6%A8%A1%E5%BC%8F%E4%B8%8B---%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%BC%96%E7%A8%8B/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/11/29/CS%E6%A8%A1%E5%BC%8F-%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%BC%96%E7%A8%8B/">展开全文 >></a>
         </p>
       
 
@@ -516,14 +335,14 @@
 
 
   
-    <article id="post-C!S模式下---多进程编程" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-CS模式-多进程编程" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/29/C!S%E6%A8%A1%E5%BC%8F%E4%B8%8B---%E5%A4%9A%E8%BF%9B%E7%A8%8B%E7%BC%96%E7%A8%8B/">C/S模式下---多进程编程</a>
+      <a class="article-title" href="/2018/11/29/CS%E6%A8%A1%E5%BC%8F-%E5%A4%9A%E8%BF%9B%E7%A8%8B%E7%BC%96%E7%A8%8B/">C/S模式-多进程编程</a>
     </h1>
   
 
@@ -531,7 +350,7 @@
         
         <!--显示阅读次数完毕-->
         
-        <a href="/2018/11/29/C!S%E6%A8%A1%E5%BC%8F%E4%B8%8B---%E5%A4%9A%E8%BF%9B%E7%A8%8B%E7%BC%96%E7%A8%8B/" class="archive-article-date">
+        <a href="/2018/11/29/CS%E6%A8%A1%E5%BC%8F-%E5%A4%9A%E8%BF%9B%E7%A8%8B%E7%BC%96%E7%A8%8B/" class="archive-article-date">
   	<time datetime="2018-11-29T06:25:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-29</time>
 </a>
         
@@ -547,7 +366,7 @@
 <p><font size=4 face="Courier New" color=blue>1.listen()函数将已经完成三次握手和即将完成三次握手的客户端文件描述符存放到队列中。<br>2.在实际客户端与服务器进行交互时，服务器必须能够同时与多个客户端进行交互。</font></p>
 <p><font size=5 face="Courier New">多进程编程的优势：</font><br><font size=4 face="Courier New" color=red>1.能够处理同时处理多个客户端的连接，并且能够与客户端进行交互。<br>2.子进程可以共享fork()之间父进程打开的文件描述符，而不需要在进程之间传递文件描述符，简化了编程。<br>3.服务器处理的每个客户连接都是相互独立的，因为进程之间是相互独立的。。<br>4.任务分派明确，父进程只需处理客户端的连接，子进程只需要与客户端进程交互即可。</p>
 <p><font size=4 face="Courier New">多进程服务器端代码：</font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;sys&#x2F;scoket.h&gt;</span><br><span class="line">#include &lt;arpa&#x2F;inet&gt;  </span><br><span class="line">#include &lt;netinet&#x2F;in.h&gt;</span><br><span class="line">#include &lt;assert.h&gt;</span><br><span class="line">#Include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;unistd.h&gt;</span><br><span class="line">#include &lt;fcntl.h&gt;</span><br><span class="line">#include &lt;signal.h&gt;</span><br><span class="line">#include &lt;string.h&gt;</span><br><span class="line">#include &lt;stdlib.h&gt;</span><br><span class="line"></span><br><span class="line">void zmobie()&#123;</span><br><span class="line">	wait(NULL);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void communicateWithCli(int c)&#123;</span><br><span class="line">	char buff[128] &#x3D; &#123;0&#125;;</span><br><span class="line">	while(1)&#123;</span><br><span class="line">		int n &#x3D; recv(c,buff,127,0);</span><br><span class="line">		if(n&lt;&#x3D;0)&#123;</span><br><span class="line">			printf(&quot;one client quit!&quot;);</span><br><span class="line">			break;</span><br><span class="line">		&#125;</span><br><span class="line">		printf(&quot;%d : %s&quot;,c,buff);</span><br><span class="line">		send(c,&quot;OK&quot;,2,0);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">	signal(SIGCHLD,zmobie);</span><br><span class="line">	int fd &#x3D; socket(AF_INET,SOCK_STREAM,0);</span><br><span class="line">	assert(fd!&#x3D;-1);</span><br><span class="line">	</span><br><span class="line">	struct sockaddr_in cli,ser;</span><br><span class="line">	ser.sin_family &#x3D; AF_INET;</span><br><span class="line">	ser.sin_port &#x3D; htons(5000);</span><br><span class="line">	ser.sin_addr.s_addr &#x3D; inet_addr(&quot;127.0.0.1&quot;);</span><br><span class="line"></span><br><span class="line">	int res &#x3D; bind(fd,(struct sockaddr*)&amp;ser,sizeof(ser));</span><br><span class="line">	assert(res!&#x3D;-1);	</span><br><span class="line"></span><br><span class="line">	res &#x3D; listen(fd,5);</span><br><span class="line">	assert(res!&#x3D;-1);</span><br><span class="line"></span><br><span class="line">	while(1)&#123;</span><br><span class="line">		socklen_t len &#x3D; sizeof(cli);</span><br><span class="line">		int c &#x3D; accept(fd,(struct sockaddr*)&amp;cli,&amp;len);</span><br><span class="line">		if(c&#x3D;&#x3D;-1)&#123;</span><br><span class="line">			printf(&quot;link error!&quot;);</span><br><span class="line">			continue;&#x2F;&#x2F;继续进行连接</span><br><span class="line">		&#125;</span><br><span class="line">		pid_t pid &#x3D; fork();</span><br><span class="line">		assert(pid!&#x3D;-1);</span><br><span class="line">		&#x2F;&#x2F;子进程</span><br><span class="line">		if(pid&#x3D;&#x3D;0)&#123;</span><br><span class="line">			communicateWithCli(c);</span><br><span class="line">			exit(0);&#x2F;&#x2F;向父亲发出信号，避免成为僵死进程,因为父进程是一直启动的</span><br><span class="line">		&#125;</span><br><span class="line">		&#x2F;&#x2F;父进程</span><br><span class="line">		else&#123;</span><br><span class="line">			close(c);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	close(fd);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/scoket.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;arpa/inet&gt;  </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;netinet/in.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;assert.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;signal.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">zmobie</span><span class="params">()</span></span>&#123;</span><br><span class="line">	wait(<span class="literal">NULL</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">communicateWithCli</span><span class="params">(<span class="keyword">int</span> c)</span></span>&#123;</span><br><span class="line">	<span class="keyword">char</span> buff[<span class="number">128</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">		<span class="keyword">int</span> n = recv(c,buff,<span class="number">127</span>,<span class="number">0</span>);</span><br><span class="line">		<span class="keyword">if</span>(n&lt;=<span class="number">0</span>)&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">&quot;one client quit!&quot;</span>);</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%d : %s&quot;</span>,c,buff);</span><br><span class="line">		send(c,<span class="string">&quot;OK&quot;</span>,<span class="number">2</span>,<span class="number">0</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	signal(SIGCHLD,zmobie);</span><br><span class="line">	<span class="keyword">int</span> fd = socket(AF_INET,SOCK_STREAM,<span class="number">0</span>);</span><br><span class="line">	assert(fd!=<span class="number">-1</span>);</span><br><span class="line">	</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">sockaddr_in</span> <span class="title">cli</span>,<span class="title">ser</span>;</span></span><br><span class="line">	ser.sin_family = AF_INET;</span><br><span class="line">	ser.sin_port = htons(<span class="number">5000</span>);</span><br><span class="line">	ser.sin_addr.s_addr = inet_addr(<span class="string">&quot;127.0.0.1&quot;</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">int</span> res = bind(fd,(struct sockaddr*)&amp;ser,<span class="keyword">sizeof</span>(ser));</span><br><span class="line">	assert(res!=<span class="number">-1</span>);	</span><br><span class="line"></span><br><span class="line">	res = listen(fd,<span class="number">5</span>);</span><br><span class="line">	assert(res!=<span class="number">-1</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">		<span class="keyword">socklen_t</span> len = <span class="keyword">sizeof</span>(cli);</span><br><span class="line">		<span class="keyword">int</span> c = accept(fd,(struct sockaddr*)&amp;cli,&amp;len);</span><br><span class="line">		<span class="keyword">if</span>(c==<span class="number">-1</span>)&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">&quot;link error!&quot;</span>);</span><br><span class="line">			<span class="keyword">continue</span>;<span class="comment">//继续进行连接</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">pid_t</span> pid = fork();</span><br><span class="line">		assert(pid!=<span class="number">-1</span>);</span><br><span class="line">		<span class="comment">//子进程</span></span><br><span class="line">		<span class="keyword">if</span>(pid==<span class="number">0</span>)&#123;</span><br><span class="line">			communicateWithCli(c);</span><br><span class="line">			<span class="built_in">exit</span>(<span class="number">0</span>);<span class="comment">//向父亲发出信号，避免成为僵死进程,因为父进程是一直启动的</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">//父进程</span></span><br><span class="line">		<span class="keyword">else</span>&#123;</span><br><span class="line">			close(c);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	close(fd);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><font size=4 face="Courier New">执行结果：</font><br><img src="https://img-blog.csdnimg.cn/20181129140209958.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20181129140427495.png" alt="在这里插入图片描述"><br><font size=5 face="Courier New">从执行结果可以看出，有四个客户端可以同时和服务器进行交互，通过多进程的方式就解决了在最前提出的问题。</font></p>
 <p><font size=5 face="Courier New" color=blue>值得探究的是为什么每次服务器端输出的客户端的文件描述符都是4?</font></p>
 <p><font size=5 face="Courier New" color=blue><img src="https://img-blog.csdnimg.cn/20181129141717767.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><font size=5 face="Courier New" color=red>为什么在父进程中需要关闭客户端的文件描述符？</font><br><font size=4  face="Courier New">文件描述符作为进程的资源是有限的，处于C/S的模式下，主进程只需要负责与客户端连接，而不需要去做具体的逻辑处理。连接之后就不需要该客户端的文件描述符了，具体与客户端进行交互的进程中已经拿到对应的文件描述符了。因此，在父进程中关闭客户端的文件描述符可以减少不必要的资源浪费。</p>
@@ -566,7 +385,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/linux//" class="article-tag-list-link color1">linux</a>
+        			<a href="/categories/Linux网络编程//" class="article-tag-list-link color5">Linux网络编程</a>
         		</li>
       		
 		</ul>
@@ -575,7 +394,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/11/29/C!S%E6%A8%A1%E5%BC%8F%E4%B8%8B---%E5%A4%9A%E8%BF%9B%E7%A8%8B%E7%BC%96%E7%A8%8B/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/11/29/CS%E6%A8%A1%E5%BC%8F-%E5%A4%9A%E8%BF%9B%E7%A8%8B%E7%BC%96%E7%A8%8B/">展开全文 >></a>
         </p>
       
 
@@ -647,7 +466,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/Linux//" class="article-tag-list-link color1">Linux</a>
+        			<a href="/categories/Linux-MySQL//" class="article-tag-list-link color2">Linux MySQL</a>
         		</li>
       		
 		</ul>
@@ -729,7 +548,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/linux//" class="article-tag-list-link color1">linux</a>
+        			<a href="/categories/Linux//" class="article-tag-list-link color1">Linux</a>
         		</li>
       		
 		</ul>
@@ -875,16 +694,16 @@
         <a id="more"></a>
 
 <p><font size=4 face="Courier New">区分什么是<font color=red>初始化</font>和<font color=red>赋值</font>。</font><br><font size=4 face="Courier New">对于一个类来讲，如果用一个已经存在的对象去构造一个新对象，这个过程就是初始化的过程。如果用一个已经存在的对象去给另一个已经存在的对象赋值，这就是赋值的过程。<br><font size=4 face="Courier New">在初始化和赋值的过程中，假设类涉及到<font color=blue>堆内存</font>,如果采用编译器系统默认给定的<font color=red>拷贝构造函数</font>和<font color=red>赋值运算符的重载函数</font>进行对象之间的初始化过程和赋值过程，轻则发生浅拷贝，重则内存泄漏，这样的程序都是有问题的。下面分析为什么在使用默认的拷贝构造函数时会出现<font color=blue>浅拷贝问题。</font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">class Cstring&#123;</span><br><span class="line">private:</span><br><span class="line">	char* _data;</span><br><span class="line">public:</span><br><span class="line">	Cstring(const char* str)&#123;</span><br><span class="line">		if(str!&#x3D;NULL)&#123;</span><br><span class="line">			_data &#x3D; new char[strlen(str)+1]；</span><br><span class="line">			strcpy(_data,str);</span><br><span class="line">		&#125;</span><br><span class="line">		else&#123;</span><br><span class="line">			&#x2F;&#x2F;不处理为NULL的原因是，降低类中其他函数的逻辑复杂度，统一处理</span><br><span class="line">			&#x2F;&#x2F;不需要判断_data是否NULL，分开处理</span><br><span class="line">			_data &#x3D; new char[1];</span><br><span class="line">			*_data &#x3D; &#39;\0&#39;;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	~Cstring()&#123;</span><br><span class="line">		delete[] _data;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Cstring</span>&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="keyword">char</span>* _data;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	Cstring(<span class="keyword">const</span> <span class="keyword">char</span>* str)&#123;</span><br><span class="line">		<span class="keyword">if</span>(str!=<span class="literal">NULL</span>)&#123;</span><br><span class="line">			_data = <span class="keyword">new</span> <span class="keyword">char</span>[<span class="built_in">strlen</span>(str)+<span class="number">1</span>]；</span><br><span class="line">			<span class="built_in">strcpy</span>(_data,str);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span>&#123;</span><br><span class="line">			<span class="comment">//不处理为NULL的原因是，降低类中其他函数的逻辑复杂度，统一处理</span></span><br><span class="line">			<span class="comment">//不需要判断_data是否NULL，分开处理</span></span><br><span class="line">			_data = <span class="keyword">new</span> <span class="keyword">char</span>[<span class="number">1</span>];</span><br><span class="line">			*_data = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	~Cstring()&#123;</span><br><span class="line">		<span class="keyword">delete</span>[] _data;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p><font size=4 face="Courier New">测试程序 ：</font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">int main()&#123;</span><br><span class="line">	Cstring str(&quot;hello&quot;);</span><br><span class="line">	Cstring str1 &#x3D; str;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="function">Cstring <span class="title">str</span><span class="params">(<span class="string">&quot;hello&quot;</span>)</span></span>;</span><br><span class="line">	Cstring str1 = str;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><img src="https://img-blog.csdnimg.cn/20181117105017230.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><font size=4 face="Courier New"><br>因为调用默认的拷贝构造函数，只是简单的内存值拷贝，这样会使得对象str1中的_data和对象str中的_data指向同一块在堆上的内存空间，str1相对于str后构造，所以str1会先进行析构，释放掉了这块堆内存。使得str中的_data变为野指针，此str对象进行析构。将会释放野指针指向heap上的一块堆内存，这是非常不安全的。</font><br><img src="https://img-blog.csdnimg.cn/20181117105305770.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><font size=4 face="Courier New" color=red>解决方案:进行深拷贝，每个对象有自己的堆内存</font></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Cstring::Cstring(const Cstring&amp; src)&#123;</span><br><span class="line">	this-&gt;_data &#x3D; new char[strlen(src._data)+1]；</span><br><span class="line">	strcpy(_data,src.data);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><img src="https://img-blog.csdnimg.cn/20181117105949702.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><font size=4 face="Courier New" color=red>如上图，这样就实现了在拷贝构造函数中深拷贝。</font></p>
 <p><font size=4 face="Courier New">下面再讨论一下使用默认赋值运算符重载的拷贝构造函数在使用时出现的内存泄漏以及浅拷贝问题。<br><font size=4 color=black face="Courier New">测试程序：</font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">int main()&#123;</span><br><span class="line">	Cstring str(&quot;hello&quot;);</span><br><span class="line">	Cstrint str1(&quot;world&quot;);</span><br><span class="line">	str &#x3D; str1;&#x2F;&#x2F;可以理解为str.&#x3D;(str1)这样的调用方式</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="function">Cstring <span class="title">str</span><span class="params">(<span class="string">&quot;hello&quot;</span>)</span></span>;</span><br><span class="line">	<span class="function">Cstrint <span class="title">str1</span><span class="params">(<span class="string">&quot;world&quot;</span>)</span></span>;</span><br><span class="line">	str = str1;<span class="comment">//可以理解为str.=(str1)这样的调用方式</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><font size=4 face="Courier New">编译器系统默认的赋值运算符的重载函数是简单的<font color=red>赋值。</font><br><img src="https://img-blog.csdnimg.cn/20181117111431699.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><font size=4 face="Courier New" color=black>解决方案：自己实现赋值运算符重载函数，两个目的：<font color=red>1.避免出现内存泄漏的问题。2.进行深拷贝</font></font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Cstring&amp; Cstring(const Cstring&amp; src)&#123;</span><br><span class="line">	&#x2F;&#x2F;防止发生在自赋值</span><br><span class="line">	if(this &#x3D;&#x3D; &amp;src)&#123;</span><br><span class="line">		return *this;</span><br><span class="line">	&#125;</span><br><span class="line">	delete[] this-&gt;_data;&#x2F;&#x2F;释放当前对象在堆上的空间，避免出现内存泄漏</span><br><span class="line">	_data &#x3D; new char[strlen(src._data)+1];&#x2F;&#x2F;申请空间，避免出现浅拷贝</span><br><span class="line">	strcpy(_data,src._data);&#x2F;&#x2F;进行内存拷贝</span><br><span class="line">	return *this;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F;经过上述的处理，内存泄漏和浅拷贝的问题都得以解决</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Cstring&amp; <span class="title">Cstring</span><span class="params">(<span class="keyword">const</span> Cstring&amp; src)</span></span>&#123;</span><br><span class="line">	<span class="comment">//防止发生在自赋值</span></span><br><span class="line">	<span class="keyword">if</span>(<span class="keyword">this</span> == &amp;src)&#123;</span><br><span class="line">		<span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">delete</span>[] <span class="keyword">this</span>-&gt;_data;<span class="comment">//释放当前对象在堆上的空间，避免出现内存泄漏</span></span><br><span class="line">	_data = <span class="keyword">new</span> <span class="keyword">char</span>[<span class="built_in">strlen</span>(src._data)+<span class="number">1</span>];<span class="comment">//申请空间，避免出现浅拷贝</span></span><br><span class="line">	<span class="built_in">strcpy</span>(_data,src._data);<span class="comment">//进行内存拷贝</span></span><br><span class="line">	<span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//经过上述的处理，内存泄漏和浅拷贝的问题都得以解决</span></span><br></pre></td></tr></table></figure>
 
 <p><font size=5 face="Courier New" color=black>总结：在实现类的构造函数中，往往会涉及到堆内存的开辟。如果对拷贝构造函数和赋值运算符的重载函数不进行重写，会发生浅拷贝以及内存泄漏等问题导致程序出错。</font></p>
 
@@ -968,10 +787,10 @@
 
 <p><font size=5 face="Courier New" color=black>二叉堆：二叉堆一棵完全二叉树，从递归的定义来讲，对于完全二叉树的任何一个节点，其左孩子要么是空树要么是一个完全二叉树，右孩子同上。</font></p>
 <p><font size=5 face="Courier New" color=black><font color=red>堆：</font>对于一个堆来讲，可以是一个<font color=red>大根堆</font>，也可以是一个<font color=red>小根堆。</font></p>
-<p><font size=5 face="Courier New" color=black><font color=red>大根堆的性质：</font>对于在大根堆任何一个节点，其值不小于左右孩子的值。<br><font size=5 face="Courier New" color=black><font color=red>小根堆的性质：</font>对于在大根堆任何一个节点，其值不大于左右孩子的值。<br></font><br><font size=5 face="Courier New" color=black>由于堆的底层数据结构是由完全二叉树实现的，就可以利用完全二叉树的一些性质来实现一个堆。假设一棵完全二叉树的编号从零开始，则对于任意节点i，其父亲节点和孩子节点可以表示为。<br>father(i) = i/2;<br>left(i) = 2 * i,right(i) = 2 * i+1;<br>用数组构建一个堆：由于数组的下标是从0开始的，这样与完全二叉树节点从1开始不对应，实际可以这样处理，为数组多申请一个空间不使用索引为0的空间，这样就可以将一棵完全二叉树和数组完全的对应起来，这样处理会使得代码编写更为简单，代码的可读性非常高。<br></font></p>
+<p><font size=5 face="Courier New" color=black><font color=red>大根堆的性质：</font>对于在大根堆任何一个节点，其值不小于左右孩子的值。<br><font size=5 face="Courier New" color=black><font color=red>小根堆的性质：</font>对于在大根堆任何一个节点，其值不大于左右孩子的值。<br></font><br><font size=5 face="Courier New" color=black>由于堆的底层数据结构是由完全二叉树实现的，就可以利用完全二叉树的一些性质来实现一个堆。假设一棵完全二叉树的编号从零开始，则对于任意节点i，其父亲节点和孩子节点可以表示为。<br>father(i) = i/2;<br>left(i) = 2 * i,right(i) = 2 * i+1;<br>用数组构建一个堆：由于数组的下标是从0开始的，这样与完全二叉树节点从1开始不对应，实际可以这样处理，为数组多申请一个空间不使用索引为0的空间，这样就可以将一棵完全二叉树和数组完全的对应起来，这样处理会使得代码编写更为简单，代码的可读性非常高。</font></p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Heap</span>&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	T* data;<span class="comment">//存储堆中数据的数组</span></span><br><span class="line">	<span class="keyword">int</span> count;<span class="comment">//记录当前堆中有效元素的个数</span></span><br><span class="line">	<span class="keyword">int</span> capacity;<span class="comment">//记录堆存储的容量</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">//向上调整元素data[k]满足堆的性质</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">shiftUp</span><span class="params">(<span class="keyword">int</span> k)</span></span>&#123;</span><br><span class="line">		<span class="comment">//以构建大根堆为前提条件</span></span><br><span class="line">		<span class="keyword">while</span>(k&gt;<span class="number">1</span> &amp;&amp; data[k/<span class="number">2</span>] &lt; data[k])&#123;</span><br><span class="line">			<span class="comment">//若k节点的父亲节点data[k/2]比自己还小，需交换位置</span></span><br><span class="line">			<span class="comment">/*循环终止条件k&gt;1,当k==2时，其父亲节点为data[1]。</span></span><br><span class="line"><span class="comment">			需注意边界处理，否则会发生数组越界*/</span>		</span><br><span class="line">			swap(data[k/<span class="number">2</span>],data[k]);</span><br><span class="line">			k /= <span class="number">2</span>;<span class="comment">//更新节点</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//向下调整data[k]以继续满足堆的性质</span></span><br><span class="line">	<span class="comment">//对于任何一个节点，寻找max(node,max(node-&gt;left,node-&gt;right))作为当前的根节点</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">shiftDown</span><span class="params">(<span class="keyword">int</span> k)</span></span>&#123;</span><br><span class="line">		<span class="comment">//当前节点有右孩子</span></span><br><span class="line">		<span class="keyword">while</span>(<span class="number">2</span>*k&lt;=count)&#123;</span><br><span class="line">			<span class="keyword">int</span> j = <span class="number">2</span>*k;<span class="comment">//j表示最终data[k]所在的位置</span></span><br><span class="line">			<span class="keyword">if</span>(j+<span class="number">1</span> &lt;= count &amp;&amp; data[j+<span class="number">1</span>]&gt;data[j])&#123;</span><br><span class="line">				j ++;<span class="comment">//当前节点存在右孩子，并且右孩子大于左孩子的值</span></span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span>(data[k] &gt; data[j])</span><br><span class="line">				<span class="keyword">break</span>;<span class="comment">//当前节点大于其左右孩子，则不需要做调整</span></span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">				swap(data[k],data[j]);</span><br><span class="line">			k = j;<span class="comment">//更新新的根节点</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	Heap(<span class="keyword">int</span> capacity)&#123;</span><br><span class="line">		data = <span class="keyword">new</span> T[capacity+<span class="number">1</span>];<span class="comment">//0索引不使用</span></span><br><span class="line">		<span class="keyword">this</span>-&gt;capacity = capacity;</span><br><span class="line">		<span class="keyword">this</span>-&gt;count = <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	~Heap()&#123;</span><br><span class="line">		<span class="keyword">delete</span>[] data;<span class="comment">//释放在堆上开辟的内存</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">size</span><span class="params">()</span></span>&#123;<span class="keyword">return</span> count;&#125;</span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">isEmpty</span><span class="params">()</span></span>&#123;<span class="keyword">return</span> size==<span class="number">0</span>;&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">insert</span><span class="params">(T value)</span></span>&#123;</span><br><span class="line">		<span class="comment">//插入数据前需判断是否还有空间可以插入</span></span><br><span class="line">		assert(count&lt;capacity);</span><br><span class="line">		data[count+<span class="number">1</span>] = value;</span><br><span class="line">		count ++;</span><br><span class="line">		<span class="comment">//新添加的元素可能不满足堆的性质，需做调整维护堆的性质</span></span><br><span class="line">		shiftUp(count);<span class="comment">//调用被private限定的方法，不直接暴露给用户</span></span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//推出堆顶元素</span></span><br><span class="line">	<span class="function">T <span class="title">extractMax</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="comment">//需判空，如果堆空，则没有堆顶元素</span></span><br><span class="line">		assert(count &gt;= <span class="number">1</span>);<span class="comment">//堆中至少由一个元素</span></span><br><span class="line">		T ans = data[<span class="number">1</span>];<span class="comment">//对于大根堆，data[1]就是此堆的最大元素</span></span><br><span class="line">		swap(data[<span class="number">1</span>],data[count]);<span class="comment">//将堆中最后一个元素和第一个元素交换位置</span></span><br><span class="line">		count --;<span class="comment">//删除被交换下来的最大元素</span></span><br><span class="line">		shiftDown(<span class="number">1</span>);<span class="comment">//data[count]放置到第一个位置有可能不满足堆的性质，需做调整</span></span><br><span class="line">		<span class="keyword">return</span> ans;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p><font size=5 face="Courier New" color=black>利用上边已经实现的Heap的类模板实现堆排序</font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;堆排序的接口</span><br><span class="line">template&lt;typename T&gt;</span><br><span class="line">void heapSort(T arr[],int n)&#123;</span><br><span class="line">	Heap&lt;T&gt; hp(n+1);</span><br><span class="line">	for(int i&#x3D;0;i&lt;n;++i)&#123;</span><br><span class="line">		hp.insert(arr[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	&#x2F;&#x2F;从小到大排序</span><br><span class="line">	for(int i&#x3D;n-1;i&gt;&#x3D;0;--i)&#123;</span><br><span class="line">		arr[i]  &#x3D; hp.extractMax();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">template&lt;typename T&gt;</span><br><span class="line">void show(T arr[],int n)&#123;</span><br><span class="line">	for(int i&#x3D;0;i&lt;n;++i)&#123;</span><br><span class="line">		cout&lt;&lt;arr[i]&lt;&lt;&quot; &quot;;</span><br><span class="line">	&#125;</span><br><span class="line">	cout&lt;&lt;endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//堆排序的接口</span></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">heapSort</span><span class="params">(T arr[],<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="function">Heap&lt;T&gt; <span class="title">hp</span><span class="params">(n+<span class="number">1</span>)</span></span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;++i)&#123;</span><br><span class="line">		hp.insert(arr[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//从小到大排序</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=n<span class="number">-1</span>;i&gt;=<span class="number">0</span>;--i)&#123;</span><br><span class="line">		arr[i]  = hp.extractMax();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">show</span><span class="params">(T arr[],<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;++i)&#123;</span><br><span class="line">		<span class="built_in">cout</span>&lt;&lt;arr[i]&lt;&lt;<span class="string">&quot; &quot;</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><font size=5 face="Courier New" color=black>主函数</font></p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> arr[] = &#123;<span class="number">8</span>,<span class="number">5</span>,<span class="number">9</span>,<span class="number">7</span>,<span class="number">3</span>,<span class="number">6</span>,<span class="number">4</span>,<span class="number">2</span>,<span class="number">1</span>&#125;;</span><br><span class="line">	<span class="keyword">int</span> n = <span class="keyword">sizeof</span>(arr)/<span class="keyword">sizeof</span>(<span class="keyword">int</span>);</span><br><span class="line">	heapSort(arr,n);</span><br><span class="line">	show(arr,n);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p><font size=5 face="Courier New" color=black>执行结果：</font><br><img src="https://img-blog.csdnimg.cn/20181116224201357.png" alt="在这里插入图片描述"></p>
@@ -1010,6 +829,183 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/11/16/%E4%BA%8C%E5%8F%89%E5%A0%86%E7%B1%BB%E6%A8%A1%E6%9D%BF%E7%9A%84%E5%AE%9E%E7%8E%B0%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8%E5%AE%83%E8%BF%9B%E8%A1%8C%E5%A0%86%E6%8E%92%E5%BA%8F/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+    <article id="post-CVTE笔试题目--删除链表中的重复元素" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/16/CVTE%E7%AC%94%E8%AF%95%E9%A2%98%E7%9B%AE--%E5%88%A0%E9%99%A4%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%9A%84%E9%87%8D%E5%A4%8D%E5%85%83%E7%B4%A0/">CVTE笔试题目--删除链表中的重复元素</a>
+    </h1>
+  
+
+        <!--显示阅读次数-->
+        
+        <!--显示阅读次数完毕-->
+        
+        <a href="/2018/11/16/CVTE%E7%AC%94%E8%AF%95%E9%A2%98%E7%9B%AE--%E5%88%A0%E9%99%A4%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%9A%84%E9%87%8D%E5%A4%8D%E5%85%83%E7%B4%A0/" class="archive-article-date">
+  	<time datetime="2018-11-16T12:41:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-16</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+      
+        <a id="more"></a>
+
+<p><font size=5 face="Courier New" color=black>题目描述：有时候列表中的重复元素占用空间但是并没有什么作用，请实现下列函数帮忙删除有序链表中的重复元素。只保留第一个出现的元素。</font></p>
+<p><font size=5 face="Courier New" color=black>输入样例：1-&gt;2-&gt;2-&gt;4-&gt;4-&gt;4-&gt;5-&gt;6-&gt;6-&gt;7</font><br><font size=5 face="Courier New" color=black>输出样例：1-&gt;2-&gt;4-&gt;5-&gt;6-&gt;7</font></p>
+<p><font size=5 face="Courier New" color=red>解题思路：使用一个hash数组来标记链表中元素是否出现，这样即使出现重复元素，标记的是该元素是否出现，这样就将重复的元素过滤掉。之后清空链表，因为是顺序链表，从0索引开遍历整个hash数组。将hash数组中标记为true所对应的索引push_back到链表中即可。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">RemoveRedundant</span><span class="params">(<span class="built_in">list</span>&lt;<span class="keyword">int</span>&gt;&amp; l)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> len = l.size();</span><br><span class="line">	<span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">bool</span>&gt; <span class="title">arr</span><span class="params">(len,<span class="literal">false</span>)</span></span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">auto</span> it=l.begin();it!=l.end();++it)&#123;</span><br><span class="line">		arr[*it] = <span class="literal">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	l.clear();</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;arr.size();++i)&#123;</span><br><span class="line">		<span class="keyword">if</span>(arr[i]==<span class="literal">true</span>)&#123;</span><br><span class="line">			l.push_back(i);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/笔试面试//" class="article-tag-list-link color5">笔试面试</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/11/16/CVTE%E7%AC%94%E8%AF%95%E9%A2%98%E7%9B%AE--%E5%88%A0%E9%99%A4%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%9A%84%E9%87%8D%E5%A4%8D%E5%85%83%E7%B4%A0/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+    <article id="post-使用优先级队列实现堆排序" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/12/%E4%BD%BF%E7%94%A8%E4%BC%98%E5%85%88%E7%BA%A7%E9%98%9F%E5%88%97%E5%AE%9E%E7%8E%B0%E5%A0%86%E6%8E%92%E5%BA%8F/">使用优先级队列实现堆排序</a>
+    </h1>
+  
+
+        <!--显示阅读次数-->
+        
+        <!--显示阅读次数完毕-->
+        
+        <a href="/2018/11/12/%E4%BD%BF%E7%94%A8%E4%BC%98%E5%85%88%E7%BA%A7%E9%98%9F%E5%88%97%E5%AE%9E%E7%8E%B0%E5%A0%86%E6%8E%92%E5%BA%8F/" class="archive-article-date">
+  	<time datetime="2018-11-12T09:20:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+      
+        <a id="more"></a>
+
+<p><font size=5 face="Courier New" color=black>代码实现：</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">heapSort</span><span class="params">(T arr[],<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="comment">//构建大根堆</span></span><br><span class="line">	<span class="comment">//如果T类型不是基本类型，是class/struct，则需要重载小于号运算符</span></span><br><span class="line">	<span class="built_in">priority_queue</span>&lt;T,<span class="built_in">vector</span>&lt;T&gt;&gt; q;<span class="comment">//缺省的情况下使用小于号，越小的优先级越高</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;++i)&#123;</span><br><span class="line">		q.push(arr[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=n<span class="number">-1</span>;i&gt;=<span class="number">0</span>;--i)&#123;</span><br><span class="line">		arr[i] = q.top();</span><br><span class="line">		q.pop();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">show</span><span class="params">(T arr[],<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;++i)&#123;</span><br><span class="line">		<span class="built_in">cout</span>&lt;&lt;arr[i]&lt;&lt;<span class="string">&quot; &quot;</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> arr[] = &#123;<span class="number">5</span>,<span class="number">3</span>,<span class="number">1</span>,<span class="number">4</span>,<span class="number">2</span>&#125;;</span><br><span class="line">	<span class="keyword">int</span> n = <span class="keyword">sizeof</span>(arr)/<span class="keyword">sizeof</span>(<span class="keyword">int</span>);</span><br><span class="line">	heapSort(arr,n);</span><br><span class="line">	show(arr,n);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier New" color=black>执行结果：</font><br><img src="https://img-blog.csdnimg.cn/2018111217202370.png" alt="在这里插入图片描述"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">排序</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/数据结构//" class="article-tag-list-link color5">数据结构</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/11/12/%E4%BD%BF%E7%94%A8%E4%BC%98%E5%85%88%E7%BA%A7%E9%98%9F%E5%88%97%E5%AE%9E%E7%8E%B0%E5%A0%86%E6%8E%92%E5%BA%8F/">展开全文 >></a>
         </p>
       
 
@@ -1133,11 +1129,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">动态规划</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">1024程序员节</a>
+                <a href="javascript:void(0)" class="js-tag color3">dp</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1145,7 +1137,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">数据结构 算法</a>
+                <a href="javascript:void(0)" class="js-tag color3">查找</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1157,11 +1149,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">c语言</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color4">STL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1169,7 +1157,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">linux系统编程</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">linux命令</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1185,14 +1177,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">c</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">c++11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">protobuf</a>
               </li>
              
@@ -1205,7 +1189,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color2">树</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">栈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">二分</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">堆</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1217,11 +1213,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">堆</a>
+                <a href="javascript:void(0)" class="js-tag color2">c</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">回溯法</a>
+                <a href="javascript:void(0)" class="js-tag color3">排序</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1229,11 +1225,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">最短路径</a>
+                <a href="javascript:void(0)" class="js-tag color4">回溯法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">进程通信</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">单链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">计算机组成</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">最短路径</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">单链表 排序</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1245,15 +1257,31 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">排序</a>
+                <a href="javascript:void(0)" class="js-tag color5">Linux系统编程</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">1024程序员节 c++</a>
+                <a href="javascript:void(0)" class="js-tag color1">c++11</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">动态规划 算法 leetcode</a>
+                <a href="javascript:void(0)" class="js-tag color5">而擦函数</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">图论</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">稀疏矩阵</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">双链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">树 图</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1261,11 +1289,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">递归</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">c++11算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">计算机组成</a>
+                <a href="javascript:void(0)" class="js-tag color5">堆栈调用</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1277,7 +1309,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">递归</a>
+                <a href="javascript:void(0)" class="js-tag color5">进程基础</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">图的存储结构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">哈希</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">剑指offer</a>
               </li>
             
             <div class="clearfix"></div>

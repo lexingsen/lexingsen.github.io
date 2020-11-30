@@ -21,7 +21,7 @@
 <meta property="og:image" content="https://img-blog.csdn.net/20180802090137687?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
 <meta property="og:image" content="https://img-blog.csdn.net/20180802090815510?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
 <meta property="article:published_time" content="2018-05-17T09:00:22.000Z">
-<meta property="article:modified_time" content="2020-11-29T19:35:27.719Z">
+<meta property="article:modified_time" content="2020-11-30T15:29:36.555Z">
 <meta property="article:author" content="lexingsen">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://img-blog.csdn.net/20180517162558864?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
@@ -74,7 +74,7 @@
 			</ul>
 			</nav>
 			<nav>
-			总文章数 300
+			总文章数 296
 			</nav>
 		<nav class="header-smart-menu">
     		
@@ -196,27 +196,29 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int &amp;p &#x3D; 100;&#x2F;&#x2F;这是错误的</span><br></pre></td></tr></table></figure>
 <p>（3）引用不能改变，一旦初始化，不能引用其他变量名。<br>（4）访问引用变量，永远访问的是被引用变量的内存。</p>
 <p><font color=red>引用的这几点重要的内容，可以反应出引用相对于指针来讲，更加安全。她不会引用一个未初始化的内存块，建议在C++中更多使用引用。</font><br>提出一个问题，引用究竟有没有进行内存的开辟？许多书籍上写出引用没有开辟空间，到底对不对呢，还是理解的方向不正确？<br>下面通过一段代码分析</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	int a &#x3D; 10;</span><br><span class="line">	int &amp;b &#x3D; a;</span><br><span class="line">	int *p &#x3D; &amp;a;</span><br><span class="line"></span><br><span class="line">	b &#x3D; 20;</span><br><span class="line">	cout &lt;&lt;&quot;a &#x3D; &quot;&lt;&lt;a&lt;&lt;&quot;,b &#x3D; &quot;&lt;&lt;b&lt;&lt;&quot;,*p &#x3D; &quot;&lt;&lt;*p&lt;&lt;endl;</span><br><span class="line"></span><br><span class="line">	*p &#x3D; 30;</span><br><span class="line">	cout &lt;&lt;&quot;a &#x3D; &quot;&lt;&lt;a&lt;&lt;&quot;,b &#x3D; &quot;&lt;&lt;b&lt;&lt;&quot;,*p &#x3D; &quot;&lt;&lt;*p&lt;&lt;endl;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line">	<span class="keyword">int</span> &amp;b = a;</span><br><span class="line">	<span class="keyword">int</span> *p = &amp;a;</span><br><span class="line"></span><br><span class="line">	b = <span class="number">20</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt;<span class="string">&quot;a = &quot;</span>&lt;&lt;a&lt;&lt;<span class="string">&quot;,b = &quot;</span>&lt;&lt;b&lt;&lt;<span class="string">&quot;,*p = &quot;</span>&lt;&lt;*p&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">	*p = <span class="number">30</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt;<span class="string">&quot;a = &quot;</span>&lt;&lt;a&lt;&lt;<span class="string">&quot;,b = &quot;</span>&lt;&lt;b&lt;&lt;<span class="string">&quot;,*p = &quot;</span>&lt;&lt;*p&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><img src="https://img-blog.csdn.net/20180517162558864?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>由上图看出，修改引用和修改指针都达到修改a内存块值的目的。也就是说 <code>a  b *p</code>似乎是一块内存。</p>
 <p>试着输出一下<code>int a = 10;int &amp;b = a;int *p = &amp;a;</code>中a和b的地址，以及p的值。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	int a &#x3D; 10;</span><br><span class="line">	int &amp;b &#x3D; a;</span><br><span class="line">	int *p &#x3D; &amp;a;</span><br><span class="line">	</span><br><span class="line">	cout &lt;&lt; hex &lt;&lt; &quot;&amp;a &#x3D; &quot; &lt;&lt; &amp;a &lt;&lt; &quot;,&amp;b &#x3D; &quot; &lt;&lt; &amp;b &lt;&lt; &quot;,p &#x3D; &quot; &lt;&lt; p &lt;&lt; endl;</span><br><span class="line"> 	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line">	<span class="keyword">int</span> &amp;b = a;</span><br><span class="line">	<span class="keyword">int</span> *p = &amp;a;</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; hex &lt;&lt; <span class="string">&quot;&amp;a = &quot;</span> &lt;&lt; &amp;a &lt;&lt; <span class="string">&quot;,&amp;b = &quot;</span> &lt;&lt; &amp;b &lt;&lt; <span class="string">&quot;,p = &quot;</span> &lt;&lt; p &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"> 	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><img src="https://img-blog.csdn.net/20180517163258410?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
 <p>在输出结果中，似乎变量a的地址、引用的地址相同。似乎验证了刚才提到的问题，引用没有开辟独立的内存块。实际则不然，下面看上述代码的反汇编：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">1.	int a &#x3D; 10;</span><br><span class="line">2.  mov  dword ptr [ebp-4],0Ah</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">3.	int &amp;b &#x3D; a;</span><br><span class="line">4.	lea eax,[ebp-4]</span><br><span class="line">5.	mov dword ptr [ebp-8],eax</span><br><span class="line"></span><br><span class="line">6.	int *p &#x3D; &amp;a;</span><br><span class="line">7.	lea ecx,[ebp-4]</span><br><span class="line">8.	mov dword ptr [ebp-0Ch],ecx</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>	<span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line"><span class="number">2.</span>  mov  dword ptr [ebp<span class="number">-4</span>],<span class="number">0</span>Ah</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="number">3.</span>	<span class="keyword">int</span> &amp;b = a;</span><br><span class="line"><span class="number">4.</span>	lea eax,[ebp<span class="number">-4</span>]</span><br><span class="line"><span class="number">5.</span>	mov dword ptr [ebp<span class="number">-8</span>],eax</span><br><span class="line"></span><br><span class="line"><span class="number">6.</span>	<span class="keyword">int</span> *p = &amp;a;</span><br><span class="line"><span class="number">7.</span>	lea ecx,[ebp<span class="number">-4</span>]</span><br><span class="line"><span class="number">8.</span>	mov dword ptr [ebp<span class="number">-0</span>Ch],ecx</span><br></pre></td></tr></table></figure>
+
 <p>对比上边3，4，5和6，7，8汇编代码，我们发现在底层语言中，压根就没有引用和指针的区别。<br>在函数栈帧的开辟中，用栈底指针ebp的偏移量表示局部变量的地址。[ebp-4]对应的内存块就是a。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">int &amp;b &#x3D; a;</span><br><span class="line">lea eax,[ebp-4]&#x2F;&#x2F;就是将内存块a的地址保存在eax寄存器中</span><br><span class="line">&#x2F;&#x2F;lea指令是移地址指令,对比下边int *p &#x3D; &amp;a的汇编指令是一摸一样.</span><br><span class="line">dword ptr [ebp-8],eax&#x2F;&#x2F;[ebp-8]即是引用b的内存块</span><br><span class="line">&#x2F;&#x2F;所以说引用是开辟了内存块的，用来保存被引用变量的地址。</span><br><span class="line"></span><br><span class="line">int *p &#x3D; &amp;a;</span><br><span class="line">lea ecx,[ebp-4]&#x2F;&#x2F;就是将内存块a的地址保存在eax寄存器中</span><br><span class="line">&#x2F;&#x2F;lea指令是移地址指令</span><br><span class="line">mov dword ptr [ebp-0Ch],ecx</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> &amp;b = a;</span><br><span class="line">lea eax,[ebp<span class="number">-4</span>]<span class="comment">//就是将内存块a的地址保存在eax寄存器中</span></span><br><span class="line"><span class="comment">//lea指令是移地址指令,对比下边int *p = &amp;a的汇编指令是一摸一样.</span></span><br><span class="line">dword ptr [ebp<span class="number">-8</span>],eax<span class="comment">//[ebp-8]即是引用b的内存块</span></span><br><span class="line"><span class="comment">//所以说引用是开辟了内存块的，用来保存被引用变量的地址。</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> *p = &amp;a;</span><br><span class="line">lea ecx,[ebp<span class="number">-4</span>]<span class="comment">//就是将内存块a的地址保存在eax寄存器中</span></span><br><span class="line"><span class="comment">//lea指令是移地址指令</span></span><br><span class="line">mov dword ptr [ebp<span class="number">-0</span>Ch],ecx</span><br></pre></td></tr></table></figure>
 
 <p>通过上边的反汇编，我们可以得到的一条结论是：<strong>引用实际上开辟了内存用于保存被引用变量的地址。</strong><br>但是，为什么我们输出引用变量b的地址，却是内存块a的地址呢？<br>实际上，只要一旦使用，在编译器内部就会自动进行解应用。也就是说永远不可能访问到引用变量b的地址，因为每当你使用引用时，已经经过解引用。</p>
 <p><font size=4 color=black>初学者如何方便的定义引用变量呢？</font><br>通过上边的分析，引用底层也是一个指针。只是在使用时，就进行了解引用，对程序员来讲这个过程是透明的。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">int a&#x3D;10;</span><br><span class="line">int *p &#x3D; &amp;a;&#x2F;&#x2F;首先定义一个指针</span><br><span class="line">&#x2F;&#x2F;将右边的取地址符&amp;覆盖左边的*符号，即可得到引用变量的定义</span><br><span class="line">int &amp;p &#x3D; a;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a=<span class="number">10</span>;</span><br><span class="line"><span class="keyword">int</span> *p = &amp;a;<span class="comment">//首先定义一个指针</span></span><br><span class="line"><span class="comment">//将右边的取地址符&amp;覆盖左边的*符号，即可得到引用变量的定义</span></span><br><span class="line"><span class="keyword">int</span> &amp;p = a;</span><br></pre></td></tr></table></figure>
 <p><font size=4 color=black>定义引用变量引用数组名</font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;按照上边的规则</span><br><span class="line">int arr[10] &#x3D; &#123;0&#125;;</span><br><span class="line">&#x2F;&#x2F;首先定义一个指向数组的指针</span><br><span class="line">int (*p)[10] &#x3D; &amp;arr;</span><br><span class="line">&#x2F;&#x2F;将右边的取地址符&amp;覆盖左边的*符号，即可得到引用变量的定义</span><br><span class="line">int (&amp;p)[10] &#x3D; arr;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int main()&#123;</span><br><span class="line">	int arr[10] &#x3D; &#123;0&#125;;</span><br><span class="line">	int (*p)[10] &#x3D; &amp;arr;</span><br><span class="line">	int (&amp;q)[10] &#x3D; arr;</span><br><span class="line">	cout&lt;&lt;sizeof(arr)&lt;&lt;&quot; &quot;</span><br><span class="line">		&lt;&lt;sizeof(p)&lt;&lt;&quot; &quot;</span><br><span class="line">		&lt;&lt;sizeof(q)&lt;&lt;endl;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//按照上边的规则</span></span><br><span class="line"><span class="keyword">int</span> arr[<span class="number">10</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line"><span class="comment">//首先定义一个指向数组的指针</span></span><br><span class="line"><span class="keyword">int</span> (*p)[<span class="number">10</span>] = &amp;arr;</span><br><span class="line"><span class="comment">//将右边的取地址符&amp;覆盖左边的*符号，即可得到引用变量的定义</span></span><br><span class="line"><span class="keyword">int</span> (&amp;p)[<span class="number">10</span>] = arr;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> arr[<span class="number">10</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="keyword">int</span> (*p)[<span class="number">10</span>] = &amp;arr;</span><br><span class="line">	<span class="keyword">int</span> (&amp;q)[<span class="number">10</span>] = arr;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="keyword">sizeof</span>(arr)&lt;&lt;<span class="string">&quot; &quot;</span></span><br><span class="line">		&lt;&lt;<span class="keyword">sizeof</span>(p)&lt;&lt;<span class="string">&quot; &quot;</span></span><br><span class="line">		&lt;&lt;<span class="keyword">sizeof</span>(q)&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><img src="https://img-blog.csdn.net/20180802085454712?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>64bit编译器下，指针变量的大小为8个字节。</p>
 <p><font size=4 color=black>引用变量作为函数参数</font><br>当数组名作为函数参数时会退化为指针，因此实际应用中往往还需要传递数组的长度。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">void fun(int arr[])&#123;</span><br><span class="line">	printf(&quot;sizeof(arr)&#x3D;%d\n&quot;,sizeof(arr));</span><br><span class="line">&#125;</span><br><span class="line">int main()&#123;</span><br><span class="line">	int arr[10]&#x3D;&#123;0&#125;;</span><br><span class="line">	printf(&quot;sizeof(arr)&#x3D;%d\n&quot;,sizeof(arr));</span><br><span class="line">	fun(arr);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fun</span><span class="params">(<span class="keyword">int</span> arr[])</span></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;sizeof(arr)=%d\n&quot;</span>,<span class="keyword">sizeof</span>(arr));</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> arr[<span class="number">10</span>]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;sizeof(arr)=%d\n&quot;</span>,<span class="keyword">sizeof</span>(arr));</span><br><span class="line">	fun(arr);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><font color=red>注：64bit编译器指针变量的大小为8个字节。</font><br><img src="https://img-blog.csdn.net/20180802090137687?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><font color=black>引用作为函数参数</font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">void fun(int (&amp;p)[10])&#123;</span><br><span class="line">	cout&lt;&lt;&quot;sizeof(p)&#x3D;&quot;&lt;&lt;sizeof(p)&lt;&lt;endl;</span><br><span class="line">&#125;</span><br><span class="line">int main()&#123;</span><br><span class="line">	int arr[10]&#x3D;&#123;0&#125;;</span><br><span class="line">	int (&amp;p)[10] &#x3D; arr;</span><br><span class="line">	cout&lt;&lt;&quot;sizeof(arr)&#x3D;&quot;&lt;&lt;sizeof(arr)&lt;&lt;endl;</span><br><span class="line">	fun(p);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fun</span><span class="params">(<span class="keyword">int</span> (&amp;p)[<span class="number">10</span>])</span></span>&#123;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;sizeof(p)=&quot;</span>&lt;&lt;<span class="keyword">sizeof</span>(p)&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> arr[<span class="number">10</span>]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="keyword">int</span> (&amp;p)[<span class="number">10</span>] = arr;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;sizeof(arr)=&quot;</span>&lt;&lt;<span class="keyword">sizeof</span>(arr)&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	fun(p);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><img src="https://img-blog.csdn.net/20180802090815510?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>可见当引用变量引用数组名时，作为函数参数不会退化为指针。</p>
 
       
@@ -435,11 +437,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">动态规划</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">1024程序员节</a>
+                <a href="javascript:void(0)" class="js-tag color3">dp</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -447,7 +445,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">数据结构 算法</a>
+                <a href="javascript:void(0)" class="js-tag color3">查找</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -459,11 +457,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">c语言</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color4">STL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -471,7 +465,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">linux系统编程</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">linux命令</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -487,14 +485,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">c</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">c++11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">protobuf</a>
               </li>
              
@@ -507,7 +497,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color2">树</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">栈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">二分</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">堆</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -519,11 +521,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">堆</a>
+                <a href="javascript:void(0)" class="js-tag color2">c</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">回溯法</a>
+                <a href="javascript:void(0)" class="js-tag color3">排序</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -531,11 +533,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">最短路径</a>
+                <a href="javascript:void(0)" class="js-tag color4">回溯法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">进程通信</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">单链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">计算机组成</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">最短路径</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">单链表 排序</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -547,15 +565,31 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">排序</a>
+                <a href="javascript:void(0)" class="js-tag color5">Linux系统编程</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">1024程序员节 c++</a>
+                <a href="javascript:void(0)" class="js-tag color1">c++11</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">动态规划 算法 leetcode</a>
+                <a href="javascript:void(0)" class="js-tag color5">而擦函数</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">图论</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">稀疏矩阵</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">双链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">树 图</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -563,11 +597,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">递归</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">c++11算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">计算机组成</a>
+                <a href="javascript:void(0)" class="js-tag color5">堆栈调用</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -579,7 +617,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">递归</a>
+                <a href="javascript:void(0)" class="js-tag color5">进程基础</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">图的存储结构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">哈希</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">剑指offer</a>
               </li>
             
             <div class="clearfix"></div>

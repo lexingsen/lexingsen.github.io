@@ -8,15 +8,15 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>const修饰符的使用（修饰结构体指针，引用外部的const 变量） | 乐行僧的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="const修饰符的使用 1234567891011&#x2F;&#x2F;const修饰变量为只读const  int a &#x3D; 10;a &#x3D; 20;&#x2F;&#x2F;是错误的赋值&#x2F;&#x2F;指针变量   指针指向的内存  两个不同的概念char buf[] &#x3D; &quot;helloworld&quot;;&#x2F;&#x2F;从左往右看，跳过">
+  <meta name="description" content="const修饰符的使用 1234567891011&#x2F;&#x2F;const修饰变量为只读const  int a &#x3D; 10;a &#x3D; 20;&#x2F;&#x2F;是错误的赋值&#x2F;&#x2F;指针变量   指针指向的内存  两个不同的概念char buf[] &#x3D; &quot;helloworld&quot;;&#x2F;&#x2F;从左往右看，跳过类型，看修饰那个字符&#x2F;&#x2F;如果是*,说明指针指向的内存不能改变&#x2F;&#x2F;如果是指针变量，说明指针的指向不能改变，指针的">
 <meta property="og:type" content="article">
 <meta property="og:title" content="const修饰符的使用（修饰结构体指针，引用外部的const 变量）">
 <meta property="og:url" content="http://example.com/2018/04/05/const%E4%BF%AE%E9%A5%B0%E7%AC%A6%E7%9A%84%E4%BD%BF%E7%94%A8%EF%BC%88%E4%BF%AE%E9%A5%B0%E7%BB%93%E6%9E%84%E4%BD%93%E6%8C%87%E9%92%88%EF%BC%8C%E5%BC%95%E7%94%A8%E5%A4%96%E9%83%A8%E7%9A%84const%20%E5%8F%98%E9%87%8F%EF%BC%89/index.html">
 <meta property="og:site_name" content="乐行僧的博客">
-<meta property="og:description" content="const修饰符的使用 1234567891011&#x2F;&#x2F;const修饰变量为只读const  int a &#x3D; 10;a &#x3D; 20;&#x2F;&#x2F;是错误的赋值&#x2F;&#x2F;指针变量   指针指向的内存  两个不同的概念char buf[] &#x3D; &quot;helloworld&quot;;&#x2F;&#x2F;从左往右看，跳过">
+<meta property="og:description" content="const修饰符的使用 1234567891011&#x2F;&#x2F;const修饰变量为只读const  int a &#x3D; 10;a &#x3D; 20;&#x2F;&#x2F;是错误的赋值&#x2F;&#x2F;指针变量   指针指向的内存  两个不同的概念char buf[] &#x3D; &quot;helloworld&quot;;&#x2F;&#x2F;从左往右看，跳过类型，看修饰那个字符&#x2F;&#x2F;如果是*,说明指针指向的内存不能改变&#x2F;&#x2F;如果是指针变量，说明指针的指向不能改变，指针的">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2018-04-05T07:55:32.000Z">
-<meta property="article:modified_time" content="2020-11-29T19:35:28.903Z">
+<meta property="article:modified_time" content="2020-11-30T16:16:52.930Z">
 <meta property="article:author" content="lexingsen">
 <meta name="twitter:card" content="summary">
   
@@ -68,7 +68,7 @@
 			</ul>
 			</nav>
 			<nav>
-			总文章数 300
+			总文章数 296
 			</nav>
 		<nav class="header-smart-menu">
     		
@@ -185,17 +185,17 @@
         <a id="more"></a>
 
 <p><strong>const修饰符的使用</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;const修饰变量为只读</span><br><span class="line">const  int a &#x3D; 10;</span><br><span class="line">a &#x3D; 20;&#x2F;&#x2F;是错误的赋值</span><br><span class="line">&#x2F;&#x2F;指针变量   指针指向的内存  两个不同的概念</span><br><span class="line">char buf[] &#x3D; &quot;helloworld&quot;;</span><br><span class="line">&#x2F;&#x2F;从左往右看，跳过类型，看修饰那个字符</span><br><span class="line">&#x2F;&#x2F;如果是*,说明指针指向的内存不能改变</span><br><span class="line">&#x2F;&#x2F;如果是指针变量，说明指针的指向不能改变，指针的值不能修改</span><br><span class="line">const char *p &#x3D; buf;</span><br><span class="line">char const *p1 &#x3D; buf;</span><br><span class="line">&#x2F;&#x2F;以上两条语句是等价的，都是修饰指针指向的内存不能改变。是对指针指向的内存空间的内容进行封锁。</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//const修饰变量为只读</span></span><br><span class="line"><span class="keyword">const</span>  <span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line">a = <span class="number">20</span>;<span class="comment">//是错误的赋值</span></span><br><span class="line"><span class="comment">//指针变量   指针指向的内存  两个不同的概念</span></span><br><span class="line"><span class="keyword">char</span> buf[] = <span class="string">&quot;helloworld&quot;</span>;</span><br><span class="line"><span class="comment">//从左往右看，跳过类型，看修饰那个字符</span></span><br><span class="line"><span class="comment">//如果是*,说明指针指向的内存不能改变</span></span><br><span class="line"><span class="comment">//如果是指针变量，说明指针的指向不能改变，指针的值不能修改</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">char</span> *p = buf;</span><br><span class="line"><span class="keyword">char</span> <span class="keyword">const</span> *p1 = buf;</span><br><span class="line"><span class="comment">//以上两条语句是等价的，都是修饰指针指向的内存不能改变。是对指针指向的内存空间的内容进行封锁。</span></span><br></pre></td></tr></table></figure>
 
 
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">const封锁的是指针变量，不能修改其指向，但是可以修改指针指向内存当中的内容。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">char* const p2 &#x3D; buf;</span><br><span class="line">p2[1] &#x3D; &#39;3&#39;;&#x2F;&#x2F;可以进行赋值</span><br><span class="line">p2 &#x3D; &quot;hello&quot;;是错误的</span><br><span class="line"></span><br><span class="line">const char * const p2 &#x3D; buf;</span><br><span class="line">&#x2F;&#x2F;进行双重封锁，即既不能修改指针的指向，也不能修改指针指向内存当中的内容。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span>封锁的是指针变量，不能修改其指向，但是可以修改指针指向内存当中的内容。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">char</span>* <span class="keyword">const</span> p2 = buf;</span><br><span class="line">p2[<span class="number">1</span>] = <span class="string">&#x27;3&#x27;</span>;<span class="comment">//可以进行赋值</span></span><br><span class="line">p2 = <span class="string">&quot;hello&quot;</span>;是错误的</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">char</span> * <span class="keyword">const</span> p2 = buf;</span><br><span class="line"><span class="comment">//进行双重封锁，即既不能修改指针的指向，也不能修改指针指向内存当中的内容。</span></span><br></pre></td></tr></table></figure>
 
 <p><strong>const修饰结构体指针</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;对结构体进行封锁</span><br><span class="line">typedef struct </span><br><span class="line">&#123;</span><br><span class="line">	int a;</span><br><span class="line">	int b;</span><br><span class="line">&#125;my_struct;</span><br><span class="line"></span><br><span class="line">void fun1(my_struct *p)</span><br><span class="line">&#123;</span><br><span class="line">	&#x2F;&#x2F;结构体指针可以修改</span><br><span class="line">	&#x2F;&#x2F;结构体指针指向的内存也可以改变	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void fun2(my_struct const *p)</span><br><span class="line">&#123;</span><br><span class="line">	&#x2F;&#x2F;结构体指针可以修改    &#x2F;&#x2F;如 p &#x3D; NULL;   是可以修改的</span><br><span class="line">	&#x2F;&#x2F;结构体指针指向的内容不能修改	&#x2F;&#x2F;p-&gt;a &#x3D; 10    是错误的</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void fun3(my_struct * const p)</span><br><span class="line">&#123;</span><br><span class="line">	&#x2F;&#x2F;结构体指针的指向不可以修改   p &#x3D; NULL是错误的</span><br><span class="line">	&#x2F;&#x2F;结构体指针指向的内容可以修改  p-&gt;a &#x3D; 10是可以修改的</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void fun4(const my_struct * const p)</span><br><span class="line">&#123;</span><br><span class="line">	&#x2F;&#x2F;结构体指针的指向不可以修改</span><br><span class="line">	&#x2F;&#x2F;结构体指针指向内存当中的内容也不可以修改</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//对结构体进行封锁</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> </span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">int</span> a;</span><br><span class="line">	<span class="keyword">int</span> b;</span><br><span class="line">&#125;my_struct;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fun1</span><span class="params">(my_struct *p)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//结构体指针可以修改</span></span><br><span class="line">	<span class="comment">//结构体指针指向的内存也可以改变	</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fun2</span><span class="params">(my_struct <span class="keyword">const</span> *p)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//结构体指针可以修改    //如 p = NULL;   是可以修改的</span></span><br><span class="line">	<span class="comment">//结构体指针指向的内容不能修改	//p-&gt;a = 10    是错误的</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fun3</span><span class="params">(my_struct * <span class="keyword">const</span> p)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//结构体指针的指向不可以修改   p = NULL是错误的</span></span><br><span class="line">	<span class="comment">//结构体指针指向的内容可以修改  p-&gt;a = 10是可以修改的</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fun4</span><span class="params">(<span class="keyword">const</span> my_struct * <span class="keyword">const</span> p)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//结构体指针的指向不可以修改</span></span><br><span class="line">	<span class="comment">//结构体指针指向内存当中的内容也不可以修改</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p><strong>如何引用其他.c文件中的const变量</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">extern const int a;&#x2F;&#x2F;注意，不能再进行赋值，只能声明</span><br><span class="line">printf(&quot;a &#x3D; %d\n&quot;,a);</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">extern</span> <span class="keyword">const</span> <span class="keyword">int</span> a;<span class="comment">//注意，不能再进行赋值，只能声明</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;a = %d\n&quot;</span>,a);</span><br></pre></td></tr></table></figure>
 
 
       
@@ -206,6 +206,17 @@
       
       
       
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/c-c//" class="article-tag-list-link color1">c/c++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
       
 
@@ -403,11 +414,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">动态规划</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">1024程序员节</a>
+                <a href="javascript:void(0)" class="js-tag color3">dp</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -415,7 +422,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">数据结构 算法</a>
+                <a href="javascript:void(0)" class="js-tag color3">查找</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -427,11 +434,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">c语言</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color4">STL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -439,7 +442,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">linux系统编程</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">linux命令</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -455,14 +462,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">c</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">c++11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">protobuf</a>
               </li>
              
@@ -475,7 +474,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color2">树</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">栈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">二分</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">堆</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -487,11 +498,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">堆</a>
+                <a href="javascript:void(0)" class="js-tag color2">c</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">回溯法</a>
+                <a href="javascript:void(0)" class="js-tag color3">排序</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -499,11 +510,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">最短路径</a>
+                <a href="javascript:void(0)" class="js-tag color4">回溯法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">进程通信</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">单链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">计算机组成</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">最短路径</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">单链表 排序</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -515,15 +542,31 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">排序</a>
+                <a href="javascript:void(0)" class="js-tag color5">Linux系统编程</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">1024程序员节 c++</a>
+                <a href="javascript:void(0)" class="js-tag color1">c++11</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">动态规划 算法 leetcode</a>
+                <a href="javascript:void(0)" class="js-tag color5">而擦函数</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">图论</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">稀疏矩阵</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">双链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">树 图</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -531,11 +574,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">递归</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">c++11算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">计算机组成</a>
+                <a href="javascript:void(0)" class="js-tag color5">堆栈调用</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -547,7 +594,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">递归</a>
+                <a href="javascript:void(0)" class="js-tag color5">进程基础</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">图的存储结构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">哈希</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">剑指offer</a>
               </li>
             
             <div class="clearfix"></div>

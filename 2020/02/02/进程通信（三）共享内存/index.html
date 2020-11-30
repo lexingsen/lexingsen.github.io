@@ -17,8 +17,9 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20200131183254226.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70">
 <meta property="article:published_time" content="2020-02-02T03:26:14.000Z">
-<meta property="article:modified_time" content="2020-11-29T19:35:18.919Z">
+<meta property="article:modified_time" content="2020-11-30T12:59:27.794Z">
 <meta property="article:author" content="lexingsen">
+<meta property="article:tag" content="进程通信">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://img-blog.csdnimg.cn/20200131183254226.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70">
   
@@ -70,7 +71,7 @@
 			</ul>
 			</nav>
 			<nav>
-			总文章数 300
+			总文章数 296
 			</nav>
 		<nav class="header-smart-menu">
     		
@@ -191,15 +192,15 @@
 <p><font size=5 face=Courier new color=red>二、共享内存原理</font><br><img src="https://img-blog.csdnimg.cn/20200131183254226.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
 <p><font size=5 face=Courier new>当不同进程的虚拟地址空间按照页面的大小加载到内存时，CPU发出的虚拟地址经过MMU(内存管理单元）的地址转换之后，就可以得到对应的物理地址，然后就可以进行访存等一系列操作，而共享内存API就是让不同的进程虚拟地址空间的某部分经过加载然后映射到的是同一块物理内存上，这样就可以使得不同的进程访问同一块物理内存，从而进行不同进程间的进程通信。<font color=red>需要注意的是：</font>由于此时这块用于进程通信的物理内存成为<font color=blue>临界区</font>，因此当不同的进程访问时，可能会出现竞态条件，因此为了实现进程同步，当不同进程访问临区时，必须对进程实现互斥和同步操作。<font color=red>这点非常重要，希望能引起重视。</font></font></p>
 <p><font size=5 face=Courier new color=red>三、共享内存API分析</font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">shm:share memory共享内存的简写</span><br><span class="line">1.shmget</span><br><span class="line">函数原型：int shmget(key_t key, size_t size, int shmflg);</span><br><span class="line">函数功能：创建新的或者已有的共享内存。</span><br><span class="line">参数key:key值，与消息队列所需要的key是一样的，如何得到？</span><br><span class="line">请看：(https:&#x2F;&#x2F;blog.csdn.net&#x2F;ASJBFJSB&#x2F;article&#x2F;details&#x2F;104122200)</span><br><span class="line">(1)如果key值没有对应的共享内存，创建出来一个新的共享内存，创建的过程实质上就是os在物理内存</span><br><span class="line">上划分出一块区域作为贡献内存的存储空间。</span><br><span class="line">(2)如果key值已经确定，说明已经有一个共享内存了，是由之前其他进程创建的，此时shmget就是获取</span><br><span class="line">该key对应的共享内存。</span><br><span class="line"></span><br><span class="line">参数size:指定共享内存的大小，一般是指定的是页面大小的整数倍(4k),如果不是，为了方便映射以及内存</span><br><span class="line">管理，api会自动将size调整为页面大小的整数倍。</span><br><span class="line"></span><br><span class="line">参数shmflg:指定权限以及IPC_CREAT。</span><br><span class="line"></span><br><span class="line">返回值：</span><br><span class="line">成功：返回共享内存的唯一标识符。</span><br><span class="line">失败：返回-1。</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">shm:share memory共享内存的简写</span><br><span class="line"><span class="number">1.</span>shmget</span><br><span class="line">函数原型：<span class="function"><span class="keyword">int</span> <span class="title">shmget</span><span class="params">(<span class="keyword">key_t</span> key, <span class="keyword">size_t</span> size, <span class="keyword">int</span> shmflg)</span></span>;</span><br><span class="line">函数功能：创建新的或者已有的共享内存。</span><br><span class="line">参数key:key值，与消息队列所需要的key是一样的，如何得到？</span><br><span class="line">请看：(https:<span class="comment">//blog.csdn.net/ASJBFJSB/article/details/104122200)</span></span><br><span class="line">(<span class="number">1</span>)如果key值没有对应的共享内存，创建出来一个新的共享内存，创建的过程实质上就是os在物理内存</span><br><span class="line">上划分出一块区域作为贡献内存的存储空间。</span><br><span class="line">(<span class="number">2</span>)如果key值已经确定，说明已经有一个共享内存了，是由之前其他进程创建的，此时shmget就是获取</span><br><span class="line">该key对应的共享内存。</span><br><span class="line"></span><br><span class="line">参数size:指定共享内存的大小，一般是指定的是页面大小的整数倍(<span class="number">4</span>k),如果不是，为了方便映射以及内存</span><br><span class="line">管理，api会自动将size调整为页面大小的整数倍。</span><br><span class="line"></span><br><span class="line">参数shmflg:指定权限以及IPC_CREAT。</span><br><span class="line"></span><br><span class="line">返回值：</span><br><span class="line">成功：返回共享内存的唯一标识符。</span><br><span class="line">失败：返回<span class="number">-1</span>。</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">2.shmat</span><br><span class="line">函数原型：void *shmat(int shmid, const void *shmaddr, int shmflg);</span><br><span class="line"></span><br><span class="line">功能：将shmid指向的共享内存的空间映射到当前进程的虚拟地址空间上，</span><br><span class="line">并且返回映射后的起始地址。得到这个地址，就可以在此地址上进行读写操作。</span><br><span class="line"></span><br><span class="line">参数shmid：shmid是由shmget得到标识共享内存的唯一标识符。</span><br><span class="line">参数shmaddr：指定映射的起始地址。</span><br><span class="line">（1）自己设置映射的起始地址（虚拟地址空间的地址），建议不要使用，因为你是搞不懂在虚拟地址空间中</span><br><span class="line">哪里用了，哪里可能还没有使用。</span><br><span class="line">（2）传NULL，由操作系统填写映射的地址。因为只有os才知道哪里能够映射，哪里不能映射。</span><br><span class="line">参数shmflg：指定映射条件。</span><br><span class="line">（1）0：以可读可写的方式进行共享内存的映射。</span><br><span class="line">（2）SHM_RDONLY：以只读的方式进行映射。</span><br><span class="line"></span><br><span class="line">返回值：</span><br><span class="line">成功：返回映射地址</span><br><span class="line">失败：返回(void*)-1</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2.</span>shmat</span><br><span class="line">函数原型：<span class="function"><span class="keyword">void</span> *<span class="title">shmat</span><span class="params">(<span class="keyword">int</span> shmid, <span class="keyword">const</span> <span class="keyword">void</span> *shmaddr, <span class="keyword">int</span> shmflg)</span></span>;</span><br><span class="line"></span><br><span class="line">功能：将shmid指向的共享内存的空间映射到当前进程的虚拟地址空间上，</span><br><span class="line">并且返回映射后的起始地址。得到这个地址，就可以在此地址上进行读写操作。</span><br><span class="line"></span><br><span class="line">参数shmid：shmid是由shmget得到标识共享内存的唯一标识符。</span><br><span class="line">参数shmaddr：指定映射的起始地址。</span><br><span class="line">（<span class="number">1</span>）自己设置映射的起始地址（虚拟地址空间的地址），建议不要使用，因为你是搞不懂在虚拟地址空间中</span><br><span class="line">哪里用了，哪里可能还没有使用。</span><br><span class="line">（<span class="number">2</span>）传<span class="literal">NULL</span>，由操作系统填写映射的地址。因为只有os才知道哪里能够映射，哪里不能映射。</span><br><span class="line">参数shmflg：指定映射条件。</span><br><span class="line">（<span class="number">1</span>）<span class="number">0</span>：以可读可写的方式进行共享内存的映射。</span><br><span class="line">（<span class="number">2</span>）SHM_RDONLY：以只读的方式进行映射。</span><br><span class="line"></span><br><span class="line">返回值：</span><br><span class="line">成功：返回映射地址</span><br><span class="line">失败：返回(<span class="keyword">void</span>*)<span class="number">-1</span></span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">3.shmdt</span><br><span class="line">函数原型：int shmdt(const void *shmaddr);</span><br><span class="line">功能：断开当前进程虚拟地址空间与shmaddr指向的共享内存的映射。</span><br><span class="line">参数shmaddr：指向共享内存的指针</span><br><span class="line">需要注意的是shmdt并不能进行共享内存区域的删除。需要使用shmctl或者ipcrm进行删除。</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">3.</span>shmdt</span><br><span class="line">函数原型：<span class="function"><span class="keyword">int</span> <span class="title">shmdt</span><span class="params">(<span class="keyword">const</span> <span class="keyword">void</span> *shmaddr)</span></span>;</span><br><span class="line">功能：断开当前进程虚拟地址空间与shmaddr指向的共享内存的映射。</span><br><span class="line">参数shmaddr：指向共享内存的指针</span><br><span class="line">需要注意的是shmdt并不能进行共享内存区域的删除。需要使用shmctl或者ipcrm进行删除。</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">4.shmctl</span><br><span class="line">函数原型：int shmctl(int shmid, int cmd, struct shmid_ds* buf)；</span><br><span class="line">函数功能：与消息队列的msgctl功能几乎一样，shmctl也提供了三个命令。</span><br><span class="line">IPC_RMID:删除由shmid唯一标识的共享内存区。此时第三个参数不使用，传入NULL。</span><br><span class="line">IPC_SET:设置shmid_ds中的三个成员，分别是：shm_perm.uid,shm_perm.gid和shm_perm.mode。</span><br><span class="line">IPC_STAT:buf作为传出参数，获取shmid唯一标识的共享内存的shmid_ds结构。</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">4.</span>shmctl</span><br><span class="line">函数原型：int shmctl(int shmid, int cmd, struct shmid_ds* buf)；</span><br><span class="line">函数功能：与消息队列的msgctl功能几乎一样，shmctl也提供了三个命令。</span><br><span class="line">IPC_RMID:删除由shmid唯一标识的共享内存区。此时第三个参数不使用，传入<span class="literal">NULL</span>。</span><br><span class="line">IPC_SET:设置shmid_ds中的三个成员，分别是：shm_perm.uid,shm_perm.gid和shm_perm.mode。</span><br><span class="line">IPC_STAT:buf作为传出参数，获取shmid唯一标识的共享内存的shmid_ds结构。</span><br></pre></td></tr></table></figure>
 <p><font size=5 face=Courier new color=red>四、共享内存实战代码</font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 发送端进程</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;assert.h&gt;</span><br><span class="line">#include &lt;sys&#x2F;ipc.h&gt;</span><br><span class="line">#include &lt;sys&#x2F;shm.h&gt;</span><br><span class="line">#include &lt;sys&#x2F;types.h&gt;</span><br><span class="line">#include &lt;unistd.h&gt;</span><br><span class="line">#include &lt;string.h&gt;</span><br><span class="line">#define PAGESIZE 4096</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">	int shmid &#x3D; shmget((key_t) 123, PAGESIZE, 0664|IPC_CREAT);</span><br><span class="line">	assert(shmid !&#x3D; -1);</span><br><span class="line">	</span><br><span class="line">	char * p &#x3D; (char*)shmat(shmid, NULL, 0);</span><br><span class="line">	assert(p !&#x3D; (char*)-1);</span><br><span class="line">	while (1) &#123;</span><br><span class="line">		printf(&quot;input: &quot;);</span><br><span class="line">		fgets(p, PAGESIZE-1, stdin);</span><br><span class="line">		if (strncmp(p, &quot;end&quot;, 3) &#x3D;&#x3D; 0) break;</span><br><span class="line">	&#125;</span><br><span class="line">	shmdt(p);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;接收端进程</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;assert.h&gt;</span><br><span class="line">#include &lt;sys&#x2F;ipc.h&gt;</span><br><span class="line">#include &lt;sys&#x2F;shm.h&gt;</span><br><span class="line">#include &lt;sys&#x2F;types.h&gt;</span><br><span class="line">#include &lt;unistd.h&gt;</span><br><span class="line">#include &lt;string.h&gt;</span><br><span class="line">#define PAGESIZE 4096</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">	int shmid &#x3D; shmget((key_t) 123, PAGESIZE, 0664|IPC_CREAT);</span><br><span class="line">	assert(shmid !&#x3D; -1);</span><br><span class="line">	</span><br><span class="line">	char * p &#x3D; (char*)shmat(shmid, NULL, 0);</span><br><span class="line">	assert(p !&#x3D; (char*)-1);</span><br><span class="line">	while (1) &#123;</span><br><span class="line">		if (strncmp(p, &quot;end&quot;, 3) &#x3D;&#x3D; 0) break;</span><br><span class="line">		printf(&quot;%s &quot;, p);</span><br><span class="line">		sleep(1);</span><br><span class="line">	&#125;</span><br><span class="line">	shmdt(p);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 发送端进程</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;assert.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/ipc.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/shm.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> PAGESIZE 4096</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> shmid = shmget((<span class="keyword">key_t</span>) <span class="number">123</span>, PAGESIZE, <span class="number">0664</span>|IPC_CREAT);</span><br><span class="line">	assert(shmid != <span class="number">-1</span>);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">char</span> * p = (<span class="keyword">char</span>*)shmat(shmid, <span class="literal">NULL</span>, <span class="number">0</span>);</span><br><span class="line">	assert(p != (<span class="keyword">char</span>*)<span class="number">-1</span>);</span><br><span class="line">	<span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;input: &quot;</span>);</span><br><span class="line">		fgets(p, PAGESIZE<span class="number">-1</span>, <span class="built_in">stdin</span>);</span><br><span class="line">		<span class="keyword">if</span> (<span class="built_in">strncmp</span>(p, <span class="string">&quot;end&quot;</span>, <span class="number">3</span>) == <span class="number">0</span>) <span class="keyword">break</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	shmdt(p);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//接收端进程</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;assert.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/ipc.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/shm.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> PAGESIZE 4096</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> shmid = shmget((<span class="keyword">key_t</span>) <span class="number">123</span>, PAGESIZE, <span class="number">0664</span>|IPC_CREAT);</span><br><span class="line">	assert(shmid != <span class="number">-1</span>);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">char</span> * p = (<span class="keyword">char</span>*)shmat(shmid, <span class="literal">NULL</span>, <span class="number">0</span>);</span><br><span class="line">	assert(p != (<span class="keyword">char</span>*)<span class="number">-1</span>);</span><br><span class="line">	<span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">		<span class="keyword">if</span> (<span class="built_in">strncmp</span>(p, <span class="string">&quot;end&quot;</span>, <span class="number">3</span>) == <span class="number">0</span>) <span class="keyword">break</span>;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%s &quot;</span>, p);</span><br><span class="line">		sleep(<span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	shmdt(p);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><font size=5 face=Courier new color=red>五、进程安全的探讨</font></p>
 <p><font size=5 face=Courier new>在上述的代码中，由于未对共享内存临界区做不同进程互斥的操作，当操作系统分配给进程的CPU时间片使用完成后，可能会出现当前进程还未完成任务，而另外的进程已经从共享内存中拿走了未完成任务的数据，这样的问题在进程通信中是非常致命的，那么如何解决进程在共享内存的通信过程中实现数据的同步和互斥，避免数据发生混乱的情况呢，请看下篇博客，信号量的使用。</font></p>
 
@@ -210,13 +211,24 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">进程通信</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/linux//" class="article-tag-list-link color1">linux</a>
+        			<a href="/categories/Linux系统编程//" class="article-tag-list-link color5">Linux系统编程</a>
         		</li>
       		
 		</ul>
@@ -419,11 +431,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">动态规划</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">1024程序员节</a>
+                <a href="javascript:void(0)" class="js-tag color3">dp</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -431,7 +439,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">数据结构 算法</a>
+                <a href="javascript:void(0)" class="js-tag color3">查找</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -443,11 +451,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">c语言</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color4">STL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -455,7 +459,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">linux系统编程</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">linux命令</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -471,14 +479,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">c</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">c++11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">protobuf</a>
               </li>
              
@@ -491,7 +491,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color2">树</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">栈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">二分</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">堆</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -503,11 +515,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">堆</a>
+                <a href="javascript:void(0)" class="js-tag color2">c</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">回溯法</a>
+                <a href="javascript:void(0)" class="js-tag color3">排序</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -515,11 +527,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">最短路径</a>
+                <a href="javascript:void(0)" class="js-tag color4">回溯法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">进程通信</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">单链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">计算机组成</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">最短路径</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">单链表 排序</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -531,15 +559,31 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">排序</a>
+                <a href="javascript:void(0)" class="js-tag color5">Linux系统编程</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">1024程序员节 c++</a>
+                <a href="javascript:void(0)" class="js-tag color1">c++11</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">动态规划 算法 leetcode</a>
+                <a href="javascript:void(0)" class="js-tag color5">而擦函数</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">图论</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">稀疏矩阵</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">双链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">树 图</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -547,11 +591,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">递归</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">c++11算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">计算机组成</a>
+                <a href="javascript:void(0)" class="js-tag color5">堆栈调用</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -563,7 +611,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">递归</a>
+                <a href="javascript:void(0)" class="js-tag color5">进程基础</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">图的存储结构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">哈希</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">剑指offer</a>
               </li>
             
             <div class="clearfix"></div>

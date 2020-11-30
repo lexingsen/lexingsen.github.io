@@ -16,8 +16,9 @@
 <meta property="og:description" content="在一些考试题中以及笔试面试的过程中，在需要使用stack和queue的时候，可能被要求不能使用STL中相关的库函数，也就意味着我们需要使用纯C进行编程。但是如果在考试中或者笔试面试中，为了要使用栈和队列，而去写一个完整的数据结构是比较大费周章，况且在时间上也不一定允许，因此，使用数组来模拟栈和队列的实现是一种明智的选择，原因有两个：一、使用数组模拟队列和栈可以简化编程的复杂度，节省时间，比如在">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-08-12T09:23:49.000Z">
-<meta property="article:modified_time" content="2020-11-29T19:35:21.831Z">
+<meta property="article:modified_time" content="2020-11-30T13:29:30.990Z">
 <meta property="article:author" content="lexingsen">
+<meta property="article:tag" content="栈和队列">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="乐行僧的博客" type="application/atom+xml">
@@ -68,7 +69,7 @@
 			</ul>
 			</nav>
 			<nav>
-			总文章数 300
+			总文章数 296
 			</nav>
 		<nav class="header-smart-menu">
     		
@@ -186,15 +187,15 @@
 
 <p><font size=5 face="Consolas">在一些考试题中以及笔试面试的过程中，在需要使用stack和queue的时候，可能被要求不能使用STL中相关的库函数，也就意味着我们需要使用纯C进行编程。但是如果在考试中或者笔试面试中，为了要使用栈和队列，而去写一个完整的数据结构是比较大费周章，况且在时间上也不一定允许，因此，使用数组来模拟栈和队列的实现是一种明智的选择，原因有两个：</font><font size=5 face="Consolas" color="blue"><br>一、使用数组模拟队列和栈可以简化编程的复杂度，节省时间，比如在dfs()和bfs()可以花更多的时间来思考这两个逻辑的实现。<br>二、使用数组模拟的栈和队列在效率上比标准库的容器类高很多,可以使得程序执行的速度更快。</font></p>
 <p><font size=6 face="Consolas" color="red">1.数组模拟栈的实现</font><br><font size=5 face="Consolas"><br>数组模拟栈的的实现，在栈顶指针的处理上，一般有两种处理方式top=-1,和top=0,也就意味着在这两种情况下对栈的操作是不相同的。<br><font size=4 face="Consolas" color="red">(1)top=-1</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">#include  &lt;stdio.h&gt;</span><br><span class="line">#define MAX 100 &#x2F;&#x2F;定义栈的大小</span><br><span class="line"></span><br><span class="line">int s[MAX];</span><br><span class="line">int top &#x3D; -1;&#x2F;&#x2F;初始的栈顶指针为-1</span><br><span class="line"></span><br><span class="line">void push(int x) &#123;</span><br><span class="line">	if(isFull()) return;</span><br><span class="line">	else s[++ top] &#x3D; x;</span><br><span class="line">&#125;</span><br><span class="line">void pop() &#123;</span><br><span class="line">	if(isEmpty()) return;</span><br><span class="line">	else top --;</span><br><span class="line">&#125;</span><br><span class="line">int top() &#123;</span><br><span class="line">	if(isEmpty()) return -1;</span><br><span class="line">	else return s[top];</span><br><span class="line">&#125;</span><br><span class="line">bool isEmpty() &#123;return top &#x3D;&#x3D; -1;&#125;</span><br><span class="line">bool isFull() &#123;return top &#x3D;&#x3D; MAX-1;&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span>  <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAX 100 <span class="comment">//定义栈的大小</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> s[MAX];</span><br><span class="line"><span class="keyword">int</span> top = <span class="number">-1</span>;<span class="comment">//初始的栈顶指针为-1</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">push</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(isFull()) <span class="keyword">return</span>;</span><br><span class="line">	<span class="keyword">else</span> s[++ top] = x;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">pop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(isEmpty()) <span class="keyword">return</span>;</span><br><span class="line">	<span class="keyword">else</span> top --;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">top</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(isEmpty()) <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">return</span> s[top];</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">isEmpty</span><span class="params">()</span> </span>&#123;<span class="keyword">return</span> top == <span class="number">-1</span>;&#125;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">isFull</span><span class="params">()</span> </span>&#123;<span class="keyword">return</span> top == MAX<span class="number">-1</span>;&#125;</span><br></pre></td></tr></table></figure>
 <p><font size=4 face="Consolas" color="red">(1)top=0</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">#include  &lt;stdio.h&gt;</span><br><span class="line">#define MAX 100 &#x2F;&#x2F;定义栈的大小</span><br><span class="line"></span><br><span class="line">int s[MAX];</span><br><span class="line">int top &#x3D; 0;&#x2F;&#x2F;初始的栈顶指针为0</span><br><span class="line"></span><br><span class="line">void push(int x) &#123;</span><br><span class="line">	if(isFull()) return;</span><br><span class="line">	else s[top ++] &#x3D; x;</span><br><span class="line">&#125;</span><br><span class="line">void pop() &#123;</span><br><span class="line">	if(isEmpty()) return;</span><br><span class="line">	else top --;</span><br><span class="line">&#125;</span><br><span class="line">int top() &#123;</span><br><span class="line">	if(isEmpty()) return -1;</span><br><span class="line">	else return s[top-1];</span><br><span class="line">&#125;</span><br><span class="line">bool isEmpty() &#123;return top &#x3D;&#x3D; 0;&#125;</span><br><span class="line">bool isFull() &#123;return top &#x3D;&#x3D; MAX;&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span>  <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAX 100 <span class="comment">//定义栈的大小</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> s[MAX];</span><br><span class="line"><span class="keyword">int</span> top = <span class="number">0</span>;<span class="comment">//初始的栈顶指针为0</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">push</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(isFull()) <span class="keyword">return</span>;</span><br><span class="line">	<span class="keyword">else</span> s[top ++] = x;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">pop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(isEmpty()) <span class="keyword">return</span>;</span><br><span class="line">	<span class="keyword">else</span> top --;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">top</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(isEmpty()) <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">return</span> s[top<span class="number">-1</span>];</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">isEmpty</span><span class="params">()</span> </span>&#123;<span class="keyword">return</span> top == <span class="number">0</span>;&#125;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">isFull</span><span class="params">()</span> </span>&#123;<span class="keyword">return</span> top == MAX;&#125;</span><br></pre></td></tr></table></figure>
 <p><font size=5 face="Consolas" color="red">至于选择哪种来使用，看大家的习惯。</p>
 <p><font size=6 face="Consolas" color="red">2.数组模拟栈的实现</font><font size=5 face="Consolas"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#define N 100</span><br><span class="line"></span><br><span class="line">int q[N];</span><br><span class="line">int f&#x3D;-1, r&#x3D;-1;&#x2F;&#x2F;初始定义队头和队尾指针均为-1</span><br><span class="line"></span><br><span class="line">void push(int x) &#123;</span><br><span class="line">	if(isFull()) return;</span><br><span class="line">	q[++ r]  &#x3D; x;</span><br><span class="line">&#125;</span><br><span class="line">int front() &#123;</span><br><span class="line">	if(isEmpty()) return -1;</span><br><span class="line">	return q[++ f];</span><br><span class="line">&#125;</span><br><span class="line">bool isEmpty() &#123;return f&#x3D;&#x3D;r;&#125;</span><br><span class="line">bool isFull() &#123;return r&#x3D;&#x3D;N-1;&#125;</span><br></pre></td></tr></table></figure>
-<p><font size=6 face="Consolas" color="red">3.数组模拟循环队列的实现</font><font size=5 face="Consolas"></p>
-<p><font size=5 face=Consolas >循环队列本质上是为了解决队列假溢出的问题，假溢出可能会造成大量的存储空间的浪费。循环队列虽然能够解决上述的问题，但是在判断队列空和队列满的两种状态上需要处理的比较好，非则也会出现不知队列是空还是满。目前比较常用的方式是：<font color=blue>牺牲一个位置存储空间来判别队列的两种状态。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">#define N 6</span><br><span class="line">int q[N];</span><br><span class="line">int hh&#x3D;0, tt&#x3D;0</span><br><span class="line"></span><br><span class="line">void push(int x) &#123;</span><br><span class="line">	if(isFull()) return;</span><br><span class="line">	q[tt ++] &#x3D; x;</span><br><span class="line">	tt &#x3D; (tt + 1) % N;</span><br><span class="line">&#125;</span><br><span class="line">int front() &#123;</span><br><span class="line">	if(isEmpty()) return -1;</span><br><span class="line">	int res &#x3D; q[hh];</span><br><span class="line">	hh &#x3D; (hh + 1)  % N;</span><br><span class="line">	return res;</span><br><span class="line">&#125;</span><br><span class="line">bool isEmpty() &#123;return hh&#x3D;&#x3D;tt;&#125;</span><br><span class="line">bool isFull() &#123;return (tt + 1) % N &#x3D;&#x3D; hh;&#125; </span><br><span class="line">int length() &#123;return (tt - hh + N) % N;&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> N 100</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> q[N];</span><br><span class="line"><span class="keyword">int</span> f=<span class="number">-1</span>, r=<span class="number">-1</span>;<span class="comment">//初始定义队头和队尾指针均为-1</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">push</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(isFull()) <span class="keyword">return</span>;</span><br><span class="line">	q[++ r]  = x;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">front</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(isEmpty()) <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">return</span> q[++ f];</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">isEmpty</span><span class="params">()</span> </span>&#123;<span class="keyword">return</span> f==r;&#125;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">isFull</span><span class="params">()</span> </span>&#123;<span class="keyword">return</span> r==N<span class="number">-1</span>;&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=6 face="Consolas" color="red">3.数组模拟循环队列的实现</font></p>
+<p><font size=5 face=Consolas >循环队列本质上是为了解决队列假溢出的问题，假溢出可能会造成大量的存储空间的浪费。循环队列虽然能够解决上述的问题，但是在判断队列空和队列满的两种状态上需要处理的比较好，非则也会出现不知队列是空还是满。目前比较常用的方式是：<font color=blue>牺牲一个位置存储空间来判别队列的两种状态。</font></font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> N 6</span></span><br><span class="line"><span class="keyword">int</span> q[N];</span><br><span class="line"><span class="keyword">int</span> hh=<span class="number">0</span>, tt=<span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> push(<span class="keyword">int</span> x) &#123;</span><br><span class="line">	<span class="keyword">if</span>(isFull()) <span class="keyword">return</span>;</span><br><span class="line">	q[tt ++] = x;</span><br><span class="line">	tt = (tt + <span class="number">1</span>) % N;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">front</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(isEmpty()) <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">int</span> res = q[hh];</span><br><span class="line">	hh = (hh + <span class="number">1</span>)  % N;</span><br><span class="line">	<span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">isEmpty</span><span class="params">()</span> </span>&#123;<span class="keyword">return</span> hh==tt;&#125;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">isFull</span><span class="params">()</span> </span>&#123;<span class="keyword">return</span> (tt + <span class="number">1</span>) % N == hh;&#125; </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">length</span><span class="params">()</span> </span>&#123;<span class="keyword">return</span> (tt - hh + N) % N;&#125;</span><br></pre></td></tr></table></figure>
 
       
 
@@ -203,13 +204,24 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">栈和队列</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/数据结构-算法基础//" class="article-tag-list-link color5">数据结构 算法基础</a>
+        			<a href="/categories/数据结构//" class="article-tag-list-link color5">数据结构</a>
         		</li>
       		
 		</ul>
@@ -412,11 +424,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">动态规划</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">1024程序员节</a>
+                <a href="javascript:void(0)" class="js-tag color3">dp</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -424,7 +432,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">数据结构 算法</a>
+                <a href="javascript:void(0)" class="js-tag color3">查找</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -436,11 +444,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">c语言</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color4">STL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -448,7 +452,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">linux系统编程</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">linux命令</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -464,14 +472,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">c</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">c++11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">protobuf</a>
               </li>
              
@@ -484,7 +484,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color2">树</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">栈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">二分</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">堆</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -496,11 +508,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">堆</a>
+                <a href="javascript:void(0)" class="js-tag color2">c</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">回溯法</a>
+                <a href="javascript:void(0)" class="js-tag color3">排序</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -508,11 +520,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">最短路径</a>
+                <a href="javascript:void(0)" class="js-tag color4">回溯法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">进程通信</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">单链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">计算机组成</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">最短路径</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">单链表 排序</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -524,15 +552,31 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">排序</a>
+                <a href="javascript:void(0)" class="js-tag color5">Linux系统编程</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">1024程序员节 c++</a>
+                <a href="javascript:void(0)" class="js-tag color1">c++11</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">动态规划 算法 leetcode</a>
+                <a href="javascript:void(0)" class="js-tag color5">而擦函数</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">图论</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">稀疏矩阵</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">双链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">树 图</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -540,11 +584,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">递归</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">c++11算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">计算机组成</a>
+                <a href="javascript:void(0)" class="js-tag color5">堆栈调用</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -556,7 +604,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">递归</a>
+                <a href="javascript:void(0)" class="js-tag color5">进程基础</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">图的存储结构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">哈希</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">剑指offer</a>
               </li>
             
             <div class="clearfix"></div>

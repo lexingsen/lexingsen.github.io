@@ -16,8 +16,9 @@
 <meta property="og:description" content="123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-10-29T02:24:32.000Z">
-<meta property="article:modified_time" content="2020-11-29T19:35:21.295Z">
+<meta property="article:modified_time" content="2020-11-30T13:34:59.154Z">
 <meta property="article:author" content="lexingsen">
+<meta property="article:tag" content="单链表">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="乐行僧的博客" type="application/atom+xml">
@@ -68,7 +69,7 @@
 			</ul>
 			</nav>
 			<nav>
-			总文章数 300
+			总文章数 296
 			</nav>
 		<nav class="header-smart-menu">
     		
@@ -184,7 +185,7 @@
       
         <a id="more"></a>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;bits&#x2F;stdc++.h&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class LinkedCircleList &#123;</span><br><span class="line">private:</span><br><span class="line">	struct node &#123;</span><br><span class="line">		int val;</span><br><span class="line">		node *next;</span><br><span class="line">		</span><br><span class="line">		node() &#123;&#125;</span><br><span class="line">		node(int x, node *next) &#123;</span><br><span class="line">			this-&gt;val &#x3D; x;</span><br><span class="line">			this-&gt;next &#x3D; next;</span><br><span class="line">		&#125; </span><br><span class="line">	&#125;;	</span><br><span class="line">	</span><br><span class="line">	int size;</span><br><span class="line">	node *head;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">public:</span><br><span class="line">	LinkedCircleList() &#123;</span><br><span class="line">		this-&gt;size &#x3D; 0;</span><br><span class="line">		head &#x3D; new node;</span><br><span class="line">		head-&gt;next &#x3D; head;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	~LinkedCircleList() &#123;</span><br><span class="line">		while (head!&#x3D;head-&gt;next) &#123;</span><br><span class="line">			delTail();</span><br><span class="line">		&#125;</span><br><span class="line">		delete head; </span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	void insert(int index, int x) &#123;</span><br><span class="line">		if (index&lt;0 || index&gt;size) &#123;</span><br><span class="line">			cout &lt;&lt; &quot;the index is invalid!&quot; &lt;&lt; endl;</span><br><span class="line">			return;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		node *p &#x3D; head;</span><br><span class="line">		for (int i&#x3D;0; i&lt;index; ++i) p &#x3D; p-&gt;next;</span><br><span class="line">		node *q &#x3D; new node(x, p-&gt;next);</span><br><span class="line">		p-&gt;next &#x3D; q;</span><br><span class="line">		size ++;</span><br><span class="line">	&#125;</span><br><span class="line">	void insertHead(int x) &#123;insert(0, x);&#125;</span><br><span class="line">	void insertTail(int x) &#123;insert(size, x);&#125;</span><br><span class="line">	</span><br><span class="line">	int del(int index) &#123;</span><br><span class="line">		if (index&lt;0 || index&gt;&#x3D;size) &#123;</span><br><span class="line">			cout &lt;&lt; &quot;the index is invalid!&quot; &lt;&lt; endl;</span><br><span class="line">			return -1;</span><br><span class="line">		&#125; </span><br><span class="line">		</span><br><span class="line">		if (head-&gt;next &#x3D;&#x3D; head) &#123;</span><br><span class="line">			cout &lt;&lt; &quot;the LinkedCircleList is null！&quot; &lt;&lt; endl;</span><br><span class="line">			return -1; </span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		node *p &#x3D; head;</span><br><span class="line">		for (int i&#x3D;0; i&lt;index; ++i) p &#x3D; p-&gt;next;</span><br><span class="line">		node *del &#x3D; p-&gt;next;</span><br><span class="line">		p-&gt;next &#x3D; del-&gt;next;</span><br><span class="line">		int res &#x3D; del-&gt;val;</span><br><span class="line">		delete del;</span><br><span class="line">		size --;</span><br><span class="line">		return res;</span><br><span class="line">	&#125;</span><br><span class="line">	int delTail() &#123;del(size-1);&#125;</span><br><span class="line">	int delHead() &#123;del(0);&#125;</span><br><span class="line">	</span><br><span class="line">	int get(int index) &#123;</span><br><span class="line">		if (index &lt; 0 || index&gt;&#x3D;size) &#123;</span><br><span class="line">		 	cout &lt;&lt; &quot;the index is invalid!&quot; &lt;&lt; endl;</span><br><span class="line">			return -1; </span><br><span class="line">		&#125;</span><br><span class="line">		 </span><br><span class="line">		if (head-&gt;next &#x3D;&#x3D; head) &#123;</span><br><span class="line">			cout &lt;&lt; &quot;the LinkedCircleList is null！&quot; &lt;&lt; endl;</span><br><span class="line">			return -1; </span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		node *p &#x3D; head-&gt;next;</span><br><span class="line">		for (int i&#x3D;0; i&lt;index; ++i) p &#x3D; p-&gt;next;</span><br><span class="line">		return p-&gt;val;</span><br><span class="line">	&#125;</span><br><span class="line">	int getHead() &#123;get(0);&#125;</span><br><span class="line">	int getTail() &#123;get(size-1);&#125;</span><br><span class="line">	</span><br><span class="line">	void show() &#123;</span><br><span class="line">		node *p &#x3D; head-&gt;next;</span><br><span class="line">		while (p!&#x3D;head) &#123;</span><br><span class="line">			cout &lt;&lt; p-&gt;val &lt;&lt; &quot; &quot;;</span><br><span class="line">			p &#x3D; p-&gt;next;</span><br><span class="line">		&#125;</span><br><span class="line">		cout &lt;&lt; endl;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	bool isEmpty() &#123;return head-&gt;next &#x3D;&#x3D; head;&#125;</span><br><span class="line">&#125;;</span><br><span class="line">int main() &#123;</span><br><span class="line">	int a[] &#x3D; &#123;1&#125;;</span><br><span class="line">	int n &#x3D; sizeof(a)&#x2F;sizeof(int);</span><br><span class="line">	LinkedCircleList list &#x3D; LinkedCircleList();</span><br><span class="line">	for (int i&#x3D;0; i&lt;n; ++i) list.insertTail(a[i]);</span><br><span class="line">	list.show(); </span><br><span class="line">	cout &lt;&lt; list.getHead() &lt;&lt; endl;</span><br><span class="line">	cout &lt;&lt; list.getTail() &lt;&lt; endl;</span><br><span class="line">	return 0;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LinkedCircleList</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">node</span> &#123;</span></span><br><span class="line">		<span class="keyword">int</span> val;</span><br><span class="line">		node *next;</span><br><span class="line">		</span><br><span class="line">		node() &#123;&#125;</span><br><span class="line">		node(<span class="keyword">int</span> x, node *next) &#123;</span><br><span class="line">			<span class="keyword">this</span>-&gt;val = x;</span><br><span class="line">			<span class="keyword">this</span>-&gt;next = next;</span><br><span class="line">		&#125; </span><br><span class="line">	&#125;;	</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">int</span> size;</span><br><span class="line">	node *head;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	LinkedCircleList() &#123;</span><br><span class="line">		<span class="keyword">this</span>-&gt;size = <span class="number">0</span>;</span><br><span class="line">		head = <span class="keyword">new</span> node;</span><br><span class="line">		head-&gt;next = head;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	~LinkedCircleList() &#123;</span><br><span class="line">		<span class="keyword">while</span> (head!=head-&gt;next) &#123;</span><br><span class="line">			delTail();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">delete</span> head; </span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">insert</span><span class="params">(<span class="keyword">int</span> index, <span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (index&lt;<span class="number">0</span> || index&gt;size) &#123;</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;the index is invalid!&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		node *p = head;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;index; ++i) p = p-&gt;next;</span><br><span class="line">		node *q = <span class="keyword">new</span> node(x, p-&gt;next);</span><br><span class="line">		p-&gt;next = q;</span><br><span class="line">		size ++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">insertHead</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;insert(<span class="number">0</span>, x);&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">insertTail</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;insert(size, x);&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">del</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (index&lt;<span class="number">0</span> || index&gt;=size) &#123;</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;the index is invalid!&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">			<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">		&#125; </span><br><span class="line">		</span><br><span class="line">		<span class="keyword">if</span> (head-&gt;next == head) &#123;</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;the LinkedCircleList is null！&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">			<span class="keyword">return</span> <span class="number">-1</span>; </span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		node *p = head;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;index; ++i) p = p-&gt;next;</span><br><span class="line">		node *del = p-&gt;next;</span><br><span class="line">		p-&gt;next = del-&gt;next;</span><br><span class="line">		<span class="keyword">int</span> res = del-&gt;val;</span><br><span class="line">		<span class="keyword">delete</span> del;</span><br><span class="line">		size --;</span><br><span class="line">		<span class="keyword">return</span> res;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">delTail</span><span class="params">()</span> </span>&#123;del(size<span class="number">-1</span>);&#125;</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">delHead</span><span class="params">()</span> </span>&#123;del(<span class="number">0</span>);&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">get</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (index &lt; <span class="number">0</span> || index&gt;=size) &#123;</span><br><span class="line">		 	<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;the index is invalid!&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">			<span class="keyword">return</span> <span class="number">-1</span>; </span><br><span class="line">		&#125;</span><br><span class="line">		 </span><br><span class="line">		<span class="keyword">if</span> (head-&gt;next == head) &#123;</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;the LinkedCircleList is null！&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">			<span class="keyword">return</span> <span class="number">-1</span>; </span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		node *p = head-&gt;next;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;index; ++i) p = p-&gt;next;</span><br><span class="line">		<span class="keyword">return</span> p-&gt;val;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">getHead</span><span class="params">()</span> </span>&#123;get(<span class="number">0</span>);&#125;</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">getTail</span><span class="params">()</span> </span>&#123;get(size<span class="number">-1</span>);&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">show</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		node *p = head-&gt;next;</span><br><span class="line">		<span class="keyword">while</span> (p!=head) &#123;</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; p-&gt;val &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">			p = p-&gt;next;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">isEmpty</span><span class="params">()</span> </span>&#123;<span class="keyword">return</span> head-&gt;next == head;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a[] = &#123;<span class="number">1</span>&#125;;</span><br><span class="line">	<span class="keyword">int</span> n = <span class="keyword">sizeof</span>(a)/<span class="keyword">sizeof</span>(<span class="keyword">int</span>);</span><br><span class="line">	LinkedCircleList <span class="built_in">list</span> = LinkedCircleList();</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;n; ++i) <span class="built_in">list</span>.insertTail(a[i]);</span><br><span class="line">	<span class="built_in">list</span>.show(); </span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="built_in">list</span>.getHead() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="built_in">list</span>.getTail() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
 
       
 
@@ -193,6 +194,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">单链表</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
@@ -402,11 +414,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">动态规划</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">1024程序员节</a>
+                <a href="javascript:void(0)" class="js-tag color3">dp</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -414,7 +422,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">数据结构 算法</a>
+                <a href="javascript:void(0)" class="js-tag color3">查找</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -426,11 +434,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">c语言</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color4">STL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -438,7 +442,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">linux系统编程</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">linux命令</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -454,14 +462,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">c</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">c++11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">protobuf</a>
               </li>
              
@@ -474,7 +474,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color2">树</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">栈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">二分</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">堆</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -486,11 +498,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">堆</a>
+                <a href="javascript:void(0)" class="js-tag color2">c</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">回溯法</a>
+                <a href="javascript:void(0)" class="js-tag color3">排序</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -498,11 +510,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">最短路径</a>
+                <a href="javascript:void(0)" class="js-tag color4">回溯法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">进程通信</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">单链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">计算机组成</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">最短路径</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">单链表 排序</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -514,15 +542,31 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">排序</a>
+                <a href="javascript:void(0)" class="js-tag color5">Linux系统编程</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">1024程序员节 c++</a>
+                <a href="javascript:void(0)" class="js-tag color1">c++11</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">动态规划 算法 leetcode</a>
+                <a href="javascript:void(0)" class="js-tag color5">而擦函数</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">图论</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">稀疏矩阵</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">双链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">树 图</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -530,11 +574,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">递归</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">c++11算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">计算机组成</a>
+                <a href="javascript:void(0)" class="js-tag color5">堆栈调用</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -546,7 +594,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">递归</a>
+                <a href="javascript:void(0)" class="js-tag color5">进程基础</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">图的存储结构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">哈希</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">剑指offer</a>
               </li>
             
             <div class="clearfix"></div>

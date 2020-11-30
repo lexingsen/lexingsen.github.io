@@ -19,7 +19,7 @@
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20181111122020607.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20181111122842514.png">
 <meta property="article:published_time" content="2018-11-11T04:31:46.000Z">
-<meta property="article:modified_time" content="2020-11-29T19:35:25.039Z">
+<meta property="article:modified_time" content="2020-11-30T16:28:48.842Z">
 <meta property="article:author" content="lexingsen">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://img-blog.csdnimg.cn/2018111111534583.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70">
@@ -72,7 +72,7 @@
 			</ul>
 			</nav>
 			<nav>
-			总文章数 300
+			总文章数 296
 			</nav>
 		<nav class="header-smart-menu">
     		
@@ -189,7 +189,7 @@
         <a id="more"></a>
 
 <p><font size=5 face="Courier New" color=black>单链表实现：</font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br></pre></td><td class="code"><pre><span class="line">public class MyLinkedList &lt;T&gt;&#123;</span><br><span class="line">    private static class Entry&lt;E&gt;&#123;</span><br><span class="line">        private E value;</span><br><span class="line">        private Entry next;</span><br><span class="line"></span><br><span class="line">        Entry(E e)&#123;this.value &#x3D; e;this.next &#x3D; null;&#125;</span><br><span class="line">        Entry(E e,Entry next)&#123;this.value &#x3D; e;this.next &#x3D; next;&#125;</span><br><span class="line">        Entry()&#123;&#125;</span><br><span class="line"></span><br><span class="line">        public E getValue()&#123;return value;&#125;</span><br><span class="line">        public void setValue(E value) &#123;this.value &#x3D; value;&#125;</span><br><span class="line">        public Entry getNext() &#123; return next;&#125;</span><br><span class="line">        public void setNext(Entry next) &#123; this.next &#x3D; next;&#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private Entry&lt;T&gt; head;</span><br><span class="line">    private int length;</span><br><span class="line"></span><br><span class="line">    MyLinkedList()&#123;</span><br><span class="line">        head &#x3D; new Entry&lt;T&gt;();</span><br><span class="line">        length &#x3D; 0;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void push(T e)&#123;</span><br><span class="line">        insertTail(e);</span><br><span class="line">    &#125;</span><br><span class="line">    public void pop()&#123;</span><br><span class="line">        if(!isEmpty())&#123;</span><br><span class="line">            deleteTail();</span><br><span class="line">        &#125;</span><br><span class="line">        else&#123;</span><br><span class="line">            System.out.print(&quot;栈空，不能进行删除!&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    public T peek()&#123;</span><br><span class="line">        if(!isEmpty())&#123;</span><br><span class="line">            return getTailValue();</span><br><span class="line">        &#125;</span><br><span class="line">        else &#123;</span><br><span class="line">            System.out.print(&quot;栈空，没有栈顶元素&quot;);</span><br><span class="line">            return null;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    public boolean isEmpty()&#123;return getLength()&#x3D;&#x3D;0;&#125;</span><br><span class="line">    public int search(T e)&#123;</span><br><span class="line">        int index &#x3D; searchIndex(e);</span><br><span class="line">        if(index&gt;&#x3D;0)&#123;</span><br><span class="line">            return getLength()-index;</span><br><span class="line">        &#125;</span><br><span class="line">        else&#123;</span><br><span class="line">            return -1;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    public int searchIndex(T e)&#123;</span><br><span class="line">        assert(head!&#x3D;null);</span><br><span class="line">        Entry p &#x3D; head.next;</span><br><span class="line">        int i &#x3D; 0;</span><br><span class="line">        while(p!&#x3D;null)&#123;</span><br><span class="line">            if(p.value.equals(e))&#123;</span><br><span class="line">                return i;</span><br><span class="line">            &#125;</span><br><span class="line">            i++;</span><br><span class="line">            p &#x3D; p.next;</span><br><span class="line">        &#125;</span><br><span class="line">        return -1;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void insert(int pos,T e)&#123;</span><br><span class="line">            if(pos &lt; 1 || pos &gt;getLength()+1)&#123;</span><br><span class="line">                System.out.print(&quot;插入位置不正确!&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">            int i &#x3D; 0;</span><br><span class="line">            assert(head!&#x3D;null);</span><br><span class="line">            Entry p &#x3D; head;</span><br><span class="line">            while(i&lt;pos-1 &amp;&amp; p!&#x3D;null)&#123;</span><br><span class="line">                i++;</span><br><span class="line">                p &#x3D; p.next;</span><br><span class="line">            &#125;</span><br><span class="line">            Entry pNew &#x3D; new Entry(e);</span><br><span class="line">            pNew.next &#x3D; p.next;</span><br><span class="line">            p.next &#x3D; pNew;</span><br><span class="line">            length++;</span><br><span class="line">    &#125;</span><br><span class="line">    public void insertHead(T e)&#123;insert(1,e);&#125;</span><br><span class="line">    public void insertTail(T e)&#123;insert(getLength()+1,e);&#125;</span><br><span class="line">    public void delete(int pos)&#123;</span><br><span class="line">        if(pos&lt;1 || pos&gt;getLength())&#123;</span><br><span class="line">            System.out.print(&quot;删除位置不正确!&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        assert(head!&#x3D;null);</span><br><span class="line">        int i&#x3D;0;</span><br><span class="line">        Entry p &#x3D; head;</span><br><span class="line">        while(i&lt;pos-1 &amp;&amp; p!&#x3D;null)&#123;</span><br><span class="line">            i++;p &#x3D; p.next;</span><br><span class="line">        &#125;</span><br><span class="line">        Entry q &#x3D; p.next;</span><br><span class="line">        q.value &#x3D; null;</span><br><span class="line">        p.next &#x3D; q.next;</span><br><span class="line">        length--;</span><br><span class="line">    &#125;</span><br><span class="line">    public void deleteHead()&#123;delete(1);&#125;</span><br><span class="line">    public void deleteTail()&#123;delete(getLength());&#125;</span><br><span class="line">    public void show()&#123;</span><br><span class="line">        assert(head!&#x3D;null);</span><br><span class="line">        Entry p &#x3D; head.next;</span><br><span class="line">        while(p!&#x3D;null)&#123;</span><br><span class="line">            System.out.print(p.value+&quot; &quot;);</span><br><span class="line">            p &#x3D; p.next;</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println();</span><br><span class="line">    &#125;</span><br><span class="line">    public int getLength()&#123;return length;&#125;</span><br><span class="line">    public T getTailValue()&#123;</span><br><span class="line">        assert(head!&#x3D;null);</span><br><span class="line">        Entry&lt;T&gt; p &#x3D; head;</span><br><span class="line">        while(p.next!&#x3D;null)&#123;</span><br><span class="line">            p &#x3D; p.next;</span><br><span class="line">        &#125;</span><br><span class="line">        return p.getValue();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyLinkedList</span> &lt;<span class="title">T</span>&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Entry</span>&lt;<span class="title">E</span>&gt;</span>&#123;</span><br><span class="line">        <span class="keyword">private</span> E value;</span><br><span class="line">        <span class="keyword">private</span> Entry next;</span><br><span class="line"></span><br><span class="line">        Entry(E e)&#123;<span class="keyword">this</span>.value = e;<span class="keyword">this</span>.next = <span class="keyword">null</span>;&#125;</span><br><span class="line">        Entry(E e,Entry next)&#123;<span class="keyword">this</span>.value = e;<span class="keyword">this</span>.next = next;&#125;</span><br><span class="line">        Entry()&#123;&#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> E <span class="title">getValue</span><span class="params">()</span></span>&#123;<span class="keyword">return</span> value;&#125;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setValue</span><span class="params">(E value)</span> </span>&#123;<span class="keyword">this</span>.value = value;&#125;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> Entry <span class="title">getNext</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> next;&#125;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setNext</span><span class="params">(Entry next)</span> </span>&#123; <span class="keyword">this</span>.next = next;&#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Entry&lt;T&gt; head;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> length;</span><br><span class="line"></span><br><span class="line">    MyLinkedList()&#123;</span><br><span class="line">        head = <span class="keyword">new</span> Entry&lt;T&gt;();</span><br><span class="line">        length = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">push</span><span class="params">(T e)</span></span>&#123;</span><br><span class="line">        insertTail(e);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">pop</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(!isEmpty())&#123;</span><br><span class="line">            deleteTail();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            System.out.print(<span class="string">&quot;栈空，不能进行删除!&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> T <span class="title">peek</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(!isEmpty())&#123;</span><br><span class="line">            <span class="keyword">return</span> getTailValue();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            System.out.print(<span class="string">&quot;栈空，没有栈顶元素&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isEmpty</span><span class="params">()</span></span>&#123;<span class="keyword">return</span> getLength()==<span class="number">0</span>;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">search</span><span class="params">(T e)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> index = searchIndex(e);</span><br><span class="line">        <span class="keyword">if</span>(index&gt;=<span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> getLength()-index;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">searchIndex</span><span class="params">(T e)</span></span>&#123;</span><br><span class="line">        <span class="keyword">assert</span>(head!=<span class="keyword">null</span>);</span><br><span class="line">        Entry p = head.next;</span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(p!=<span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span>(p.value.equals(e))&#123;</span><br><span class="line">                <span class="keyword">return</span> i;</span><br><span class="line">            &#125;</span><br><span class="line">            i++;</span><br><span class="line">            p = p.next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insert</span><span class="params">(<span class="keyword">int</span> pos,T e)</span></span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(pos &lt; <span class="number">1</span> || pos &gt;getLength()+<span class="number">1</span>)&#123;</span><br><span class="line">                System.out.print(<span class="string">&quot;插入位置不正确!&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">assert</span>(head!=<span class="keyword">null</span>);</span><br><span class="line">            Entry p = head;</span><br><span class="line">            <span class="keyword">while</span>(i&lt;pos-<span class="number">1</span> &amp;&amp; p!=<span class="keyword">null</span>)&#123;</span><br><span class="line">                i++;</span><br><span class="line">                p = p.next;</span><br><span class="line">            &#125;</span><br><span class="line">            Entry pNew = <span class="keyword">new</span> Entry(e);</span><br><span class="line">            pNew.next = p.next;</span><br><span class="line">            p.next = pNew;</span><br><span class="line">            length++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insertHead</span><span class="params">(T e)</span></span>&#123;insert(<span class="number">1</span>,e);&#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insertTail</span><span class="params">(T e)</span></span>&#123;insert(getLength()+<span class="number">1</span>,e);&#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">delete</span><span class="params">(<span class="keyword">int</span> pos)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(pos&lt;<span class="number">1</span> || pos&gt;getLength())&#123;</span><br><span class="line">            System.out.print(<span class="string">&quot;删除位置不正确!&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">assert</span>(head!=<span class="keyword">null</span>);</span><br><span class="line">        <span class="keyword">int</span> i=<span class="number">0</span>;</span><br><span class="line">        Entry p = head;</span><br><span class="line">        <span class="keyword">while</span>(i&lt;pos-<span class="number">1</span> &amp;&amp; p!=<span class="keyword">null</span>)&#123;</span><br><span class="line">            i++;p = p.next;</span><br><span class="line">        &#125;</span><br><span class="line">        Entry q = p.next;</span><br><span class="line">        q.value = <span class="keyword">null</span>;</span><br><span class="line">        p.next = q.next;</span><br><span class="line">        length--;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">deleteHead</span><span class="params">()</span></span>&#123;delete(<span class="number">1</span>);&#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">deleteTail</span><span class="params">()</span></span>&#123;delete(getLength());&#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">show</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">assert</span>(head!=<span class="keyword">null</span>);</span><br><span class="line">        Entry p = head.next;</span><br><span class="line">        <span class="keyword">while</span>(p!=<span class="keyword">null</span>)&#123;</span><br><span class="line">            System.out.print(p.value+<span class="string">&quot; &quot;</span>);</span><br><span class="line">            p = p.next;</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getLength</span><span class="params">()</span></span>&#123;<span class="keyword">return</span> length;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> T <span class="title">getTailValue</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">assert</span>(head!=<span class="keyword">null</span>);</span><br><span class="line">        Entry&lt;T&gt; p = head;</span><br><span class="line">        <span class="keyword">while</span>(p.next!=<span class="keyword">null</span>)&#123;</span><br><span class="line">            p = p.next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> p.getValue();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><font size=5 color=black face="Courier New">Iterable接口</font><br><img src="https://img-blog.csdnimg.cn/2018111111534583.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><font size=5 color=black face="Courier New">Iterable接口中需要实现的抽象方法iterator()的返回值会返回一个迭代器对象，这个迭代器对象可以作为一个工具来遍历集合类中的对象。此外，迭代器更是设计模式，如对图的遍历可以实现一个图迭代器，简化代码，将遍历的思想抽象出来。</font></p>
 <p><font size=5 face="Courier New" color=black>自己实现一个可以遍历上述单链表的迭代器,<font size=5 color=red face="Courier New">这个迭代器需要实现Iterator接口中的方法。</font>主要包括以下三个方法：<br><img src="https://img-blog.csdnimg.cn/20181111122020607.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>（1）是否存在下一个对象元素<br>（2）返回下一个对象元素<br>（3）删除集合中的当前迭代器指向的对象元素<br></font></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">public class MyLinkedList &lt;T&gt; implements Iterable&lt;T&gt;&#123;</span><br><span class="line">    public Iterator iterator()&#123;</span><br><span class="line">        return new MyIterator();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	public class MyIterator implements Iterator&lt;T&gt; &#123;</span><br><span class="line">        Entry&lt;T&gt; data;</span><br><span class="line"></span><br><span class="line">        MyIterator()&#123;</span><br><span class="line">            data &#x3D; head.next;</span><br><span class="line">        &#125;</span><br><span class="line">        @Override</span><br><span class="line">        public boolean hasNext() &#123;</span><br><span class="line">            return data !&#x3D; null;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        @Override</span><br><span class="line">        public T next() &#123;</span><br><span class="line">            Entry&lt;T&gt; last &#x3D; data;</span><br><span class="line">            data &#x3D; data.next;</span><br><span class="line">            return last.getValue();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        @Override</span><br><span class="line">        public void remove() &#123;</span><br><span class="line">            MyLinkedList1.this.delete(searchIndex(data.getValue()));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
@@ -413,11 +413,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">动态规划</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">1024程序员节</a>
+                <a href="javascript:void(0)" class="js-tag color3">dp</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -425,7 +421,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">数据结构 算法</a>
+                <a href="javascript:void(0)" class="js-tag color3">查找</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -437,11 +433,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">c语言</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color4">STL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -449,7 +441,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">linux系统编程</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">linux命令</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -465,14 +461,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">c</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">c++11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">protobuf</a>
               </li>
              
@@ -485,7 +473,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color2">树</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">栈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">二分</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">堆</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -497,11 +497,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">堆</a>
+                <a href="javascript:void(0)" class="js-tag color2">c</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">回溯法</a>
+                <a href="javascript:void(0)" class="js-tag color3">排序</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -509,11 +509,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">最短路径</a>
+                <a href="javascript:void(0)" class="js-tag color4">回溯法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">进程通信</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">单链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">计算机组成</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">最短路径</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">单链表 排序</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -525,15 +541,31 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">排序</a>
+                <a href="javascript:void(0)" class="js-tag color5">Linux系统编程</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">1024程序员节 c++</a>
+                <a href="javascript:void(0)" class="js-tag color1">c++11</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">动态规划 算法 leetcode</a>
+                <a href="javascript:void(0)" class="js-tag color5">而擦函数</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">图论</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">稀疏矩阵</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">双链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">树 图</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -541,11 +573,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">递归</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">c++11算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">计算机组成</a>
+                <a href="javascript:void(0)" class="js-tag color5">堆栈调用</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -557,7 +593,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">递归</a>
+                <a href="javascript:void(0)" class="js-tag color5">进程基础</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">图的存储结构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">哈希</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">剑指offer</a>
               </li>
             
             <div class="clearfix"></div>

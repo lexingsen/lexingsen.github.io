@@ -8,17 +8,17 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>opendir/readdir/closedir 目录遍历相关函数 | 乐行僧的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1.打开目录所需头文件： 12#include&lt;sys&#x2F;types.h&gt;#include&lt;dirent.h&gt; opendir是一个C库函数，可以通过man 3 opendir查看函数相关的详细内容。 函数原型：DIR *opendir(const char *name) 参数：name为目录名。返回值：成功返回一个指向目录的指针，失败返回NULL,同时errn">
+  <meta name="description" content="1.打开目录所需头文件： 12#include&lt;sys&#x2F;types.h&gt;#include&lt;dirent.h&gt; opendir是一个C库函数，可以通过man 3 opendir查看函数相关的详细内容。 函数原型：DIR *opendir(const char *name) 参数：name为目录名。返回值：成功返回一个指向目录的指针，失败返回NULL,同时errno会被设置">
 <meta property="og:type" content="article">
 <meta property="og:title" content="opendir&#x2F;readdir&#x2F;closedir 目录遍历相关函数">
 <meta property="og:url" content="http://example.com/2018/05/14/opendir!readdir!closedir%20%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0/index.html">
 <meta property="og:site_name" content="乐行僧的博客">
-<meta property="og:description" content="1.打开目录所需头文件： 12#include&lt;sys&#x2F;types.h&gt;#include&lt;dirent.h&gt; opendir是一个C库函数，可以通过man 3 opendir查看函数相关的详细内容。 函数原型：DIR *opendir(const char *name) 参数：name为目录名。返回值：成功返回一个指向目录的指针，失败返回NULL,同时errn">
+<meta property="og:description" content="1.打开目录所需头文件： 12#include&lt;sys&#x2F;types.h&gt;#include&lt;dirent.h&gt; opendir是一个C库函数，可以通过man 3 opendir查看函数相关的详细内容。 函数原型：DIR *opendir(const char *name) 参数：name为目录名。返回值：成功返回一个指向目录的指针，失败返回NULL,同时errno会被设置">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://img-blog.csdn.net/20180514193917575?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
 <meta property="og:image" content="https://img-blog.csdn.net/20180514204753830?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
 <meta property="article:published_time" content="2018-05-14T13:25:56.000Z">
-<meta property="article:modified_time" content="2020-11-29T19:35:28.003Z">
+<meta property="article:modified_time" content="2020-11-30T16:41:11.904Z">
 <meta property="article:author" content="lexingsen">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://img-blog.csdn.net/20180514193917575?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
@@ -71,7 +71,7 @@
 			</ul>
 			</nav>
 			<nav>
-			总文章数 300
+			总文章数 296
 			</nav>
 		<nav class="header-smart-menu">
     		
@@ -188,19 +188,19 @@
         <a id="more"></a>
 
 <p><strong>1.打开目录</strong><br>所需头文件：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;sys&#x2F;types.h&gt;</span><br><span class="line">#include&lt;dirent.h&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;dirent.h&gt;</span></span></span><br></pre></td></tr></table></figure>
 <p><code>opendir</code>是一个C库函数，可以通过<code>man 3 opendir</code>查看函数相关的详细内容。</p>
 <p>函数原型：<code>DIR *opendir(const char *name) </code><br>参数：name为目录名。<br>返回值：成功返回一个指向目录的指针，失败返回<code>NULL</code>,同时errno会被设置为一个合适的值。</p>
 <p><strong>2.读目录</strong><br>所需头文件：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;dirent.h&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;dirent.h&gt;</span></span></span><br></pre></td></tr></table></figure>
 <p>函数原型：<code>struct dirent *readdir(DIR *dirp)</code><br>参数：<code>opendir</code>函数的返回值。<br>返回值：指向目录项结构体的指针。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">struct dirent&#123;</span><br><span class="line">	ino_t d_ino;    &#x2F;&#x2F;此目录进入点的inode</span><br><span class="line">	off_t d_off;     &#x2F;&#x2F;目录文件开头至此目录进入点的偏移</span><br><span class="line">	signed short int d_reclen;      &#x2F;&#x2F;d_name的长度,不包括NULL字符</span><br><span class="line">	unsigned char d_type;           &#x2F;&#x2F;d_name所指文件的类型</span><br><span class="line">	char d_name[256];     &#x2F;&#x2F;文件名</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;类型声明</span><br><span class="line">ino_t 为  unsigned long int</span><br><span class="line">off_t 为  long int</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">dirent</span>&#123;</span></span><br><span class="line">	<span class="keyword">ino_t</span> d_ino;    <span class="comment">//此目录进入点的inode</span></span><br><span class="line">	<span class="keyword">off_t</span> d_off;     <span class="comment">//目录文件开头至此目录进入点的偏移</span></span><br><span class="line">	<span class="keyword">signed</span> <span class="keyword">short</span> <span class="keyword">int</span> d_reclen;      <span class="comment">//d_name的长度,不包括NULL字符</span></span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">char</span> d_type;           <span class="comment">//d_name所指文件的类型</span></span><br><span class="line">	<span class="keyword">char</span> d_name[<span class="number">256</span>];     <span class="comment">//文件名</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//类型声明</span></span><br><span class="line"><span class="keyword">ino_t</span> 为  <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">int</span></span><br><span class="line"><span class="keyword">off_t</span> 为  <span class="keyword">long</span> <span class="keyword">int</span></span><br></pre></td></tr></table></figure>
 <p><img src="https://img-blog.csdn.net/20180514193917575?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
 <p>实例应用：<br>在当前目录下有一个dir目录文件：<br><img src="https://img-blog.csdn.net/20180514204753830?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">#include&lt;stdlib.h&gt;</span><br><span class="line">#include&lt;unistd.h&gt;</span><br><span class="line">#include&lt;dirent.h&gt;</span><br><span class="line">#include&lt;assert.h&gt;</span><br><span class="line">#include&lt;sting.h&gt;</span><br><span class="line">#include&lt;sys&#x2F;types.h&gt;</span><br><span class="line"></span><br><span class="line">int main(int argc,char *argv[])</span><br><span class="line">&#123;</span><br><span class="line">	DIR *drip &#x3D; opendir(argv[1]);</span><br><span class="line">	if(drip &#x3D;&#x3D; NULL)</span><br><span class="line">	&#123;</span><br><span class="line">		perror(&quot;opendir&quot;);</span><br><span class="line">		exit(1);</span><br><span class="line">	&#125;</span><br><span class="line">	struct dirent* dir &#x3D; NULL;</span><br><span class="line">	dir &#x3D; readdir(drip);</span><br><span class="line">	assert(dir !&#x3D; NULL);</span><br><span class="line">	printf(&quot;Inode &#x3D; %lu\n&quot;,dir-&gt;d_ino);</span><br><span class="line">	printf(&quot;目录文件至此目录进入点的偏移 &#x3D; %ld\n&quot;,dir-&gt;d_off);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;dirent.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;assert.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;sting.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc,<span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	DIR *drip = opendir(argv[<span class="number">1</span>]);</span><br><span class="line">	<span class="keyword">if</span>(drip == <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		perror(<span class="string">&quot;opendir&quot;</span>);</span><br><span class="line">		<span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">dirent</span>* <span class="title">dir</span> =</span> <span class="literal">NULL</span>;</span><br><span class="line">	dir = readdir(drip);</span><br><span class="line">	assert(dir != <span class="literal">NULL</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;Inode = %lu\n&quot;</span>,dir-&gt;d_ino);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;目录文件至此目录进入点的偏移 = %ld\n&quot;</span>,dir-&gt;d_off);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p><strong>3.关闭目录</strong><br>所需头文件：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;sys&#x2F;types.h&gt;</span><br><span class="line">#include&lt;dirent.h&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;dirent.h&gt;</span></span></span><br></pre></td></tr></table></figure>
 <p>函数原型：<code>int close(DIR *drip)</code><br>参数：opendir函数的返回值。<br>返回值：成功关闭返回0，失败返回-1，同时errno被设置为一个合适的值。</p>
 <p><strong>注意：</strong><code>closedir与opendir</code>搭配使用。大家可以与C语言中的fopen和fclose函数联系，其作用是相同的。</p>
 
@@ -420,11 +420,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">动态规划</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">1024程序员节</a>
+                <a href="javascript:void(0)" class="js-tag color3">dp</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -432,7 +428,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">数据结构 算法</a>
+                <a href="javascript:void(0)" class="js-tag color3">查找</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -444,11 +440,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">c语言</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color4">STL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -456,7 +448,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">linux系统编程</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">linux命令</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -472,14 +468,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">c</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">c++11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">protobuf</a>
               </li>
              
@@ -492,7 +480,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color2">树</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">栈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">二分</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">堆</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -504,11 +504,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">堆</a>
+                <a href="javascript:void(0)" class="js-tag color2">c</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">回溯法</a>
+                <a href="javascript:void(0)" class="js-tag color3">排序</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -516,11 +516,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">最短路径</a>
+                <a href="javascript:void(0)" class="js-tag color4">回溯法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">进程通信</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">单链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">计算机组成</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">最短路径</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">单链表 排序</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -532,15 +548,31 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">排序</a>
+                <a href="javascript:void(0)" class="js-tag color5">Linux系统编程</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">1024程序员节 c++</a>
+                <a href="javascript:void(0)" class="js-tag color1">c++11</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">动态规划 算法 leetcode</a>
+                <a href="javascript:void(0)" class="js-tag color5">而擦函数</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">图论</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">稀疏矩阵</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">双链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">树 图</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -548,11 +580,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">递归</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">c++11算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">计算机组成</a>
+                <a href="javascript:void(0)" class="js-tag color5">堆栈调用</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -564,7 +600,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">递归</a>
+                <a href="javascript:void(0)" class="js-tag color5">进程基础</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">图的存储结构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">哈希</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">剑指offer</a>
               </li>
             
             <div class="clearfix"></div>

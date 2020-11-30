@@ -8,17 +8,17 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>数据结构：归并排序（自顶向下和自底向上）递归和非递归 | 乐行僧的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1.自顶向下 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748#include &lt;iostream&gt;using namespace std;&#x2F;&#x2F;合并两个有序数组的操作&#x2F;&#x2F;索引m是第二区间的左边界void merge(i">
+  <meta name="description" content="1.自顶向下 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748#include &lt;iostream&gt;using namespace std;&#x2F;&#x2F;合并两个有序数组的操作&#x2F;&#x2F;索引m是第二区间的左边界void merge(int *a, int l, int m,">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数据结构：归并排序（自顶向下和自底向上）递归和非递归">
 <meta property="og:url" content="http://example.com/2019/08/23/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%9A%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F%EF%BC%88%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E5%92%8C%E8%87%AA%E5%BA%95%E5%90%91%E4%B8%8A%EF%BC%89%E9%80%92%E5%BD%92%E5%92%8C%E9%9D%9E%E9%80%92%E5%BD%92/index.html">
 <meta property="og:site_name" content="乐行僧的博客">
-<meta property="og:description" content="1.自顶向下 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748#include &lt;iostream&gt;using namespace std;&#x2F;&#x2F;合并两个有序数组的操作&#x2F;&#x2F;索引m是第二区间的左边界void merge(i">
+<meta property="og:description" content="1.自顶向下 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748#include &lt;iostream&gt;using namespace std;&#x2F;&#x2F;合并两个有序数组的操作&#x2F;&#x2F;索引m是第二区间的左边界void merge(int *a, int l, int m,">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-08-23T01:42:47.000Z">
-<meta property="article:modified_time" content="2020-11-29T19:35:21.567Z">
+<meta property="article:modified_time" content="2020-11-30T15:20:18.086Z">
 <meta property="article:author" content="lexingsen">
-<meta property="article:tag" content="数据结构">
+<meta property="article:tag" content="排序">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="乐行僧的博客" type="application/atom+xml">
@@ -69,7 +69,7 @@
 			</ul>
 			</nav>
 			<nav>
-			总文章数 300
+			总文章数 296
 			</nav>
 		<nav class="header-smart-menu">
     		
@@ -186,9 +186,9 @@
         <a id="more"></a>
 
 <p><font size=5 face=Consolas>1.自顶向下</font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;合并两个有序数组的操作</span><br><span class="line">&#x2F;&#x2F;索引m是第二区间的左边界</span><br><span class="line">void merge(int *a, int l, int m, int r) &#123;</span><br><span class="line">	int LEFT_SZIE  &#x3D; m - l;</span><br><span class="line">	int RIGHT_SIZE &#x3D; r - m + 1;</span><br><span class="line">	int *left  &#x3D; new int[LEFT_SIZE];</span><br><span class="line">	int *right &#x3D; new int[RIGHT_SIZE];</span><br><span class="line">	for(int i&#x3D;l; i&lt;m; ++i) left[i-l] &#x3D; a[i];</span><br><span class="line">	for(int i&#x3D;m; i&lt;&#x3D;r; ++i) right[i-m] &#x3D; a[i];</span><br><span class="line">	int i&#x3D;0, j&#x3D;0, k&#x3D;l;</span><br><span class="line">	while(i &lt; LEFT_SZIE &amp;&amp; j &lt; RIGHT_SIZE) &#123;</span><br><span class="line">		if(left[i] &lt; right[j]) a[k ++] &#x3D; left[i ++];</span><br><span class="line">		ekse a[k ++] &#x3D; right[j ++];</span><br><span class="line">	&#125;</span><br><span class="line">	while(i &lt; LEFT_SIZE)  a[k ++] &#x3D; left[i ++];</span><br><span class="line">	while(j &lt; RIGHT_SIZE) a[k ++] &#x3D; right[j ++];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	delete[] left;</span><br><span class="line">	delete[] right;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void _mergeSort(int *a, int l, int r) &#123;</span><br><span class="line">	if(l &gt;&#x3D; r) return;</span><br><span class="line">	int m &#x3D; (r - l) &#x2F; 2 + l;</span><br><span class="line">	_mergeSort(a, l, m);</span><br><span class="line">	_mergeSort(a, m+1, r);</span><br><span class="line">	merge(a, l, m+1, r);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void mergeSort(int *a, int n) &#123;</span><br><span class="line">	_mergeSort(a, 0, n-1);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">    int a[] &#x3D; &#123;4, 1, 8, 0, 3, 5, 7, 6, 2&#125;;</span><br><span class="line">    int n &#x3D; sizeof a&#x2F;sizeof(int);</span><br><span class="line"></span><br><span class="line">    cout &lt;&lt; n &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">    mergeSort(a, n);</span><br><span class="line">    for_each(a, a+n, [](int a) &#123;cout &lt;&lt; a &lt;&lt; &quot; &quot;;&#125;); cout &lt;&lt; endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//合并两个有序数组的操作</span></span><br><span class="line"><span class="comment">//索引m是第二区间的左边界</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">merge</span><span class="params">(<span class="keyword">int</span> *a, <span class="keyword">int</span> l, <span class="keyword">int</span> m, <span class="keyword">int</span> r)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> LEFT_SZIE  = m - l;</span><br><span class="line">	<span class="keyword">int</span> RIGHT_SIZE = r - m + <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">int</span> *left  = <span class="keyword">new</span> <span class="keyword">int</span>[LEFT_SIZE];</span><br><span class="line">	<span class="keyword">int</span> *right = <span class="keyword">new</span> <span class="keyword">int</span>[RIGHT_SIZE];</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=l; i&lt;m; ++i) left[i-l] = a[i];</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=m; i&lt;=r; ++i) right[i-m] = a[i];</span><br><span class="line">	<span class="keyword">int</span> i=<span class="number">0</span>, j=<span class="number">0</span>, k=l;</span><br><span class="line">	<span class="keyword">while</span>(i &lt; LEFT_SZIE &amp;&amp; j &lt; RIGHT_SIZE) &#123;</span><br><span class="line">		<span class="keyword">if</span>(left[i] &lt; right[j]) a[k ++] = left[i ++];</span><br><span class="line">		ekse a[k ++] = right[j ++];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">while</span>(i &lt; LEFT_SIZE)  a[k ++] = left[i ++];</span><br><span class="line">	<span class="keyword">while</span>(j &lt; RIGHT_SIZE) a[k ++] = right[j ++];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="keyword">delete</span>[] left;</span><br><span class="line">	<span class="keyword">delete</span>[] right;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> _mergeSort(<span class="keyword">int</span> *a, <span class="keyword">int</span> l, <span class="keyword">int</span> r) &#123;</span><br><span class="line">	<span class="keyword">if</span>(l &gt;= r) <span class="keyword">return</span>;</span><br><span class="line">	<span class="keyword">int</span> m = (r - l) / <span class="number">2</span> + l;</span><br><span class="line">	_mergeSort(a, l, m);</span><br><span class="line">	_mergeSort(a, m+<span class="number">1</span>, r);</span><br><span class="line">	merge(a, l, m+<span class="number">1</span>, r);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">mergeSort</span><span class="params">(<span class="keyword">int</span> *a, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">	_mergeSort(a, <span class="number">0</span>, n<span class="number">-1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a[] = &#123;<span class="number">4</span>, <span class="number">1</span>, <span class="number">8</span>, <span class="number">0</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">6</span>, <span class="number">2</span>&#125;;</span><br><span class="line">    <span class="keyword">int</span> n = <span class="keyword">sizeof</span> a/<span class="keyword">sizeof</span>(<span class="keyword">int</span>);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; n &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    mergeSort(a, n);</span><br><span class="line">    for_each(a, a+n, [](<span class="keyword">int</span> a) &#123;<span class="built_in">cout</span> &lt;&lt; a &lt;&lt; <span class="string">&quot; &quot;</span>;&#125;); <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><font size=5 face=Consolas>2.自底向上</font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;merge操作和上边是一样的</span><br><span class="line">&#x2F;&#x2F;这种实现方式参考算法四的实现</span><br><span class="line">void _mergeSortBU(int *a, int n) &#123;</span><br><span class="line">	for(int sz&#x3D;1; sz&lt;n; sz+&#x3D;sz) </span><br><span class="line">		&#x2F;&#x2F;对a[i...i+sz-1]和a[i+sz....i+2*sz-1]进行归并</span><br><span class="line">        &#x2F;*(1)为了保证由两个归并段i+sz &lt; n</span><br><span class="line">          (2)为了保证不越界 min(i+2*sz-1, n-1)*&#x2F;</span><br><span class="line">		for(int i&#x3D;0; i+sz&lt;n; i+&#x3D;sz+sz) </span><br><span class="line">			merge(a, i, i+sz, min(i+sz+sz-1, n-1));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void mergeSortBU(int *a, int n) &#123;</span><br><span class="line">	_mergeSortBU(a, n);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">    int a[] &#x3D; &#123;4, 1, 8, 0, 3, 5, 7, 6, 2&#125;;</span><br><span class="line">    int n &#x3D; sizeof a&#x2F;sizeof(int);</span><br><span class="line"></span><br><span class="line">    cout &lt;&lt; n &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">    mergeSortBU(a, n);</span><br><span class="line">    for_each(a, a+n, [](int a) &#123;cout &lt;&lt; a &lt;&lt; &quot; &quot;;&#125;); cout &lt;&lt; endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//merge操作和上边是一样的</span></span><br><span class="line"><span class="comment">//这种实现方式参考算法四的实现</span></span><br><span class="line"><span class="keyword">void</span> _mergeSortBU(<span class="keyword">int</span> *a, <span class="keyword">int</span> n) &#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> sz=<span class="number">1</span>; sz&lt;n; sz+=sz) </span><br><span class="line">		<span class="comment">//对a[i...i+sz-1]和a[i+sz....i+2*sz-1]进行归并</span></span><br><span class="line">        <span class="comment">/*(1)为了保证由两个归并段i+sz &lt; n</span></span><br><span class="line"><span class="comment">          (2)为了保证不越界 min(i+2*sz-1, n-1)*/</span></span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i+sz&lt;n; i+=sz+sz) </span><br><span class="line">			merge(a, i, i+sz, min(i+sz+sz<span class="number">-1</span>, n<span class="number">-1</span>));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">mergeSortBU</span><span class="params">(<span class="keyword">int</span> *a, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">	_mergeSortBU(a, n);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a[] = &#123;<span class="number">4</span>, <span class="number">1</span>, <span class="number">8</span>, <span class="number">0</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">6</span>, <span class="number">2</span>&#125;;</span><br><span class="line">    <span class="keyword">int</span> n = <span class="keyword">sizeof</span> a/<span class="keyword">sizeof</span>(<span class="keyword">int</span>);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; n &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    mergeSortBU(a, n);</span><br><span class="line">    for_each(a, a+n, [](<span class="keyword">int</span> a) &#123;<span class="built_in">cout</span> &lt;&lt; a &lt;&lt; <span class="string">&quot; &quot;</span>;&#125;); <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
 
@@ -202,7 +202,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">排序</a>
         		</li>
       		
 		</ul>
@@ -417,11 +417,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">动态规划</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">1024程序员节</a>
+                <a href="javascript:void(0)" class="js-tag color3">dp</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -429,7 +425,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">数据结构 算法</a>
+                <a href="javascript:void(0)" class="js-tag color3">查找</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -441,11 +437,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">c语言</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color4">STL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -453,7 +445,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">linux系统编程</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">linux命令</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -469,14 +465,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">c</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">c++11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">protobuf</a>
               </li>
              
@@ -489,7 +477,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color2">树</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">栈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">二分</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">堆</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -501,11 +501,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">堆</a>
+                <a href="javascript:void(0)" class="js-tag color2">c</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">回溯法</a>
+                <a href="javascript:void(0)" class="js-tag color3">排序</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -513,11 +513,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">最短路径</a>
+                <a href="javascript:void(0)" class="js-tag color4">回溯法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">进程通信</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">单链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">计算机组成</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">最短路径</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">单链表 排序</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -529,15 +545,31 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">排序</a>
+                <a href="javascript:void(0)" class="js-tag color5">Linux系统编程</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">1024程序员节 c++</a>
+                <a href="javascript:void(0)" class="js-tag color1">c++11</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">动态规划 算法 leetcode</a>
+                <a href="javascript:void(0)" class="js-tag color5">而擦函数</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">图论</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">稀疏矩阵</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">双链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">树 图</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -545,11 +577,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">递归</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">c++11算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">计算机组成</a>
+                <a href="javascript:void(0)" class="js-tag color5">堆栈调用</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -561,7 +597,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">递归</a>
+                <a href="javascript:void(0)" class="js-tag color5">进程基础</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">图的存储结构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">哈希</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">剑指offer</a>
               </li>
             
             <div class="clearfix"></div>

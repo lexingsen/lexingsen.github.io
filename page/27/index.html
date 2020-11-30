@@ -64,7 +64,7 @@
 			</ul>
 			</nav>
 			<nav>
-			总文章数 300
+			总文章数 296
 			</nav>
 		<nav class="header-smart-menu">
     		
@@ -147,288 +147,6 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-opendir!readdir!closedir 目录遍历相关函数" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/14/opendir!readdir!closedir%20%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0/">opendir/readdir/closedir 目录遍历相关函数</a>
-    </h1>
-  
-
-        <!--显示阅读次数-->
-        
-        <!--显示阅读次数完毕-->
-        
-        <a href="/2018/05/14/opendir!readdir!closedir%20%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0/" class="archive-article-date">
-  	<time datetime="2018-05-14T13:25:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-14</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-      
-      
-        <a id="more"></a>
-
-<p><strong>1.打开目录</strong><br>所需头文件：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;sys&#x2F;types.h&gt;</span><br><span class="line">#include&lt;dirent.h&gt;</span><br></pre></td></tr></table></figure>
-<p><code>opendir</code>是一个C库函数，可以通过<code>man 3 opendir</code>查看函数相关的详细内容。</p>
-<p>函数原型：<code>DIR *opendir(const char *name) </code><br>参数：name为目录名。<br>返回值：成功返回一个指向目录的指针，失败返回<code>NULL</code>,同时errno会被设置为一个合适的值。</p>
-<p><strong>2.读目录</strong><br>所需头文件：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;dirent.h&gt;</span><br></pre></td></tr></table></figure>
-<p>函数原型：<code>struct dirent *readdir(DIR *dirp)</code><br>参数：<code>opendir</code>函数的返回值。<br>返回值：指向目录项结构体的指针。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">struct dirent&#123;</span><br><span class="line">	ino_t d_ino;    &#x2F;&#x2F;此目录进入点的inode</span><br><span class="line">	off_t d_off;     &#x2F;&#x2F;目录文件开头至此目录进入点的偏移</span><br><span class="line">	signed short int d_reclen;      &#x2F;&#x2F;d_name的长度,不包括NULL字符</span><br><span class="line">	unsigned char d_type;           &#x2F;&#x2F;d_name所指文件的类型</span><br><span class="line">	char d_name[256];     &#x2F;&#x2F;文件名</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;类型声明</span><br><span class="line">ino_t 为  unsigned long int</span><br><span class="line">off_t 为  long int</span><br></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdn.net/20180514193917575?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
-<p>实例应用：<br>在当前目录下有一个dir目录文件：<br><img src="https://img-blog.csdn.net/20180514204753830?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">#include&lt;stdlib.h&gt;</span><br><span class="line">#include&lt;unistd.h&gt;</span><br><span class="line">#include&lt;dirent.h&gt;</span><br><span class="line">#include&lt;assert.h&gt;</span><br><span class="line">#include&lt;sting.h&gt;</span><br><span class="line">#include&lt;sys&#x2F;types.h&gt;</span><br><span class="line"></span><br><span class="line">int main(int argc,char *argv[])</span><br><span class="line">&#123;</span><br><span class="line">	DIR *drip &#x3D; opendir(argv[1]);</span><br><span class="line">	if(drip &#x3D;&#x3D; NULL)</span><br><span class="line">	&#123;</span><br><span class="line">		perror(&quot;opendir&quot;);</span><br><span class="line">		exit(1);</span><br><span class="line">	&#125;</span><br><span class="line">	struct dirent* dir &#x3D; NULL;</span><br><span class="line">	dir &#x3D; readdir(drip);</span><br><span class="line">	assert(dir !&#x3D; NULL);</span><br><span class="line">	printf(&quot;Inode &#x3D; %lu\n&quot;,dir-&gt;d_ino);</span><br><span class="line">	printf(&quot;目录文件至此目录进入点的偏移 &#x3D; %ld\n&quot;,dir-&gt;d_off);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p><strong>3.关闭目录</strong><br>所需头文件：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;sys&#x2F;types.h&gt;</span><br><span class="line">#include&lt;dirent.h&gt;</span><br></pre></td></tr></table></figure>
-<p>函数原型：<code>int close(DIR *drip)</code><br>参数：opendir函数的返回值。<br>返回值：成功关闭返回0，失败返回-1，同时errno被设置为一个合适的值。</p>
-<p><strong>注意：</strong><code>closedir与opendir</code>搭配使用。大家可以与C语言中的fopen和fclose函数联系，其作用是相同的。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/linux//" class="article-tag-list-link color1">linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/05/14/opendir!readdir!closedir%20%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
-    <article id="post-linux系统调用函数 rename!getcwd!chdir!mkdir!rmdir--目录操作相关函数" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/14/linux%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%87%BD%E6%95%B0%20rename!getcwd!chdir!mkdir!rmdir--%E7%9B%AE%E5%BD%95%E6%93%8D%E4%BD%9C%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0/">linux系统调用函数 rename/getcwd/chdir/mkdir/rmdir--目录操作相关函数</a>
-    </h1>
-  
-
-        <!--显示阅读次数-->
-        
-        <!--显示阅读次数完毕-->
-        
-        <a href="/2018/05/14/linux%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%87%BD%E6%95%B0%20rename!getcwd!chdir!mkdir!rmdir--%E7%9B%AE%E5%BD%95%E6%93%8D%E4%BD%9C%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0/" class="archive-article-date">
-  	<time datetime="2018-05-14T10:33:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-14</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-      
-      
-        <a id="more"></a>
-
-<p><strong>1.文件重命名</strong><br>在linux的shell解释器中输入<code>mv 原文件名 新文件名</code>即可进行重命名，实际上C库函数提供了具有相同功能的系统调用函数<code>rename</code>。</p>
-<p>所需头文件：<code>#include&lt;stdio.h&gt;</code><br>函数原型： <code>int rename(const char *oldpath,const char *newpath)</code><br>参数：  oldpath原文件名,newpath为新文件名。<br>返回值：成功返回0，失败返回-1，同时errno被设置为合适的值。</p>
-<p>该函数用法比较简单，不做实例验证，大家可以自行验证。</p>
-<p><strong>2.修改当前进行（应用程序）的路径  cd。</strong><br>所需头文件： <code>#include&lt;unistd.h&gt;</code><br>函数原型： <code>int chdir(const char *path)</code><br>参数： path即为要切换的路径。<br>返回值： 成功返回0，失败返回-1,同时errno会被设置为合适的值。</p>
-<p><strong>3.获取当前进程的工作目录 pwd</strong><br>函数原型：<code>char* getcwd(char *buf,size_t size)</code><br>参数：buf,缓冲区，存储当前的工作目录。size，缓冲区的大小。<br>返回值：成功返回当前的工作目录，失败返回<code>NULL</code>。</p>
-<p>实例验证：<br>（1）输入<code>pwd</code>获取当前工作目录。<br><img src="https://img-blog.csdn.net/20180514181213102?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>（2）函数验证</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">#unclude&lt;sys&#x2F;types.h&gt;</span><br><span class="line">#include&lt;unistd.h&gt;</span><br><span class="line">#include&lt;stdlib.h&gt;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	char buff[128] &#x3D; &#123;0&#125;;</span><br><span class="line">	char* s &#x3D; getcwd(buff,sizeof(buff));</span><br><span class="line">	if(NULL &#x3D;&#x3D; s)</span><br><span class="line">	&#123;</span><br><span class="line">		perror(&quot;getcwd&quot;);</span><br><span class="line">		exit(1);</span><br><span class="line">	&#125;</span><br><span class="line">	printf(&quot;%s\n&quot;,buff);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdn.net/20180514182224623?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>观察上图结果和我们用<code>pwd</code>获取到的当前工作目录是一致的。</p>
-<p><strong>4.创建目录 mkdir</strong><br>所需头文件：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;sys&#x2F;stat.h&gt;</span><br><span class="line">#include&lt;sys&#x2F;types.h&gt;</span><br></pre></td></tr></table></figure>
-<p>函数原型：<code>int mkdir(const char *pathname,mode_t mode)</code><br>参数：pathname为目录名   mode是目录权限，是一个八进制的数字，实际权限：<code>mode &amp; ~umask</code><br>返回值：成功返回0，失败返回-1，同时errno会被设置成一个合适的值。</p>
-<p><strong>5.删除一个空目录 rmdir</strong><br>所需头文件：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;unistd&gt;</span><br></pre></td></tr></table></figure>
-<p>函数原型：<code>int rmdir(const char* pathname)</code><br>参数：空目录的名字。<br>返回值：成功返回0，失败返回-1，同时errno会被设置为一个合适的值。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/linux//" class="article-tag-list-link color1">linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/05/14/linux%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%87%BD%E6%95%B0%20rename!getcwd!chdir!mkdir!rmdir--%E7%9B%AE%E5%BD%95%E6%93%8D%E4%BD%9C%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
-    <article id="post-linux系统调用函数 chmod!chown!truncate--修改文件属性" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/14/linux%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%87%BD%E6%95%B0%20chmod!chown!truncate--%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E5%B1%9E%E6%80%A7/">linux系统调用函数 chmod/chown/truncate--修改文件属性</a>
-    </h1>
-  
-
-        <!--显示阅读次数-->
-        
-        <!--显示阅读次数完毕-->
-        
-        <a href="/2018/05/14/linux%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%87%BD%E6%95%B0%20chmod!chown!truncate--%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E5%B1%9E%E6%80%A7/" class="archive-article-date">
-  	<time datetime="2018-05-14T09:39:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-14</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-      
-      
-        <a id="more"></a>
-
-<p>1.chmod  修改文件权限<br><strong>所需头文件：</strong>    <code>#include&lt;sys/stat.h&gt;</code><br><strong>函数原型：</strong> <code>int chmod(const char *filename,int mode)</code><br><strong>参数：</strong>  filename为文件名，mode为文件权限，八进制数。<br><strong>返回值：</strong>成功返回0，失败返回-1，同时errno会被设置为合适值。</p>
-<p>应用实例：<br>当前目录文件下：<br><img src="https://img-blog.csdn.net/20180514153228380?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>我们在应用<code>chmod</code>函数修改其<code>a.txt</code>的权限。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">#include&lt;sys&#x2F;stat.h&gt;</span><br><span class="line">#include&lt;stdlib.h&gt;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	int res &#x3D; chmod(&quot;.&#x2F;a.txt&quot;,0777);</span><br><span class="line">	if(res &#x3D;&#x3D; -1)</span><br><span class="line">	&#123;</span><br><span class="line">		perror(&quot;chmod&quot;);</span><br><span class="line">		exit(1);</span><br><span class="line">	&#125;</span><br><span class="line">	printf(&quot;chmod success!\n&quot;);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdn.net/20180514153620328?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
-<p>2.修改文件所有者和所属组。<br><strong>所需头文件：</strong> <code>#include&lt;unistd.h&gt;</code><br><strong>函数原型：</strong> <code>int chown(const char *path,uid_t owner,gid_t group)</code><br><strong>参数：</strong> path为文件路径，相对路径和绝对路径均可。 owner（无符号整型），用户ID。group（无符号整型）组ID。<br><strong>返回值：</strong>成功返回0，失败返回-1，同时errno会被设置为一个合适的值。</p>
-<p><strong>注意：</strong>可以通过 <code>/etc/passwd</code>访问用户ID，通过<code>/etc/group</code>访问组ID。<br>使用man文档查看passwd的组成，<code>man 5 passwd</code>。</p>
-<p>3.修改文件大小。<br><strong>所需头文件：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;unistd.h&gt;</span><br><span class="line">#include&lt;sys&#x2F;types.h&gt;</span><br></pre></td></tr></table></figure>
-<p><strong>函数原型：</strong> <code>int truncate(const char *path,off_t length)</code><br><strong>参数：</strong> path为文件名，length为为文件的最终大小。<code>off_t</code>为长整型，<code>long int</code>。<br>（1）最终大小比原来大，向后扩展。<br>（2）最终大小比原来小，删除后边的部分。</p>
-<p>应用实例：<br>现在在当前目录文件下创建名为<code>a.txt</code>的文件，再没行数如10个字符，且行为都有一个换行符，如下：<br><img src="https://img-blog.csdn.net/20180514172610601?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>所以其大小为55。<br><img src="https://img-blog.csdn.net/20180514172703586?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
-<p>现在我们在代码中分别进行扩大和缩小文件大小，观察结果进行对比：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;1.扩大a.txt文件</span><br><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">#include&lt;stdlib.h&gt;</span><br><span class="line">#include&lt;unistd.h&gt;</span><br><span class="line">#include&lt;sys&#x2F;types.h&gt;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	int res &#x3D; truncate(&quot;a.txt&quot;,100);&#x2F;&#x2F;将其扩大为100</span><br><span class="line">	if(res &#x3D;&#x3D; -1)</span><br><span class="line">	&#123;</span><br><span class="line">		perror(&quot;truncate&quot;);</span><br><span class="line">		exit(1);</span><br><span class="line">	&#125;</span><br><span class="line">	else</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;&quot;truncate success!\n);</span><br><span class="line">	&#125;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdn.net/20180514173104494?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>由图可知，此时<code>a.txt</code>文件已经扩大至100。我们查看一下此时<code>a.txt</code>文件中的内容：<br><img src="https://img-blog.csdn.net/20180514173306918?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>这里的<code>^@</code>其实就是<code>\0</code>。<br>和man文档中的描述是一致的。<br><img src="https://img-blog.csdn.net/20180514173459550?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;2.缩小a.txt文件</span><br><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">#include&lt;stdlib.h&gt;</span><br><span class="line">#include&lt;unistd.h&gt;</span><br><span class="line">#include&lt;sys&#x2F;types.h&gt;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	int res &#x3D; truncate(&quot;a.txt&quot;,25);&#x2F;&#x2F;将其缩小为25</span><br><span class="line">	if(res &#x3D;&#x3D; -1)</span><br><span class="line">	&#123;</span><br><span class="line">		perror(&quot;truncate&quot;);</span><br><span class="line">		exit(1);</span><br><span class="line">	&#125;</span><br><span class="line">	else</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;&quot;truncate success!\n);</span><br><span class="line">	&#125;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>执行后，查看此时的<code>a.txt</code>文件的大小：<br><img src="https://img-blog.csdn.net/20180514173816193?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>所以缩小源文件的大小会造成数据的丢失，使用请慎重。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/linux//" class="article-tag-list-link color1">linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/05/14/linux%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%87%BD%E6%95%B0%20chmod!chown!truncate--%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E5%B1%9E%E6%80%A7/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
     <article id="post-linux系统调用函数 access--获取文件属性" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -461,7 +179,7 @@
 <p><strong>参数：</strong> pathname代表文件名，绝对路径或相对路径都可以。 mode代表权限，共四种。分别是<code>R_OK(读)</code>、<code>W_OK(写)</code>、<code>X_OK(执行)</code>和 <code>F_OK(文件是否存在)</code>。</p>
 <p><strong>返回值：</strong> 0 表示存在某种权限，或文件不存在。<br>                    -1 没有，或文件不存在。<br><strong>功能：</strong>测试当前用户指定文件是否具有某种属性，注意当前用户，使用哪个用户调用这个函数，这个用户就是当前用户。</p>
 <p>下面举例应用access函数：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">#include&lt;unistd.h&gt;</span><br><span class="line">#include&lt;stdlib.h&gt;</span><br><span class="line"></span><br><span class="line">int main(int argc,char *argv[])</span><br><span class="line">&#123;</span><br><span class="line">	if(argc &lt; 2)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;filename:%s\n&quot;,argv[0]);</span><br><span class="line">		exit(1);</span><br><span class="line">	&#125;</span><br><span class="line">	int res &#x3D; access(argv[1],R_OK);&#x2F;&#x2F;X_OK,W_OK和F_OK测试方法相同</span><br><span class="line">	if(res &#x3D;&#x3D; -1)</span><br><span class="line">	&#123;</span><br><span class="line">		perror(&quot;access&quot;);</span><br><span class="line">		exit(1);</span><br><span class="line">	&#125;</span><br><span class="line">	else</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;%s can be read!\n&quot;,argv[1]);</span><br><span class="line">	&#125;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc,<span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(argc &lt; <span class="number">2</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;filename:%s\n&quot;</span>,argv[<span class="number">0</span>]);</span><br><span class="line">		<span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> res = access(argv[<span class="number">1</span>],R_OK);<span class="comment">//X_OK,W_OK和F_OK测试方法相同</span></span><br><span class="line">	<span class="keyword">if</span>(res == <span class="number">-1</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		perror(<span class="string">&quot;access&quot;</span>);</span><br><span class="line">		<span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%s can be read!\n&quot;</span>,argv[<span class="number">1</span>]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>当前目录下的文件：<br><img src="https://img-blog.csdn.net/20180514121354547?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
 <p>运行上述代码，结果如下：<br><img src="https://img-blog.csdn.net/20180514121512346?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
 
@@ -478,7 +196,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/linux//" class="article-tag-list-link color1">linux</a>
+        			<a href="/categories/Linux//" class="article-tag-list-link color1">Linux</a>
         		</li>
       		
 		</ul>
@@ -646,23 +364,23 @@
 
 
 <p>所需头文件：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;unistd.h&gt;</span><br><span class="line">#include&lt;sys&#x2F;stat.h&gt;</span><br><span class="line">#include&lt;sys&#x2F;types.h&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br></pre></td></tr></table></figure>
 
 <p><strong>函数功能：</strong>用来获取linux操作系统下文件的属性。<br><strong>函数原型：</strong> <code>int stat(const char *pathname,struct stat *buf);</code></p>
 <p><strong>参数：</strong>第一个参数为传入参数，<code>pathname</code>为文件的<strong>绝对路径</strong>或<strong>相对路径</strong>。第二参数为传出参数，一个<code>struct stat</code>类型的结构体指针。传出参数可以采用下边两种方法，定义结构体变量<strong>struct stat st</strong>,或定义结构体指针变量*<em>strut stat <em>st = &amp;st</em></em>(注意这里一定要进行初始化，说明其为一块有效的内存空间)，相对而言，使用结构体变量更为方便。</p>
 <p>注意，在linux操作系统下，一切皆文件。文件共有七种类型，分别是普通文件、目录文件、管道文件、可执行文件、压缩文件、设备文件（字符、管道和块）和其他文件。</p>
 <p>下面介绍一下<code>struct stat</code>结构体：</p>
 <p><img src="https://img-blog.csdn.net/20180512214612954?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">struct stat &#123;</span><br><span class="line">    dev_t     st_dev;      文件的设备编号</span><br><span class="line">    ino_t     st_ino;      节点</span><br><span class="line">    mode_t    st_mode;     文件的类型和权限</span><br><span class="line">    nlink_t   st_nlink;    连到该文件的硬链接数目，刚建立的文件值为1</span><br><span class="line">    uid_t     st_uid;      用户ID</span><br><span class="line">    gid_t     st_gid;      组ID</span><br><span class="line">    dev_t     st_rdev;     设备类型）若此文件为设备文件，则为其设备编号</span><br><span class="line">    off_t     st_size;     文件字节数（文件大小）</span><br><span class="line">    blksize_t st_blksize;  块大小（文件I&#x2F;O缓冲区的大小）</span><br><span class="line">    blkcnt_t  st_blocks;   块数</span><br><span class="line">    time_t    st_atime;    最后一次访问时间</span><br><span class="line">    time_t    st_mtime;    最后一次修改时间</span><br><span class="line">    time_t    st_ctime;    最后一次改变时间（指属性）</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>下面举例使用stat函数获取文件的属性：<br>在linux的shell解释器中，输入这样的命令stat + 文件名即可获取文件的属性。如：<br><img src="https://img-blog.csdn.net/20180512215736360?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>那么如何在函数中获取文件属性并将其打印出来呢？下面应用stat函数获取main.c文件的属性。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;unistd.h&gt;</span><br><span class="line">#include&lt;sys&#x2F;types.h&gt;</span><br><span class="line">#include&lt;sys&#x2F;stat.h&gt;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	struct stat st;&#x2F;&#x2F;定义结构体变量，保存所获取的文件属性</span><br><span class="line">	int res &#x3D; stat(&quot;&#x2F;home&#x2F;lsc&#x2F;Desktop&#x2F;linux&#x2F;k0512&#x2F;test&#x2F;main.c&quot;，&amp;st);</span><br><span class="line">	if(res &#x3D;&#x3D; -1)&#x2F;&#x2F;获取文件属性失败，errno设置为合适的值</span><br><span class="line">	&#123;</span><br><span class="line">		perror(&quot;stat fail&quot;);</span><br><span class="line">		exit(1);</span><br><span class="line">	&#125;</span><br><span class="line">	printf(&quot;大小:%d    &quot;,st.st_size);</span><br><span class="line">	printf(&quot;设备:%d    &quot;,st.st_dev);</span><br><span class="line">	printf(&quot;块:%d   &quot;,st_st_blocks);</span><br><span class="line">	printf(&quot;Inode:%d   &quot;,st.st_ino);</span><br><span class="line">	printf(&quot;硬链接:%d   &quot;,st.st_nlink);</span><br><span class="line">	printf(&quot;uid:%d   &quot;,st.st_uid);</span><br><span class="line">	printf(&quot;gid:%   &quot;,st.st_gid);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">stat</span> &#123;</span></span><br><span class="line">    <span class="keyword">dev_t</span>     st_dev;      文件的设备编号</span><br><span class="line">    <span class="keyword">ino_t</span>     st_ino;      节点</span><br><span class="line">    <span class="keyword">mode_t</span>    st_mode;     文件的类型和权限</span><br><span class="line">    <span class="keyword">nlink_t</span>   st_nlink;    连到该文件的硬链接数目，刚建立的文件值为<span class="number">1</span></span><br><span class="line">    <span class="keyword">uid_t</span>     st_uid;      用户ID</span><br><span class="line">    <span class="keyword">gid_t</span>     st_gid;      组ID</span><br><span class="line">    <span class="keyword">dev_t</span>     st_rdev;     设备类型）若此文件为设备文件，则为其设备编号</span><br><span class="line">    <span class="keyword">off_t</span>     st_size;     文件字节数（文件大小）</span><br><span class="line">    <span class="keyword">blksize_t</span> st_blksize;  块大小（文件I/O缓冲区的大小）</span><br><span class="line">    <span class="keyword">blkcnt_t</span>  st_blocks;   块数</span><br><span class="line">    <span class="keyword">time_t</span>    st_atime;    最后一次访问时间</span><br><span class="line">    <span class="keyword">time_t</span>    st_mtime;    最后一次修改时间</span><br><span class="line">    <span class="keyword">time_t</span>    st_ctime;    最后一次改变时间（指属性）</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>下面举例使用stat函数获取文件的属性：<br>在linux的shell解释器中，输入这样的命令stat + 文件名即可获取文件的属性。如：<br><img src="https://img-blog.csdn.net/20180512215736360?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>那么如何在函数中获取文件属性并将其打印出来呢？下面应用stat函数获取main.c文件的属性。\</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">stat</span> <span class="title">st</span>;</span><span class="comment">//定义结构体变量，保存所获取的文件属性</span></span><br><span class="line">	<span class="keyword">int</span> res = stat(<span class="string">&quot;/home/lsc/Desktop/linux/k0512/test/main.c&quot;</span>，&amp;st);</span><br><span class="line">	<span class="keyword">if</span>(res == <span class="number">-1</span>)<span class="comment">//获取文件属性失败，errno设置为合适的值</span></span><br><span class="line">	&#123;</span><br><span class="line">		perror(<span class="string">&quot;stat fail&quot;</span>);</span><br><span class="line">		<span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;大小:%d    &quot;</span>,st.st_size);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;设备:%d    &quot;</span>,st.st_dev);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;块:%d   &quot;</span>,st_st_blocks);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;Inode:%d   &quot;</span>,st.st_ino);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;硬链接:%d   &quot;</span>,st.st_nlink);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;uid:%d   &quot;</span>,st.st_uid);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;gid:%   &quot;</span>,st.st_gid);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>执行结果：<br>和我们用<code>stat + 文件名</code>命令获取到文件的属性信息是一致的。<br><img src="https://img-blog.csdn.net/20180513080918557?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
 <p>大家可能注意到，在代码中并为涉及输出st_mode属性相关的信息。<br><strong>重点：</strong>下面着重深入的研究一下st_mode这属性，可以通过它来获取文件的文件类型以及权限。</p>
 <p><code>mode_t st_mode</code>是一个16位的short类型，对应16个标志位，其组成如下：</p>
 <p><img src="https://img-blog.csdn.net/20180513082612758?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>而其，通常情况下特殊权限位不使用。<br>那么如何取出对应的位置的位获取相关的信息呢，Linux系统调用给我们提供了一系列的宏，可以查看man文档 <code>man 2 stat</code>。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">S_IFMT     0170000   &#x2F;&#x2F;掩码，过滤st_mode中除文件类型以外的信息</span><br><span class="line">S_IFSOCK   0140000   &#x2F;&#x2F;套接字</span><br><span class="line">S_IFLNK    0120000   &#x2F;&#x2F;符号链接(软链接)</span><br><span class="line">S_IFREG    0100000   &#x2F;&#x2F;普通文件</span><br><span class="line">S_IFBLK    0060000   &#x2F;&#x2F;块设备</span><br><span class="line">S_IFDIR    0040000   &#x2F;&#x2F;目录文件</span><br><span class="line">S_IFCHR    0020000   &#x2F;&#x2F;字符设备</span><br><span class="line">S_IFIFO    0010000   &#x2F;&#x2F;管道</span><br><span class="line">S_ISUID    0004000   &#x2F;&#x2F;设置用户ID</span><br><span class="line">S_ISGID    0002000   &#x2F;&#x2F;设置组ID</span><br><span class="line">S_ISVTX    0001000   &#x2F;&#x2F;粘住位</span><br><span class="line">S_IRWXU    00700     &#x2F;&#x2F;掩码，过滤st_mode除文件所有者权限以外的信息</span><br><span class="line">S_IRUSR    00400     &#x2F;&#x2F;用户读权限</span><br><span class="line">S_IWUSR    00200     &#x2F;&#x2F;用户写权限</span><br><span class="line">S_IXUSR    00100     &#x2F;&#x2F;用户执行权限</span><br><span class="line">S_IRWXG    00070     &#x2F;&#x2F;掩码，过滤st_mode除所属组权限以外的信息</span><br><span class="line">S_IRGRP    00040     &#x2F;&#x2F;读权限</span><br><span class="line">S_IWGRP    00020     &#x2F;&#x2F;写权限</span><br><span class="line">S_IXGRP    00010     &#x2F;&#x2F;执行权限</span><br><span class="line">S_IRWXO    00007     &#x2F;&#x2F;掩码，过滤st_mode除其他人权限以外的信息</span><br><span class="line">S_IROTH    00004     &#x2F;&#x2F;读权限</span><br><span class="line">S_IWOTH    00002     &#x2F;&#x2F;写权限</span><br><span class="line">S_IXOTH    00001     &#x2F;&#x2F;执行权限</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">S_IFMT     <span class="number">0170000</span>   <span class="comment">//掩码，过滤st_mode中除文件类型以外的信息</span></span><br><span class="line">S_IFSOCK   <span class="number">0140000</span>   <span class="comment">//套接字</span></span><br><span class="line">S_IFLNK    <span class="number">0120000</span>   <span class="comment">//符号链接(软链接)</span></span><br><span class="line">S_IFREG    <span class="number">0100000</span>   <span class="comment">//普通文件</span></span><br><span class="line">S_IFBLK    <span class="number">0060000</span>   <span class="comment">//块设备</span></span><br><span class="line">S_IFDIR    <span class="number">0040000</span>   <span class="comment">//目录文件</span></span><br><span class="line">S_IFCHR    <span class="number">0020000</span>   <span class="comment">//字符设备</span></span><br><span class="line">S_IFIFO    <span class="number">0010000</span>   <span class="comment">//管道</span></span><br><span class="line">S_ISUID    <span class="number">0004000</span>   <span class="comment">//设置用户ID</span></span><br><span class="line">S_ISGID    <span class="number">0002000</span>   <span class="comment">//设置组ID</span></span><br><span class="line">S_ISVTX    <span class="number">0001000</span>   <span class="comment">//粘住位</span></span><br><span class="line">S_IRWXU    <span class="number">00700</span>     <span class="comment">//掩码，过滤st_mode除文件所有者权限以外的信息</span></span><br><span class="line">S_IRUSR    <span class="number">00400</span>     <span class="comment">//用户读权限</span></span><br><span class="line">S_IWUSR    <span class="number">00200</span>     <span class="comment">//用户写权限</span></span><br><span class="line">S_IXUSR    <span class="number">00100</span>     <span class="comment">//用户执行权限</span></span><br><span class="line">S_IRWXG    <span class="number">00070</span>     <span class="comment">//掩码，过滤st_mode除所属组权限以外的信息</span></span><br><span class="line">S_IRGRP    <span class="number">00040</span>     <span class="comment">//读权限</span></span><br><span class="line">S_IWGRP    <span class="number">00020</span>     <span class="comment">//写权限</span></span><br><span class="line">S_IXGRP    <span class="number">00010</span>     <span class="comment">//执行权限</span></span><br><span class="line">S_IRWXO    <span class="number">00007</span>     <span class="comment">//掩码，过滤st_mode除其他人权限以外的信息</span></span><br><span class="line">S_IROTH    <span class="number">00004</span>     <span class="comment">//读权限</span></span><br><span class="line">S_IWOTH    <span class="number">00002</span>     <span class="comment">//写权限</span></span><br><span class="line">S_IXOTH    <span class="number">00001</span>     <span class="comment">//执行权限</span></span><br></pre></td></tr></table></figure>
 <p>下面举一个简单例子，验证一个文件是否为普通文件。<br>在当前目录下有一个普通文件：<br><img src="https://img-blog.csdn.net/20180513084728740?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">#include&lt;stdlib.h&gt;</span><br><span class="line">#include&lt;unistd.h&gt;</span><br><span class="line">#incude&lt;sys&#x2F;stat.h&gt;</span><br><span class="line">#include&lt;sys&#x2F;types.h&gt;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	struct stat st;</span><br><span class="line">	int res &#x3D; stat(&quot;.&#x2F;test.c&quot;,&amp;st);</span><br><span class="line">	if(-1 &#x3D;&#x3D; res)</span><br><span class="line">	&#123;</span><br><span class="line">		perror(&quot;stat fail&quot;);</span><br><span class="line">		exit(1);</span><br><span class="line">	&#125;</span><br><span class="line">	if((st.st_mode &amp; S_IFMT) &#x3D;&#x3D; S_IFREG)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;regular file\n&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#incude<span class="meta-string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">stat</span> <span class="title">st</span>;</span></span><br><span class="line">	<span class="keyword">int</span> res = stat(<span class="string">&quot;./test.c&quot;</span>,&amp;st);</span><br><span class="line">	<span class="keyword">if</span>(<span class="number">-1</span> == res)</span><br><span class="line">	&#123;</span><br><span class="line">		perror(<span class="string">&quot;stat fail&quot;</span>);</span><br><span class="line">		<span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>((st.st_mode &amp; S_IFMT) == S_IFREG)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;regular file\n&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><img src="https://img-blog.csdn.net/2018051309015446?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
 <p>相信完全理解了系统调用函数stat之后，实现一个<code>ls -l</code>的命令也会变得简单，大家可以试试。</p>
 
@@ -679,7 +397,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/linux//" class="article-tag-list-link color1">linux</a>
+        			<a href="/categories/Linux系统编程//" class="article-tag-list-link color5">Linux系统编程</a>
         		</li>
       		
 		</ul>
@@ -747,20 +465,20 @@
 <p><strong>1.在C89标准下的const</strong></p>
 <p>const 修饰的类型是一个常变量，不能作为数组的下标。常变量不能作为左值。</p>
 <p>如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">const int a &#x3D; 10;</span><br><span class="line">int b &#x3D; a;</span><br><span class="line">&#x2F;&#x2F;其编译的过程和一般变量编译的过程相同</span><br><span class="line">&#x2F;&#x2F;并不会把引用符号的地方替换为对应的数据</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">int</span> b = a;</span><br><span class="line"><span class="comment">//其编译的过程和一般变量编译的过程相同</span></span><br><span class="line"><span class="comment">//并不会把引用符号的地方替换为对应的数据</span></span><br></pre></td></tr></table></figure>
 <p><strong>2.C++99</strong></p>
 <p>（1）<strong>常量：</strong>在c++中，<code>const int a = 10</code>是一个真真正正的常量。<br>（2）<strong>常变量：</strong>退化为常变量的情况，初始化为一个不明确的值。<br>（3）<strong>常变量和普通变量生成的符号的作用域不一样。</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int a &#x3D; 10;</span><br><span class="line">const int b &#x3D; a;&#x2F;&#x2F;在编译阶段不会进行运算</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> b = a;<span class="comment">//在编译阶段不会进行运算</span></span><br></pre></td></tr></table></figure>
 <p>对比下面两段代码，都是执行打印操作，但在本质上它们是有区别的。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;常变量</span><br><span class="line">int a &#x3D; 10;</span><br><span class="line">const int b &#x3D; a;</span><br><span class="line">cout &lt;&lt; b &lt;&lt; endl;</span><br><span class="line">mov eax,dword ptr[ebp-8]</span><br><span class="line">push eax</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//常变量</span></span><br><span class="line"><span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> b = a;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; b &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">mov eax,dword ptr[ebp<span class="number">-8</span>]</span><br><span class="line">push eax</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;常量</span><br><span class="line">const int b &#x3D; 20;</span><br><span class="line">cout &lt;&lt; b &lt;&lt; endl;</span><br><span class="line">&#x2F;&#x2F;cout其实也是函数调用，调用会压参数。</span><br><span class="line">&#x2F;&#x2F;汇编代码</span><br><span class="line">push 20</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//常量</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> b = <span class="number">20</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; b &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="comment">//cout其实也是函数调用，调用会压参数。</span></span><br><span class="line"><span class="comment">//汇编代码</span></span><br><span class="line">push <span class="number">20</span></span><br></pre></td></tr></table></figure>
 <p>测试常量和普通变量所生成符号的作用域：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int a &#x3D; 10;&#x2F;&#x2F;普通全局变量</span><br><span class="line">const int d &#x3D; 20;&#x2F;&#x2F;常量</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> a = <span class="number">10</span>;<span class="comment">//普通全局变量</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> d = <span class="number">20</span>;<span class="comment">//常量</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><strong>1.g++ test.cpp -c     生成test.o文件</strong><br><strong>2.使用readelf -s test.o命令查看编译之后生成的符号表。</strong><br><img src="https://img-blog.csdn.net/20180512140952329?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
 <p>由图可见，普通变量生成的符号为GLOBAL，而经过const修饰的常量生成的符号是LOCAL。所以普通变量和常量作用域是不相同的。</p>
 <p><strong>3.要访问另外一个文件中定义的常量的方法。</strong><br>在定义处添加extern关键字，使其编程后生成的符号为GLOBAL，这样链接器就可以对其进行处理。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;简单的测试一下，方法同上</span><br><span class="line">#include&lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">extern const int a &#x3D; 10;</span><br><span class="line">int mian()</span><br><span class="line">&#123;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F;g++ test.cpp -c -o test.o</span><br><span class="line">&#x2F;&#x2F;readelf -s test.o</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//简单的测试一下，方法同上</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">extern</span> <span class="keyword">const</span> <span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">mian</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//g++ test.cpp -c -o test.o</span></span><br><span class="line"><span class="comment">//readelf -s test.o</span></span><br></pre></td></tr></table></figure>
 <p><img src="https://img-blog.csdn.net/20180512142125507?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>可以看到，经过<code>extern</code>修饰的常量，进过编译生成的符号表中其作用域变为<strong>GLOBAL</strong>。</p>
 
       
@@ -814,14 +532,14 @@
 
 
   
-    <article id="post-c++函数重载概念及重载规则" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-C++函数重载" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/06/c++%E5%87%BD%E6%95%B0%E9%87%8D%E8%BD%BD%E6%A6%82%E5%BF%B5%E5%8F%8A%E9%87%8D%E8%BD%BD%E8%A7%84%E5%88%99/">c++函数重载概念及重载规则</a>
+      <a class="article-title" href="/2018/05/06/C++%E5%87%BD%E6%95%B0%E9%87%8D%E8%BD%BD/">c++函数重载概念及重载规则</a>
     </h1>
   
 
@@ -829,7 +547,7 @@
         
         <!--显示阅读次数完毕-->
         
-        <a href="/2018/05/06/c++%E5%87%BD%E6%95%B0%E9%87%8D%E8%BD%BD%E6%A6%82%E5%BF%B5%E5%8F%8A%E9%87%8D%E8%BD%BD%E8%A7%84%E5%88%99/" class="archive-article-date">
+        <a href="/2018/05/06/C++%E5%87%BD%E6%95%B0%E9%87%8D%E8%BD%BD/" class="archive-article-date">
   	<time datetime="2018-05-06T05:19:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-06</time>
 </a>
         
@@ -867,7 +585,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/05/06/c++%E5%87%BD%E6%95%B0%E9%87%8D%E8%BD%BD%E6%A6%82%E5%BF%B5%E5%8F%8A%E9%87%8D%E8%BD%BD%E8%A7%84%E5%88%99/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/05/06/C++%E5%87%BD%E6%95%B0%E9%87%8D%E8%BD%BD/">展开全文 >></a>
         </p>
       
 
@@ -896,14 +614,14 @@
 
 
   
-    <article id="post-C!C++函数调用约定汇总" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-C-C++函数调用约定汇总" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/22/C!C++%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E7%BA%A6%E5%AE%9A%E6%B1%87%E6%80%BB/">C/C++函数调用约定汇总</a>
+      <a class="article-title" href="/2018/04/22/C-C++%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E7%BA%A6%E5%AE%9A%E6%B1%87%E6%80%BB/">C/C++函数调用约定汇总</a>
     </h1>
   
 
@@ -911,7 +629,7 @@
         
         <!--显示阅读次数完毕-->
         
-        <a href="/2018/04/22/C!C++%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E7%BA%A6%E5%AE%9A%E6%B1%87%E6%80%BB/" class="archive-article-date">
+        <a href="/2018/04/22/C-C++%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E7%BA%A6%E5%AE%9A%E6%B1%87%E6%80%BB/" class="archive-article-date">
   	<time datetime="2018-04-22T05:26:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-22</time>
 </a>
         
@@ -1038,7 +756,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/22/C!C++%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E7%BA%A6%E5%AE%9A%E6%B1%87%E6%80%BB/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/04/22/C-C++%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E7%BA%A6%E5%AE%9A%E6%B1%87%E6%80%BB/">展开全文 >></a>
         </p>
       
 
@@ -1097,57 +815,57 @@
 <p><strong>下面以主函数调用求和函数分析函数堆栈调用</strong></p>
 <p>带着以下一个问题来探索：<br>（1）形参的内存空间的开辟和清理是由调用方还是由被调用方执行的？<br>（2）主函数调用函数结束后，主函数从哪里开始执行？从头开始还是从调用之后开始？<br>（3）返回值是如何带出来的？</p>
 <p><strong>用于验证的代码如下：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;srtio.h&gt;</span><br><span class="line"></span><br><span class="line">int sum(int a,int b)</span><br><span class="line">&#123;</span><br><span class="line">	int res &#x3D; 0;</span><br><span class="line">	res &#x3D; a+b;</span><br><span class="line">	return res;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	int a &#x3D; 10;</span><br><span class="line">	int b &#x3D; 20;</span><br><span class="line">	int ret &#x3D; 0;</span><br><span class="line">	ret &#x3D; sum(a,b);</span><br><span class="line">	printf(&quot;ret &#x3D; %d\n&quot;,ret);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;srdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sum</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">	res = a+b;</span><br><span class="line">	<span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line">	<span class="keyword">int</span> b = <span class="number">20</span>;</span><br><span class="line">	<span class="keyword">int</span> ret = <span class="number">0</span>;</span><br><span class="line">	ret = sum(a,b);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;ret = %d\n&quot;</span>,ret);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><strong>实验环境：vc++ 6.0  和  Win10操作系统</strong></p>
 <p><strong>注意：linux操作系统采用的汇编指令是AT&amp;T，而Windows采用的是intel x86</strong><br>最简易区分它们的规则是：intel x86从左向右读，而AT&amp;T是从右往左读。<br><strong>反汇编代码如下：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line">1:    #include&lt;stdio.h&gt;</span><br><span class="line">2:</span><br><span class="line">3:    int sum(int a,int b)</span><br><span class="line">4:    &#123;</span><br><span class="line">00401020   push        ebp</span><br><span class="line">00401021   mov         ebp,esp</span><br><span class="line">00401023   sub         esp,44h</span><br><span class="line">00401026   push        ebx</span><br><span class="line">00401027   push        esi</span><br><span class="line">00401028   push        edi</span><br><span class="line">00401029   lea         edi,[ebp-44h]</span><br><span class="line">0040102C   mov         ecx,11h</span><br><span class="line">00401031   mov         eax,0CCCCCCCCh</span><br><span class="line">00401036   rep stos    dword ptr [edi]</span><br><span class="line">5:        int res &#x3D; 0;</span><br><span class="line">00401038   mov         dword ptr [ebp-4],0</span><br><span class="line">6:        res &#x3D; a+b;</span><br><span class="line">0040103F   mov         eax,dword ptr [ebp+8]</span><br><span class="line">00401042   add         eax,dword ptr [ebp+0Ch]</span><br><span class="line">00401045   mov         dword ptr [ebp-4],eax</span><br><span class="line">7:        return res;</span><br><span class="line">00401048   mov         eax,dword ptr [ebp-4]</span><br><span class="line">8:    &#125;</span><br><span class="line">0040104B   pop         edi</span><br><span class="line">0040104C   pop         esi</span><br><span class="line">0040104D   pop         ebx</span><br><span class="line">0040104E   mov         esp,ebp</span><br><span class="line">00401050   pop         ebp</span><br><span class="line">00401051   ret </span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">12:   &#123;</span><br><span class="line">00401060   push        ebp</span><br><span class="line">00401061   mov         ebp,esp</span><br><span class="line">00401063   sub         esp,4Ch</span><br><span class="line">00401066   push        ebx</span><br><span class="line">00401067   push        esi</span><br><span class="line">00401068   push        edi</span><br><span class="line">00401069   lea         edi,[ebp-4Ch]</span><br><span class="line">0040106C   mov         ecx,13h</span><br><span class="line">00401071   mov         eax,0CCCCCCCCh</span><br><span class="line">00401076   rep stos    dword ptr [edi]</span><br><span class="line">13:       int a &#x3D; 10;</span><br><span class="line">00401078   mov         dword ptr [ebp-4],0Ah</span><br><span class="line">14:       int b &#x3D; 20;</span><br><span class="line">0040107F   mov         dword ptr [ebp-8],14h</span><br><span class="line">15:       int ret &#x3D; 0;</span><br><span class="line">00401086   mov         dword ptr [ebp-0Ch],0</span><br><span class="line">16:       ret &#x3D; sum(a,b);</span><br><span class="line">0040108D   mov         eax,dword ptr [ebp-8]</span><br><span class="line">00401090   push        eax</span><br><span class="line">00401091   mov         ecx,dword ptr [ebp-4]</span><br><span class="line">00401094   push        ecx</span><br><span class="line">00401095   call        @ILT+0(_sum) (00401005)</span><br><span class="line">0040109A   add         esp,8</span><br><span class="line">0040109D   mov         dword ptr [ebp-0Ch],eax</span><br><span class="line">17:</span><br><span class="line">18:       printf(&quot;ret &#x3D; %d\n&quot;,ret);</span><br><span class="line">004010A0   mov         edx,dword ptr [ebp-0Ch]</span><br><span class="line">004010A3   push        edx</span><br><span class="line">004010A4   push        offset string &quot;ret &#x3D; %d\n&quot; (0042201c)</span><br><span class="line">004010A9   call        printf (004010e0)</span><br><span class="line">004010AE   add         esp,8</span><br><span class="line">19:</span><br><span class="line">20:       return 0;</span><br><span class="line">004010B1   xor         eax,eax</span><br><span class="line">21:   &#125;</span><br><span class="line">004010B3   pop         edi</span><br><span class="line">004010B4   pop         esi</span><br><span class="line">004010B5   pop         ebx</span><br><span class="line">004010B6   add         esp,4Ch</span><br><span class="line">004010B9   cmp         ebp,esp</span><br><span class="line">004010BB   call        __chkesp (00401160)</span><br><span class="line">004010C0   mov         esp,ebp</span><br><span class="line">004010C2   pop         ebp</span><br><span class="line">004010C3   ret</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>:    <span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="number">2</span>:</span><br><span class="line"><span class="number">3</span>:    <span class="function"><span class="keyword">int</span> <span class="title">sum</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> b)</span></span></span><br><span class="line"><span class="function">4:    </span>&#123;</span><br><span class="line"><span class="number">00401020</span>   push        ebp</span><br><span class="line"><span class="number">00401021</span>   mov         ebp,esp</span><br><span class="line"><span class="number">00401023</span>   sub         esp,<span class="number">44</span>h</span><br><span class="line"><span class="number">00401026</span>   push        ebx</span><br><span class="line"><span class="number">00401027</span>   push        esi</span><br><span class="line"><span class="number">00401028</span>   push        edi</span><br><span class="line"><span class="number">00401029</span>   lea         edi,[ebp<span class="number">-44</span>h]</span><br><span class="line"><span class="number">0040102</span>C   mov         ecx,<span class="number">11</span>h</span><br><span class="line"><span class="number">00401031</span>   mov         eax,<span class="number">0</span>CCCCCCCCh</span><br><span class="line"><span class="number">00401036</span>   rep stos    dword ptr [edi]</span><br><span class="line"><span class="number">5</span>:        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line"><span class="number">00401038</span>   mov         dword ptr [ebp<span class="number">-4</span>],<span class="number">0</span></span><br><span class="line"><span class="number">6</span>:        res = a+b;</span><br><span class="line"><span class="number">0040103F</span>   mov         eax,dword ptr [ebp+<span class="number">8</span>]</span><br><span class="line"><span class="number">00401042</span>   add         eax,dword ptr [ebp+<span class="number">0</span>Ch]</span><br><span class="line"><span class="number">00401045</span>   mov         dword ptr [ebp<span class="number">-4</span>],eax</span><br><span class="line"><span class="number">7</span>:        <span class="keyword">return</span> res;</span><br><span class="line"><span class="number">00401048</span>   mov         eax,dword ptr [ebp<span class="number">-4</span>]</span><br><span class="line"><span class="number">8</span>:    &#125;</span><br><span class="line"><span class="number">0040104B</span>   pop         edi</span><br><span class="line"><span class="number">0040104</span>C   pop         esi</span><br><span class="line"><span class="number">0040104</span>D   pop         ebx</span><br><span class="line"><span class="number">0040104</span>E   mov         esp,ebp</span><br><span class="line"><span class="number">00401050</span>   pop         ebp</span><br><span class="line"><span class="number">00401051</span>   ret </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function">12:   </span>&#123;</span><br><span class="line"><span class="number">00401060</span>   push        ebp</span><br><span class="line"><span class="number">00401061</span>   mov         ebp,esp</span><br><span class="line"><span class="number">00401063</span>   sub         esp,<span class="number">4</span>Ch</span><br><span class="line"><span class="number">00401066</span>   push        ebx</span><br><span class="line"><span class="number">00401067</span>   push        esi</span><br><span class="line"><span class="number">00401068</span>   push        edi</span><br><span class="line"><span class="number">00401069</span>   lea         edi,[ebp<span class="number">-4</span>Ch]</span><br><span class="line"><span class="number">0040106</span>C   mov         ecx,<span class="number">13</span>h</span><br><span class="line"><span class="number">00401071</span>   mov         eax,<span class="number">0</span>CCCCCCCCh</span><br><span class="line"><span class="number">00401076</span>   rep stos    dword ptr [edi]</span><br><span class="line"><span class="number">13</span>:       <span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line"><span class="number">00401078</span>   mov         dword ptr [ebp<span class="number">-4</span>],<span class="number">0</span>Ah</span><br><span class="line"><span class="number">14</span>:       <span class="keyword">int</span> b = <span class="number">20</span>;</span><br><span class="line"><span class="number">0040107F</span>   mov         dword ptr [ebp<span class="number">-8</span>],<span class="number">14</span>h</span><br><span class="line"><span class="number">15</span>:       <span class="keyword">int</span> ret = <span class="number">0</span>;</span><br><span class="line"><span class="number">00401086</span>   mov         dword ptr [ebp<span class="number">-0</span>Ch],<span class="number">0</span></span><br><span class="line"><span class="number">16</span>:       ret = sum(a,b);</span><br><span class="line"><span class="number">0040108</span>D   mov         eax,dword ptr [ebp<span class="number">-8</span>]</span><br><span class="line"><span class="number">00401090</span>   push        eax</span><br><span class="line"><span class="number">00401091</span>   mov         ecx,dword ptr [ebp<span class="number">-4</span>]</span><br><span class="line"><span class="number">00401094</span>   push        ecx</span><br><span class="line"><span class="number">00401095</span>   call        @ILT+<span class="number">0</span>(_sum) (<span class="number">00401005</span>)</span><br><span class="line"><span class="number">0040109</span>A   add         esp,<span class="number">8</span></span><br><span class="line"><span class="number">0040109</span>D   mov         dword ptr [ebp<span class="number">-0</span>Ch],eax</span><br><span class="line"><span class="number">17</span>:</span><br><span class="line"><span class="number">18</span>:       <span class="built_in">printf</span>(<span class="string">&quot;ret = %d\n&quot;</span>,ret);</span><br><span class="line"><span class="number">004010</span>A0   mov         edx,dword ptr [ebp<span class="number">-0</span>Ch]</span><br><span class="line"><span class="number">004010</span>A3   push        edx</span><br><span class="line"><span class="number">004010</span>A4   push        offset <span class="built_in">string</span> <span class="string">&quot;ret = %d\n&quot;</span> (<span class="number">0042201</span>c)</span><br><span class="line"><span class="number">004010</span><span class="function">A9   call        <span class="title">printf</span> <span class="params">(<span class="number">004010e0</span>)</span></span></span><br><span class="line">004010AE   add         esp,8</span><br><span class="line"><span class="number">19</span>:</span><br><span class="line"><span class="number">20</span>:       <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"><span class="number">004010B</span>1   <span class="keyword">xor</span>         eax,eax</span><br><span class="line"><span class="number">21</span>:   &#125;</span><br><span class="line"><span class="number">004010B</span>3   pop         edi</span><br><span class="line"><span class="number">004010B</span>4   pop         esi</span><br><span class="line"><span class="number">004010B</span>5   pop         ebx</span><br><span class="line"><span class="number">004010B</span>6   add         esp,<span class="number">4</span>Ch</span><br><span class="line"><span class="number">004010B</span>9   cmp         ebp,esp</span><br><span class="line"><span class="number">004010B</span>B   call        __chkesp (<span class="number">00401160</span>)</span><br><span class="line"><span class="number">004010</span>C0   mov         esp,ebp</span><br><span class="line"><span class="number">004010</span>C2   pop         ebp</span><br><span class="line"><span class="number">004010</span>C3   ret</span><br></pre></td></tr></table></figure>
 <p>可以看到在主函数和求和函数中首先出现的反汇编代码，我们以求函数举例，其实它们的功能是相同的，就是<strong>开辟栈帧</strong>。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">00401060   push        ebp</span><br><span class="line">00401061   mov         ebp,esp</span><br><span class="line">00401063   sub         esp,4Ch</span><br><span class="line">00401066   push        ebx</span><br><span class="line">00401067   push        esi</span><br><span class="line">00401068   push        edi</span><br><span class="line">00401069   lea         edi,[ebp-4Ch]</span><br><span class="line">0040106C   mov         ecx,13h</span><br><span class="line">00401071   mov         eax,0CCCCCCCCh</span><br><span class="line">00401076   rep stos    dword ptr [edi]</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">00401060</span>   push        ebp</span><br><span class="line"><span class="number">00401061</span>   mov         ebp,esp</span><br><span class="line"><span class="number">00401063</span>   sub         esp,<span class="number">4</span>Ch</span><br><span class="line"><span class="number">00401066</span>   push        ebx</span><br><span class="line"><span class="number">00401067</span>   push        esi</span><br><span class="line"><span class="number">00401068</span>   push        edi</span><br><span class="line"><span class="number">00401069</span>   lea         edi,[ebp<span class="number">-4</span>Ch]</span><br><span class="line"><span class="number">0040106</span>C   mov         ecx,<span class="number">13</span>h</span><br><span class="line"><span class="number">00401071</span>   mov         eax,<span class="number">0</span>CCCCCCCCh</span><br><span class="line"><span class="number">00401076</span>   rep stos    dword ptr [edi]</span><br></pre></td></tr></table></figure>
 <p>要看懂以上的汇编代码，首先我们必须具备的基础知识是<strong>几条简单的汇编指令</strong>和<strong>寄存器的功能和作用</strong>以及通常用的几个寄存器。</p>
 <p><strong>1.常用的intelx86汇编指令。</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[push  寄存器]  功能：将一个寄存器中的数据入栈。包含两个动作：将寄存器中的数据入栈，栈顶指针向上（低地址）偏移。</span><br><span class="line">[pop 寄存器]  功能：出栈，以一个寄存器接受出栈的数据。包含两个动作：将栈中的数据保存在寄存器中，同时栈顶指针向下(高地址)偏移。</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[push  寄存器]  功能：将一个寄存器中的数据入栈。包含两个动作：将寄存器中的数据入栈，栈顶指针向上（低地址）偏移。</span><br><span class="line">[pop 寄存器]  功能：出栈，以一个寄存器接受出栈的数据。包含两个动作：将栈中的数据保存在寄存器中，同时栈顶指针向下(高地址)偏移。</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[add 寄存器,数据] 如：add ax,8    &#x2F;&#x2F;相当于ax +&#x3D; 8;</span><br><span class="line">[sub 寄存器,数据] 如：sub bx,4    &#x2F;&#x2F;相当于bx -&#x3D; 4;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[add 寄存器,数据] 如：add ax,<span class="number">8</span>    <span class="comment">//相当于ax += 8;</span></span><br><span class="line">[sub 寄存器,数据] 如：sub bx,<span class="number">4</span>    <span class="comment">//相当于bx -= 4;</span></span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">常见的几种mov指令：</span><br><span class="line">[mov 寄存器,寄存器] 如：move ax,8</span><br><span class="line">[mov 寄存器,数据] 如：move ax,bx</span><br><span class="line">[mov 寄存器，内存单元] 如：move ax,[0]</span><br><span class="line">[mov 内存单元，寄存器] 如：move [0],ax</span><br><span class="line">[mov 段寄存器，寄存器] 如：move ds,ax</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">常见的几种mov指令：</span><br><span class="line">[mov 寄存器,寄存器] 如：move ax,<span class="number">8</span></span><br><span class="line">[mov 寄存器,数据] 如：move ax,bx</span><br><span class="line">[mov 寄存器，内存单元] 如：move ax,[<span class="number">0</span>]</span><br><span class="line">[mov 内存单元，寄存器] 如：move [<span class="number">0</span>],ax</span><br><span class="line">[mov 段寄存器，寄存器] 如：move ds,ax</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">call指令：call指令有两个动作</span><br><span class="line">(1)将下一行指令地址压栈</span><br><span class="line">(2)跳转</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">call指令：call指令有两个动作</span><br><span class="line">(<span class="number">1</span>)将下一行指令地址压栈</span><br><span class="line">(<span class="number">2</span>)跳转</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[lea ax,[]]  功能：将有效地址放[]到指定寄存器中。</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[lea ax,[]]  功能：将有效地址放[]到指定寄存器中。</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[rep stos ]</span><br><span class="line">如：</span><br><span class="line">lea     edi,[ebp-0C0h] </span><br><span class="line">mov     ecx,30h </span><br><span class="line">mov     eax,0CCCCCCCCh </span><br><span class="line">rep stos dword ptr [edi]</span><br><span class="line">rep指令的目的是重复其上面的指令。ecx寄存器中的值是重复的次数。</span><br><span class="line">stos指令的作用是将eax寄存器中的值拷贝到[edi]指向的地址。</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[rep stos ]</span><br><span class="line">如：</span><br><span class="line">lea     edi,[ebp<span class="number">-0</span>C0h] </span><br><span class="line">mov     ecx,<span class="number">30</span>h </span><br><span class="line">mov     eax,<span class="number">0</span>CCCCCCCCh </span><br><span class="line">rep stos dword ptr [edi]</span><br><span class="line">rep指令的目的是重复其上面的指令。ecx寄存器中的值是重复的次数。</span><br><span class="line">stos指令的作用是将eax寄存器中的值拷贝到[edi]指向的地址。</span><br></pre></td></tr></table></figure>
 <p><strong>2.常用的寄存器。</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">eax：累加寄存器，它是许多加法乘法指令的缺省寄存器。(缺省即默认defalut)</span><br><span class="line">ebx：基地址寄存器，在内存寻址是存放基地址。</span><br><span class="line">ecx：计数器，是重复前缀指令res和loop指令的内定计数器。</span><br><span class="line">edx：总是被用来存放整数产生的余数。</span><br><span class="line">esp：专门用作堆栈指针，被形象的称为栈顶指针，堆栈的顶部是地址小的区域，压入堆栈的数据越多，esp就越来越小。在32位平台上，esp每次减少4个字节。</span><br><span class="line">ebp：堆栈的栈底指针。</span><br><span class="line">esi&#x2F;edi:&quot;分别叫做源&#x2F;目标索引寄存器&quot;(source&#x2F;destination index),因为在很多字符串操作指令中，DS:ESI指向源串，而ES:EDI指向目标串。</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">eax：累加寄存器，它是许多加法乘法指令的缺省寄存器。(缺省即默认defalut)</span><br><span class="line">ebx：基地址寄存器，在内存寻址是存放基地址。</span><br><span class="line">ecx：计数器，是重复前缀指令res和loop指令的内定计数器。</span><br><span class="line">edx：总是被用来存放整数产生的余数。</span><br><span class="line">esp：专门用作堆栈指针，被形象的称为栈顶指针，堆栈的顶部是地址小的区域，压入堆栈的数据越多，esp就越来越小。在<span class="number">32</span>位平台上，esp每次减少<span class="number">4</span>个字节。</span><br><span class="line">ebp：堆栈的栈底指针。</span><br><span class="line">esi/edi:<span class="string">&quot;分别叫做源/目标索引寄存器&quot;</span>(source/destination index),因为在很多字符串操作指令中，DS:ESI指向源串，而ES:EDI指向目标串。</span><br></pre></td></tr></table></figure>
 <p>具备上边常用的intelx86汇编指令以及常用寄存器的功能。开始分析函数栈帧开辟的过程：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">00401060   push        ebp</span><br><span class="line">00401061   mov         ebp,esp</span><br><span class="line">00401063   sub         esp,4Ch</span><br><span class="line">00401066   push        ebx</span><br><span class="line">00401067   push        esi</span><br><span class="line">00401068   push        edi</span><br><span class="line">00401069   lea         edi,[ebp-4Ch]</span><br><span class="line">0040106C   mov         ecx,13h</span><br><span class="line">00401071   mov         eax,0CCCCCCCCh</span><br><span class="line">00401076   rep stos    dword ptr [edi]</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">00401060</span>   push        ebp</span><br><span class="line"><span class="number">00401061</span>   mov         ebp,esp</span><br><span class="line"><span class="number">00401063</span>   sub         esp,<span class="number">4</span>Ch</span><br><span class="line"><span class="number">00401066</span>   push        ebx</span><br><span class="line"><span class="number">00401067</span>   push        esi</span><br><span class="line"><span class="number">00401068</span>   push        edi</span><br><span class="line"><span class="number">00401069</span>   lea         edi,[ebp<span class="number">-4</span>Ch]</span><br><span class="line"><span class="number">0040106</span>C   mov         ecx,<span class="number">13</span>h</span><br><span class="line"><span class="number">00401071</span>   mov         eax,<span class="number">0</span>CCCCCCCCh</span><br><span class="line"><span class="number">00401076</span>   rep stos    dword ptr [edi]</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">1.压栈，并将值保存于ebp寄存器中，即ebp指向该块内存区域。</span><br><span class="line"></span><br><span class="line">2.使得esp和ebp指向同一块内存区域，虽然esp和ebp是寄存器，但由于其内保存的是地址，所以在此我们也可以形象的将esp和ebp看做指针，便于理解。</span><br><span class="line"></span><br><span class="line">3.sub esp,4Ch,对照上边的汇编指令，这里做的操作是 -&#x3D; ，即esp &#x3D; esp-4ch,我们都知道，指针进行加减还是指针。所以栈顶指针向上(低地址)移动76个字节，为什么会移动76个字节。我们可以认为，编译认为主函数栈帧开辟76个字节大小完全足够使用。在这里还需要注意的一点是，虚拟地址空间中栈的生长方向是从高地址到低地址，所以我们看到的是esp-4ch。</span><br><span class="line"></span><br><span class="line">4.由于接下来的三条汇编指令   入栈</span><br><span class="line">00401066   push        ebx</span><br><span class="line">00401067   push        esi</span><br><span class="line">00401068   push        edi</span><br><span class="line">与后边的出栈指令呼应，相当于没有入栈，在此不做赘述。</span><br><span class="line">004010B3   pop         edi</span><br><span class="line">004010B4   pop         esi</span><br><span class="line">004010B5   pop         ebx</span><br><span class="line"></span><br><span class="line">5.lea edi [ebp-4ch],将[ebp-4ch]的地址存放在地址寄存器中。</span><br><span class="line"></span><br><span class="line">6.mov ecx,13h</span><br><span class="line">7.mov eax,CCCCCCCCh</span><br><span class="line">8.rep stos dword ptr [edi]</span><br><span class="line">以上三条指令构成循环拷贝指令，循环次数13.拷贝的内容，CCCCCCCCh,即汉字&quot;烫烫&quot;。也就是说开辟栈帧结束后，对其做初始化。这就是为什么当我们访问未初始化内存中的内容，看到的是如下图的情况。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">简单小程序验证一下:</span><br><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	int ch;</span><br><span class="line">	putchar(ch);</span><br><span class="line">	return;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">简单小程序验证一下:</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> ch;</span><br><span class="line">	<span class="built_in">putchar</span>(ch);</span><br><span class="line">	<span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>//执行程序会报错，但可以通过调试查看内存获取内容。<br><img src="https://img-blog.csdn.net/20180421174830729?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>下面将开辟栈帧之后的图展示一下，以便理解：<br><img src="https://img-blog.csdn.net/20180421175343695?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
 <p>下面分析栈帧开辟完成之后的汇编指令：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">13:       int a &#x3D; 10;</span><br><span class="line">00401078   mov         dword ptr [ebp-4],0Ah</span><br><span class="line">14:       int b &#x3D; 20;</span><br><span class="line">0040107F   mov         dword ptr [ebp-8],14h</span><br><span class="line">15:       int ret &#x3D; 0;</span><br><span class="line">00401086   mov         dword ptr [ebp-0Ch],0</span><br><span class="line">16:       ret &#x3D; sum(a,b);</span><br><span class="line">0040108D   mov         eax,dword ptr [ebp-8]</span><br><span class="line">00401090   push        eax</span><br><span class="line">00401091   mov         ecx,dword ptr [ebp-4]</span><br><span class="line">00401094   push        ecx</span><br><span class="line">00401095   call        @ILT+0(_sum) (00401005)</span><br><span class="line">0040109A   add         esp,8</span><br><span class="line">0040109D   mov         dword ptr [ebp-0Ch],eax</span><br><span class="line">17:</span><br><span class="line">18:       printf(&quot;ret &#x3D; %d\n&quot;,ret);</span><br><span class="line">004010A0   mov         edx,dword ptr [ebp-0Ch]</span><br><span class="line">004010A3   push        edx</span><br><span class="line">004010A4   push        offset string &quot;ret &#x3D; %d\n&quot; (0042201c)</span><br><span class="line">004010A9   call        printf (004010e0)</span><br><span class="line">004010AE   add         esp,8</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">13</span>:       <span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line"><span class="number">00401078</span>   mov         dword ptr [ebp<span class="number">-4</span>],<span class="number">0</span>Ah</span><br><span class="line"><span class="number">14</span>:       <span class="keyword">int</span> b = <span class="number">20</span>;</span><br><span class="line"><span class="number">0040107F</span>   mov         dword ptr [ebp<span class="number">-8</span>],<span class="number">14</span>h</span><br><span class="line"><span class="number">15</span>:       <span class="keyword">int</span> ret = <span class="number">0</span>;</span><br><span class="line"><span class="number">00401086</span>   mov         dword ptr [ebp<span class="number">-0</span>Ch],<span class="number">0</span></span><br><span class="line"><span class="number">16</span>:       ret = sum(a,b);</span><br><span class="line"><span class="number">0040108</span>D   mov         eax,dword ptr [ebp<span class="number">-8</span>]</span><br><span class="line"><span class="number">00401090</span>   push        eax</span><br><span class="line"><span class="number">00401091</span>   mov         ecx,dword ptr [ebp<span class="number">-4</span>]</span><br><span class="line"><span class="number">00401094</span>   push        ecx</span><br><span class="line"><span class="number">00401095</span>   call        @ILT+<span class="number">0</span>(_sum) (<span class="number">00401005</span>)</span><br><span class="line"><span class="number">0040109</span>A   add         esp,<span class="number">8</span></span><br><span class="line"><span class="number">0040109</span>D   mov         dword ptr [ebp<span class="number">-0</span>Ch],eax</span><br><span class="line"><span class="number">17</span>:</span><br><span class="line"><span class="number">18</span>:       <span class="built_in">printf</span>(<span class="string">&quot;ret = %d\n&quot;</span>,ret);</span><br><span class="line"><span class="number">004010</span>A0   mov         edx,dword ptr [ebp<span class="number">-0</span>Ch]</span><br><span class="line"><span class="number">004010</span>A3   push        edx</span><br><span class="line"><span class="number">004010</span>A4   push        offset <span class="built_in">string</span> <span class="string">&quot;ret = %d\n&quot;</span> (<span class="number">0042201</span>c)</span><br><span class="line"><span class="number">004010</span><span class="function">A9   call        <span class="title">printf</span> <span class="params">(<span class="number">004010e0</span>)</span></span></span><br><span class="line">004010AE   add         esp,8</span><br></pre></td></tr></table></figure>
 <p>纵观上边列出的指令，可以看到。布局变量并没有表现出来，它是<strong>通过ebp栈底指针的偏移量来表示的</strong>。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">13:       int a &#x3D; 10;</span><br><span class="line">00401078   mov         dword ptr [ebp-4],0Ah</span><br><span class="line">14:       int b &#x3D; 20;</span><br><span class="line">0040107F   mov         dword ptr [ebp-8],14h</span><br><span class="line">15:       int ret &#x3D; 0;</span><br><span class="line">00401086   mov         dword ptr [ebp-0Ch],0</span><br><span class="line"></span><br><span class="line">1.mov dword ptr [ebp-4],0Ah，dword表示双字，即四字节。即将0Ah放入[ebp-4]指向的四字节内存块中。</span><br><span class="line">2.mov dword ptr [ebp-8],14h，将14h放入[ebp-8]指向的四字节内存块中。</span><br><span class="line">3. mov dword ptr [ebp-0Ch],0，将0放入[ebp-0Ch]指向的四字节内存块中。</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">13</span>:       <span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line"><span class="number">00401078</span>   mov         dword ptr [ebp<span class="number">-4</span>],<span class="number">0</span>Ah</span><br><span class="line"><span class="number">14</span>:       <span class="keyword">int</span> b = <span class="number">20</span>;</span><br><span class="line"><span class="number">0040107F</span>   mov         dword ptr [ebp<span class="number">-8</span>],<span class="number">14</span>h</span><br><span class="line"><span class="number">15</span>:       <span class="keyword">int</span> ret = <span class="number">0</span>;</span><br><span class="line"><span class="number">00401086</span>   mov         dword ptr [ebp<span class="number">-0</span>Ch],<span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="number">1.</span>mov dword ptr [ebp<span class="number">-4</span>],<span class="number">0</span>Ah，dword表示双字，即四字节。即将<span class="number">0</span>Ah放入[ebp<span class="number">-4</span>]指向的四字节内存块中。</span><br><span class="line"><span class="number">2.</span>mov dword ptr [ebp<span class="number">-8</span>],<span class="number">14</span>h，将<span class="number">14</span>h放入[ebp<span class="number">-8</span>]指向的四字节内存块中。</span><br><span class="line"><span class="number">3.</span> mov dword ptr [ebp<span class="number">-0</span>Ch],<span class="number">0</span>，将<span class="number">0</span>放入[ebp<span class="number">-0</span>Ch]指向的四字节内存块中。</span><br></pre></td></tr></table></figure>
 <p><img src="https://img-blog.csdn.net/20180421180809673?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">16:       ret &#x3D; sum(a,b);</span><br><span class="line">0040108D   mov         eax,dword ptr [ebp-8]</span><br><span class="line">00401090   push        eax</span><br><span class="line">00401091   mov         ecx,dword ptr [ebp-4]</span><br><span class="line">00401094   push        ecx</span><br><span class="line">1.将[ebp-8]指向内存块中的值存入寄存器eax中，并进行压栈。同时栈顶指针向上偏移(低地址)。</span><br><span class="line">2.将[ebp-4]指向内存块中的值存入寄存器ecx中，并进行压栈。同时栈顶指针向上偏移(低地址)。</span><br><span class="line">在这两行代码中，可以得到以下的结论：</span><br><span class="line">(1)形参的内存是由调用方开辟的。</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">16</span>:       ret = sum(a,b);</span><br><span class="line"><span class="number">0040108</span>D   mov         eax,dword ptr [ebp<span class="number">-8</span>]</span><br><span class="line"><span class="number">00401090</span>   push        eax</span><br><span class="line"><span class="number">00401091</span>   mov         ecx,dword ptr [ebp<span class="number">-4</span>]</span><br><span class="line"><span class="number">00401094</span>   push        ecx</span><br><span class="line"><span class="number">1.</span>将[ebp<span class="number">-8</span>]指向内存块中的值存入寄存器eax中，并进行压栈。同时栈顶指针向上偏移(低地址)。</span><br><span class="line"><span class="number">2.</span>将[ebp<span class="number">-4</span>]指向内存块中的值存入寄存器ecx中，并进行压栈。同时栈顶指针向上偏移(低地址)。</span><br><span class="line">在这两行代码中，可以得到以下的结论：</span><br><span class="line">(<span class="number">1</span>)形参的内存是由调用方开辟的。</span><br></pre></td></tr></table></figure>
 <p><img src="https://img-blog.csdn.net/20180422093501589?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">00401095   call        @ILT+0(_sum) (00401005)</span><br><span class="line"></span><br><span class="line">这条指令是尤为重要的，前面已经讲过call指令有两个动作。</span><br><span class="line">(1)将下一条指令的地址压栈。</span><br><span class="line">(2)跳转</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">00401095</span>   call        @ILT+<span class="number">0</span>(_sum) (<span class="number">00401005</span>)</span><br><span class="line"></span><br><span class="line">这条指令是尤为重要的，前面已经讲过call指令有两个动作。</span><br><span class="line">(<span class="number">1</span>)将下一条指令的地址压栈。</span><br><span class="line">(<span class="number">2</span>)跳转</span><br></pre></td></tr></table></figure>
 <p>如何确定call指令是否执行了上述的动作，我们使用反汇编代码进行调试。<br><img src="https://img-blog.csdn.net/20180422094243434?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>黄箭头表示此条指令还未执行，那么我们查看此时栈底指针esp的地址，查看内存中的内容。<br><img src="https://img-blog.csdn.net/20180422094453939?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>查看<code>0x0019fee0</code>对应的内存块。<br><img src="https://img-blog.csdn.net/20180422094544533?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>可见上述实参<code>10</code>和<code>20</code>已经入栈，并且栈顶指针指向<code>10(0A)</code>所在的内存块。</p>
 <p>下面执行call指令我们看看会发生什么？<br>首先栈顶指针向上偏移(低地址)。<br><img src="https://img-blog.csdn.net/2018042209491654?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><strong>重点：下一条指令的地址被压栈</strong><br><img src="https://img-blog.csdn.net/20180422095044601?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
 <p>由于intelx86体系的机器是小端模式，读取<code>0x0019fedc</code>内存块的内容,<code>0040109A</code>,正是<code>call指令</code>下一条指令的地址。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">00401095   call        @ILT+0(_sum) (00401005)</span><br><span class="line">0040109A   add         esp,8</span><br></pre></td></tr></table></figure>
 <p><img src="https://img-blog.csdn.net/20180422095503210?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
 <p>跳转到被调用函数中，首先也是开辟栈帧并作初始化，在此不做赘述。但是值得注意的是栈帧开辟的时候进行<code>push ebp</code>的操作。<br><img src="https://img-blog.csdn.net/20180422095910525?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">5:        int res &#x3D; 0;</span><br><span class="line">00401038   mov         dword ptr [ebp-4],0</span><br><span class="line">6:        res &#x3D; a+b;</span><br><span class="line">0040103F   mov         eax,dword ptr [ebp+8]</span><br><span class="line">00401042   add         eax,dword ptr [ebp+0Ch]</span><br><span class="line">00401045   mov         dword ptr [ebp-4],eax</span><br><span class="line">7:        return res;</span><br><span class="line">00401048   mov         eax,dword ptr [ebp-4]</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">5</span>:        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line"><span class="number">00401038</span>   mov         dword ptr [ebp<span class="number">-4</span>],<span class="number">0</span></span><br><span class="line"><span class="number">6</span>:        res = a+b;</span><br><span class="line"><span class="number">0040103F</span>   mov         eax,dword ptr [ebp+<span class="number">8</span>]</span><br><span class="line"><span class="number">00401042</span>   add         eax,dword ptr [ebp+<span class="number">0</span>Ch]</span><br><span class="line"><span class="number">00401045</span>   mov         dword ptr [ebp<span class="number">-4</span>],eax</span><br><span class="line"><span class="number">7</span>:        <span class="keyword">return</span> res;</span><br><span class="line"><span class="number">00401048</span>   mov         eax,dword ptr [ebp<span class="number">-4</span>]</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1.在求和函数中，将0存入[ebp-4]指向的内存块中。</span><br><span class="line">2.将[ebp+8]指向的内存块中的值放入eax寄存器中，而[ebp+8]指向的内存块对应的正是实参&#96;10&#96;。</span><br><span class="line">3.将[eb[ebp+0Ch]指向的内存块中的值放入eax寄存器中，而[ebp+0Ch]指向的内存中对应的正是实参&#96;20&#96;。</span><br><span class="line">4.将eax寄存器中的值压栈，存放到[ebp-4]指向的内存块中，此时eax寄存器中的值为&#96;30&#96;。</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>在求和函数中，将<span class="number">0</span>存入[ebp<span class="number">-4</span>]指向的内存块中。</span><br><span class="line"><span class="number">2.</span>将[ebp+<span class="number">8</span>]指向的内存块中的值放入eax寄存器中，而[ebp+<span class="number">8</span>]指向的内存块对应的正是实参`<span class="number">10</span>`。</span><br><span class="line"><span class="number">3.</span>将[eb[ebp+<span class="number">0</span>Ch]指向的内存块中的值放入eax寄存器中，而[ebp+<span class="number">0</span>Ch]指向的内存中对应的正是实参`<span class="number">20</span>`。</span><br><span class="line"><span class="number">4.</span>将eax寄存器中的值压栈，存放到[ebp<span class="number">-4</span>]指向的内存块中，此时eax寄存器中的值为`<span class="number">30</span>`。</span><br></pre></td></tr></table></figure>
 <p><img src="https://img-blog.csdn.net/20180422101410449?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">7:        return res;</span><br><span class="line">00401048   mov         eax,dword ptr [ebp-4]</span><br><span class="line"></span><br><span class="line">     </span><br><span class="line">0040104E   mov         esp,ebp</span><br><span class="line">00401050   pop         ebp</span><br><span class="line">00401051   ret </span><br><span class="line"></span><br><span class="line">1.由mov    eax,dword ptr [ebp-4]可知，函数的返回值(小于等于四个字节)是由寄存器带回的。</span><br><span class="line">        </span><br><span class="line">2.0040104E   mov       esp,ebp使得被调用函数栈帧回退。此时栈帧空间的内容还存在。</span><br></pre></td></tr></table></figure>
 <p><img src="https://img-blog.csdn.net/20180422102757746?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">3.pop   ebp 两个动作，出栈，并将出栈的值赋给ebp。在这里，即ebp&#x3D;&#x3D;0x100。栈顶指针向下回退四个字节(高地址)。</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">3.</span>pop   ebp 两个动作，出栈，并将出栈的值赋给ebp。在这里，即ebp==<span class="number">0x100</span>。栈顶指针向下回退四个字节(高地址)。</span><br></pre></td></tr></table></figure>
 <p><img src="https://img-blog.csdn.net/20180422103408785?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;下面看主函数调用求和函数执行的指令</span><br><span class="line">0040109A   add         esp,8</span><br><span class="line">0040109D   mov         dword ptr [ebp-0Ch],eax</span><br><span class="line"></span><br><span class="line">1.add   esp,8 相当于esp &#x3D; esp + 8,是主函数压实参的栈帧回退。所以形参内存是由调用方清理的。</span><br><span class="line">2.将eax寄存器中的值&#96;30&#96;放入[ebp-0Ch]指向的四字节内存块中。</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//下面看主函数调用求和函数执行的指令</span></span><br><span class="line"><span class="number">0040109</span>A   add         esp,<span class="number">8</span></span><br><span class="line"><span class="number">0040109</span>D   mov         dword ptr [ebp<span class="number">-0</span>Ch],eax</span><br><span class="line"></span><br><span class="line"><span class="number">1.</span>add   esp,<span class="number">8</span> 相当于esp = esp + <span class="number">8</span>,是主函数压实参的栈帧回退。所以形参内存是由调用方清理的。</span><br><span class="line"><span class="number">2.</span>将eax寄存器中的值`<span class="number">30</span>`放入[ebp<span class="number">-0</span>Ch]指向的四字节内存块中。</span><br></pre></td></tr></table></figure>
 <p><img src="https://img-blog.csdn.net/20180422103945937?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
 <p>到这里，函数堆栈调用的过程就完全展示出来了。现在回答最开始我们提出的几个题：</p>
 <p>（1）形参的内存空间的开辟和清理是由调用方还是由被调用方执行的？<br>（2）主函数调用函数结束后，主函数从哪里开始执行？从头开始还是从调用之后开始？<br>（3）返回值是如何带出来的？</p>
@@ -1160,6 +878,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">堆栈调用</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
@@ -1176,6 +905,282 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/04/22/%E6%B1%87%E7%BC%96%E8%A7%92%E5%BA%A6%E7%9C%8B%E5%87%BD%E6%95%B0%E5%A0%86%E6%A0%88%E8%B0%83%E7%94%A8/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+    <article id="post-子进程继承父进程的锁" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/20/%E5%AD%90%E8%BF%9B%E7%A8%8B%E7%BB%A7%E6%89%BF%E7%88%B6%E8%BF%9B%E7%A8%8B%E7%9A%84%E9%94%81/">子进程继承父进程的锁</a>
+    </h1>
+  
+
+        <!--显示阅读次数-->
+        
+        <!--显示阅读次数完毕-->
+        
+        <a href="/2018/04/20/%E5%AD%90%E8%BF%9B%E7%A8%8B%E7%BB%A7%E6%89%BF%E7%88%B6%E8%BF%9B%E7%A8%8B%E7%9A%84%E9%94%81/" class="archive-article-date">
+  	<time datetime="2018-04-20T12:47:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-20</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+      
+        <a id="more"></a>
+
+<p>fork函数调用会创建子进程，子进程的地址空间是在调用fork时父进程地址空间的拷贝。因为子进程地址空间跟父进程一样，所以调用fork时，子进程继承了父进程中的所有互斥锁、读写锁和条件变量（包括它们的状态）。<br>    但在多线程环境中，调用fork时，子进程中只有一个线程存在，这个线程是调用fork函数的那个线程，其他线程都没有被拷贝。<br>    根据上述两点，子进程中的锁可能被不存在的线程所拥有，这样子进程将没法获取或释放这些锁。针对这个问题有一个解决办法，即在调用fork之前，线程先获取进程中所有锁，在调用fork后分别在父子进程中释放这些锁，从而可以重新利用这些资源。因为fork之前，当前线程拥有所有的锁，所以fork之后，当前线程继续存在，子进程可以安全的释放这些锁。<br>    当然，在调用fork后，子进程马上调用exec，就无需考虑这些问题了，因为子进程地址空间被完全更换了。<br>    函数pthread_atfork专门用来解决这种问题：<br>    int pthread_atfork ( void (*prepare)(void), void (*parent)(void), void (*child)(void) );<br>    pthread_atfork安装一些在fork调用时的回调函数。prepare函数将在fork创建子进程之前被调用，通常可以用来获取进程中的所有锁；parent在fork创建子进程后返回前在父进程中被调用，可以用来释放父进程中的锁；child在fork创建子进程后fork返回前在子进程中被调用，可以用来释放子进程中的锁。给这三个参数传递NULL，表示不调用该函数。<br>    可以调用pthread_atfork多次注册多组回调函数，这时，回调函数调用的顺序规定如下：<br>      ①prepare函数调用顺序与它们的注册顺序相反；<br>      ②parent和child函数的调用顺序与注册顺序相同。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Linux系统编程//" class="article-tag-list-link color5">Linux系统编程</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/04/20/%E5%AD%90%E8%BF%9B%E7%A8%8B%E7%BB%A7%E6%89%BF%E7%88%B6%E8%BF%9B%E7%A8%8B%E7%9A%84%E9%94%81/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+    <article id="post-多线程访问共享的全局变量引发的数据混乱" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/17/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E8%AE%BF%E9%97%AE%E5%85%B1%E4%BA%AB%E7%9A%84%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F%E5%BC%95%E5%8F%91%E7%9A%84%E6%95%B0%E6%8D%AE%E6%B7%B7%E4%B9%B1/">多线程访问共享的全局变量引发的数据混乱</a>
+    </h1>
+  
+
+        <!--显示阅读次数-->
+        
+        <!--显示阅读次数完毕-->
+        
+        <a href="/2018/04/17/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E8%AE%BF%E9%97%AE%E5%85%B1%E4%BA%AB%E7%9A%84%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F%E5%BC%95%E5%8F%91%E7%9A%84%E6%95%B0%E6%8D%AE%E6%B7%B7%E4%B9%B1/" class="archive-article-date">
+  	<time datetime="2018-04-17T11:55:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-17</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+      
+        <a id="more"></a>
+
+<p>1.<strong>线程共享全局变量</strong></p>
+<p>在学习线程的相关概念之后，想探究在进程的虚拟地址空间当中的哪些区域是进程中多个线程共享的。<br>探究发现，全局变量在不同的线程当中访问全局变量是共享的。举例如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;assert.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;pthread.h&gt;//线程库</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">char</span> *str;<span class="comment">//定义指向字符串的全局变量str</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//线程函数</span></span><br><span class="line"><span class="function"><span class="keyword">void</span>* <span class="title">my_fun</span><span class="params">(<span class="keyword">void</span> *arg)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;函数线程：str = %s\n&quot;</span>,str);</span><br><span class="line">	<span class="comment">//若共享，输出为主线程修改指向后指向的字符串，否则会出现段错误。</span></span><br><span class="line">	<span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">pthread_t</span> id;<span class="comment">//传出参数，用于保存成功创建线程后对应线程的id</span></span><br><span class="line">	<span class="keyword">int</span> res = pthread_create(&amp;id,<span class="literal">NULL</span>,my_fun,<span class="literal">NULL</span>);</span><br><span class="line">	<span class="comment">//成功创建返回值为0</span></span><br><span class="line">	assert(<span class="number">0</span> == res);</span><br><span class="line">	str = <span class="string">&quot;hello&quot;</span>;<span class="comment">//修改全局指针变量的指向</span></span><br><span class="line">	pthread_exit(<span class="literal">NULL</span>);<span class="comment">//退出当前线程</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>测试结果</strong><br><img src="https://img-blog.csdn.net/20180417170110584?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>可见，全局变量在多个线程中是共享的。</p>
+<p><strong>2.多线访问共享变量引发的数据混乱。</strong></p>
+<p>虽然线程共享全局变量相对于进程通信会给线程通信带来巨大的方便，但是探究以下问题时发现不做控制的进行访问全局变量也是致命的，带来巨大程序bug，并且难以发现，首先请看一下代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;assert.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;pthread.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAX 10000</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> count = <span class="number">0</span>;<span class="comment">//定义全局count并初始化为0</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//函数线程A</span></span><br><span class="line"><span class="function"><span class="keyword">void</span>* <span class="title">my_funa</span><span class="params">(<span class="keyword">void</span> *arg)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(;i &lt; MAX;++i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> cur = count;</span><br><span class="line">		cur++;</span><br><span class="line">		count = cur;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;线程A:id = %lu,count = %d\n&quot;</span>,pthread_self(),count);</span><br><span class="line">		usleep(<span class="number">10</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//函数线程B</span></span><br><span class="line"><span class="function"><span class="keyword">void</span>* <span class="title">my_funb</span><span class="params">(<span class="keyword">void</span> *arg)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(;i &lt; MAX;++i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> cur = count;</span><br><span class="line">		cur++;</span><br><span class="line">		count = cur;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;线程B:id = %lu,count = %d\n&quot;</span>,pthread_self(),count);</span><br><span class="line">		usleep(<span class="number">10</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//解释：定义全局变量count并初始化为0作为计数器</span></span><br><span class="line"><span class="comment">//在函数线程A和函数线程B分别进行10000次的++操作</span></span><br><span class="line"><span class="comment">//那么在两个线程执行完毕之后此时计数器count的值为20000</span></span><br><span class="line"><span class="comment">//usleep(10)，是为了模仿交替执行的过程，主动放弃cpu的执行权。</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span>  <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//创建两个线程</span></span><br><span class="line">	<span class="keyword">pthread_t</span> pthid1,pthid2;</span><br><span class="line">	<span class="keyword">int</span> res1 = pthread_create(&amp;pthid1,<span class="literal">NULL</span>,my_funa,<span class="literal">NULL</span>);</span><br><span class="line">	<span class="keyword">int</span> res2 = pthread_create(&amp;pthid2,<span class="literal">NULL</span>,my_funb,<span class="literal">NULL</span>);</span><br><span class="line">	assert(<span class="number">0</span> == res1);</span><br><span class="line">	assert(<span class="number">0</span> == res2);</span><br><span class="line"></span><br><span class="line">	<span class="comment">//阻塞，回收函数线程资源</span></span><br><span class="line">	pthread_join(pthid1,<span class="literal">NULL</span>);</span><br><span class="line">	pthread_join(pthid2,<span class="literal">NULL</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用gcc编译并执行：<br><img src="https://img-blog.csdn.net/2018041717173811?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><strong>多次执行结果：</strong><br><img src="https://img-blog.csdn.net/2018041717255381?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<p><img src="https://img-blog.csdn.net/20180417172603319?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<p><img src="https://img-blog.csdn.net/20180417172614873?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<p>这里结果就令我感到非常疑惑，按照我们预期的结果。在两个线程中，都访问了全局变量并且同样进行了一万次的++操作，结果应该是20000。但是在这里我们看到多次执行结果每次的输出并不一致，存在结果为20000的情况，但是更多的是小于20000的情况。<br>试想一下，这样的程序应用在实际的软件当中，必然会带来巨大的漏洞和危害，造成一定的经济损失。</p>
+<p><strong>下面就开始探索如何这样的问题是如何出现的？为什么执行同一个可执行程序不能得到相同的计算结果？该如何解决这样的问题？</strong></p>
+<p>通过查阅相关的资料，得到了一下的信息。<br>（1）时间片轮转技术<br>（2）cur++的反汇编代码</p>
+<p><strong>时间片轮转技术</strong><br>什么是时间片轮转技术？在计算机发展的早期，CPU的价格昂贵，如果执行一个程序时但其输入输出需要的时间比较长，此时CPU就必须等到数据的到来才能进行运算。对于这样的时间浪费，在那个时期简直就是暴殄天物。聪明的计算机前辈很快就意识到这个问题，于是提出了监控CPU状态的程序。当发现CPU处于等待IO时，切换到等待获取CPU执行的程序，使得CPU被充分利用起来，这就是最早期的多道程序设计的思想。但是这样的调度策略显得太过粗糙，不分程序之间的优先级。随后就提出了分时系统的调度策略，即每个程序执行一小段时间之后将CPU的控制权交给其他就绪的程序。使得每个程序都有得到使用CPU执行的机会。这大概就是时间轮转技术的雏形吧。</p>
+<p><strong>现代计算机的时间片轮转技术是这样定义的：</strong><br>在早期的时间片轮转法中，系统将所有的就绪进程按先来先服务的原则，排成一个队列，每次调度时，把CPU分配给队首进程，并令其执行一个时间片。时间片的大小从几ms到几百ms。当执行的时间片用完时，由一个计时器发出时钟中断请求，调度程序便据此信号来停止该进程的执行，并将它送往就绪队列的末尾;然后，再把处理机分配给就绪队列中新的队首进程，同时也让它执行一个时间片。这样就可以保证就绪队列中的所有进程，在一给定的时间内，均能获得一时间片的处理机执行时间。<br>如果在时间片结束时进程还在运行，则CPU将被剥夺并分配给另一个进程。如果进程在时间片结束前阻塞或结束，则CPU当即进行切换。调度程序所要做的就是维护一张就绪进程列表，当进程用完它的时间片后，它被移到队列的末尾。</p>
+<p>在这里为什么要提时间片轮转技术呢？针对我们上边的线程访问全局变量时，分配给单个线程执行时间是有限的，而且为了模仿交替执行的过程，程序中还使用了usleep(10)系统调用函数，主动交出CPU的控制权。但其实在拥有CPU控制权的那段时间内线程只能执行有限的指令条数，但这与输出结果不一致有什么关系呢？</p>
+<p><strong>先看下边cur++的反汇编代码：</strong><br><img src="https://img-blog.csdn.net/20180417193619880?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>可以看到++过程是在寄存器中进行的。到这里可以说问题已经解决了。<br>试想下面一个过程。<br>（1）时间片分给线程A执行代码，当<code>cur</code>在寄存中中累加到了<code>100</code>，此时恰巧时间片被用完了，而存放在寄存器中的中间变量<strong>还没来及</strong>写入实际的物理内存。</p>
+<p>（2）时间片分配给线程B，由于线程A算出来的值<strong>并没有写回内存</strong>，所以实际上此时线程B还是取得 <code>cur == 0</code>  而进行的 <code>++</code> 操作，大概进行了 <code>200次</code> 的<code>++</code> 操作，但这次时间片刚好够用，线程B将得到的 <code>cur == 200</code> 写回了实际的物理内存。</p>
+<p>（3）时间片再度分配给线程A,线程A开始执行它在上一个时间片结束时没有执行完的工作，将 <code>cur == 100</code> 写入实际的物理内存,计算机严格按照代码执行指令，殊不知此时会将由线程B计算出来的 <code>cur == 200</code> 覆盖，这就是为什么在上面的图片当中，三次执行相同的代码，得到的结果完全不一致的原因。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">多线程</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Linux-操作系统//" class="article-tag-list-link color1">Linux 操作系统</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/04/17/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E8%AE%BF%E9%97%AE%E5%85%B1%E4%BA%AB%E7%9A%84%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F%E5%BC%95%E5%8F%91%E7%9A%84%E6%95%B0%E6%8D%AE%E6%B7%B7%E4%B9%B1/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+    <article id="post-求二进制数中一的个数的三种方法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/14/%E6%B1%82%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%95%B0%E4%B8%AD%E4%B8%80%E7%9A%84%E4%B8%AA%E6%95%B0%E7%9A%84%E4%B8%89%E7%A7%8D%E6%96%B9%E6%B3%95/">求二进制数中一的个数的三种方法</a>
+    </h1>
+  
+
+        <!--显示阅读次数-->
+        
+        <!--显示阅读次数完毕-->
+        
+        <a href="/2018/04/14/%E6%B1%82%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%95%B0%E4%B8%AD%E4%B8%80%E7%9A%84%E4%B8%AA%E6%95%B0%E7%9A%84%E4%B8%89%E7%A7%8D%E6%96%B9%E6%B3%95/" class="archive-article-date">
+  	<time datetime="2018-04-14T14:27:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-14</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+      
+        <a id="more"></a>
+
+<p><strong>题目描述：</strong>编写一个函数，输入是一个无符号整数，返回的是它所有 位1 的个数（也被称为汉明重量）。</p>
+<p>例如，<code>32位整数 &#39;11&#39;</code> 的二进制表示为 <code>00000000000000000000000000001011</code>，所以函数返回<code>3</code>。<br><strong>题目来源：</strong> leetcode</p>
+<p><strong>方法一：</strong>利用整数除法的特点，通过相处和判断余数的值进行分析。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">count</span><span class="params">(<span class="keyword">int</span> a)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span>(a)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>(a % <span class="number">2</span> == <span class="number">1</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			count++;</span><br><span class="line">		&#125;</span><br><span class="line">		a /= <span class="number">2</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> count;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>方法二：</strong>使用位运算。位运算符当中的右移运算符每一次移动一位，其实与除以2是等价的。进行掩码运算，取当前二进制数的最后一位。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">count</span><span class="params">(<span class="keyword">int</span> a)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span>(a)</span><br><span class="line">	&#123;</span><br><span class="line">		count += a &amp; <span class="number">0x00000001</span>;<span class="comment">//获取当前二进制数的最后一位，为0或1。</span></span><br><span class="line">		a &gt;&gt;= <span class="number">1</span>;<span class="comment">//相当于除以2</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> count;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>方法三：</strong> 有技巧的<strong>位与运算</strong>。<br>举例:<br>如二进制数    1001 0010 进行减一操作后 0110 1101 然后进行位与运算<br>10010010 &amp; 01101101 = 0，证明原二进制数一个2的N次方值。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">count</span><span class="params">(<span class="keyword">int</span> a)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span>(a)</span><br><span class="line">	&#123;</span><br><span class="line">		a &amp;= (a<span class="number">-1</span>);	</span><br><span class="line">		count++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> count;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/算法基础//" class="article-tag-list-link color5">算法基础</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/04/14/%E6%B1%82%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%95%B0%E4%B8%AD%E4%B8%80%E7%9A%84%E4%B8%AA%E6%95%B0%E7%9A%84%E4%B8%89%E7%A7%8D%E6%96%B9%E6%B3%95/">展开全文 >></a>
         </p>
       
 
@@ -1299,11 +1304,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">动态规划</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">1024程序员节</a>
+                <a href="javascript:void(0)" class="js-tag color3">dp</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1311,7 +1312,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">数据结构 算法</a>
+                <a href="javascript:void(0)" class="js-tag color3">查找</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1323,11 +1324,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">c语言</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color4">STL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1335,7 +1332,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">linux系统编程</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">linux命令</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1351,14 +1352,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">c</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">c++11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">protobuf</a>
               </li>
              
@@ -1371,7 +1364,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color2">树</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">栈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">二分</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">堆</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1383,11 +1388,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">堆</a>
+                <a href="javascript:void(0)" class="js-tag color2">c</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">回溯法</a>
+                <a href="javascript:void(0)" class="js-tag color3">排序</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1395,11 +1400,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">最短路径</a>
+                <a href="javascript:void(0)" class="js-tag color4">回溯法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">进程通信</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">单链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">计算机组成</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">最短路径</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">单链表 排序</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1411,15 +1432,31 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">排序</a>
+                <a href="javascript:void(0)" class="js-tag color5">Linux系统编程</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">1024程序员节 c++</a>
+                <a href="javascript:void(0)" class="js-tag color1">c++11</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">动态规划 算法 leetcode</a>
+                <a href="javascript:void(0)" class="js-tag color5">而擦函数</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">图论</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">稀疏矩阵</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">双链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">树 图</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1427,11 +1464,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">递归</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">c++11算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">计算机组成</a>
+                <a href="javascript:void(0)" class="js-tag color5">堆栈调用</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1443,7 +1484,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">递归</a>
+                <a href="javascript:void(0)" class="js-tag color5">进程基础</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">图的存储结构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">哈希</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">剑指offer</a>
               </li>
             
             <div class="clearfix"></div>

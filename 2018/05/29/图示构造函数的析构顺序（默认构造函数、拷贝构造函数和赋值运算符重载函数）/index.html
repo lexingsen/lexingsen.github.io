@@ -8,16 +8,16 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>图示构造函数的析构顺序（默认构造函数、拷贝构造函数和赋值运算符重载函数） | 乐行僧的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="示例代码： 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556#include&lt;iostream&gt;using namespace std;class Test&amp;#123;public:	Test(int a&#x3D;10,in">
+  <meta name="description" content="示例代码： 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556#include&lt;iostream&gt;using namespace std;class Test&amp;#123;public:	Test(int a&#x3D;10,int b&#x3D;2">
 <meta property="og:type" content="article">
 <meta property="og:title" content="图示构造函数的析构顺序（默认构造函数、拷贝构造函数和赋值运算符重载函数）">
 <meta property="og:url" content="http://example.com/2018/05/29/%E5%9B%BE%E7%A4%BA%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E7%9A%84%E6%9E%90%E6%9E%84%E9%A1%BA%E5%BA%8F%EF%BC%88%E9%BB%98%E8%AE%A4%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E3%80%81%E6%8B%B7%E8%B4%9D%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%92%8C%E8%B5%8B%E5%80%BC%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD%E5%87%BD%E6%95%B0%EF%BC%89/index.html">
 <meta property="og:site_name" content="乐行僧的博客">
-<meta property="og:description" content="示例代码： 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556#include&lt;iostream&gt;using namespace std;class Test&amp;#123;public:	Test(int a&#x3D;10,in">
+<meta property="og:description" content="示例代码： 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556#include&lt;iostream&gt;using namespace std;class Test&amp;#123;public:	Test(int a&#x3D;10,int b&#x3D;2">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://img-blog.csdn.net/20180529174210776?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
 <meta property="article:published_time" content="2018-05-29T09:42:40.000Z">
-<meta property="article:modified_time" content="2020-11-29T19:35:27.703Z">
+<meta property="article:modified_time" content="2020-11-30T15:26:26.666Z">
 <meta property="article:author" content="lexingsen">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://img-blog.csdn.net/20180529174210776?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
@@ -70,7 +70,7 @@
 			</ul>
 			</nav>
 			<nav>
-			总文章数 300
+			总文章数 296
 			</nav>
 		<nav class="header-smart-menu">
     		
@@ -187,7 +187,7 @@
         <a id="more"></a>
 
 <p><strong>示例代码：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">class Test</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">	Test(int a&#x3D;10,int b&#x3D;20)</span><br><span class="line">	&#123;</span><br><span class="line">		_a &#x3D; a;</span><br><span class="line">		_b &#x3D; b;</span><br><span class="line">		cout &lt;&lt; this &lt;&lt; &quot; &quot;;</span><br><span class="line">		cout &lt;&lt; &quot;Test(int,int)&quot; &lt;&lt; endl;</span><br><span class="line">		cout &lt;&lt; &quot;_a &#x3D; &quot; &lt;&lt; _a &lt;&lt; &quot;,_b &#x3D; &quot; &lt;&lt; _b &lt;&lt; endl; </span><br><span class="line">	&#125;</span><br><span class="line">	Test(const Test&amp; src)</span><br><span class="line">	&#123;</span><br><span class="line">		_a &#x3D; src._a;</span><br><span class="line">		cout &lt;&lt; this &lt;&lt; &quot; &quot;;</span><br><span class="line">		cout &lt;&lt; &quot;Test(const Test&amp;)&quot; &lt;&lt; endl;</span><br><span class="line">		cout &lt;&lt; &quot;_a &#x3D; &quot; &lt;&lt; _a &lt;&lt; &quot;,_b &#x3D; &quot; &lt;&lt; _b &lt;&lt; endl; </span><br><span class="line">	&#125;</span><br><span class="line">	void operator&#x3D;(const Test&amp; src)</span><br><span class="line">	&#123;</span><br><span class="line">		_a &#x3D; src._a;</span><br><span class="line">		cout &lt;&lt; this &lt;&lt; &quot; &quot;;</span><br><span class="line">		cout &lt;&lt; &quot;operator(const Test&amp;)&quot; &lt;&lt; endl;</span><br><span class="line">		cout &lt;&lt; &quot;_a &#x3D; &quot; &lt;&lt; _a &lt;&lt; &quot;,_b &#x3D; &quot; &lt;&lt; _b &lt;&lt; endl; </span><br><span class="line">	&#125;</span><br><span class="line">	~Test()</span><br><span class="line">	&#123;</span><br><span class="line">		cout &lt;&lt; this &lt;&lt; &quot; &quot;;</span><br><span class="line">		cout &lt;&lt; &quot;~Test()&quot; &lt;&lt; endl;</span><br><span class="line">		cout &lt;&lt; &quot;_a &#x3D; &quot; &lt;&lt; _a &lt;&lt; &quot;,_b &#x3D; &quot; &lt;&lt; _b &lt;&lt; endl; </span><br><span class="line">	&#125;</span><br><span class="line">private:</span><br><span class="line">	int _a;</span><br><span class="line">	int _b;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Test t1(20,20);</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	Test t2(30,30);</span><br><span class="line">	Test t3 &#x3D; t2;</span><br><span class="line">	static Test t4 &#x3D; Test(40,40); </span><br><span class="line">	t2 &#x3D; Test(50,50);</span><br><span class="line">	t2 &#x3D; (Test)(60,60);</span><br><span class="line">	t2 &#x3D; 70;</span><br><span class="line">	Test *p1 &#x3D; &amp;Test(70,70);</span><br><span class="line">	Test &amp;q &#x3D; Test(80,80);</span><br><span class="line">	Test *p2 &#x3D; new Test;</span><br><span class="line">	delete p2; </span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br><span class="line">Test t5(90,90);</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	Test(<span class="keyword">int</span> a=<span class="number">10</span>,<span class="keyword">int</span> b=<span class="number">20</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		_a = a;</span><br><span class="line">		_b = b;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="keyword">this</span> &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Test(int,int)&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;_a = &quot;</span> &lt;&lt; _a &lt;&lt; <span class="string">&quot;,_b = &quot;</span> &lt;&lt; _b &lt;&lt; <span class="built_in">endl</span>; </span><br><span class="line">	&#125;</span><br><span class="line">	Test(<span class="keyword">const</span> Test&amp; src)</span><br><span class="line">	&#123;</span><br><span class="line">		_a = src._a;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="keyword">this</span> &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Test(const Test&amp;)&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;_a = &quot;</span> &lt;&lt; _a &lt;&lt; <span class="string">&quot;,_b = &quot;</span> &lt;&lt; _b &lt;&lt; <span class="built_in">endl</span>; </span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">void</span> <span class="keyword">operator</span>=(<span class="keyword">const</span> Test&amp; src)</span><br><span class="line">	&#123;</span><br><span class="line">		_a = src._a;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="keyword">this</span> &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;operator(const Test&amp;)&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;_a = &quot;</span> &lt;&lt; _a &lt;&lt; <span class="string">&quot;,_b = &quot;</span> &lt;&lt; _b &lt;&lt; <span class="built_in">endl</span>; </span><br><span class="line">	&#125;</span><br><span class="line">	~Test()</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="keyword">this</span> &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;~Test()&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;_a = &quot;</span> &lt;&lt; _a &lt;&lt; <span class="string">&quot;,_b = &quot;</span> &lt;&lt; _b &lt;&lt; <span class="built_in">endl</span>; </span><br><span class="line">	&#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="keyword">int</span> _a;</span><br><span class="line">	<span class="keyword">int</span> _b;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function">Test <span class="title">t1</span><span class="params">(<span class="number">20</span>,<span class="number">20</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="function">Test <span class="title">t2</span><span class="params">(<span class="number">30</span>,<span class="number">30</span>)</span></span>;</span><br><span class="line">	Test t3 = t2;</span><br><span class="line">	<span class="keyword">static</span> Test t4 = Test(<span class="number">40</span>,<span class="number">40</span>); </span><br><span class="line">	t2 = Test(<span class="number">50</span>,<span class="number">50</span>);</span><br><span class="line">	t2 = (Test)(<span class="number">60</span>,<span class="number">60</span>);</span><br><span class="line">	t2 = <span class="number">70</span>;</span><br><span class="line">	Test *p1 = &amp;Test(<span class="number">70</span>,<span class="number">70</span>);</span><br><span class="line">	Test &amp;q = Test(<span class="number">80</span>,<span class="number">80</span>);</span><br><span class="line">	Test *p2 = <span class="keyword">new</span> Test;</span><br><span class="line">	<span class="keyword">delete</span> p2; </span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">Test <span class="title">t5</span><span class="params">(<span class="number">90</span>,<span class="number">90</span>)</span></span>;</span><br></pre></td></tr></table></figure>
 <p><strong>运行结构分析：</strong></p>
 <p><img src="https://img-blog.csdn.net/20180529174210776?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
 
@@ -407,11 +407,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">动态规划</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">1024程序员节</a>
+                <a href="javascript:void(0)" class="js-tag color3">dp</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -419,7 +415,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">数据结构 算法</a>
+                <a href="javascript:void(0)" class="js-tag color3">查找</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -431,11 +427,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">c语言</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color4">STL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -443,7 +435,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">linux系统编程</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">linux命令</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -459,14 +455,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">c</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">c++11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">protobuf</a>
               </li>
              
@@ -479,7 +467,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color2">树</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">栈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">二分</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">堆</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -491,11 +491,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">堆</a>
+                <a href="javascript:void(0)" class="js-tag color2">c</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">回溯法</a>
+                <a href="javascript:void(0)" class="js-tag color3">排序</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -503,11 +503,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">最短路径</a>
+                <a href="javascript:void(0)" class="js-tag color4">回溯法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">进程通信</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">单链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">计算机组成</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">最短路径</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">单链表 排序</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -519,15 +535,31 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">排序</a>
+                <a href="javascript:void(0)" class="js-tag color5">Linux系统编程</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">1024程序员节 c++</a>
+                <a href="javascript:void(0)" class="js-tag color1">c++11</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">动态规划 算法 leetcode</a>
+                <a href="javascript:void(0)" class="js-tag color5">而擦函数</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">图论</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">稀疏矩阵</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">双链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">树 图</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -535,11 +567,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">递归</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">c++11算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">计算机组成</a>
+                <a href="javascript:void(0)" class="js-tag color5">堆栈调用</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -551,7 +587,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">递归</a>
+                <a href="javascript:void(0)" class="js-tag color5">进程基础</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">图的存储结构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">哈希</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">剑指offer</a>
               </li>
             
             <div class="clearfix"></div>

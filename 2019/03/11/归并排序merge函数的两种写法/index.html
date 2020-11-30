@@ -17,8 +17,9 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20190311203929242.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70">
 <meta property="article:published_time" content="2019-03-11T13:01:45.000Z">
-<meta property="article:modified_time" content="2020-11-29T19:35:24.215Z">
+<meta property="article:modified_time" content="2020-11-30T13:06:55.931Z">
 <meta property="article:author" content="lexingsen">
+<meta property="article:tag" content="排序">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190311203929242.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70">
   
@@ -70,7 +71,7 @@
 			</ul>
 			</nav>
 			<nav>
-			总文章数 300
+			总文章数 296
 			</nav>
 		<nav class="header-smart-menu">
     		
@@ -186,11 +187,11 @@
       
         <a id="more"></a>
 
-<p><font size=4 face="Courier New">第一种：将[left, mid，right]划分为left和right两个子闭区间。其中将mid定义为右子区间的第一个元素的下标。</font><br><img src="https://img-blog.csdnimg.cn/20190311203929242.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><font size=4 face="Courier New">代码实现：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">template &lt;typename T&gt;</span><br><span class="line">void merge(T arr[], int l, int m, int r)&#123;</span><br><span class="line">	int LEFT_SIZE  &#x3D; m-l;&#x2F;&#x2F;左子区间的大小</span><br><span class="line">	int RIGHT_SIZE &#x3D; r-m+1;&#x2F;&#x2F;右子区间的大小</span><br><span class="line"></span><br><span class="line">	&#x2F;&#x2F;动态申请内存，否则数据量太大时，栈会溢出</span><br><span class="line">	T* left &#x3D; new T[LEFT_SIZE];</span><br><span class="line">	T* right &#x3D; new T[RIGHT_SIZE];</span><br><span class="line">	</span><br><span class="line">	&#x2F;&#x2F;合并两个有序数组的常规操作</span><br><span class="line">	int i &#x3D; 0,j &#x3D; 0,k &#x3D; l;&#x2F;&#x2F;注意k的起始下标为l而不是0</span><br><span class="line">	while(i&lt;LEFT_SIZE &amp;&amp; j&lt;RIGHT_SIZE)&#123;</span><br><span class="line">		if(left[i] &lt; right[j])&#123;</span><br><span class="line">			arr[k ++] &#x3D; left[i ++];</span><br><span class="line">		&#125;</span><br><span class="line">		else&#123;</span><br><span class="line">			arr[k ++] &#x3D; right[j ++];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	while(i &lt; LEFT_SIZE)&#123;arr[k ++] &#x3D; left[i ++];&#125;</span><br><span class="line">	while(j &lt; RIGHT_SIZE)&#123;arr[k ++] &#x3D; right[j ++];&#125;</span><br><span class="line"></span><br><span class="line">	delete[] left;</span><br><span class="line">	delete[] right;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=4 face="Courier New">第一种：将[left, mid，right]划分为left和right两个子闭区间。其中将mid定义为右子区间的第一个元素的下标。</font><br><img src="https://img-blog.csdnimg.cn/20190311203929242.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><font size=4 face="Courier New">代码实现：</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">merge</span><span class="params">(T arr[], <span class="keyword">int</span> l, <span class="keyword">int</span> m, <span class="keyword">int</span> r)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> LEFT_SIZE  = m-l;<span class="comment">//左子区间的大小</span></span><br><span class="line">	<span class="keyword">int</span> RIGHT_SIZE = r-m+<span class="number">1</span>;<span class="comment">//右子区间的大小</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">//动态申请内存，否则数据量太大时，栈会溢出</span></span><br><span class="line">	T* left = <span class="keyword">new</span> T[LEFT_SIZE];</span><br><span class="line">	T* right = <span class="keyword">new</span> T[RIGHT_SIZE];</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//合并两个有序数组的常规操作</span></span><br><span class="line">	<span class="keyword">int</span> i = <span class="number">0</span>,j = <span class="number">0</span>,k = l;<span class="comment">//注意k的起始下标为l而不是0</span></span><br><span class="line">	<span class="keyword">while</span>(i&lt;LEFT_SIZE &amp;&amp; j&lt;RIGHT_SIZE)&#123;</span><br><span class="line">		<span class="keyword">if</span>(left[i] &lt; right[j])&#123;</span><br><span class="line">			arr[k ++] = left[i ++];</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span>&#123;</span><br><span class="line">			arr[k ++] = right[j ++];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span>(i &lt; LEFT_SIZE)&#123;arr[k ++] = left[i ++];&#125;</span><br><span class="line">	<span class="keyword">while</span>(j &lt; RIGHT_SIZE)&#123;arr[k ++] = right[j ++];&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">delete</span>[] left;</span><br><span class="line">	<span class="keyword">delete</span>[] right;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p><font size=4 face="Courier New">第二种：将[left, mid, right]复制到一个数组中，但此时mid是第一子区间的最后一个元素的下标。</font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">template &lt;typename T&gt;</span><br><span class="line">void merge(T arr[], int l, int mid, int r)&#123;</span><br><span class="line">	T* data &#x3D; new T[r-l+1]; &#x2F;&#x2F;[l..r]是一个闭区间所以申请空间时需加1</span><br><span class="line">	for(int i&#x3D;l; i&lt;&#x3D;r; ++i)&#123;</span><br><span class="line">		data[i-l] &#x3D; arr[i];</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	int i&#x3D;l, j&#x3D;mid+1; &#x2F;&#x2F;i和j代表两个子区间的下标  起始位置分别为i&#x3D;l和j&#x3D;mid+1</span><br><span class="line">	</span><br><span class="line">	for(int k&#x3D;l; k&lt;&#x3D;r; ++k)&#123;</span><br><span class="line">		if(i&gt;mid)&#123;</span><br><span class="line">			arr[k] &#x3D; data[j-l];</span><br><span class="line">			j ++;</span><br><span class="line">		&#125;</span><br><span class="line">		else if(j&gt;r)&#123;</span><br><span class="line">			arr[k] &#x3D; data[i-l];</span><br><span class="line">			i ++;</span><br><span class="line">		&#125;</span><br><span class="line">		else if(data[i-l] &lt; data[j-l)&#123;</span><br><span class="line">			arr[k] &#x3D; data[i-l];</span><br><span class="line">			i ++;</span><br><span class="line">		&#125;</span><br><span class="line">		else&#123;</span><br><span class="line">			arr[k] &#x3D; data[j-l];</span><br><span class="line">			j ++;	</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	delete[] data;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">merge</span><span class="params">(T arr[], <span class="keyword">int</span> l, <span class="keyword">int</span> mid, <span class="keyword">int</span> r)</span></span>&#123;</span><br><span class="line">	T* data = <span class="keyword">new</span> T[r-l+<span class="number">1</span>]; <span class="comment">//[l..r]是一个闭区间所以申请空间时需加1</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=l; i&lt;=r; ++i)&#123;</span><br><span class="line">		data[i-l] = arr[i];</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">int</span> i=l, j=mid+<span class="number">1</span>; <span class="comment">//i和j代表两个子区间的下标  起始位置分别为i=l和j=mid+1</span></span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> k=l; k&lt;=r; ++k)&#123;</span><br><span class="line">		<span class="keyword">if</span>(i&gt;mid)&#123;</span><br><span class="line">			arr[k] = data[j-l];</span><br><span class="line">			j ++;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(j&gt;r)&#123;</span><br><span class="line">			arr[k] = data[i-l];</span><br><span class="line">			i ++;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(data[i-l] &lt; data[j-l)&#123;</span><br><span class="line">			arr[k] = data[i-l];</span><br><span class="line">			i ++;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span>&#123;</span><br><span class="line">			arr[k] = data[j-l];</span><br><span class="line">			j ++;	</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">delete</span>[] data;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
 
@@ -199,6 +200,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">排序</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
@@ -408,11 +420,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">动态规划</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">1024程序员节</a>
+                <a href="javascript:void(0)" class="js-tag color3">dp</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -420,7 +428,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">数据结构 算法</a>
+                <a href="javascript:void(0)" class="js-tag color3">查找</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -432,11 +440,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">c语言</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color4">STL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -444,7 +448,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">linux系统编程</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">linux命令</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -460,14 +468,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">c</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">c++11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">protobuf</a>
               </li>
              
@@ -480,7 +480,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color2">树</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">栈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">二分</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">堆</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -492,11 +504,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">堆</a>
+                <a href="javascript:void(0)" class="js-tag color2">c</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">回溯法</a>
+                <a href="javascript:void(0)" class="js-tag color3">排序</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -504,11 +516,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">最短路径</a>
+                <a href="javascript:void(0)" class="js-tag color4">回溯法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">进程通信</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">单链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">计算机组成</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">最短路径</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">单链表 排序</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -520,15 +548,31 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">排序</a>
+                <a href="javascript:void(0)" class="js-tag color5">Linux系统编程</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">1024程序员节 c++</a>
+                <a href="javascript:void(0)" class="js-tag color1">c++11</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">动态规划 算法 leetcode</a>
+                <a href="javascript:void(0)" class="js-tag color5">而擦函数</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">图论</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">稀疏矩阵</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">双链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">树 图</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -536,11 +580,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">递归</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">c++11算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">计算机组成</a>
+                <a href="javascript:void(0)" class="js-tag color5">堆栈调用</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -552,7 +600,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">递归</a>
+                <a href="javascript:void(0)" class="js-tag color5">进程基础</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">图的存储结构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">哈希</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">剑指offer</a>
               </li>
             
             <div class="clearfix"></div>

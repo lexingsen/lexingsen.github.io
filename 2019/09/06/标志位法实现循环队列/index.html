@@ -16,7 +16,7 @@
 <meta property="og:description" content="为了解决顺序队列假溢出的问题，提出了循环队列。使得内存的利用率得到了很大的提升。但是在判断循环队列空和满这两种状态任然存在问题，因为对于一个循环队列，不做任何判空和判满的机制。判空和判满的条件都是：q-&gt;rear &#x3D;&#x3D; q-&gt;front。带来的问题就是当出现上述条件时不能区分循环队列到底是空还是满，因此为了解决上述问题。人们提出以下两种方案来解决：（1）牺牲一个位置用作判断的条件">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-09-06T07:22:37.000Z">
-<meta property="article:modified_time" content="2020-11-30T00:42:47.130Z">
+<meta property="article:modified_time" content="2020-11-30T13:11:20.389Z">
 <meta property="article:author" content="lexingsen">
 <meta property="article:tag" content="队列">
 <meta name="twitter:card" content="summary">
@@ -69,7 +69,7 @@
 			</ul>
 			</nav>
 			<nav>
-			总文章数 300
+			总文章数 296
 			</nav>
 		<nav class="header-smart-menu">
     		
@@ -190,7 +190,7 @@
 <p><font size=5 color=blue>（2）设置标志位来区分队空和队满，这样就不需要牺牲空间，使得循环队列的空间得到了最大的利用。缺点是需要做很多的逻辑判断来处理标志位。</p>
 <p><font color=red size=4>队空：q-&gt;rear == q-&gt;front &amp;&amp; q-&gt;tag == 0<br>队满：q-&gt;rear == q-&gt;front &amp;&amp; q-&gt;tag == 1<br>此外，在标志位实现循环队列的机制下，需要几个计数器来统计当前队列中元素的个数，方便处理q-&gt;tag。</p>
 <p><font size=5 color=black face=consonlas>代码实现：</font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">#define N 5</span><br><span class="line"></span><br><span class="line">typedef struct node &#123;</span><br><span class="line">	int data[N];</span><br><span class="line">	int rear, front;</span><br><span class="line">	bool tag;</span><br><span class="line">&#125;queue;</span><br><span class="line"></span><br><span class="line">int cnt &#x3D; 0;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">bool isEmpty(queue *q) &#123;</span><br><span class="line">	return q-&gt;rear &#x3D;&#x3D; q-&gt;front &amp;&amp; q-&gt;tag &#x3D;&#x3D; 0;</span><br><span class="line">&#125;</span><br><span class="line">bool isFull(queue *q) &#123;</span><br><span class="line">	return q-&gt;rear &#x3D;&#x3D; q-&gt;front &amp;&amp; q-&gt;tag &#x3D;&#x3D; 1;</span><br><span class="line">&#125;</span><br><span class="line">void init(queue *q) &#123;</span><br><span class="line">	q-&gt;rear &#x3D; q-&gt;front &#x3D; 0;</span><br><span class="line">	q-&gt;tag &#x3D; 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void push(queue *q, int x) &#123;</span><br><span class="line">	if (isFull(q)) &#123;</span><br><span class="line">		cout &lt;&lt; &quot;full&quot; &lt;&lt; endl;</span><br><span class="line">		return ;</span><br><span class="line">	&#125; else&#123;</span><br><span class="line">		q-&gt;data[q-&gt;rear] &#x3D; x;</span><br><span class="line">		q-&gt;rear &#x3D; (q-&gt;rear+1) % N;</span><br><span class="line">		cnt ++;</span><br><span class="line">		if (cnt &#x3D;&#x3D; N) q-&gt;tag &#x3D; 1;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">void pop(queue *q)  &#123;</span><br><span class="line">	if (isEmpty(q)) &#123;</span><br><span class="line">		cout &lt;&lt; &quot;empty&quot; &lt;&lt; endl;</span><br><span class="line">		return;</span><br><span class="line">	&#125; else &#123;</span><br><span class="line">		cnt --;</span><br><span class="line">		if (cnt &#x3D;&#x3D; 0) q-&gt;tag &#x3D; 0;</span><br><span class="line">		q-&gt;front &#x3D; (q-&gt;front + 1) % N; </span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">int front(queue *q) &#123;</span><br><span class="line">	if (isEmpty(q)) &#123;</span><br><span class="line">		cout &lt;&lt; &quot;empty&quot; &lt;&lt; endl;</span><br><span class="line">		return -1;</span><br><span class="line">	&#125; else &#123;</span><br><span class="line">		int res &#x3D; q-&gt;data[q-&gt;front];</span><br><span class="line">		q-&gt;front &#x3D; (q-&gt;front + 1) % N;</span><br><span class="line">		cnt --;</span><br><span class="line">		if (cnt &#x3D;&#x3D; 0) q-&gt;tag &#x3D; 0;</span><br><span class="line">		return res;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">	int a[] &#x3D; &#123;1,2,3,4,5&#125;;</span><br><span class="line">	int n &#x3D; sizeof a&#x2F;sizeof(int);</span><br><span class="line">	queue q;</span><br><span class="line">	init(&amp;q);</span><br><span class="line">	</span><br><span class="line">	for (int i&#x3D;0; i&lt;n; ++i) &#123;</span><br><span class="line">		push(&amp;q, a[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	while (!isEmpty(&amp;q))&#123;</span><br><span class="line">		cout &lt;&lt; front(&amp;q) &lt;&lt; &quot; &quot;;</span><br><span class="line">	&#125;</span><br><span class="line">	cout &lt;&lt; endl;</span><br><span class="line">	</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> N 5</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">node</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> data[N];</span><br><span class="line">	<span class="keyword">int</span> rear, front;</span><br><span class="line">	<span class="keyword">bool</span> tag;</span><br><span class="line">&#125;<span class="built_in">queue</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> cnt = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">isEmpty</span><span class="params">(<span class="built_in">queue</span> *q)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> q-&gt;rear == q-&gt;front &amp;&amp; q-&gt;tag == <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">isFull</span><span class="params">(<span class="built_in">queue</span> *q)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> q-&gt;rear == q-&gt;front &amp;&amp; q-&gt;tag == <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">(<span class="built_in">queue</span> *q)</span> </span>&#123;</span><br><span class="line">	q-&gt;rear = q-&gt;front = <span class="number">0</span>;</span><br><span class="line">	q-&gt;tag = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">push</span><span class="params">(<span class="built_in">queue</span> *q, <span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (isFull(q)) &#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;full&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		<span class="keyword">return</span> ;</span><br><span class="line">	&#125; <span class="keyword">else</span>&#123;</span><br><span class="line">		q-&gt;data[q-&gt;rear] = x;</span><br><span class="line">		q-&gt;rear = (q-&gt;rear+<span class="number">1</span>) % N;</span><br><span class="line">		cnt ++;</span><br><span class="line">		<span class="keyword">if</span> (cnt == N) q-&gt;tag = <span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">pop</span><span class="params">(<span class="built_in">queue</span> *q)</span>  </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (isEmpty(q)) &#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;empty&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		cnt --;</span><br><span class="line">		<span class="keyword">if</span> (cnt == <span class="number">0</span>) q-&gt;tag = <span class="number">0</span>;</span><br><span class="line">		q-&gt;front = (q-&gt;front + <span class="number">1</span>) % N; </span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">front</span><span class="params">(<span class="built_in">queue</span> *q)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (isEmpty(q)) &#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;empty&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="keyword">int</span> res = q-&gt;data[q-&gt;front];</span><br><span class="line">		q-&gt;front = (q-&gt;front + <span class="number">1</span>) % N;</span><br><span class="line">		cnt --;</span><br><span class="line">		<span class="keyword">if</span> (cnt == <span class="number">0</span>) q-&gt;tag = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">return</span> res;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a[] = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;;</span><br><span class="line">	<span class="keyword">int</span> n = <span class="keyword">sizeof</span> a/<span class="keyword">sizeof</span>(<span class="keyword">int</span>);</span><br><span class="line">	<span class="built_in">queue</span> q;</span><br><span class="line">	init(&amp;q);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;n; ++i) &#123;</span><br><span class="line">		push(&amp;q, a[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">while</span> (!isEmpty(&amp;q))&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; front(&amp;q) &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
 
@@ -419,11 +419,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">动态规划</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">1024程序员节</a>
+                <a href="javascript:void(0)" class="js-tag color3">dp</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -431,7 +427,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">数据结构 算法</a>
+                <a href="javascript:void(0)" class="js-tag color3">查找</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -443,11 +439,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">c语言</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color4">STL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -455,7 +447,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">linux系统编程</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">linux命令</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -471,14 +467,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">c</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">c++11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">protobuf</a>
               </li>
              
@@ -491,7 +479,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color2">树</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">栈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">二分</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">堆</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -503,11 +503,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">堆</a>
+                <a href="javascript:void(0)" class="js-tag color2">c</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">回溯法</a>
+                <a href="javascript:void(0)" class="js-tag color3">排序</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -515,11 +515,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">最短路径</a>
+                <a href="javascript:void(0)" class="js-tag color4">回溯法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">进程通信</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">单链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">计算机组成</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">最短路径</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">单链表 排序</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -531,15 +547,31 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">排序</a>
+                <a href="javascript:void(0)" class="js-tag color5">Linux系统编程</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">1024程序员节 c++</a>
+                <a href="javascript:void(0)" class="js-tag color1">c++11</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">动态规划 算法 leetcode</a>
+                <a href="javascript:void(0)" class="js-tag color5">而擦函数</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">图论</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">稀疏矩阵</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">双链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">树 图</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -547,11 +579,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">递归</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">c++11算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">计算机组成</a>
+                <a href="javascript:void(0)" class="js-tag color5">堆栈调用</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -563,7 +599,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">递归</a>
+                <a href="javascript:void(0)" class="js-tag color5">进程基础</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">图的存储结构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">哈希</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">剑指offer</a>
               </li>
             
             <div class="clearfix"></div>

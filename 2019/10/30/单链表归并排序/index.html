@@ -16,9 +16,9 @@
 <meta property="og:description" content="单链表归并排序需要掌握的知识点。1.归并排序的思想2.如何合并两个有序的单链表3.如何找到一个链表的中间节点，这里是为了断链。将链表一分为二。 （1）合并两个有序的链表，主要有两种思路。递归和迭代递归方法的代码： 12345678910111213141516struct node &amp;#123;	int val;	node *next;&amp;#125;;&#x2F;&#x2F;注意此时链表a和链表b均为递增有序的单链">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-10-30T09:03:54.000Z">
-<meta property="article:modified_time" content="2020-11-30T00:46:52.035Z">
+<meta property="article:modified_time" content="2020-11-30T13:10:12.277Z">
 <meta property="article:author" content="lexingsen">
-<meta property="article:tag" content="单链表">
+<meta property="article:tag" content="单链表 排序">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="乐行僧的博客" type="application/atom+xml">
@@ -69,7 +69,7 @@
 			</ul>
 			</nav>
 			<nav>
-			总文章数 300
+			总文章数 296
 			</nav>
 		<nav class="header-smart-menu">
     		
@@ -186,12 +186,12 @@
         <a id="more"></a>
 
 <p><font size=6 face=consolas>单链表归并排序需要掌握的知识点。<br><font size=5 face=consolas color=blue>1.归并排序的思想<br>2.如何合并两个有序的单链表<br>3.如何找到一个链表的中间节点，这里是为了断链。将链表一分为二。</p>
-<p><font size=5 face=consolas color=red>（1）合并两个有序的链表，主要有两种思路。递归和迭代<br><font size=5 face=consolas color=blue>递归方法的代码：</p>
+<p><font size=5 face=consolas color=red>（1）合并两个有序的链表，主要有两种思路。递归和迭代<br><font size=5 face=consolas color=blue>递归方法的代码：</font></p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> val;</span><br><span class="line">	node *next;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//注意此时链表a和链表b均为递增有序的单链表</span></span><br><span class="line"><span class="function">node *<span class="title">merge</span><span class="params">(node *a, node *b)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (!a) <span class="keyword">return</span> b;</span><br><span class="line">	<span class="keyword">if</span> (!b) <span class="keyword">return</span> a;</span><br><span class="line">	<span class="keyword">if</span> (a-&gt;val &lt;= b-&gt;val) &#123;</span><br><span class="line">		a-&gt;next = merge(a-&gt;next, b);</span><br><span class="line">		<span class="keyword">return</span> a;</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		b-&gt;next = merge(b-&gt;next, a);</span><br><span class="line">		<span class="keyword">return</span> b;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><font size=5 face=consolas color=blue>迭代方法的代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">node *merge(node *a, node *b) &#123;</span><br><span class="line">	node *dummy &#x3D; new node(0);&#x2F;&#x2F;建立虚拟节点</span><br><span class="line">	node *p &#x3D; dummy;</span><br><span class="line">	while (a &amp;&amp; b) &#123;</span><br><span class="line">		if (a-&gt;val &lt;&#x3D; b-&gt;val) &#123;</span><br><span class="line">			p-&gt;next &#x3D; a;</span><br><span class="line">			a &#x3D; a-&gt;next;</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			p-&gt;next &#x3D; b;</span><br><span class="line">			b &#x3D; b-&gt;next;</span><br><span class="line">		&#125;</span><br><span class="line">		p &#x3D; p-&gt;next;</span><br><span class="line">	&#125;</span><br><span class="line">	&#x2F;&#x2F;退出while循环  可能是a&#x3D;&#x3D;NULL 或者 b&#x3D;&#x3D;NULL 或者  a&#x3D;&#x3D;NULL &amp;&amp; b&#x3D;&#x3D;NULL</span><br><span class="line">	&#x2F;&#x2F;但是我们需要把不空的那条链继续连上</span><br><span class="line">	p-&gt;next &#x3D; (a!&#x3D;NULL)?a:b;</span><br><span class="line">	return dummy-&gt;next;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><font size=5 face=consolas color=red>（2) 链表的归并排序，其实也是递归的处理两个子链，最后合并两个有序的链表。这里主要的难点是如何找到链表的中点进行断链。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">node *_mergeSort(node *head) &#123;</span><br><span class="line">	if (!head-&gt;next) return head; &#x2F;&#x2F;如果链表中只有一个节点， 即为递归出口，直接返回</span><br><span class="line">	&#x2F;*</span><br><span class="line">	使用快慢指针，（1）慢指针规规矩矩每次只走一步</span><br><span class="line">				 （2）快指针每次走两步</span><br><span class="line">	*&#x2F;</span><br><span class="line">	node *slow &#x3D; head;&#x2F;&#x2F;最终指向第二条链的第一个节点</span><br><span class="line">	node *fast  &#x3D; head;</span><br><span class="line">	node *pre   &#x3D; NULL;&#x2F;&#x2F;最终指向第一条链的最后一个节点	</span><br><span class="line">	while (fast &amp;&amp; fast-&gt;next) &#123;</span><br><span class="line">		pre &#x3D; p;</span><br><span class="line">		slow &#x3D; slow-&gt;next;</span><br><span class="line">		fast &#x3D; fast-&gt;next-&gt;next;</span><br><span class="line">	&#125;</span><br><span class="line">	pre-&gt;next &#x3D; NULL;&#x2F;&#x2F;这一步很关键  就是在断链</span><br><span class="line">	node *left  &#x3D; mergeSort(head);&#x2F;&#x2F;递归的排序以head为头指针的第一条链</span><br><span class="line">	node *right &#x3D; mergeSort(slow);</span><br><span class="line">	return merge(left, right);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">node *mergeSort(node *head) &#123;</span><br><span class="line">	if (!head) return NULL;</span><br><span class="line">	else return _mergeSort(head); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=5 face=consolas color=blue>迭代方法的代码：</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">node *<span class="title">merge</span><span class="params">(node *a, node *b)</span> </span>&#123;</span><br><span class="line">	node *dummy = <span class="keyword">new</span> node(<span class="number">0</span>);<span class="comment">//建立虚拟节点</span></span><br><span class="line">	node *p = dummy;</span><br><span class="line">	<span class="keyword">while</span> (a &amp;&amp; b) &#123;</span><br><span class="line">		<span class="keyword">if</span> (a-&gt;val &lt;= b-&gt;val) &#123;</span><br><span class="line">			p-&gt;next = a;</span><br><span class="line">			a = a-&gt;next;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			p-&gt;next = b;</span><br><span class="line">			b = b-&gt;next;</span><br><span class="line">		&#125;</span><br><span class="line">		p = p-&gt;next;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//退出while循环  可能是a==NULL 或者 b==NULL 或者  a==NULL &amp;&amp; b==NULL</span></span><br><span class="line">	<span class="comment">//但是我们需要把不空的那条链继续连上</span></span><br><span class="line">	p-&gt;next = (a!=<span class="literal">NULL</span>)?a:b;</span><br><span class="line">	<span class="keyword">return</span> dummy-&gt;next;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=5 face=consolas color=red>（2) 链表的归并排序，其实也是递归的处理两个子链，最后合并两个有序的链表。这里主要的难点是如何找到链表的中点进行断链。</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">node *_mergeSort(node *head) &#123;</span><br><span class="line">	<span class="keyword">if</span> (!head-&gt;next) <span class="keyword">return</span> head; <span class="comment">//如果链表中只有一个节点， 即为递归出口，直接返回</span></span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">	使用快慢指针，（1）慢指针规规矩矩每次只走一步</span></span><br><span class="line"><span class="comment">				 （2）快指针每次走两步</span></span><br><span class="line"><span class="comment">	*/</span></span><br><span class="line">	node *slow = head;<span class="comment">//最终指向第二条链的第一个节点</span></span><br><span class="line">	node *fast  = head;</span><br><span class="line">	node *pre   = <span class="literal">NULL</span>;<span class="comment">//最终指向第一条链的最后一个节点	</span></span><br><span class="line">	<span class="keyword">while</span> (fast &amp;&amp; fast-&gt;next) &#123;</span><br><span class="line">		pre = p;</span><br><span class="line">		slow = slow-&gt;next;</span><br><span class="line">		fast = fast-&gt;next-&gt;next;</span><br><span class="line">	&#125;</span><br><span class="line">	pre-&gt;next = <span class="literal">NULL</span>;<span class="comment">//这一步很关键  就是在断链</span></span><br><span class="line">	node *left  = mergeSort(head);<span class="comment">//递归的排序以head为头指针的第一条链</span></span><br><span class="line">	node *right = mergeSort(slow);</span><br><span class="line">	<span class="keyword">return</span> merge(left, right);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">node *<span class="title">mergeSort</span><span class="params">(node *head)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (!head) <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">return</span> _mergeSort(head); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
 
@@ -205,7 +205,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">单链表</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">单链表 排序</a>
         		</li>
       		
 		</ul>
@@ -420,11 +420,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">动态规划</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">1024程序员节</a>
+                <a href="javascript:void(0)" class="js-tag color3">dp</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -432,7 +428,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">数据结构 算法</a>
+                <a href="javascript:void(0)" class="js-tag color3">查找</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -444,11 +440,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">c语言</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color4">STL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -456,7 +448,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">linux系统编程</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">linux命令</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -472,14 +468,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">c</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">c++11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">protobuf</a>
               </li>
              
@@ -492,7 +480,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color2">树</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">栈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">二分</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">堆</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -504,11 +504,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">堆</a>
+                <a href="javascript:void(0)" class="js-tag color2">c</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">回溯法</a>
+                <a href="javascript:void(0)" class="js-tag color3">排序</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -516,11 +516,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">最短路径</a>
+                <a href="javascript:void(0)" class="js-tag color4">回溯法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">进程通信</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">单链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">计算机组成</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">最短路径</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">单链表 排序</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -532,15 +548,31 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">排序</a>
+                <a href="javascript:void(0)" class="js-tag color5">Linux系统编程</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">1024程序员节 c++</a>
+                <a href="javascript:void(0)" class="js-tag color1">c++11</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">动态规划 算法 leetcode</a>
+                <a href="javascript:void(0)" class="js-tag color5">而擦函数</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">图论</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">稀疏矩阵</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">双链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">树 图</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -548,11 +580,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">递归</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">c++11算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">计算机组成</a>
+                <a href="javascript:void(0)" class="js-tag color5">堆栈调用</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -564,7 +600,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">递归</a>
+                <a href="javascript:void(0)" class="js-tag color5">进程基础</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">图的存储结构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">哈希</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">剑指offer</a>
               </li>
             
             <div class="clearfix"></div>

@@ -64,7 +64,7 @@
 			</ul>
 			</nav>
 			<nav>
-			总文章数 300
+			总文章数 296
 			</nav>
 		<nav class="header-smart-menu">
     		
@@ -147,86 +147,6 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-判断两棵二叉树是否相同" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/11/01/%E5%88%A4%E6%96%AD%E4%B8%A4%E6%A3%B5%E4%BA%8C%E5%8F%89%E6%A0%91%E6%98%AF%E5%90%A6%E7%9B%B8%E5%90%8C/">判断两棵二叉树是否相同</a>
-    </h1>
-  
-
-        <!--显示阅读次数-->
-        
-        <!--显示阅读次数完毕-->
-        
-        <a href="/2019/11/01/%E5%88%A4%E6%96%AD%E4%B8%A4%E6%A3%B5%E4%BA%8C%E5%8F%89%E6%A0%91%E6%98%AF%E5%90%A6%E7%9B%B8%E5%90%8C/" class="archive-article-date">
-  	<time datetime="2019-11-01T02:04:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-      
-      
-        <a id="more"></a>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">struct node &#123;</span><br><span class="line">	int val;</span><br><span class="line">	node *left, *right;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">bool isSame(node *a, node *b) &#123;</span><br><span class="line">	if (!a  &amp;&amp; !b) return true;</span><br><span class="line">	if ((!a &amp;&amp; b) ||  (!b &amp;&amp; a)) return false;</span><br><span class="line">	if (a-&gt;val &#x3D;&#x3D; b-&gt;val) </span><br><span class="line">		return isSame(a-&gt;left, b-&gt;left) &amp;&amp; isSame(a-&gt;right, b-&gt;right);</span><br><span class="line">	else return false;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/数据结构//" class="article-tag-list-link color5">数据结构</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/11/01/%E5%88%A4%E6%96%AD%E4%B8%A4%E6%A3%B5%E4%BA%8C%E5%8F%89%E6%A0%91%E6%98%AF%E5%90%A6%E7%9B%B8%E5%90%8C/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
     <article id="post-在单链表中删除值相同的多余节点的算法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -255,7 +175,7 @@
         <a id="more"></a>
 
 <p><font size=5 face="consolas">思路：分别使用两个指针p和q, 因为可能q-&gt;val==p-&gt;val时，此时要删除q所指向的节点，所以需要一个s指针记录q,防止发生断链。</font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">struct node &#123;</span><br><span class="line">	int val;</span><br><span class="line">	node *next;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void delDuplication(node *head) &#123;</span><br><span class="line">	for (node *p&#x3D;head-&gt;next; p; p-&gt;next) &#123;</span><br><span class="line">		for (node *q&#x3D;p-&gt;next, *s&#x3D;q; q) &#123;</span><br><span class="line">			if (p-&gt;val &#x3D;&#x3D; q-&gt;val) &#123;</span><br><span class="line">				&#x2F;&#x2F;删除q</span><br><span class="line">				s-&gt;next &#x3D; q-&gt;next;</span><br><span class="line">				delete q;</span><br><span class="line">				q &#x3D; s-&gt;next;</span><br><span class="line">			&#125; else &#123;</span><br><span class="line">				s &#x3D; q;</span><br><span class="line">				q &#x3D; q-&gt;next;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> val;</span><br><span class="line">	node *next;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">delDuplication</span><span class="params">(node *head)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (node *p=head-&gt;next; p; p-&gt;next) &#123;</span><br><span class="line">		<span class="keyword">for</span> (node *q=p-&gt;next, *s=q; q) &#123;</span><br><span class="line">			<span class="keyword">if</span> (p-&gt;val == q-&gt;val) &#123;</span><br><span class="line">				<span class="comment">//删除q</span></span><br><span class="line">				s-&gt;next = q-&gt;next;</span><br><span class="line">				<span class="keyword">delete</span> q;</span><br><span class="line">				q = s-&gt;next;</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				s = q;</span><br><span class="line">				q = q-&gt;next;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
 
@@ -264,6 +184,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">单链表</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
@@ -338,7 +269,7 @@
 <p><font size=5 face=consolas>满二叉树的定义：一个高度为h，并且含有2^h - 1个节点的二叉树称为满二叉树，下文称呼满二叉树为FBT。</p>
 <p><font size=5 face=consolas color=blue>根据满二叉树的高度与节点个数之间的关系，很容易判断一棵树是否为FBT，只需要求树其树高和节点个数即可。</p>
 <p><font size=5 face=consolas color=red>代码实现：</font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">struct node &#123;</span><br><span class="line">	int val;</span><br><span class="line">	node *left, *right;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">int height(node *root) &#123;</span><br><span class="line">	if (!root) return 0;</span><br><span class="line">	int left  &#x3D; height(root-&gt;left);</span><br><span class="line">	int right &#x3D; height(root-&gt;right);</span><br><span class="line">	return max(left, right) + 1; </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void count(node *root, int &amp;sum) &#123;</span><br><span class="line">	if (root) &#123;</span><br><span class="line">		sum +&#x3D; 1;</span><br><span class="line">		count(root-&gt;left);</span><br><span class="line">		count(root-&gt;right);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bool isFBT(node *root) &#123;</span><br><span class="line">	if (!root) return 1;</span><br><span class="line">	int sum &#x3D; 0;</span><br><span class="line">	int h &#x3D; height(root);</span><br><span class="line">	count(root, sum);</span><br><span class="line">	return sum &#x3D;&#x3D; pow(2, h) - 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> val;</span><br><span class="line">	node *left, *right;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">height</span><span class="params">(node *root)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (!root) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> left  = height(root-&gt;left);</span><br><span class="line">	<span class="keyword">int</span> right = height(root-&gt;right);</span><br><span class="line">	<span class="keyword">return</span> max(left, right) + <span class="number">1</span>; </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">count</span><span class="params">(node *root, <span class="keyword">int</span> &amp;sum)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (root) &#123;</span><br><span class="line">		sum += <span class="number">1</span>;</span><br><span class="line">		count(root-&gt;left);</span><br><span class="line">		count(root-&gt;right);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">isFBT</span><span class="params">(node *root)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (!root) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> h = height(root);</span><br><span class="line">	count(root, sum);</span><br><span class="line">	<span class="keyword">return</span> sum == <span class="built_in">pow</span>(<span class="number">2</span>, h) - <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
 
@@ -347,6 +278,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">二叉树</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
@@ -418,10 +360,10 @@
       
         <a id="more"></a>
 
-<p><font size=5 face=consolas>完全二叉树的定义（王道）：设一棵高度为h,有n个节点的二叉树，当且仅当其中每一个节点都与高度为h的满二叉树编号为1~n的节点一一对应时，称为完全二叉树。下文称呼完全二叉树为CBT。</p>
-<p><font size=5 face=consolas color=blue>由定义可知，CBT可以不是满树，但其叶子节点只能出现在最后两层。利用这个性质来判断完全二叉树，使用层序遍历，我们依次将节点入队，而不考虑当前节点的左右孩子节点是否为空而直接入队，这样当我们在出队时发现有空节点，此时判断队列中是否还有非空节点，如果有，则说明此树是CBT。</p>
+<p><font size=5 face=consolas>完全二叉树的定义（王道）：设一棵高度为h,有n个节点的二叉树，当且仅当其中每一个节点都与高度为h的满二叉树编号为1~n的节点一一对应时，称为完全二叉树。下文称呼完全二叉树为CBT。</font></p>
+<p><font size=5 face=consolas color=blue>由定义可知，CBT可以不是满树，但其叶子节点只能出现在最后两层。利用这个性质来判断完全二叉树，使用层序遍历，我们依次将节点入队，而不考虑当前节点的左右孩子节点是否为空而直接入队，这样当我们在出队时发现有空节点，此时判断队列中是否还有非空节点，如果有，则说明此树是CBT。</font></p>
 <p><font size=5 face=consolas color=red>代码实现：</font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;queue&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">struct node &#123;</span><br><span class="line">	int val;</span><br><span class="line">	node *next;</span><br><span class="line">&#125;;</span><br><span class="line">bool isCBT(node *root) &#123;</span><br><span class="line">	if (!root) return true;</span><br><span class="line">	queue&lt;node*&gt; q;</span><br><span class="line">	q,push(root);</span><br><span class="line">	while (!q.empty()) &#123;</span><br><span class="line">		node *top &#x3D; q.top();q.pop();</span><br><span class="line">		if (top) &#123;</span><br><span class="line">			q.push(top-&gt;left);</span><br><span class="line">			q.push(top-&gt;right);</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			&#x2F;&#x2F;说明取出的top节点是空节点，此时看队列中是否还有非空节点</span><br><span class="line">			while (!q.empty()) &#123;</span><br><span class="line">				top &#x3D; q.top();q.pop();</span><br><span class="line">				if (top) return false; </span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return true;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> val;</span><br><span class="line">	node *next;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">isCBT</span><span class="params">(node *root)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (!root) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	<span class="built_in">queue</span>&lt;node*&gt; q;</span><br><span class="line">	q,push(root);</span><br><span class="line">	<span class="keyword">while</span> (!q.empty()) &#123;</span><br><span class="line">		node *top = q.top();q.pop();</span><br><span class="line">		<span class="keyword">if</span> (top) &#123;</span><br><span class="line">			q.push(top-&gt;left);</span><br><span class="line">			q.push(top-&gt;right);</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="comment">//说明取出的top节点是空节点，此时看队列中是否还有非空节点</span></span><br><span class="line">			<span class="keyword">while</span> (!q.empty()) &#123;</span><br><span class="line">				top = q.top();q.pop();</span><br><span class="line">				<span class="keyword">if</span> (top) <span class="keyword">return</span> <span class="literal">false</span>; </span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
 
@@ -430,6 +372,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">二叉树</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
@@ -501,10 +454,10 @@
       
         <a id="more"></a>
 
-<p><font size=5 face=consolas>排序二叉树的递归定义：<br>（1）空树。<br>（2）是由根节点、左子树和右子树组成。满足左子树上的所有节点的值都小于根节点的值，右子树上的所有节点的值都大于根节点的值。同时左子树和右子树都是排序二叉树（递归定义）。</p>
-<p><font size=5 face=consolas color=blue>老套路，还是根据定义来判断。首先如果一个树是空树，其必是一棵BST。如果不为空树，看是否满足条件二，如果满足则递归的看其两棵子树是否满足BST的定义。</p>
-<p><font size=5 face=consolas color=red>代码实现：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    bool isValidBST(TreeNode* root) &#123;</span><br><span class="line">      if (!root) return true;</span><br><span class="line">      TreeNode *left &#x3D; root-&gt;left;</span><br><span class="line">      TreeNode *right &#x3D; root-&gt;right;</span><br><span class="line">      while (left) &#123;</span><br><span class="line">        if (root-&gt;val  &lt;&#x3D; left-&gt;val) return false;</span><br><span class="line">        left &#x3D; left-&gt;right;</span><br><span class="line">      &#125;</span><br><span class="line">      while (right) &#123;</span><br><span class="line">        if (root-&gt;val &gt;&#x3D; right-&gt;val) return false;</span><br><span class="line">        right &#x3D; right-&gt;left;</span><br><span class="line">      &#125;</span><br><span class="line">      return isValidBST(root-&gt;left) &amp;&amp; isValidBST(root-&gt;right);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><font size=5 face=consolas>排序二叉树的递归定义：<br>（1）空树。<br>（2）是由根节点、左子树和右子树组成。满足左子树上的所有节点的值都小于根节点的值，右子树上的所有节点的值都大于根节点的值。同时左子树和右子树都是排序二叉树（递归定义）。</font></p>
+<p><font size=5 face=consolas color=blue>老套路，还是根据定义来判断。首先如果一个树是空树，其必是一棵BST。如果不为空树，看是否满足条件二，如果满足则递归的看其两棵子树是否满足BST的定义。</font></p>
+<p><font size=5 face=consolas color=red>代码实现：</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isValidBST</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (!root) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">      TreeNode *left = root-&gt;left;</span><br><span class="line">      TreeNode *right = root-&gt;right;</span><br><span class="line">      <span class="keyword">while</span> (left) &#123;</span><br><span class="line">        <span class="keyword">if</span> (root-&gt;val  &lt;= left-&gt;val) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        left = left-&gt;right;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">while</span> (right) &#123;</span><br><span class="line">        <span class="keyword">if</span> (root-&gt;val &gt;= right-&gt;val) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        right = right-&gt;left;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> isValidBST(root-&gt;left) &amp;&amp; isValidBST(root-&gt;right);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 
       
@@ -519,7 +472,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">c++</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">二叉树</a>
         		</li>
       		
 		</ul>
@@ -596,10 +549,10 @@
       
         <a id="more"></a>
 
-<p><font size=5 face="consolas">平衡二叉树的递归定义:<br>(1)空树。<br>(2)他的左子树和右子树都是平衡二叉树，并且左子树和右子树的高度差的绝对值不会超过1(&lt;=1)。</p>
-<p><font size=5 color=blue face="consolas">根据平衡二叉树的定义，可以很容易的判断一棵二叉树是否为平衡二叉树，首先是空树，满足条件。如果不是空树，需要检验它的两棵子树高度差的绝对值，这里需要一个辅助程序，求解一棵二叉树的高度。如果不满足条件(2)即不是平衡二叉树，如果满足，递归的判断其左右子树是否同时满足为平衡二叉树的条件。</p>
+<p><font size=5 face="consolas">平衡二叉树的递归定义:<br>(1)空树。<br>(2)他的左子树和右子树都是平衡二叉树，并且左子树和右子树的高度差的绝对值不会超过1(&lt;=1)。</font></p>
+<p><font size=5 color=blue face="consolas">根据平衡二叉树的定义，可以很容易的判断一棵二叉树是否为平衡二叉树，首先是空树，满足条件。如果不是空树，需要检验它的两棵子树高度差的绝对值，这里需要一个辅助程序，求解一棵二叉树的高度。如果不满足条件(2)即不是平衡二叉树，如果满足，递归的判断其左右子树是否同时满足为平衡二叉树的条件。</font></p>
 <p><font size=5 color=red face="consolas">代码实现:</font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">struct node &#123;</span><br><span class="line">	int val;</span><br><span class="line">	node *left, *right;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">int height(node *root) &#123;</span><br><span class="line">	if (!root) return 0;</span><br><span class="line">	int left  &#x3D; height(root-&gt;left);</span><br><span class="line">	int right &#x3D; height(root-&gt;right);</span><br><span class="line">	return max(left, right) +1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">bool isAVL(node *root) &#123;</span><br><span class="line">	if (!root) return 1;</span><br><span class="line">	if (abs(height(root-&gt;left)-height(root-&gt;right)) &gt;1) return 0;</span><br><span class="line">	return isAVL(root-&gt;left) &amp;&amp; isAVL(root-&gt;right);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> val;</span><br><span class="line">	node *left, *right;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">height</span><span class="params">(node *root)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (!root) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> left  = height(root-&gt;left);</span><br><span class="line">	<span class="keyword">int</span> right = height(root-&gt;right);</span><br><span class="line">	<span class="keyword">return</span> max(left, right) +<span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">isAVL</span><span class="params">(node *root)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (!root) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">if</span> (<span class="built_in">abs</span>(height(root-&gt;left)-height(root-&gt;right)) &gt;<span class="number">1</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">return</span> isAVL(root-&gt;left) &amp;&amp; isAVL(root-&gt;right);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
 
@@ -608,6 +561,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">二叉树</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
@@ -679,7 +643,7 @@
       
         <a id="more"></a>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;bits&#x2F;stdc++.h&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;节点类</span><br><span class="line">struct node &#123;</span><br><span class="line">	int val;</span><br><span class="line">	node *next;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">bool isSorted(node *head) &#123;</span><br><span class="line">	&#x2F;&#x2F;如果单链表为空 或者只有一个节点 如需要进行判断，直接返回为true</span><br><span class="line">	if (!head || !head-&gt;next) return 1;</span><br><span class="line">	node *p &#x3D; head-&gt;next; &#x2F;&#x2F;p指向单链表中的第一个节点</span><br><span class="line">	for (node *t&#x3D;p; t-&gt;next; t&#x3D;t-&gt;next) </span><br><span class="line">		if (t-&gt;val &gt; t-&gt;next-&gt;val) return false;</span><br><span class="line">	return true;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//节点类</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> val;</span><br><span class="line">	node *next;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">isSorted</span><span class="params">(node *head)</span> </span>&#123;</span><br><span class="line">	<span class="comment">//如果单链表为空 或者只有一个节点 如需要进行判断，直接返回为true</span></span><br><span class="line">	<span class="keyword">if</span> (!head || !head-&gt;next) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	node *p = head-&gt;next; <span class="comment">//p指向单链表中的第一个节点</span></span><br><span class="line">	<span class="keyword">for</span> (node *t=p; t-&gt;next; t=t-&gt;next) </span><br><span class="line">		<span class="keyword">if</span> (t-&gt;val &gt; t-&gt;next-&gt;val) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
 
@@ -688,6 +652,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">单链表</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
@@ -759,7 +734,7 @@
       
         <a id="more"></a>
 
-<p><font size=5 face=consolas>单链表的插入排序在思路上与顺序表是一致的，它的难点在于如何对链表进行操作，包括链表的插入以及防止访问空节点。只有能够保证思路清晰，写出也是不难的。</p>
+<p><font size=5 face=consolas>单链表的插入排序在思路上与顺序表是一致的，它的难点在于如何对链表进行操作，包括链表的插入以及防止访问空节点。只有能够保证思路清晰，写出也是不难的。</font></p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function">node *<span class="title">insertSort</span><span class="params">(node *head)</span> </span>&#123;</span><br><span class="line">	<span class="comment">//表空或者只有一个节点 不需要进行排序   直接返回</span></span><br><span class="line">	<span class="keyword">if</span> (!head || !head-&gt;next) <span class="keyword">return</span> head;</span><br><span class="line">	node *dummy = <span class="keyword">new</span> noed(<span class="number">0</span>);<span class="comment">//创建虚拟节点</span></span><br><span class="line">	dummy-&gt;next = head;</span><br><span class="line">	<span class="comment">//将链表分为有序区域和无序区   有序区初始只有一个节点</span></span><br><span class="line">	node *p = dummy-&gt;next-&gt;next;<span class="comment">//  p初始指向无序表的第一个节点</span></span><br><span class="line">	dymmy-&gt;next-&gt;next = <span class="literal">NULL</span>;<span class="comment">//断链</span></span><br><span class="line">	</span><br><span class="line">	<span class="keyword">while</span> (p) &#123;</span><br><span class="line">		node *q = p-&gt;next; <span class="comment">//保存p-&gt;next, 因为插入过程可能改变p-&gt;next</span></span><br><span class="line">		node *pre = dummy;</span><br><span class="line">	</span><br><span class="line">		<span class="comment">//当有序表不到最后一个节点并且有序表的元素小于等于无序表的元素 pre = pre-&gt;next</span></span><br><span class="line">		<span class="keyword">while</span> (pre-&gt;next &amp;&amp; pre-&gt;next-&gt;val &lt;= p-&gt;val) pre = pre-&gt;next;</span><br><span class="line">		<span class="comment">//插入无序表中此时p指向的节点到有序表中</span></span><br><span class="line">		p-&gt;next = pre-&gt;next;</span><br><span class="line">		pre-&gt;next = p</span><br><span class="line">		p = q;</span><br><span class="line">	&#125;  </span><br><span class="line">	<span class="keyword">return</span> dummy-&gt;next;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
@@ -774,7 +749,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">单链表</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">单链表 排序</a>
         		</li>
       		
 		</ul>
@@ -852,12 +827,12 @@
         <a id="more"></a>
 
 <p><font size=6 face=consolas>单链表归并排序需要掌握的知识点。<br><font size=5 face=consolas color=blue>1.归并排序的思想<br>2.如何合并两个有序的单链表<br>3.如何找到一个链表的中间节点，这里是为了断链。将链表一分为二。</p>
-<p><font size=5 face=consolas color=red>（1）合并两个有序的链表，主要有两种思路。递归和迭代<br><font size=5 face=consolas color=blue>递归方法的代码：</p>
+<p><font size=5 face=consolas color=red>（1）合并两个有序的链表，主要有两种思路。递归和迭代<br><font size=5 face=consolas color=blue>递归方法的代码：</font></p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> val;</span><br><span class="line">	node *next;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//注意此时链表a和链表b均为递增有序的单链表</span></span><br><span class="line"><span class="function">node *<span class="title">merge</span><span class="params">(node *a, node *b)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (!a) <span class="keyword">return</span> b;</span><br><span class="line">	<span class="keyword">if</span> (!b) <span class="keyword">return</span> a;</span><br><span class="line">	<span class="keyword">if</span> (a-&gt;val &lt;= b-&gt;val) &#123;</span><br><span class="line">		a-&gt;next = merge(a-&gt;next, b);</span><br><span class="line">		<span class="keyword">return</span> a;</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		b-&gt;next = merge(b-&gt;next, a);</span><br><span class="line">		<span class="keyword">return</span> b;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><font size=5 face=consolas color=blue>迭代方法的代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">node *merge(node *a, node *b) &#123;</span><br><span class="line">	node *dummy &#x3D; new node(0);&#x2F;&#x2F;建立虚拟节点</span><br><span class="line">	node *p &#x3D; dummy;</span><br><span class="line">	while (a &amp;&amp; b) &#123;</span><br><span class="line">		if (a-&gt;val &lt;&#x3D; b-&gt;val) &#123;</span><br><span class="line">			p-&gt;next &#x3D; a;</span><br><span class="line">			a &#x3D; a-&gt;next;</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			p-&gt;next &#x3D; b;</span><br><span class="line">			b &#x3D; b-&gt;next;</span><br><span class="line">		&#125;</span><br><span class="line">		p &#x3D; p-&gt;next;</span><br><span class="line">	&#125;</span><br><span class="line">	&#x2F;&#x2F;退出while循环  可能是a&#x3D;&#x3D;NULL 或者 b&#x3D;&#x3D;NULL 或者  a&#x3D;&#x3D;NULL &amp;&amp; b&#x3D;&#x3D;NULL</span><br><span class="line">	&#x2F;&#x2F;但是我们需要把不空的那条链继续连上</span><br><span class="line">	p-&gt;next &#x3D; (a!&#x3D;NULL)?a:b;</span><br><span class="line">	return dummy-&gt;next;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><font size=5 face=consolas color=red>（2) 链表的归并排序，其实也是递归的处理两个子链，最后合并两个有序的链表。这里主要的难点是如何找到链表的中点进行断链。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">node *_mergeSort(node *head) &#123;</span><br><span class="line">	if (!head-&gt;next) return head; &#x2F;&#x2F;如果链表中只有一个节点， 即为递归出口，直接返回</span><br><span class="line">	&#x2F;*</span><br><span class="line">	使用快慢指针，（1）慢指针规规矩矩每次只走一步</span><br><span class="line">				 （2）快指针每次走两步</span><br><span class="line">	*&#x2F;</span><br><span class="line">	node *slow &#x3D; head;&#x2F;&#x2F;最终指向第二条链的第一个节点</span><br><span class="line">	node *fast  &#x3D; head;</span><br><span class="line">	node *pre   &#x3D; NULL;&#x2F;&#x2F;最终指向第一条链的最后一个节点	</span><br><span class="line">	while (fast &amp;&amp; fast-&gt;next) &#123;</span><br><span class="line">		pre &#x3D; p;</span><br><span class="line">		slow &#x3D; slow-&gt;next;</span><br><span class="line">		fast &#x3D; fast-&gt;next-&gt;next;</span><br><span class="line">	&#125;</span><br><span class="line">	pre-&gt;next &#x3D; NULL;&#x2F;&#x2F;这一步很关键  就是在断链</span><br><span class="line">	node *left  &#x3D; mergeSort(head);&#x2F;&#x2F;递归的排序以head为头指针的第一条链</span><br><span class="line">	node *right &#x3D; mergeSort(slow);</span><br><span class="line">	return merge(left, right);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">node *mergeSort(node *head) &#123;</span><br><span class="line">	if (!head) return NULL;</span><br><span class="line">	else return _mergeSort(head); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=5 face=consolas color=blue>迭代方法的代码：</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">node *<span class="title">merge</span><span class="params">(node *a, node *b)</span> </span>&#123;</span><br><span class="line">	node *dummy = <span class="keyword">new</span> node(<span class="number">0</span>);<span class="comment">//建立虚拟节点</span></span><br><span class="line">	node *p = dummy;</span><br><span class="line">	<span class="keyword">while</span> (a &amp;&amp; b) &#123;</span><br><span class="line">		<span class="keyword">if</span> (a-&gt;val &lt;= b-&gt;val) &#123;</span><br><span class="line">			p-&gt;next = a;</span><br><span class="line">			a = a-&gt;next;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			p-&gt;next = b;</span><br><span class="line">			b = b-&gt;next;</span><br><span class="line">		&#125;</span><br><span class="line">		p = p-&gt;next;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//退出while循环  可能是a==NULL 或者 b==NULL 或者  a==NULL &amp;&amp; b==NULL</span></span><br><span class="line">	<span class="comment">//但是我们需要把不空的那条链继续连上</span></span><br><span class="line">	p-&gt;next = (a!=<span class="literal">NULL</span>)?a:b;</span><br><span class="line">	<span class="keyword">return</span> dummy-&gt;next;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=5 face=consolas color=red>（2) 链表的归并排序，其实也是递归的处理两个子链，最后合并两个有序的链表。这里主要的难点是如何找到链表的中点进行断链。</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">node *_mergeSort(node *head) &#123;</span><br><span class="line">	<span class="keyword">if</span> (!head-&gt;next) <span class="keyword">return</span> head; <span class="comment">//如果链表中只有一个节点， 即为递归出口，直接返回</span></span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">	使用快慢指针，（1）慢指针规规矩矩每次只走一步</span></span><br><span class="line"><span class="comment">				 （2）快指针每次走两步</span></span><br><span class="line"><span class="comment">	*/</span></span><br><span class="line">	node *slow = head;<span class="comment">//最终指向第二条链的第一个节点</span></span><br><span class="line">	node *fast  = head;</span><br><span class="line">	node *pre   = <span class="literal">NULL</span>;<span class="comment">//最终指向第一条链的最后一个节点	</span></span><br><span class="line">	<span class="keyword">while</span> (fast &amp;&amp; fast-&gt;next) &#123;</span><br><span class="line">		pre = p;</span><br><span class="line">		slow = slow-&gt;next;</span><br><span class="line">		fast = fast-&gt;next-&gt;next;</span><br><span class="line">	&#125;</span><br><span class="line">	pre-&gt;next = <span class="literal">NULL</span>;<span class="comment">//这一步很关键  就是在断链</span></span><br><span class="line">	node *left  = mergeSort(head);<span class="comment">//递归的排序以head为头指针的第一条链</span></span><br><span class="line">	node *right = mergeSort(slow);</span><br><span class="line">	<span class="keyword">return</span> merge(left, right);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">node *<span class="title">mergeSort</span><span class="params">(node *head)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (!head) <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">return</span> _mergeSort(head); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
 
@@ -871,7 +846,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">单链表</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">单链表 排序</a>
         		</li>
       		
 		</ul>
@@ -948,7 +923,7 @@
       
         <a id="more"></a>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;bits&#x2F;stdc++.h&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">	priority_queue&lt;int, vector&lt;int&gt;, greater&lt;int&gt; &gt; pq;</span><br><span class="line">	int a[] &#x3D; &#123;2,3,5,7,9&#125;;</span><br><span class="line">	int n &#x3D; sizeof(a)&#x2F;sizeof(int);</span><br><span class="line">	for (int i&#x3D;0; i&lt;n; ++i)  pq.push(a[i]);</span><br><span class="line">	int res &#x3D; 0;</span><br><span class="line">	while (pq.size() &gt; 1) &#123;</span><br><span class="line">		int a &#x3D; pq.top();pq.pop();</span><br><span class="line">		int b &#x3D; pq.top();pq.pop();</span><br><span class="line">		res +&#x3D; (a+b);</span><br><span class="line">	&#125;</span><br><span class="line">	cout &lt;&lt; res &lt;&lt; endl;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="built_in">priority_queue</span>&lt;<span class="keyword">int</span>, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;, greater&lt;<span class="keyword">int</span>&gt; &gt; pq;</span><br><span class="line">	<span class="keyword">int</span> a[] = &#123;<span class="number">2</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">7</span>,<span class="number">9</span>&#125;;</span><br><span class="line">	<span class="keyword">int</span> n = <span class="keyword">sizeof</span>(a)/<span class="keyword">sizeof</span>(<span class="keyword">int</span>);</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;n; ++i)  pq.push(a[i]);</span><br><span class="line">	<span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span> (pq.size() &gt; <span class="number">1</span>) &#123;</span><br><span class="line">		<span class="keyword">int</span> a = pq.top();pq.pop();</span><br><span class="line">		<span class="keyword">int</span> b = pq.top();pq.pop();</span><br><span class="line">		res += (a+b);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; res &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
 
@@ -957,6 +932,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">二叉树</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
@@ -973,6 +959,97 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2019/10/30/%E4%BD%BF%E7%94%A8C++%E4%BC%98%E5%85%88%E7%BA%A7%E9%98%9F%E5%88%97%E6%B1%82%E8%A7%A3Huffman%E6%A0%91%E5%B8%A6%E6%9D%83%E8%B7%AF%E5%BE%84%E9%95%BF%E5%BA%A6/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+    <article id="post-数据结构：带头节点双向循环链表的实现（考研）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/10/29/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%9A%E5%B8%A6%E5%A4%B4%E8%8A%82%E7%82%B9%E5%8F%8C%E5%90%91%E5%BE%AA%E7%8E%AF%E9%93%BE%E8%A1%A8%E7%9A%84%E5%AE%9E%E7%8E%B0%EF%BC%88%E8%80%83%E7%A0%94%EF%BC%89/">数据结构：带头节点双向循环链表的实现（考研）</a>
+    </h1>
+  
+
+        <!--显示阅读次数-->
+        
+        <!--显示阅读次数完毕-->
+        
+        <a href="/2019/10/29/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%9A%E5%B8%A6%E5%A4%B4%E8%8A%82%E7%82%B9%E5%8F%8C%E5%90%91%E5%BE%AA%E7%8E%AF%E9%93%BE%E8%A1%A8%E7%9A%84%E5%AE%9E%E7%8E%B0%EF%BC%88%E8%80%83%E7%A0%94%EF%BC%89/" class="archive-article-date">
+  	<time datetime="2019-10-29T02:30:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-29</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+      
+        <a id="more"></a>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DoubleLinkedCircleList</span>&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">node</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> val;</span><br><span class="line">    node *next, *prev;</span><br><span class="line"></span><br><span class="line">    node (<span class="keyword">int</span> x) &#123;<span class="keyword">this</span>-&gt;val = x;&#125;</span><br><span class="line">    node () &#123;&#125;</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  node *head;</span><br><span class="line">  <span class="keyword">int</span> size;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  DoubleLinkedCircleList() &#123;</span><br><span class="line">    head = <span class="keyword">new</span> node();</span><br><span class="line">    head-&gt;next = head-&gt;prev = head;</span><br><span class="line">    size = <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  ~DoubleLinkedCircleList() &#123;</span><br><span class="line">    <span class="keyword">while</span> (head-&gt;next!=head &amp;&amp; head-&gt;prev!=head) delTail();</span><br><span class="line">    <span class="keyword">delete</span> head;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">insert</span><span class="params">(<span class="keyword">int</span> index, <span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (index&lt;<span class="number">0</span> || index&gt;size) &#123;</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;the index is invalid!&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">		&#125; </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// p是待删除节点的前去节点</span></span><br><span class="line">    node *p = head;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;index; ++i) p = p-&gt;next;</span><br><span class="line">    node *q = <span class="keyword">new</span> node(x);</span><br><span class="line">    q-&gt;next = p-&gt;next;</span><br><span class="line">    <span class="keyword">if</span> (p-&gt;next) p-&gt;next-&gt;prev = q;</span><br><span class="line">    q-&gt;prev = p;</span><br><span class="line">    p-&gt;next = q;</span><br><span class="line">    size ++;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">insertHead</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;insert(<span class="number">0</span>, x);&#125;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">insertTail</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;insert(size, x);&#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">int</span> <span class="title">del</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (index&lt;<span class="number">0</span> || index&gt;=size) &#123;</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;the index is invalid!&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">			<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	</span><br><span class="line">		<span class="keyword">if</span> (isEmpty()) &#123;</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;the DoubleLinkedCircleList is null!&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">			<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">		&#125; </span><br><span class="line"></span><br><span class="line">    node *p = head;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;index; ++i) p = p-&gt;next;</span><br><span class="line">    node *q = p-&gt;next;</span><br><span class="line">    <span class="keyword">int</span> res = q-&gt;val;</span><br><span class="line">    q-&gt;next-&gt;prev = p;</span><br><span class="line">    p-&gt;next = q-&gt;next;</span><br><span class="line">    <span class="keyword">delete</span> q;</span><br><span class="line">    q = <span class="literal">NULL</span>;</span><br><span class="line">    size --;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">int</span> <span class="title">delHead</span><span class="params">()</span> </span>&#123;<span class="keyword">return</span> del(<span class="number">0</span>);&#125;</span><br><span class="line">  <span class="function"><span class="keyword">int</span> <span class="title">delTail</span><span class="params">()</span> </span>&#123;<span class="keyword">return</span> del(size<span class="number">-1</span>);&#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">int</span> <span class="title">search</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (index&lt;<span class="number">0</span> || index&gt;=size) &#123;</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;the index is invalid!&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">			<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">if</span> (head-&gt;next == head &amp;&amp; head-&gt;prev == head) &#123;</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;the DoubleLinkedCircleList is null!&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">			<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">    node *p = head-&gt;next;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;index; ++i) p = p-&gt;next;</span><br><span class="line">    <span class="keyword">return</span> p-&gt;val;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">int</span> <span class="title">searchHead</span><span class="params">()</span> </span>&#123;<span class="keyword">return</span> search(<span class="number">0</span>);&#125;</span><br><span class="line">  <span class="function"><span class="keyword">int</span> <span class="title">searchTail</span><span class="params">()</span> </span>&#123;<span class="keyword">return</span> search(size<span class="number">-1</span>);&#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">show</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    node *p = head-&gt;next;</span><br><span class="line">    <span class="keyword">while</span> (p &amp;&amp; p!=head) &#123;</span><br><span class="line">      <span class="built_in">cout</span> &lt;&lt; p-&gt;val &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">      p = p-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">isEmpty</span><span class="params">()</span> </span>&#123;<span class="keyword">return</span> head-&gt;next==head &amp;&amp; head-&gt;prev==head;&#125;</span><br><span class="line">  <span class="function"><span class="keyword">int</span> <span class="title">getSize</span><span class="params">()</span> </span>&#123;<span class="keyword">return</span> size;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> a[] = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;;</span><br><span class="line">  <span class="keyword">int</span> n = <span class="keyword">sizeof</span>(a)/<span class="keyword">sizeof</span>(<span class="keyword">int</span>);</span><br><span class="line">  DoubleLinkedCircleList <span class="built_in">list</span> = DoubleLinkedCircleList();</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;n; ++i) <span class="built_in">list</span>.insertTail(a[i]);</span><br><span class="line">  <span class="built_in">list</span>.show();</span><br><span class="line">  <span class="built_in">list</span>.delHead();</span><br><span class="line">  <span class="built_in">list</span>.show();</span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;size:&quot;</span> &lt;&lt; <span class="built_in">list</span>.getSize() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  <span class="built_in">list</span>.delTail();</span><br><span class="line">  <span class="built_in">list</span>.show();</span><br><span class="line">  <span class="built_in">list</span>.del(<span class="number">2</span>);</span><br><span class="line">  <span class="built_in">list</span>.show();</span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; <span class="built_in">list</span>.searchHead() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; <span class="built_in">list</span>.searchTail() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;======================&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; <span class="built_in">list</span>.search(<span class="number">2</span>) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; <span class="built_in">list</span>.search(<span class="number">0</span>) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;======================&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; <span class="built_in">list</span>.search(<span class="number">1</span>) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  <span class="built_in">list</span>.show();</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">双链表</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/数据结构//" class="article-tag-list-link color5">数据结构</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/10/29/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%9A%E5%B8%A6%E5%A4%B4%E8%8A%82%E7%82%B9%E5%8F%8C%E5%90%91%E5%BE%AA%E7%8E%AF%E9%93%BE%E8%A1%A8%E7%9A%84%E5%AE%9E%E7%8E%B0%EF%BC%88%E8%80%83%E7%A0%94%EF%BC%89/">展开全文 >></a>
         </p>
       
 
@@ -1096,11 +1173,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">动态规划</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">1024程序员节</a>
+                <a href="javascript:void(0)" class="js-tag color3">dp</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1108,7 +1181,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">数据结构 算法</a>
+                <a href="javascript:void(0)" class="js-tag color3">查找</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1120,11 +1193,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">c语言</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color4">STL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1132,7 +1201,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">linux系统编程</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">linux命令</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1148,14 +1221,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">c</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">c++11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">protobuf</a>
               </li>
              
@@ -1168,7 +1233,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color2">树</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">栈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">二分</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">堆</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1180,11 +1257,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">堆</a>
+                <a href="javascript:void(0)" class="js-tag color2">c</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">回溯法</a>
+                <a href="javascript:void(0)" class="js-tag color3">排序</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1192,11 +1269,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">最短路径</a>
+                <a href="javascript:void(0)" class="js-tag color4">回溯法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">进程通信</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">单链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">计算机组成</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">最短路径</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">单链表 排序</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1208,15 +1301,31 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">排序</a>
+                <a href="javascript:void(0)" class="js-tag color5">Linux系统编程</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">1024程序员节 c++</a>
+                <a href="javascript:void(0)" class="js-tag color1">c++11</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">动态规划 算法 leetcode</a>
+                <a href="javascript:void(0)" class="js-tag color5">而擦函数</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">图论</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">稀疏矩阵</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">双链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">树 图</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1224,11 +1333,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">递归</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">c++11算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">计算机组成</a>
+                <a href="javascript:void(0)" class="js-tag color5">堆栈调用</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1240,7 +1353,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">递归</a>
+                <a href="javascript:void(0)" class="js-tag color5">进程基础</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">图的存储结构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">哈希</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">剑指offer</a>
               </li>
             
             <div class="clearfix"></div>

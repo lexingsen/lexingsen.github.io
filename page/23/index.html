@@ -64,7 +64,7 @@
 			</ul>
 			</nav>
 			<nav>
-			总文章数 300
+			总文章数 296
 			</nav>
 		<nav class="header-smart-menu">
     		
@@ -147,183 +147,6 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-fibonacci数列递归，动态规划，循环+递推三种方法的性能比较" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/09/02/fibonacci%E6%95%B0%E5%88%97%E9%80%92%E5%BD%92%EF%BC%8C%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%EF%BC%8C%E5%BE%AA%E7%8E%AF+%E9%80%92%E6%8E%A8%E4%B8%89%E7%A7%8D%E6%96%B9%E6%B3%95%E7%9A%84%E6%80%A7%E8%83%BD%E6%AF%94%E8%BE%83/">fibonacci数列递归，动态规划，循环+递推三种方法的性能比较</a>
-    </h1>
-  
-
-        <!--显示阅读次数-->
-        
-        <!--显示阅读次数完毕-->
-        
-        <a href="/2018/09/02/fibonacci%E6%95%B0%E5%88%97%E9%80%92%E5%BD%92%EF%BC%8C%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%EF%BC%8C%E5%BE%AA%E7%8E%AF+%E9%80%92%E6%8E%A8%E4%B8%89%E7%A7%8D%E6%96%B9%E6%B3%95%E7%9A%84%E6%80%A7%E8%83%BD%E6%AF%94%E8%BE%83/" class="archive-article-date">
-  	<time datetime="2018-09-02T06:08:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-02</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-      
-      
-        <a id="more"></a>
-
-<p><font face="Courier New" size=5>斐波那契数列的定义</font><br><code>1.n==1 || n==2 A(n) = 1</code><br><code>2.An = A(n-1)+A(n-2)</code></p>
-<p><font face="Courier New" size=5 color=red>递归法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">int fibonacci(int n)&#123;</span><br><span class="line">	assert(n &gt; 0);</span><br><span class="line">	&#x2F;&#x2F;递归出口</span><br><span class="line">	if(n &#x3D;&#x3D; 1 || n &#x3D;&#x3D; 2)&#123;</span><br><span class="line">		return 1;</span><br><span class="line">	&#125;</span><br><span class="line">	return fiboancci(n-1)+fibonacci(n-2);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdn.net/20180902130108411?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
-<p><font face="Courier New" size=4>这样的递归算法时间复杂度达到了O(2^n)，当数据规模到达一定程度时，是不可接受的算法。为什么时间复杂度会如此之高，对于给定的一个项数n(n&gt;=2)，每次求解都需要两次进行递归，所以时间复杂度为O(2^n)。而其中还包括很多重复计算的子问题，如求解fib(4)已经知道了fib(2)，但是在计算fib(3)又一次求解了fib(2)，若给定的项数n较大时，其中包括非常之多的重复子问题。如何进行优化呢？</p>
-<p><font face="Courier New" size=5 color=red>动态规划（记忆化搜索）</font><br>动态规划正是用来解决问题当中会出现重复子问题的方法。动态规划通过记录子问题的解，来避免当下次出现相同子问题时进行重复的计算。而通过递归写法的动态规划也称为<font color=red>记忆化搜索</font>，通过递归记录子问题的解，一般将解存储在数组，而后通过索引找到对应问题的解。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;cstdio&gt;</span><br><span class="line">#include &lt;cstring&gt;</span><br><span class="line">#include &lt;cassert&gt;</span><br><span class="line"></span><br><span class="line">const int maxn &#x3D; 1000;</span><br><span class="line">int dp[maxn];&#x2F;&#x2F;全局的变量存储.data段,如果在函数中开辟会占用大量的栈空间</span><br><span class="line"></span><br><span class="line">long long fibonacci(int n)&#123;</span><br><span class="line">	assert(n &gt; 0);&#x2F;&#x2F;防止传入错误的数据，进行断言</span><br><span class="line">	if(n &#x3D;&#x3D; 1||n &#x3D;&#x3D; 2)&#123;</span><br><span class="line">		return 1;</span><br><span class="line">	&#125;</span><br><span class="line">	&#x2F;&#x2F;搜索是否有对应的解，没有则存储</span><br><span class="line">	if(dp[n] &#x3D;&#x3D; -1)&#123;</span><br><span class="line">		dp[n] &#x3D; fibonacci(n-1)+fibonacci(n-2);</span><br><span class="line">	&#125;</span><br><span class="line">	return dp[n];&#x2F;&#x2F;搜索成功</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">	memset(dp,-1,sizeof(dp));&#x2F;&#x2F;初始化记录解的dp数组</span><br><span class="line">	int n;</span><br><span class="line">	&#x2F;&#x2F;注意fibonacci的项，太大会溢出</span><br><span class="line">	scanf(&quot;%d&quot;,&amp;n);</span><br><span class="line">	printf(&quot;fib(%d) &#x3D; %lld\n&quot;,n,fibonacci(n));</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><font size=4 face="Courier New">通过记忆化搜索的方式，只需要O(n)的时间复杂度即可计算出fibonacci数列的第n的值，相比直接递归求解时间复杂度O(2^n)得到了大大的提升，算法的性能显著提高。</p>
-<p><font face="Courier New" size=5 color=red>动态规划（循环+递推）</font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;cstdio&gt;</span><br><span class="line">#include &lt;cstring&gt;</span><br><span class="line">#include &lt;cassert&gt;</span><br><span class="line"></span><br><span class="line">const int maxn &#x3D; 1000;</span><br><span class="line">int dp[maxn];</span><br><span class="line">int main()&#123;</span><br><span class="line">	memset(dp,-1,sizeof(dp));</span><br><span class="line">	int n;&#x2F;&#x2F;注意输入的项数</span><br><span class="line">	scanf(&quot;%d&quot;,&amp;n);</span><br><span class="line">	dp[0] &#x3D; 1;</span><br><span class="line">	dp[1] &#x3D; 1;</span><br><span class="line">	for(int i&#x3D;2;i &lt; n;++i)&#123;</span><br><span class="line">		dp[i] &#x3D; dp[i-1]+dp[i-2];&#x2F;&#x2F;递推</span><br><span class="line">	&#125;</span><br><span class="line">	printf(&quot;%d&quot;,dp[n-1]);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><font size=4 face="Courier New">时间复杂度为O(n),在循环+递推写法的动态规划，相比递归的写法更好理解，但是其本质还是相同的。都是为了解决当问题中出现重复子问题而进行重复计算的问题。</p>
-<p><font face="Courier New" size=5 color=red>值得注意的是，使用动态规划这种思想解决问题的前提是，一个问题当中必须有重复的子问题才能使用动态规划进行解决。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/算法基础//" class="article-tag-list-link color5">算法基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/09/02/fibonacci%E6%95%B0%E5%88%97%E9%80%92%E5%BD%92%EF%BC%8C%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%EF%BC%8C%E5%BE%AA%E7%8E%AF+%E9%80%92%E6%8E%A8%E4%B8%89%E7%A7%8D%E6%96%B9%E6%B3%95%E7%9A%84%E6%80%A7%E8%83%BD%E6%AF%94%E8%BE%83/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
-    <article id="post-LeetCode 283.Move Zeros" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/27/LeetCode%20283.Move%20Zeros/">LeetCode 283.Move Zeros</a>
-    </h1>
-  
-
-        <!--显示阅读次数-->
-        
-        <!--显示阅读次数完毕-->
-        
-        <a href="/2018/08/27/LeetCode%20283.Move%20Zeros/" class="archive-article-date">
-  	<time datetime="2018-08-27T02:28:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-27</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-      
-      
-        <a id="more"></a>
-
-<p><font size=5 face="Consolas">题目描述：Given an array nums, write a function to move all 0’s to the end of it while maintaining the relative order of the non-zero elements.</font><br>给定一个数组 <code>nums</code>，编写一个函数将所有 0 移动到数组的末尾，同时保持非零元素的相对顺序。</p>
-<p><font size=5 face="Courier New">样例输入：</font><code>[0,1,0,3,12]</code><br><font size=5 face="Courier New">样例输出：</font><code>[1,3,12,0,0]</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;直观的方法就是，开辟一个数组用于保存所有非零元素</span><br><span class="line">&#x2F;&#x2F;遍历完成后回写到原数组中，之后添加对应个数的0元素</span><br><span class="line">void moveZeroes(int* nums, int numsSize) &#123;</span><br><span class="line">    int nonzero[numsSize];</span><br><span class="line">    int k&#x3D;0;&#x2F;&#x2F;统计非零元素的个数</span><br><span class="line">    for(int i&#x3D;0; i&lt;numsSize; ++i)&#123;</span><br><span class="line">		if(nums[i])</span><br><span class="line">			nonzero[k++] &#x3D; nums[i];</span><br><span class="line">	&#125;</span><br><span class="line">	&#x2F;&#x2F;2.回写非零元素</span><br><span class="line">	int j&#x3D;0;&#x2F;&#x2F;记录新数组当前下标</span><br><span class="line">	for(int i&#x3D;0; i&lt;k; ++i)&#123;</span><br><span class="line">		nums[j++] &#x3D; nums[i];</span><br><span class="line">	&#125;</span><br><span class="line">	&#x2F;&#x2F;3.添加0,numsSize-k为零元素的个数</span><br><span class="line">	fpr(int i&#x3D;0; i&lt;numsSize-k; ++i)&#123;</span><br><span class="line">		nums[k++] &#x3D; 0;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><font face="Courier New">上述算法的时间复杂度为：O(n)，空间复杂度也为O(n)。</font><br><font color=red>上边的算法开辟了额外的数组用于存储非零元素，那么如何空间复杂度上进行优化，能能在原数组上直接操作即数据结构中的就地完成？</font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;two pointers思想</span><br><span class="line">void moveZeroes(int* nums, int numsSize)&#123;</span><br><span class="line">	int k&#x3D;0;&#x2F;&#x2F;标记非零元素</span><br><span class="line">	for(int i&#x3D;0;i&lt;numsSize;++i)&#123;</span><br><span class="line">		if(nums[i]!&#x3D;0)</span><br><span class="line">			nums[k++]&#x3D;nums[i]</span><br><span class="line">	&#125;</span><br><span class="line">	for(int i&#x3D;k;i&lt;numsSize;++i)&#123;</span><br><span class="line">		nums[i]&#x3D;0;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>交换零元素和非零元素</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">void moveZeroes(int* nums, int numsSize)&#123;</span><br><span class="line">	int k&#x3D;0;</span><br><span class="line">	for(int i&#x3D;0;i&lt;numsSize;++i)&#123;</span><br><span class="line">		if(nums[i])&#123;</span><br><span class="line">				&#x2F;&#x2F;防止发生自交换，若数组中全为非零元素</span><br><span class="line">				if(i!&#x3D;k)&#123;</span><br><span class="line">						swap(nums[k++],nums[i]);</span><br><span class="line">					&#125;</span><br><span class="line">				else&#123;</span><br><span class="line">					k++;	</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Leetcode//" class="article-tag-list-link color4">Leetcode</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/27/LeetCode%20283.Move%20Zeros/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
     <article id="post-指针值传递、地址传递和引用传递" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -352,15 +175,15 @@
         <a id="more"></a>
 
 <p><font face="Courier New" size=5>一、指针的值传递</font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;test.c</span><br><span class="line">#include &lt;cstdio&gt;</span><br><span class="line">#include &lt;cstring&gt;</span><br><span class="line">#include &lt;cassert&gt;</span><br><span class="line"></span><br><span class="line">void fun(char* p)&#123;</span><br><span class="line">	p &#x3D; (char*)malloc(sizeof(char));</span><br><span class="line">	assert(p!&#x3D;NULL);</span><br><span class="line">	strcpy(p,&quot;hello&quot;);</span><br><span class="line">	&#x2F;&#x2F;free(p)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main(void)&#123;</span><br><span class="line">	char* p &#x3D; NULL;</span><br><span class="line">	fun(p);</span><br><span class="line">	printf(&quot;p&#x3D;%s\n&quot;,p);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//test.c</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cassert&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fun</span><span class="params">(<span class="keyword">char</span>* p)</span></span>&#123;</span><br><span class="line">	p = (<span class="keyword">char</span>*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">char</span>));</span><br><span class="line">	assert(p!=<span class="literal">NULL</span>);</span><br><span class="line">	<span class="built_in">strcpy</span>(p,<span class="string">&quot;hello&quot;</span>);</span><br><span class="line">	<span class="comment">//free(p)</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">	<span class="keyword">char</span>* p = <span class="literal">NULL</span>;</span><br><span class="line">	fun(p);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;p=%s\n&quot;</span>,p);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><img src="https://img-blog.csdn.net/20180826084001395?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><font face="Courier New"><br>执行结果中并未输出字符串hello其实这里主函数调用fun函数，形参向实参传递参数的时候，发生的是拷贝。在fun函数中对局部指针变量p的任何修改都不会影响到主函数中的指针变量p。<br>下面简单的用函数栈帧空间图分析一下：<br><img src="https://img-blog.csdn.net/20180825121947543?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
 <p><font size=4 face="Courier New" color=red>值传递，形参的修改不会影响到实参</font></p>
 <p><font face="Courier New" size=5>二、指针的地址传递</font><br>由于实参是一个一级指针的地址，要传入这样的地址给形参，这需要一个对应类型的二级指针来接受一级指针的地址。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;test.c</span><br><span class="line">#include &lt;cstdio&gt;</span><br><span class="line">#include &lt;cstring&gt;</span><br><span class="line">#include &lt;cassert&gt;</span><br><span class="line">void fun(char** p)&#123;</span><br><span class="line">	*p &#x3D; (char*)malloc(sizeof(char)*100);</span><br><span class="line">	assert(*p !&#x3D; NULL);</span><br><span class="line">	strcpy(*p,&quot;hello&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main(void)&#123;</span><br><span class="line">	char* p &#x3D; NULL;</span><br><span class="line">	fun(&amp;p);</span><br><span class="line">	printf(&quot;p&#x3D;%s\n&quot;,p);</span><br><span class="line">	free(p); </span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//test.c</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cassert&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fun</span><span class="params">(<span class="keyword">char</span>** p)</span></span>&#123;</span><br><span class="line">	*p = (<span class="keyword">char</span>*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">char</span>)*<span class="number">100</span>);</span><br><span class="line">	assert(*p != <span class="literal">NULL</span>);</span><br><span class="line">	<span class="built_in">strcpy</span>(*p,<span class="string">&quot;hello&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">	<span class="keyword">char</span>* p = <span class="literal">NULL</span>;</span><br><span class="line">	fun(&amp;p);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;p=%s\n&quot;</span>,p);</span><br><span class="line">	<span class="built_in">free</span>(p); </span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>上述代码的执行结果是：<code>p=hello</code><br><img src="https://img-blog.csdn.net/20180826084040393?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
 <p><font size=4 face="Courier New">指针的地址传递经常用在没有头节点的链表中，因为在创建和销毁链表时，头指针的值需要被修改。如果用一级指针接收发生的是值传递，要修改其值必须用二级指针接收一级指针的地址，在这个地址对应的内存块进行修改。</p>
 <p><font face="Courier New" size=5>三、指针的引用传递</font><br>用二级指针操作一级指针的内存往往让人难以理解，甚至往往还会发生内存泄漏的风险，在C++中，可以通过指针的引用简化这样的内存模型，实际上在编译器内部还是处理为二级指针，当使用时，解引用为一级指针，如对无头结点链表的初始化、销毁等操作，也可以使用一级指针的引用简化问题的处理。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;test.cpp</span><br><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">void fun(char* &amp;p)&#123;</span><br><span class="line">	p &#x3D; new char[100];</span><br><span class="line">	strcpy(p,&quot;hello&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">	char* p&#x3D;NULL;</span><br><span class="line">	fun(p);</span><br><span class="line">	cout&lt;&lt;&quot;p &#x3D; &quot;&lt;&lt;p&lt;&lt;endl;</span><br><span class="line">	delete [] p;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//test.cpp</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fun</span><span class="params">(<span class="keyword">char</span>* &amp;p)</span></span>&#123;</span><br><span class="line">	p = <span class="keyword">new</span> <span class="keyword">char</span>[<span class="number">100</span>];</span><br><span class="line">	<span class="built_in">strcpy</span>(p,<span class="string">&quot;hello&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">char</span>* p=<span class="literal">NULL</span>;</span><br><span class="line">	fun(p);</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;p = &quot;</span>&lt;&lt;p&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">delete</span> [] p;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><img src="https://img-blog.csdn.net/2018082609153840?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>怎么理解一级指针的引用传递呢，编译器在内存中开辟了临时量，用于存储引用变量的地址，一但使用引用变量就进行解引用。所以在外部看来，似乎就是使用了原变量，有兴趣的同学可以反汇编源代码。从汇编的角度去理解引用，看看底层语言是怎么处理引用的，相信会对引用有更深刻的理解。<br><img src="https://img-blog.csdn.net/20180826093218437?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
 
       
@@ -444,14 +267,14 @@
 <font face="Courier New">
 二维数组本质还是一维数组，数组中的每一个元素都是数组，这些元素具有相同的属性。既然是数组类型，其具备两个条件：<font color=red>1.数组元素的个数；2.数组元素的类型<font>
 <font size=4.5>验证二维数组本质是一维数组：</font>
+
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">show</span><span class="params">(<span class="keyword">int</span>* a,<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i &lt; n;++i)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>,a[i]);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> A[] = &#123;&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>&#125;,&#123;<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>&#125;,&#123;<span class="number">9</span>,<span class="number">10</span>,<span class="number">11</span>,<span class="number">12</span>&#125;&#125;;</span><br><span class="line">	<span class="keyword">int</span> len = <span class="keyword">sizeof</span>(A)/<span class="keyword">sizeof</span>(A[<span class="number">0</span>][<span class="number">0</span>]);</span><br><span class="line">	show((<span class="keyword">int</span>*)A,len);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-![这里写图片描述](https://img-blog.csdn.net/20180821234314471?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
-在内存中，是没有二维数组的。二维数组也是连续存放的，只是在逻辑上的二维。
-<font size=4.5 color=red>验证二维数组的步长：</font>
+<p><img src="https://img-blog.csdn.net/20180821234314471?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>在内存中，是没有二维数组的。二维数组也是连续存放的，只是在逻辑上的二维。<br><font size=4.5 color=red>验证二维数组的步长：</font></p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">test.c</span><br><span class="line"><span class="keyword">int</span> A[][<span class="number">4</span>] = &#123;&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>&#125;,&#123;<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>&#125;,&#123;<span class="number">9</span>,<span class="number">10</span>,<span class="number">11</span>,<span class="number">12</span>&#125;&#125;;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;A:%d , A+1:%d&quot;</span>,A,A+<span class="number">1</span>);</span><br><span class="line"><span class="comment">//验证每一个元素的步长，即一维数组的长度</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;&amp;A:%d , &amp;A+1:%d&quot;</span>,&amp;A,&amp;A+<span class="number">1</span>);</span><br><span class="line"><span class="comment">//验证整个二维数组的步长</span></span><br></pre></td></tr></table></figure>
 </font>
 ![这里写图片描述](https://img-blog.csdn.net/2018082120480079?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
-<font color=red>二维数组名：</font>二维数组名代表第0行首元素的地址，类同于 一维数组名代表首元素的地址。二维数组首元素就是首行，这个关系是一致的。
+<font color=red>二维数组名：</font>二维数组名代表第0行首元素的地址，类同于 一维数组名代表首元素的地址。二维数组首元素就是首行，这个关系是一致的。</font>
+
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> A[][<span class="number">4</span>] = &#123;&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>&#125;,&#123;<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>&#125;,&#123;<span class="number">9</span>,<span class="number">10</span>,<span class="number">11</span>,<span class="number">12</span>&#125;&#125;;</span><br><span class="line"><span class="comment">//A：					   代表第0行首地址</span></span><br><span class="line"><span class="comment">//A+i&lt;=&gt;&amp;A[i]：			   代表第i行首地址</span></span><br><span class="line"><span class="comment">//*(A+i)&lt;=&gt;A[i]:			代表第i行首元素的地址</span></span><br><span class="line"><span class="comment">//*(A+i)+j&lt;=&gt;&amp;A[i][j]: 		代表第i行第j列元素的地址</span></span><br><span class="line"><span class="comment">//*(*(A+i)+j)&lt;=&gt;A[i][j]:	代表第i行第j列元素的值</span></span><br></pre></td></tr></table></figure>
 
 <p><font size=4.5 color=red>指向二维数组的数组指针</font></p>
@@ -549,14 +372,15 @@
       
         <a id="more"></a>
 
-<p><font size=5 color=red>一、数组指针</font><br>初学C语言的朋友对数组指针这指针数组感到迷惑，分不清，包括我自己，其实是对概念的不清晰以及对数组和指针这两个概念理解的不够深入，下面谈谈我的理解。<br>数组指针，是一个<font color=blue>指针</font>而不是<font color=blue>数组。</font><br>这个指针具有<font color=red>指向整个数组</font>的能力，保存这个数组的其实地址。<br>定义数组指针变量</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">1.先定义数组类型，根据类型定义指针变量</span><br><span class="line">typedef int A[5];&#x2F;&#x2F;A是数组类型。元素类型为int，元素个数为10</span><br><span class="line">A* p &#x3D; NULL;&#x2F;&#x2F;p是数组指针类型变量</span><br><span class="line"></span><br><span class="line">int a[5] &#x3D; &#123;0&#125;;</span><br><span class="line">p &#x3D; &amp;a;&#x2F;&#x2F;注意，不能写成 p&#x3D;a,两者类型是不相同的</span><br><span class="line">&#x2F;&#x2F;a代表数组首元素的地址，&amp;a代表整个数组的地址</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;通过数组指针赋值</span><br><span class="line">for(int i&#x3D;0;i &lt; 5;++i)&#123;</span><br><span class="line">	(*p)[i] &#x3D; i;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F;sizeof</span><br><span class="line">sizeof(p);\\4   指针变量的大小，在32位下都是4</span><br><span class="line">sizeof(*p);\\20	指针指向空间的大小，即整个数组的大小</span><br><span class="line"></span><br><span class="line">2.先定义数组指针类型，根据类型定义变量</span><br><span class="line">typedef int (*A)[5];</span><br><span class="line">&#x2F;&#x2F;定义指向元素个数为5，元素类型为int的数组的指针类型A</span><br><span class="line">int a[5]; </span><br><span class="line">A q &#x3D; &amp;a;&#x2F;&#x2F;用类型定义变量</span><br><span class="line"></span><br><span class="line">3.直接定义数组指针变量</span><br><span class="line">int a[5] &#x3D; &#123;1,2,3,4,5&#125;;</span><br><span class="line">int (*q)[5] &#x3D; &amp;a;&#x2F;&#x2F;q是数组指针变量</span><br></pre></td></tr></table></figure>
+<p><font size=5 color=red>一、数组指针</font><br>初学C语言的朋友对数组指针这指针数组感到迷惑，分不清，包括我自己，其实是对概念的不清晰以及对数组和指针这两个概念理解的不够深入，下面谈谈我的理解。<br>数组指针，是一个<font color=blue>指针</font>而不是<font color=blue>数组。</font><br>这个指针具有<font color=red>指向整个数组</font>的能力，保存这个数组的其实地址。</p>
+<p>定义数组指针变量</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>先定义数组类型，根据类型定义指针变量</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> A[<span class="number">5</span>];<span class="comment">//A是数组类型。元素类型为int，元素个数为10</span></span><br><span class="line">A* p = <span class="literal">NULL</span>;<span class="comment">//p是数组指针类型变量</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> a[<span class="number">5</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">p = &amp;a;<span class="comment">//注意，不能写成 p=a,两者类型是不相同的</span></span><br><span class="line"><span class="comment">//a代表数组首元素的地址，&amp;a代表整个数组的地址</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//通过数组指针赋值</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i &lt; <span class="number">5</span>;++i)&#123;</span><br><span class="line">	(*p)[i] = i;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//sizeof</span></span><br><span class="line"><span class="keyword">sizeof</span>(p);\\<span class="number">4</span>   指针变量的大小，在<span class="number">32</span>位下都是<span class="number">4</span></span><br><span class="line"><span class="keyword">sizeof</span>(*p);\\<span class="number">20</span>	指针指向空间的大小，即整个数组的大小</span><br><span class="line"></span><br><span class="line"><span class="number">2.</span>先定义数组指针类型，根据类型定义变量</span><br><span class="line">typedef int (*A)[5];</span><br><span class="line"><span class="comment">//定义指向元素个数为5，元素类型为int的数组的指针类型A</span></span><br><span class="line"><span class="keyword">int</span> a[<span class="number">5</span>]; </span><br><span class="line">A q = &amp;a;<span class="comment">//用类型定义变量</span></span><br><span class="line"></span><br><span class="line"><span class="number">3.</span>直接定义数组指针变量</span><br><span class="line"><span class="keyword">int</span> a[<span class="number">5</span>] = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;;</span><br><span class="line"><span class="keyword">int</span> (*q)[<span class="number">5</span>] = &amp;a;<span class="comment">//q是数组指针变量</span></span><br></pre></td></tr></table></figure>
 
 
 <p><font size=5 color=red>二、指针数组</font><br>指针数组，是一个数组，而不是指针。数组中的每一个元素都是一个指针，这些元素构成的集合就是这个数组。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">char* str[] &#x3D; &#123;&quot;China&quot;,&quot;American&quot;,&quot;Russia&quot;&#125;;</span><br><span class="line">&#x2F;&#x2F;数组中的每一个都是字符串常量</span><br><span class="line">&#x2F;&#x2F;字符串常量保存在.data段中的.rodata段</span><br><span class="line">&#x2F;&#x2F;实际上常量字符串就是一个指针，这个指针指向.rodata对应的常量字符串</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span>* str[] = &#123;<span class="string">&quot;China&quot;</span>,<span class="string">&quot;American&quot;</span>,<span class="string">&quot;Russia&quot;</span>&#125;;</span><br><span class="line"><span class="comment">//数组中的每一个都是字符串常量</span></span><br><span class="line"><span class="comment">//字符串常量保存在.data段中的.rodata段</span></span><br><span class="line"><span class="comment">//实际上常量字符串就是一个指针，这个指针指向.rodata对应的常量字符串</span></span><br></pre></td></tr></table></figure>
 <p><img src="https://img-blog.csdn.net/20180821194949768?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><font size=4.5 color=blue>指针数组的应用</font><br><font face="Courier New">完整的main函数原型，<code>int main(int arc,char* argv[],char* envp[])</code><br>其中,两个数组分别保存命令行参数和环境变量(路径)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;cstdio&gt;</span><br><span class="line">int main(int argc,char* argv[],char* envp[])&#123;</span><br><span class="line">	for(int i&#x3D;0;i &lt; argc;++i)&#123;</span><br><span class="line">		printf(&quot;argv[%d] &#x3D; %s\n&quot;,i,argv[i]);</span><br><span class="line">		printf(&quot;envp[%d] &#x3D; %s\n&quot;,i,envp[i]);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc,<span class="keyword">char</span>* argv[],<span class="keyword">char</span>* envp[])</span></span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i &lt; argc;++i)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;argv[%d] = %s\n&quot;</span>,i,argv[i]);</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;envp[%d] = %s\n&quot;</span>,i,envp[i]);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><img src="https://img-blog.csdn.net/20180821202413425?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><font size=5 color=red>三、防止数组发生越界</font><br>数组作为函数参数传递时，会退化为指针。为了提高程序执行的效率，C语言不做数组下标的安全性检查。如果进行了检查当数组数据量非常大时候会显著减低程序的效率，在<font color=red>安全性</font>和<font color=red>高效率</font>之间，权衡利弊之下。C语言选择了效率，因此在实际使用的情况下，尤其是在有数组参与函数调用的情况下，数组的长度需要作为函数的参数传递进去，防止出现错误，损坏堆栈的数据。</p>
 
       
@@ -638,7 +462,7 @@
         <a id="more"></a>
 
 <p><font size=4 color="black">一、简单介绍</font><font face="Courier New"><br>在windows32操作系统下可以使用debug.exe对可执行文件进行调试，可以看到底层的寄存器之间的数据传输。64位已经不支持运行16位的程序，因此想要在64位下完成debug调试可执行程序，需要安装32位模拟器DosBox，详细安装步骤请百度。</font><br><font size=4 color="black">二、常用命令</font><br>（1）查看寄存器中的内容<br><code>-r</code><br><img src="https://img-blog.csdn.net/20180821121910615?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>（2）单步执行<br><code>-t</code><br>测试代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">assume cs:code</span><br><span class="line">code segment:</span><br><span class="line">	start:</span><br><span class="line">	mov ax,10</span><br><span class="line">	mov ax,4c00H</span><br><span class="line">	int 21H</span><br><span class="line">code ends</span><br><span class="line">end start</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">assume cs:code</span><br><span class="line">code segment:</span><br><span class="line">	start:</span><br><span class="line">	mov ax,10</span><br><span class="line">	mov ax,4c00H</span><br><span class="line">	int 21H</span><br><span class="line">code ends</span><br><span class="line">end start</span><br></pre></td></tr></table></figure>
 <p><img src="https://img-blog.csdn.net/20180821122711931?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>（3）查看内存的内容<br><code>-d 1000:0  8</code>，1000代表段寄存器的值，0是偏移地址。8代表查看8个字节<br><img src="https://img-blog.csdn.net/20180821122932247?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>（4）改写内存中的内容<br><code>-e 1000:0</code><br>修改后进行查看：<code>-d 1000:0</code><br><img src="https://img-blog.csdn.net/20180821123358434?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>（5）将指定内存块的机器指令转化为汇编指令<br><code>-u cs:0</code><br><img src="https://img-blog.csdn.net/20180821123602619?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>（6）以汇编语言的形式在内存中写入一段程序<br><code>-a </code><br><img src="https://img-blog.csdn.net/20180821124112283?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
 
       
@@ -649,6 +473,17 @@
       
       
       
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/汇编//" class="article-tag-list-link color3">汇编</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
       
         <p class="article-more-link">
@@ -716,7 +551,8 @@
 
 <p><font size=6 face="Courier New">样例输出</font></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1</span><br><span class="line">BeiJu</span><br><span class="line">1</span><br><span class="line">BeiJu</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;cstdio&gt;</span><br><span class="line">#define maxn 201</span><br><span class="line">int main()&#123;</span><br><span class="line">	int n,m,P;</span><br><span class="line">	int reader[maxn];</span><br><span class="line">	while(scanf(&quot;%d %d&quot;,&amp;n,&amp;m)!&#x3D;EOF)&#123;</span><br><span class="line">		int booksum[maxn] &#x3D; &#123;0&#125;; </span><br><span class="line">		for(int i&#x3D;0;i&lt;n;++i)&#123;</span><br><span class="line">			scanf(&quot;%d&quot;,&amp;P);</span><br><span class="line">			reader[i] &#x3D; P;</span><br><span class="line">			booksum[P]++;</span><br><span class="line">		&#125;</span><br><span class="line">		for(int i&#x3D;0;i&lt;n;++i)&#123;</span><br><span class="line">			int sum &#x3D; booksum[reader[i]]-1;</span><br><span class="line">			if(sum!&#x3D;0)&#123;</span><br><span class="line">				printf(&quot;%d&quot;,sum);</span><br><span class="line">			&#125;</span><br><span class="line">			else&#123;</span><br><span class="line">				printf(&quot;BeiJu\n&quot;);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; </span><br><span class="line">	&#125;	</span><br><span class="line">	return 0;	 </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> maxn 201</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n,m,P;</span><br><span class="line">	<span class="keyword">int</span> reader[maxn];</span><br><span class="line">	<span class="keyword">while</span>(<span class="built_in">scanf</span>(<span class="string">&quot;%d %d&quot;</span>,&amp;n,&amp;m)!=EOF)&#123;</span><br><span class="line">		<span class="keyword">int</span> booksum[maxn] = &#123;<span class="number">0</span>&#125;; </span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;++i)&#123;</span><br><span class="line">			<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;P);</span><br><span class="line">			reader[i] = P;</span><br><span class="line">			booksum[P]++;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;++i)&#123;</span><br><span class="line">			<span class="keyword">int</span> sum = booksum[reader[i]]<span class="number">-1</span>;</span><br><span class="line">			<span class="keyword">if</span>(sum!=<span class="number">0</span>)&#123;</span><br><span class="line">				<span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>,sum);</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span>&#123;</span><br><span class="line">				<span class="built_in">printf</span>(<span class="string">&quot;BeiJu\n&quot;</span>);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; </span><br><span class="line">	&#125;	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;	 </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
       
 
       
@@ -740,91 +576,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/08/16/Codeup%E5%A2%93%E5%9C%B0%20%E8%B0%81%E6%98%AF%E4%BD%A0%E7%9A%84%E6%BD%9C%E5%9C%A8%E6%9C%8B%E5%8F%8B/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
-    <article id="post-Hash初步(空间换时间的策略)" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/16/Hash%E5%88%9D%E6%AD%A5(%E7%A9%BA%E9%97%B4%E6%8D%A2%E6%97%B6%E9%97%B4%E7%9A%84%E7%AD%96%E7%95%A5)/">Hash初步(空间换时间的策略)</a>
-    </h1>
-  
-
-        <!--显示阅读次数-->
-        
-        <!--显示阅读次数完毕-->
-        
-        <a href="/2018/08/16/Hash%E5%88%9D%E6%AD%A5(%E7%A9%BA%E9%97%B4%E6%8D%A2%E6%97%B6%E9%97%B4%E7%9A%84%E7%AD%96%E7%95%A5)/" class="archive-article-date">
-  	<time datetime="2018-08-15T16:12:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-16</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-      
-      
-        <a id="more"></a>
-
-<p><font face="Courier New">问题描述：<br>给定N个正整数，给定M个正整数。如N = {7，8，2，4}，M = {8，2}，查找集合M中的正整数是否在集合N出现过。</font></p>
-<p><font face="Courier New">暴力枚举：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;cstdio&gt;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">	int arr[N] &#x3D; &#123;7,8,2,4&#125;;</span><br><span class="line">	int brr[M] &#x3D; &#123;8,2&#125;;</span><br><span class="line">	for(int i&#x3D;0;i &lt; N;++i)&#123;</span><br><span class="line">		if(int j&#x3D;0;j &lt; M;++i)&#123;</span><br><span class="line">			if(arr[i] &#x3D;&#x3D; brr[j])&#123;</span><br><span class="line">				printf(&quot;brr[%d] &#x3D;&#x3D; arr[%d]\n&quot;,j,i);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><font face="Courier New">这样的算法时间复杂度O(M*N)，显然随着问题规模度的增加，这样的算法是给糟糕的，难以接受的。<br>而hash提供的思路是<font color=red>用空间换时间</font>，设定一个bool的hashtable数组，以hashtable[x] = true表示数据x在集合N出现过。而对于处理M个欲查询的数字是否在N出现，时间复杂度O(M+N)，改善为线性阶的时间复杂度。而对于现代计算机来讲，存储空间已经不是制约算法性能的因素了，因此采用用空间换时间的策略是完全行得通的，甚至是优秀的。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;hash.c</span><br><span class="line">#include&lt;cstdio&gt;</span><br><span class="line">#define bool int</span><br><span class="line">#define false 0</span><br><span class="line">#define true 1</span><br><span class="line">const int MAX &#x3D; 10000;</span><br><span class="line">bool HashTable[MAX] &#x3D; &#123;false&#125;;</span><br><span class="line">int main()&#123;</span><br><span class="line">	int arr[] &#x3D; &#123;7,8,2,4&#125;;</span><br><span class="line">	int N &#x3D; sizeof(arr)&#x2F;sizeof(arr[0]);</span><br><span class="line">	int brr[] &#x3D; &#123;8,2&#125;;</span><br><span class="line">	int M &#x3D; sizeof(brr)&#x2F;sizeof(brr[0]);</span><br><span class="line">	for(int i&#x3D;0;i &lt; M:++i)&#123;</span><br><span class="line">		HashTable[arr[i]] &#x3D; true;</span><br><span class="line">	&#125;</span><br><span class="line">	for(int j&#x3D;0;j &lt; N;++j)&#123;</span><br><span class="line">		if(HashTable[brr[j]] &#x3D;&#x3D; true)&#123;</span><br><span class="line">			printf(&quot;%d 出现过!\n&quot;,brr[j]);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdn.net/20180816001107822?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><font face="Courier New">对于字符串问题的处理，hash这样的处理方式往往是利器！</font></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/算法基础//" class="article-tag-list-link color5">算法基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/16/Hash%E5%88%9D%E6%AD%A5(%E7%A9%BA%E9%97%B4%E6%8D%A2%E6%97%B6%E9%97%B4%E7%9A%84%E7%AD%96%E7%95%A5)/">展开全文 >></a>
         </p>
       
 
@@ -880,10 +631,10 @@
       
         <a id="more"></a>
 
-<p><font size =4.5 face="Courier New">显然，对于具有n个元素的集合R,R={r1,r2,r3…rn},其排列方式有n!种。<br>如：R = {1,2,3}，其全排列如下：<font color=red><br>1，2，3<br>1，3，2<br>2，1，3<br>2，3，1<br>3，1，2<br>3，2，1</font><br><img src="https://img-blog.csdn.net/20180815223153757?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>从上边的排列中可以看出规律，以集合中某一元素作为第一个数字，集合当中的其余数字做全排列。而其余数字组成的集合可以看作是子集合，子集合中的第一个元素作为第一个数字，子集合当中的其余数字做全排列。可以看出，这是一个递归过程。有了上面的思想，可以容易的写出一个递归算法解决全排列的问题。<br> <strong>代码实现：</strong> </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;cstdio&gt;</span><br><span class="line">&#x2F;&#x2F;交换数组的i项和j项</span><br><span class="line">void swap(int A[],int i,int j)&#123;</span><br><span class="line">	int temp &#x3D; A[i];</span><br><span class="line">	A[i] &#x3D; A[j];</span><br><span class="line">	A[j] &#x3D; temp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void show(int A[],int n)&#123;</span><br><span class="line">	for(int i&#x3D;0;i &lt; n;++i)&#123;</span><br><span class="line">		printf(&quot;%d &quot;,A[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	printf(&quot;\n&quot;);</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F;对数组做排列,p,q之间做全排列</span><br><span class="line">void permutation(int A[],int p,int q)&#123;</span><br><span class="line">	&#x2F;&#x2F;递归出口，只有一个元素时。全排列就是其本身</span><br><span class="line">	if(p &#x3D;&#x3D; q)&#123;</span><br><span class="line">		show(A,q+1);&#x2F;&#x2F;数组是从0下标开始的</span><br><span class="line">	&#125;</span><br><span class="line">	for(int i&#x3D;p;i &lt;&#x3D; q;++i)&#123;</span><br><span class="line">		swap(A,p,i);</span><br><span class="line">		perm(A,p+1,q);&#x2F;&#x2F;子集合做全排列</span><br><span class="line">		swap(A,p,i);&#x2F;&#x2F;恢复，否则会有重复</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size =4.5 face="Courier New">显然，对于具有n个元素的集合R,R={r1,r2,r3…rn},其排列方式有n!种。<br>如：R = {1,2,3}，其全排列如下：<font color=red><br>1，2，3<br>1，3，2<br>2，1，3<br>2，3，1<br>3，1，2<br>3，2，1</font><br><img src="https://img-blog.csdn.net/20180815223153757?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>从上边的排列中可以看出规律，以集合中某一元素作为第一个数字，集合当中的其余数字做全排列。而其余数字组成的集合可以看作是子集合，子集合中的第一个元素作为第一个数字，子集合当中的其余数字做全排列。可以看出，这是一个递归过程。有了上面的思想，可以容易的写出一个递归算法解决全排列的问题。</font><br> <strong>代码实现：</strong> </p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="comment">//交换数组的i项和j项</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">int</span> A[],<span class="keyword">int</span> i,<span class="keyword">int</span> j)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> temp = A[i];</span><br><span class="line">	A[i] = A[j];</span><br><span class="line">	A[j] = temp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">show</span><span class="params">(<span class="keyword">int</span> A[],<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i &lt; n;++i)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>,A[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//对数组做排列,p,q之间做全排列</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">permutation</span><span class="params">(<span class="keyword">int</span> A[],<span class="keyword">int</span> p,<span class="keyword">int</span> q)</span></span>&#123;</span><br><span class="line">	<span class="comment">//递归出口，只有一个元素时。全排列就是其本身</span></span><br><span class="line">	<span class="keyword">if</span>(p == q)&#123;</span><br><span class="line">		show(A,q+<span class="number">1</span>);<span class="comment">//数组是从0下标开始的</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=p;i &lt;= q;++i)&#123;</span><br><span class="line">		swap(A,p,i);</span><br><span class="line">		perm(A,p+<span class="number">1</span>,q);<span class="comment">//子集合做全排列</span></span><br><span class="line">		swap(A,p,i);<span class="comment">//恢复，否则会有重复</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><font face="Courier New">test1.c<font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">int main()&#123;</span><br><span class="line">	int arr[] &#x3D; &#123;1,2,3&#125;;</span><br><span class="line">	permutation(arr,0,2);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> arr[] = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;;</span><br><span class="line">	permutation(arr,<span class="number">0</span>,<span class="number">2</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><img src="https://img-blog.csdn.net/20180815213705789?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><font face="Courier New">test2.c<font><br><img src="https://img-blog.csdn.net/20180815213826232?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
 
       
@@ -965,9 +716,9 @@
         <a id="more"></a>
 
 <p><font face="Courier New">P进制数转换为十进制数，采用按权展开相加。</font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">int p;&#x2F;&#x2F;p进制</span><br><span class="line">int x;&#x2F;&#x2F;p进制数字</span><br><span class="line">int product&#x3D;1;&#x2F;&#x2F;任何权值的0次幂均为1</span><br><span class="line">int y;&#x2F;&#x2F;输出的十进制数字</span><br><span class="line">while(x !&#x3D; 0)&#123;</span><br><span class="line">	y &#x3D; y+(x%10)*product;&#x2F;&#x2F;(x%10)获取x的个位数字</span><br><span class="line">	product *&#x3D; p;&#x2F;&#x2F;获取下一位的权值</span><br><span class="line">	x &#x2F;&#x3D; 10;&#x2F;&#x2F;去掉x的个位数字</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> p;<span class="comment">//p进制</span></span><br><span class="line"><span class="keyword">int</span> x;<span class="comment">//p进制数字</span></span><br><span class="line"><span class="keyword">int</span> product=<span class="number">1</span>;<span class="comment">//任何权值的0次幂均为1</span></span><br><span class="line"><span class="keyword">int</span> y;<span class="comment">//输出的十进制数字</span></span><br><span class="line"><span class="keyword">while</span>(x != <span class="number">0</span>)&#123;</span><br><span class="line">	y = y+(x%<span class="number">10</span>)*product;<span class="comment">//(x%10)获取x的个位数字</span></span><br><span class="line">	product *= p;<span class="comment">//获取下一位的权值</span></span><br><span class="line">	x /= <span class="number">10</span>;<span class="comment">//去掉x的个位数字</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><font face="Courier New">十进制数字转换为Q进制数字，采用除基取余法。</font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#define MAX 20</span><br><span class="line">int Q;&#x2F;&#x2F;Q进制</span><br><span class="line">int y;&#x2F;&#x2F;十进制数字</span><br><span class="line">int ans[MAX] &#x3D; &#123;0&#125;;&#x2F;&#x2F;存放Q进制数的每一位</span><br><span class="line">int num&#x3D;0;&#x2F;&#x2F;位数</span><br><span class="line">do&#123;</span><br><span class="line">	ans[num++] &#x3D; y % Q;</span><br><span class="line">	y &#x2F;&#x3D; Q;</span><br><span class="line">&#125;while(y!&#x3D;0)</span><br><span class="line"></span><br><span class="line">ans[0...num-1]，逆序输出可以得到Q进制数字的每一位</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAX 20</span></span><br><span class="line"><span class="keyword">int</span> Q;<span class="comment">//Q进制</span></span><br><span class="line"><span class="keyword">int</span> y;<span class="comment">//十进制数字</span></span><br><span class="line"><span class="keyword">int</span> ans[MAX] = &#123;<span class="number">0</span>&#125;;<span class="comment">//存放Q进制数的每一位</span></span><br><span class="line"><span class="keyword">int</span> num=<span class="number">0</span>;<span class="comment">//位数</span></span><br><span class="line"><span class="keyword">do</span>&#123;</span><br><span class="line">	ans[num++] = y % Q;</span><br><span class="line">	y /= Q;</span><br><span class="line">&#125;<span class="keyword">while</span>(y!=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">ans[<span class="number">0.</span>..num<span class="number">-1</span>]，逆序输出可以得到Q进制数字的每一位</span><br></pre></td></tr></table></figure>
       
 
       
@@ -991,6 +742,267 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/08/14/%E8%BF%9B%E5%88%B6%E8%BD%AC%E6%8D%A2/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+    <article id="post-二分查找的递归和非递归" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/14/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE%E7%9A%84%E9%80%92%E5%BD%92%E5%92%8C%E9%9D%9E%E9%80%92%E5%BD%92/">二分查找的递归和非递归</a>
+    </h1>
+  
+
+        <!--显示阅读次数-->
+        
+        <!--显示阅读次数完毕-->
+        
+        <a href="/2018/08/14/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE%E7%9A%84%E9%80%92%E5%BD%92%E5%92%8C%E9%9D%9E%E9%80%92%E5%BD%92/" class="archive-article-date">
+  	<time datetime="2018-08-14T15:08:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-14</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+      
+        <a id="more"></a>
+
+<p>二分查找的前提是数据有序，二分查找的性能十分优秀。时间复杂度为<font face="Courier New">O(log2n)</font><br><font color=red size = 4.5 face="Courier New">非递归</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">binsearch</span><span class="params">(<span class="keyword">int</span> arr[],<span class="keyword">int</span> len,<span class="keyword">int</span> value)</span></span>&#123;</span><br><span class="line">	<span class="comment">//low和high指向当前查找区间的两端,value为查找的关键字</span></span><br><span class="line">	<span class="keyword">int</span> low=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> high=len<span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">int</span> mid;<span class="comment">//当前区间的中间</span></span><br><span class="line">	<span class="keyword">while</span>(low &lt;= high)&#123;</span><br><span class="line">		mid = low + (high-low)/<span class="number">2</span>;</span><br><span class="line">		<span class="comment">//mid = (low+high)/2;这样的写法会有整型相加溢出的bug</span></span><br><span class="line">		<span class="keyword">if</span>(arr[mid] == value)&#123;</span><br><span class="line">			<span class="keyword">return</span> mid;<span class="comment">//返回下标</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(value &lt; arr[mid])&#123;</span><br><span class="line">			high = mid<span class="number">-1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span>&#123;</span><br><span class="line">			low = mid+<span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">-1</span>;<span class="comment">//未查找到返回-1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><font color=red size = 4.5 face="Courier New">递归</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">binsearch</span><span class="params">(<span class="keyword">int</span> arr[],<span class="keyword">int</span> left,<span class="keyword">int</span> right,<span class="keyword">int</span> value)</span></span>&#123;</span><br><span class="line">	<span class="comment">//递归出口</span></span><br><span class="line">	<span class="keyword">if</span>(left &gt; right)&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	mid = low + (high-low)/<span class="number">2</span>;</span><br><span class="line">	<span class="keyword">if</span>(arr[mid] == value)&#123;</span><br><span class="line">		<span class="keyword">return</span> mid;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(arr[mid] &gt; value)&#123;</span><br><span class="line">		<span class="keyword">return</span> binsearch(arr,left,mid<span class="number">-1</span>,value);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> binsearch(arr,mid+<span class="number">1</span>，right,value);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>顺序查找的时间复杂度为<font face="Courier New">O(n)，相对于二分查找性能较差</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">int seqsearch(int arr[],int len,int value)&#123;</span><br><span class="line">	for(int i&#x3D;0;i &lt; len;++i)&#123;</span><br><span class="line">		if(arr[i] &#x3D;&#x3D; value)&#123;</span><br><span class="line">			return i;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return -1;&#x2F;&#x2F;未查找到返回-1</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">二分</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/算法基础//" class="article-tag-list-link color5">算法基础</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/08/14/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE%E7%9A%84%E9%80%92%E5%BD%92%E5%92%8C%E9%9D%9E%E9%80%92%E5%BD%92/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+    <article id="post-使用vs2008编译器自带的命令行工具查看类的内存布局" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/14/%E4%BD%BF%E7%94%A8vs2008%E7%BC%96%E8%AF%91%E5%99%A8%E8%87%AA%E5%B8%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7%E6%9F%A5%E7%9C%8B%E7%B1%BB%E7%9A%84%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80/">使用vs2008编译器自带的命令行工具查看类的内存布局</a>
+    </h1>
+  
+
+        <!--显示阅读次数-->
+        
+        <!--显示阅读次数完毕-->
+        
+        <a href="/2018/08/14/%E4%BD%BF%E7%94%A8vs2008%E7%BC%96%E8%AF%91%E5%99%A8%E8%87%AA%E5%B8%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7%E6%9F%A5%E7%9C%8B%E7%B1%BB%E7%9A%84%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80/" class="archive-article-date">
+  	<time datetime="2018-08-14T11:58:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-14</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+      
+        <a id="more"></a>
+
+<p><font size=4 face="Courier New">测试代码:</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Base</span>&#123;</span></span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">	<span class="keyword">int</span> _a;</span><br><span class="line">&#125;;	</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Derive</span>:</span><span class="keyword">public</span> Base&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">int</span> _b;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=4 face="Courier New">1.打开命令行工具</font><br><img src="https://img-blog.csdn.net/2018081419421694?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><font size=4 face="Courier New">2.输入源文件路径</font><br><img src="https://img-blog.csdn.net/20180814194656692?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><font size=4 face="Courier New">3.输入<code>cl main.cpp /d1reportSingleClassLayout</code>  <code>Derivr(类名)</code>，最后加类名。<br><img src="https://img-blog.csdn.net/20180814195721805?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/c-c//" class="article-tag-list-link color1">c/c++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/08/14/%E4%BD%BF%E7%94%A8vs2008%E7%BC%96%E8%AF%91%E5%99%A8%E8%87%AA%E5%B8%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7%E6%9F%A5%E7%9C%8B%E7%B1%BB%E7%9A%84%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+    <article id="post-随机点名程序实现" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/14/%E9%9A%8F%E6%9C%BA%E7%82%B9%E5%90%8D%E7%A8%8B%E5%BA%8F%E5%AE%9E%E7%8E%B0/">随机点名程序实现</a>
+    </h1>
+  
+
+        <!--显示阅读次数-->
+        
+        <!--显示阅读次数完毕-->
+        
+        <a href="/2018/08/14/%E9%9A%8F%E6%9C%BA%E7%82%B9%E5%90%8D%E7%A8%8B%E5%BA%8F%E5%AE%9E%E7%8E%B0/" class="archive-article-date">
+  	<time datetime="2018-08-14T08:34:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-14</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+      
+        <a id="more"></a>
+
+<p><font size=4 face="Courier New">代码：test.cpp</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;ctime&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdlib&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	srand(time(<span class="literal">NULL</span>));</span><br><span class="line">	<span class="comment">//种下随机种子，否则rand()函数返回的是伪随机数</span></span><br><span class="line">	<span class="built_in">string</span> name[] = &#123;<span class="string">&quot;zhangsan&quot;</span>,<span class="string">&quot;lisi&quot;</span>,<span class="string">&quot;zhaoliu&quot;</span>,<span class="string">&quot;wangwu&quot;</span>&#125;;</span><br><span class="line">	<span class="keyword">int</span> len = <span class="keyword">sizeof</span>(str)/<span class="keyword">sizeof</span>(str[<span class="number">0</span>]);</span><br><span class="line">	cou t&lt;&lt; str[rand()%len] &lt;&lt; <span class="built_in">endl</span>;<span class="comment">//输出随机到的名字</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行结果：</p>
+<p><img src="https://img-blog.csdn.net/20180814163416111?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/编程练习//" class="article-tag-list-link color5">编程练习</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/08/14/%E9%9A%8F%E6%9C%BA%E7%82%B9%E5%90%8D%E7%A8%8B%E5%BA%8F%E5%AE%9E%E7%8E%B0/">展开全文 >></a>
         </p>
       
 
@@ -1114,11 +1126,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">动态规划</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">1024程序员节</a>
+                <a href="javascript:void(0)" class="js-tag color3">dp</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1126,7 +1134,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">数据结构 算法</a>
+                <a href="javascript:void(0)" class="js-tag color3">查找</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1138,11 +1146,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">c语言</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color4">STL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1150,7 +1154,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">linux系统编程</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">linux命令</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1166,14 +1174,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">c</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">c++11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">protobuf</a>
               </li>
              
@@ -1186,7 +1186,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color2">树</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">栈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">二分</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">堆</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1198,11 +1210,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">堆</a>
+                <a href="javascript:void(0)" class="js-tag color2">c</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">回溯法</a>
+                <a href="javascript:void(0)" class="js-tag color3">排序</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1210,11 +1222,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">最短路径</a>
+                <a href="javascript:void(0)" class="js-tag color4">回溯法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">进程通信</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">单链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">计算机组成</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">最短路径</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">单链表 排序</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1226,15 +1254,31 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">排序</a>
+                <a href="javascript:void(0)" class="js-tag color5">Linux系统编程</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">1024程序员节 c++</a>
+                <a href="javascript:void(0)" class="js-tag color1">c++11</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">动态规划 算法 leetcode</a>
+                <a href="javascript:void(0)" class="js-tag color5">而擦函数</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">图论</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">稀疏矩阵</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">双链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">树 图</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1242,11 +1286,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">递归</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">c++11算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">计算机组成</a>
+                <a href="javascript:void(0)" class="js-tag color5">堆栈调用</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1258,7 +1306,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">递归</a>
+                <a href="javascript:void(0)" class="js-tag color5">进程基础</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">图的存储结构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">哈希</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">剑指offer</a>
               </li>
             
             <div class="clearfix"></div>

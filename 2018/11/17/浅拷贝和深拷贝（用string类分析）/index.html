@@ -20,7 +20,7 @@
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20181117105949702.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20181117111431699.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70">
 <meta property="article:published_time" content="2018-11-17T03:24:22.000Z">
-<meta property="article:modified_time" content="2020-11-29T19:35:24.739Z">
+<meta property="article:modified_time" content="2020-11-30T13:24:44.517Z">
 <meta property="article:author" content="lexingsen">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://img-blog.csdnimg.cn/20181117105017230.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70">
@@ -73,7 +73,7 @@
 			</ul>
 			</nav>
 			<nav>
-			总文章数 300
+			总文章数 296
 			</nav>
 		<nav class="header-smart-menu">
     		
@@ -190,16 +190,16 @@
         <a id="more"></a>
 
 <p><font size=4 face="Courier New">区分什么是<font color=red>初始化</font>和<font color=red>赋值</font>。</font><br><font size=4 face="Courier New">对于一个类来讲，如果用一个已经存在的对象去构造一个新对象，这个过程就是初始化的过程。如果用一个已经存在的对象去给另一个已经存在的对象赋值，这就是赋值的过程。<br><font size=4 face="Courier New">在初始化和赋值的过程中，假设类涉及到<font color=blue>堆内存</font>,如果采用编译器系统默认给定的<font color=red>拷贝构造函数</font>和<font color=red>赋值运算符的重载函数</font>进行对象之间的初始化过程和赋值过程，轻则发生浅拷贝，重则内存泄漏，这样的程序都是有问题的。下面分析为什么在使用默认的拷贝构造函数时会出现<font color=blue>浅拷贝问题。</font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">class Cstring&#123;</span><br><span class="line">private:</span><br><span class="line">	char* _data;</span><br><span class="line">public:</span><br><span class="line">	Cstring(const char* str)&#123;</span><br><span class="line">		if(str!&#x3D;NULL)&#123;</span><br><span class="line">			_data &#x3D; new char[strlen(str)+1]；</span><br><span class="line">			strcpy(_data,str);</span><br><span class="line">		&#125;</span><br><span class="line">		else&#123;</span><br><span class="line">			&#x2F;&#x2F;不处理为NULL的原因是，降低类中其他函数的逻辑复杂度，统一处理</span><br><span class="line">			&#x2F;&#x2F;不需要判断_data是否NULL，分开处理</span><br><span class="line">			_data &#x3D; new char[1];</span><br><span class="line">			*_data &#x3D; &#39;\0&#39;;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	~Cstring()&#123;</span><br><span class="line">		delete[] _data;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Cstring</span>&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="keyword">char</span>* _data;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	Cstring(<span class="keyword">const</span> <span class="keyword">char</span>* str)&#123;</span><br><span class="line">		<span class="keyword">if</span>(str!=<span class="literal">NULL</span>)&#123;</span><br><span class="line">			_data = <span class="keyword">new</span> <span class="keyword">char</span>[<span class="built_in">strlen</span>(str)+<span class="number">1</span>]；</span><br><span class="line">			<span class="built_in">strcpy</span>(_data,str);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span>&#123;</span><br><span class="line">			<span class="comment">//不处理为NULL的原因是，降低类中其他函数的逻辑复杂度，统一处理</span></span><br><span class="line">			<span class="comment">//不需要判断_data是否NULL，分开处理</span></span><br><span class="line">			_data = <span class="keyword">new</span> <span class="keyword">char</span>[<span class="number">1</span>];</span><br><span class="line">			*_data = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	~Cstring()&#123;</span><br><span class="line">		<span class="keyword">delete</span>[] _data;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p><font size=4 face="Courier New">测试程序 ：</font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">int main()&#123;</span><br><span class="line">	Cstring str(&quot;hello&quot;);</span><br><span class="line">	Cstring str1 &#x3D; str;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="function">Cstring <span class="title">str</span><span class="params">(<span class="string">&quot;hello&quot;</span>)</span></span>;</span><br><span class="line">	Cstring str1 = str;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><img src="https://img-blog.csdnimg.cn/20181117105017230.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><font size=4 face="Courier New"><br>因为调用默认的拷贝构造函数，只是简单的内存值拷贝，这样会使得对象str1中的_data和对象str中的_data指向同一块在堆上的内存空间，str1相对于str后构造，所以str1会先进行析构，释放掉了这块堆内存。使得str中的_data变为野指针，此str对象进行析构。将会释放野指针指向heap上的一块堆内存，这是非常不安全的。</font><br><img src="https://img-blog.csdnimg.cn/20181117105305770.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><font size=4 face="Courier New" color=red>解决方案:进行深拷贝，每个对象有自己的堆内存</font></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Cstring::Cstring(const Cstring&amp; src)&#123;</span><br><span class="line">	this-&gt;_data &#x3D; new char[strlen(src._data)+1]；</span><br><span class="line">	strcpy(_data,src.data);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><img src="https://img-blog.csdnimg.cn/20181117105949702.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><font size=4 face="Courier New" color=red>如上图，这样就实现了在拷贝构造函数中深拷贝。</font></p>
 <p><font size=4 face="Courier New">下面再讨论一下使用默认赋值运算符重载的拷贝构造函数在使用时出现的内存泄漏以及浅拷贝问题。<br><font size=4 color=black face="Courier New">测试程序：</font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">int main()&#123;</span><br><span class="line">	Cstring str(&quot;hello&quot;);</span><br><span class="line">	Cstrint str1(&quot;world&quot;);</span><br><span class="line">	str &#x3D; str1;&#x2F;&#x2F;可以理解为str.&#x3D;(str1)这样的调用方式</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="function">Cstring <span class="title">str</span><span class="params">(<span class="string">&quot;hello&quot;</span>)</span></span>;</span><br><span class="line">	<span class="function">Cstrint <span class="title">str1</span><span class="params">(<span class="string">&quot;world&quot;</span>)</span></span>;</span><br><span class="line">	str = str1;<span class="comment">//可以理解为str.=(str1)这样的调用方式</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><font size=4 face="Courier New">编译器系统默认的赋值运算符的重载函数是简单的<font color=red>赋值。</font><br><img src="https://img-blog.csdnimg.cn/20181117111431699.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><font size=4 face="Courier New" color=black>解决方案：自己实现赋值运算符重载函数，两个目的：<font color=red>1.避免出现内存泄漏的问题。2.进行深拷贝</font></font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Cstring&amp; Cstring(const Cstring&amp; src)&#123;</span><br><span class="line">	&#x2F;&#x2F;防止发生在自赋值</span><br><span class="line">	if(this &#x3D;&#x3D; &amp;src)&#123;</span><br><span class="line">		return *this;</span><br><span class="line">	&#125;</span><br><span class="line">	delete[] this-&gt;_data;&#x2F;&#x2F;释放当前对象在堆上的空间，避免出现内存泄漏</span><br><span class="line">	_data &#x3D; new char[strlen(src._data)+1];&#x2F;&#x2F;申请空间，避免出现浅拷贝</span><br><span class="line">	strcpy(_data,src._data);&#x2F;&#x2F;进行内存拷贝</span><br><span class="line">	return *this;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F;经过上述的处理，内存泄漏和浅拷贝的问题都得以解决</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Cstring&amp; <span class="title">Cstring</span><span class="params">(<span class="keyword">const</span> Cstring&amp; src)</span></span>&#123;</span><br><span class="line">	<span class="comment">//防止发生在自赋值</span></span><br><span class="line">	<span class="keyword">if</span>(<span class="keyword">this</span> == &amp;src)&#123;</span><br><span class="line">		<span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">delete</span>[] <span class="keyword">this</span>-&gt;_data;<span class="comment">//释放当前对象在堆上的空间，避免出现内存泄漏</span></span><br><span class="line">	_data = <span class="keyword">new</span> <span class="keyword">char</span>[<span class="built_in">strlen</span>(src._data)+<span class="number">1</span>];<span class="comment">//申请空间，避免出现浅拷贝</span></span><br><span class="line">	<span class="built_in">strcpy</span>(_data,src._data);<span class="comment">//进行内存拷贝</span></span><br><span class="line">	<span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//经过上述的处理，内存泄漏和浅拷贝的问题都得以解决</span></span><br></pre></td></tr></table></figure>
 
 <p><font size=5 face="Courier New" color=black>总结：在实现类的构造函数中，往往会涉及到堆内存的开辟。如果对拷贝构造函数和赋值运算符的重载函数不进行重写，会发生浅拷贝以及内存泄漏等问题导致程序出错。</font></p>
 
@@ -419,11 +419,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">动态规划</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">1024程序员节</a>
+                <a href="javascript:void(0)" class="js-tag color3">dp</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -431,7 +427,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">数据结构 算法</a>
+                <a href="javascript:void(0)" class="js-tag color3">查找</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -443,11 +439,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">c语言</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color4">STL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -455,7 +447,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">linux系统编程</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">linux命令</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -471,14 +467,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">c</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">c++11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">protobuf</a>
               </li>
              
@@ -491,7 +479,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color2">树</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">栈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">二分</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">堆</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -503,11 +503,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">堆</a>
+                <a href="javascript:void(0)" class="js-tag color2">c</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">回溯法</a>
+                <a href="javascript:void(0)" class="js-tag color3">排序</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -515,11 +515,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">最短路径</a>
+                <a href="javascript:void(0)" class="js-tag color4">回溯法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">进程通信</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">单链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">计算机组成</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">最短路径</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">单链表 排序</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -531,15 +547,31 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">排序</a>
+                <a href="javascript:void(0)" class="js-tag color5">Linux系统编程</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">1024程序员节 c++</a>
+                <a href="javascript:void(0)" class="js-tag color1">c++11</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">动态规划 算法 leetcode</a>
+                <a href="javascript:void(0)" class="js-tag color5">而擦函数</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">图论</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">稀疏矩阵</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">双链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">树 图</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -547,11 +579,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">递归</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">c++11算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">计算机组成</a>
+                <a href="javascript:void(0)" class="js-tag color5">堆栈调用</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -563,7 +599,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">递归</a>
+                <a href="javascript:void(0)" class="js-tag color5">进程基础</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">图的存储结构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">哈希</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">剑指offer</a>
               </li>
             
             <div class="clearfix"></div>
