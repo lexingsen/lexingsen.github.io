@@ -183,6 +183,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">排序</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
@@ -505,13 +516,24 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">回溯法</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/数据结构-算法基础//" class="article-tag-list-link color5">数据结构 算法基础</a>
+        			<a href="/categories/算法基础//" class="article-tag-list-link color5">算法基础</a>
         		</li>
       		
 		</ul>
@@ -660,7 +682,7 @@
       
         <a id="more"></a>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">struct node &#123;</span><br><span class="line">	int val;</span><br><span class="line">	node *next;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">void deleteBetweenMaxAndMin(node *head, int minv, int maxv) &#123;</span><br><span class="line">	node *p &#x3D; head;</span><br><span class="line">	node *q &#x3D; head-&gt;next;</span><br><span class="line">			</span><br><span class="line">	node *premin &#x3D; head, *premax &#x3D; head;</span><br><span class="line">	node *pmin &#x3D; head-&gt;next, *pmax &#x3D; head-&gt;next;</span><br><span class="line">			</span><br><span class="line">	bool flag &#x3D; false;</span><br><span class="line">	bool tag &#x3D; false;</span><br><span class="line">			</span><br><span class="line">	while (q) &#123;</span><br><span class="line">		if (q-&gt;val &gt; minv &amp;&amp; !flag) &#123;</span><br><span class="line">			pmin &#x3D; q;</span><br><span class="line">			premin &#x3D; p;</span><br><span class="line">			flag &#x3D; true;</span><br><span class="line">		&#125; else if (q-&gt;val &lt; maxv &amp;&amp; !tag) &#123;</span><br><span class="line">			pmax &#x3D; q;</span><br><span class="line">			premax &#x3D; p;</span><br><span class="line">		&#125;</span><br><span class="line">		p &#x3D; p-&gt;next;</span><br><span class="line">		q &#x3D; q-&gt;next;	</span><br><span class="line">	&#125; </span><br><span class="line">			</span><br><span class="line">	premin-&gt;next &#x3D; pmax-&gt;next;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> val;</span><br><span class="line">	node *next;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">deleteBetweenMaxAndMin</span><span class="params">(node *head, <span class="keyword">int</span> minv, <span class="keyword">int</span> maxv)</span> </span>&#123;</span><br><span class="line">	node *p = head;</span><br><span class="line">	node *q = head-&gt;next;</span><br><span class="line">			</span><br><span class="line">	node *premin = head, *premax = head;</span><br><span class="line">	node *pmin = head-&gt;next, *pmax = head-&gt;next;</span><br><span class="line">			</span><br><span class="line">	<span class="keyword">bool</span> flag = <span class="literal">false</span>;</span><br><span class="line">	<span class="keyword">bool</span> tag = <span class="literal">false</span>;</span><br><span class="line">			</span><br><span class="line">	<span class="keyword">while</span> (q) &#123;</span><br><span class="line">		<span class="keyword">if</span> (q-&gt;val &gt; minv &amp;&amp; !flag) &#123;</span><br><span class="line">			pmin = q;</span><br><span class="line">			premin = p;</span><br><span class="line">			flag = <span class="literal">true</span>;</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (q-&gt;val &lt; maxv &amp;&amp; !tag) &#123;</span><br><span class="line">			pmax = q;</span><br><span class="line">			premax = p;</span><br><span class="line">		&#125;</span><br><span class="line">		p = p-&gt;next;</span><br><span class="line">		q = q-&gt;next;	</span><br><span class="line">	&#125; </span><br><span class="line">			</span><br><span class="line">	premin-&gt;next = pmax-&gt;next;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
 
@@ -669,6 +691,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">单链表</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
@@ -757,6 +790,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">二叉树</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
@@ -829,7 +873,7 @@
         <a id="more"></a>
 
 <p><font size=5 face=consolas>思路：用两对前驱和后继节点，分别比较当前节点的前驱和后继以及最小值界定啊的前驱和后继。<br>遍历完整个链表，删除最小值节点即可。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">struct node &#123;</span><br><span class="line">	int val;</span><br><span class="line">	node *next;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void deleteMin(node *head) &#123;</span><br><span class="line">	node *p &#x3D; head, *q &#x3D; head-&gt;next;</span><br><span class="line">	node *premin &#x3D; head, *pmin &#x3D; head-&gt;next;</span><br><span class="line">	while (q) &#123;</span><br><span class="line">		if (q-&gt;val &lt; pmin-&gt;val) &#123;</span><br><span class="line">			pmin &#x3D; q;</span><br><span class="line">			premin &#x3D; p;</span><br><span class="line">			p &#x3D; p-&gt;next, q &#x3D; q-&gt;next;</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			p &#x3D; p-&gt;next;</span><br><span class="line">			q &#x3D; q-&gt;next;</span><br><span class="line">		&#125;</span><br><span class="line">		node *del &#x3D; pmin;</span><br><span class="line">		premin-&gt;next &#x3D; pmin-&gt;next;</span><br><span class="line">		delete del;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> val;</span><br><span class="line">	node *next;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">deleteMin</span><span class="params">(node *head)</span> </span>&#123;</span><br><span class="line">	node *p = head, *q = head-&gt;next;</span><br><span class="line">	node *premin = head, *pmin = head-&gt;next;</span><br><span class="line">	<span class="keyword">while</span> (q) &#123;</span><br><span class="line">		<span class="keyword">if</span> (q-&gt;val &lt; pmin-&gt;val) &#123;</span><br><span class="line">			pmin = q;</span><br><span class="line">			premin = p;</span><br><span class="line">			p = p-&gt;next, q = q-&gt;next;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			p = p-&gt;next;</span><br><span class="line">			q = q-&gt;next;</span><br><span class="line">		&#125;</span><br><span class="line">		node *del = pmin;</span><br><span class="line">		premin-&gt;next = pmin-&gt;next;</span><br><span class="line">		<span class="keyword">delete</span> del;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
 
@@ -838,6 +882,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">单链表</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
@@ -1058,15 +1113,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color4">1024程序员节</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">动态规划</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">在线笔试题</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">数据结构 算法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">1024程序员节</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1102,15 +1161,51 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">leetcode c++</a>
+                <a href="javascript:void(0)" class="js-tag color4">二叉树</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">c++ c++11</a>
+                <a href="javascript:void(0)" class="js-tag color2">堆</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">回溯法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">最短路径</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">单链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">贪心</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">多线程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">tips</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">排序</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">并查集</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1122,7 +1217,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">队列</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">计算机组成</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">线性代数</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">c/c++</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">递归</a>
               </li>
             
             <div class="clearfix"></div>

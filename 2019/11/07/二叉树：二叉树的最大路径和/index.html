@@ -8,16 +8,17 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>二叉树：二叉树的最大路径和 | 乐行僧的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="二叉树的最大路径和，枚举二叉树的每一个节点，通过当前节点最大路径和是， 当前节点左子树的最大路径和+root-&gt;val+当前节点右子树的最大路径。 12345678910111213141516171819struct node &amp;#123;	int val;	node *left, *right;&amp;#125;;int ans &#x3D; MIN_MAX;&#x2F;&#x2F;用于维">
+  <meta name="description" content="二叉树的最大路径和，枚举二叉树的每一个节点，通过当前节点最大路径和是， 当前节点左子树的最大路径和+root-&gt;val+当前节点右子树的最大路径。 12345678910111213141516171819struct node &amp;#123;	int val;	node *left, *right;&amp;#125;;int ans &#x3D; MIN_MAX;&#x2F;&#x2F;用于维护最大路径和int dfs(n">
 <meta property="og:type" content="article">
 <meta property="og:title" content="二叉树：二叉树的最大路径和">
 <meta property="og:url" content="http://example.com/2019/11/07/%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BC%9A%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%9C%80%E5%A4%A7%E8%B7%AF%E5%BE%84%E5%92%8C/index.html">
 <meta property="og:site_name" content="乐行僧的博客">
-<meta property="og:description" content="二叉树的最大路径和，枚举二叉树的每一个节点，通过当前节点最大路径和是， 当前节点左子树的最大路径和+root-&gt;val+当前节点右子树的最大路径。 12345678910111213141516171819struct node &amp;#123;	int val;	node *left, *right;&amp;#125;;int ans &#x3D; MIN_MAX;&#x2F;&#x2F;用于维">
+<meta property="og:description" content="二叉树的最大路径和，枚举二叉树的每一个节点，通过当前节点最大路径和是， 当前节点左子树的最大路径和+root-&gt;val+当前节点右子树的最大路径。 12345678910111213141516171819struct node &amp;#123;	int val;	node *left, *right;&amp;#125;;int ans &#x3D; MIN_MAX;&#x2F;&#x2F;用于维护最大路径和int dfs(n">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-11-07T12:23:59.000Z">
-<meta property="article:modified_time" content="2020-11-29T19:35:20.667Z">
+<meta property="article:modified_time" content="2020-11-30T00:45:29.404Z">
 <meta property="article:author" content="lexingsen">
+<meta property="article:tag" content="二叉树">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="乐行僧的博客" type="application/atom+xml">
@@ -185,7 +186,7 @@
         <a id="more"></a>
 
 <p><font size=4 color=red face=consolas>二叉树的最大路径和，枚举二叉树的每一个节点，通过当前节点最大路径和是， 当前节点左子树的最大路径和+root-&gt;val+当前节点右子树的最大路径。</font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">struct node &#123;</span><br><span class="line">	int val;</span><br><span class="line">	node *left, *right;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">int ans &#x3D; MIN_MAX;&#x2F;&#x2F;用于维护最大路径和</span><br><span class="line">int dfs(node *root) &#123;</span><br><span class="line">	if (!root) return 0;</span><br><span class="line">	int left  &#x3D; dfs(root-&gt;left);</span><br><span class="line">	int right &#x3D; dfs(root-&gt;right);</span><br><span class="line">	ans &#x3D; max(ans, max(root-&gt;val+left+right);</span><br><span class="line">	return max(0, root-&gt;val + max(0, max(left, right)));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int maxPathSum(node* root) &#123;</span><br><span class="line">	dfs(root);</span><br><span class="line">	return ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> val;</span><br><span class="line">	node *left, *right;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> ans = MIN_MAX;<span class="comment">//用于维护最大路径和</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">dfs</span><span class="params">(node *root)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (!root) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> left  = dfs(root-&gt;left);</span><br><span class="line">	<span class="keyword">int</span> right = dfs(root-&gt;right);</span><br><span class="line">	ans = max(ans, max(root-&gt;val+left+right);</span><br><span class="line">	<span class="keyword">return</span> max(<span class="number">0</span>, root-&gt;val + max(<span class="number">0</span>, max(left, right)));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> maxPathSum(node* root) &#123;</span><br><span class="line">	dfs(root);</span><br><span class="line">	<span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
 
@@ -194,6 +195,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">二叉树</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
@@ -403,15 +415,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color4">1024程序员节</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">动态规划</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">在线笔试题</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">数据结构 算法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">1024程序员节</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -447,15 +463,51 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">leetcode c++</a>
+                <a href="javascript:void(0)" class="js-tag color4">二叉树</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">c++ c++11</a>
+                <a href="javascript:void(0)" class="js-tag color2">堆</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">回溯法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">最短路径</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">单链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">贪心</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">多线程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">tips</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">排序</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">并查集</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -467,7 +519,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">队列</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">计算机组成</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">线性代数</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">c/c++</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">递归</a>
               </li>
             
             <div class="clearfix"></div>

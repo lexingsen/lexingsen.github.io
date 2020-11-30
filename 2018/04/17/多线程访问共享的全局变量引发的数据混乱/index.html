@@ -22,8 +22,9 @@
 <meta property="og:image" content="https://img-blog.csdn.net/20180417172614873?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
 <meta property="og:image" content="https://img-blog.csdn.net/20180417193619880?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
 <meta property="article:published_time" content="2018-04-17T11:55:06.000Z">
-<meta property="article:modified_time" content="2020-11-29T19:35:28.655Z">
+<meta property="article:modified_time" content="2020-11-30T00:46:30.271Z">
 <meta property="article:author" content="lexingsen">
+<meta property="article:tag" content="多线程">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://img-blog.csdn.net/20180417170110584?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
   
@@ -193,11 +194,11 @@
 
 <p>1.<strong>线程共享全局变量</strong></p>
 <p>在学习线程的相关概念之后，想探究在进程的虚拟地址空间当中的哪些区域是进程中多个线程共享的。<br>探究发现，全局变量在不同的线程当中访问全局变量是共享的。举例如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">#include&lt;assert.h&gt;</span><br><span class="line">#include&lt;pthread.h&gt;&#x2F;&#x2F;线程库</span><br><span class="line"></span><br><span class="line">char *str;&#x2F;&#x2F;定义指向字符串的全局变量str</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;线程函数</span><br><span class="line">void* my_fun(void *arg)</span><br><span class="line">&#123;</span><br><span class="line">	printf(&quot;函数线程：str &#x3D; %s\n&quot;,str);</span><br><span class="line">	&#x2F;&#x2F;若共享，输出为主线程修改指向后指向的字符串，否则会出现段错误。</span><br><span class="line">	return NULL;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">	pthread_t id;&#x2F;&#x2F;传出参数，用于保存成功创建线程后对应线程的id</span><br><span class="line">	int res &#x3D; pthread_create(&amp;id,NULL,my_fun,NULL);</span><br><span class="line">	&#x2F;&#x2F;成功创建返回值为0</span><br><span class="line">	assert(0 &#x3D;&#x3D; res);</span><br><span class="line">	str &#x3D; &quot;hello&quot;;&#x2F;&#x2F;修改全局指针变量的指向</span><br><span class="line">	pthread_exit(NULL);&#x2F;&#x2F;退出当前线程</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;assert.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;pthread.h&gt;//线程库</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">char</span> *str;<span class="comment">//定义指向字符串的全局变量str</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//线程函数</span></span><br><span class="line"><span class="function"><span class="keyword">void</span>* <span class="title">my_fun</span><span class="params">(<span class="keyword">void</span> *arg)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;函数线程：str = %s\n&quot;</span>,str);</span><br><span class="line">	<span class="comment">//若共享，输出为主线程修改指向后指向的字符串，否则会出现段错误。</span></span><br><span class="line">	<span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">pthread_t</span> id;<span class="comment">//传出参数，用于保存成功创建线程后对应线程的id</span></span><br><span class="line">	<span class="keyword">int</span> res = pthread_create(&amp;id,<span class="literal">NULL</span>,my_fun,<span class="literal">NULL</span>);</span><br><span class="line">	<span class="comment">//成功创建返回值为0</span></span><br><span class="line">	assert(<span class="number">0</span> == res);</span><br><span class="line">	str = <span class="string">&quot;hello&quot;</span>;<span class="comment">//修改全局指针变量的指向</span></span><br><span class="line">	pthread_exit(<span class="literal">NULL</span>);<span class="comment">//退出当前线程</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><strong>测试结果</strong><br><img src="https://img-blog.csdn.net/20180417170110584?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>可见，全局变量在多个线程中是共享的。</p>
 <p><strong>2.多线访问共享变量引发的数据混乱。</strong></p>
 <p>虽然线程共享全局变量相对于进程通信会给线程通信带来巨大的方便，但是探究以下问题时发现不做控制的进行访问全局变量也是致命的，带来巨大程序bug，并且难以发现，首先请看一下代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">#include&lt;assert.h&gt;</span><br><span class="line">#include&lt;pthread.h&gt;</span><br><span class="line">#define MAX 10000</span><br><span class="line"></span><br><span class="line">int count &#x3D; 0;&#x2F;&#x2F;定义全局count并初始化为0</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;函数线程A</span><br><span class="line">void* my_funa(void *arg)</span><br><span class="line">&#123;</span><br><span class="line">	int i &#x3D; 0;</span><br><span class="line">	for(;i &lt; MAX;++i)</span><br><span class="line">	&#123;</span><br><span class="line">		int cur &#x3D; count;</span><br><span class="line">		cur++;</span><br><span class="line">		count &#x3D; cur;</span><br><span class="line">		printf(&quot;线程A:id &#x3D; %lu,count &#x3D; %d\n&quot;,pthread_self(),count);</span><br><span class="line">		usleep(10);</span><br><span class="line">	&#125;</span><br><span class="line">	return NULL;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;函数线程B</span><br><span class="line">void* my_funb(void *arg)</span><br><span class="line">&#123;</span><br><span class="line">	int i &#x3D; 0;</span><br><span class="line">	for(;i &lt; MAX;++i)</span><br><span class="line">	&#123;</span><br><span class="line">		int cur &#x3D; count;</span><br><span class="line">		cur++;</span><br><span class="line">		count &#x3D; cur;</span><br><span class="line">		printf(&quot;线程B:id &#x3D; %lu,count &#x3D; %d\n&quot;,pthread_self(),count);</span><br><span class="line">		usleep(10);</span><br><span class="line">	&#125;</span><br><span class="line">	return NULL;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;解释：定义全局变量count并初始化为0作为计数器</span><br><span class="line">&#x2F;&#x2F;在函数线程A和函数线程B分别进行10000次的++操作</span><br><span class="line">&#x2F;&#x2F;那么在两个线程执行完毕之后此时计数器count的值为20000</span><br><span class="line">&#x2F;&#x2F;usleep(10)，是为了模仿交替执行的过程，主动放弃cpu的执行权。</span><br><span class="line"></span><br><span class="line">int  main()</span><br><span class="line">&#123;</span><br><span class="line">	&#x2F;&#x2F;创建两个线程</span><br><span class="line">	pthread_t pthid1,pthid2;</span><br><span class="line">	int res1 &#x3D; pthread_create(&amp;pthid1,NULL,my_funa,NULL);</span><br><span class="line">	int res2 &#x3D; pthread_create(&amp;pthid2,NULL,my_funb,NULL);</span><br><span class="line">	assert(0 &#x3D;&#x3D; res1);</span><br><span class="line">	assert(0 &#x3D;&#x3D; res2);</span><br><span class="line"></span><br><span class="line">	&#x2F;&#x2F;阻塞，回收函数线程资源</span><br><span class="line">	pthread_join(pthid1,NULL);</span><br><span class="line">	pthread_join(pthid2,NULL);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;assert.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;pthread.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAX 10000</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> count = <span class="number">0</span>;<span class="comment">//定义全局count并初始化为0</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//函数线程A</span></span><br><span class="line"><span class="function"><span class="keyword">void</span>* <span class="title">my_funa</span><span class="params">(<span class="keyword">void</span> *arg)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(;i &lt; MAX;++i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> cur = count;</span><br><span class="line">		cur++;</span><br><span class="line">		count = cur;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;线程A:id = %lu,count = %d\n&quot;</span>,pthread_self(),count);</span><br><span class="line">		usleep(<span class="number">10</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//函数线程B</span></span><br><span class="line"><span class="function"><span class="keyword">void</span>* <span class="title">my_funb</span><span class="params">(<span class="keyword">void</span> *arg)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(;i &lt; MAX;++i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> cur = count;</span><br><span class="line">		cur++;</span><br><span class="line">		count = cur;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;线程B:id = %lu,count = %d\n&quot;</span>,pthread_self(),count);</span><br><span class="line">		usleep(<span class="number">10</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//解释：定义全局变量count并初始化为0作为计数器</span></span><br><span class="line"><span class="comment">//在函数线程A和函数线程B分别进行10000次的++操作</span></span><br><span class="line"><span class="comment">//那么在两个线程执行完毕之后此时计数器count的值为20000</span></span><br><span class="line"><span class="comment">//usleep(10)，是为了模仿交替执行的过程，主动放弃cpu的执行权。</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span>  <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//创建两个线程</span></span><br><span class="line">	<span class="keyword">pthread_t</span> pthid1,pthid2;</span><br><span class="line">	<span class="keyword">int</span> res1 = pthread_create(&amp;pthid1,<span class="literal">NULL</span>,my_funa,<span class="literal">NULL</span>);</span><br><span class="line">	<span class="keyword">int</span> res2 = pthread_create(&amp;pthid2,<span class="literal">NULL</span>,my_funb,<span class="literal">NULL</span>);</span><br><span class="line">	assert(<span class="number">0</span> == res1);</span><br><span class="line">	assert(<span class="number">0</span> == res2);</span><br><span class="line"></span><br><span class="line">	<span class="comment">//阻塞，回收函数线程资源</span></span><br><span class="line">	pthread_join(pthid1,<span class="literal">NULL</span>);</span><br><span class="line">	pthread_join(pthid2,<span class="literal">NULL</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>使用gcc编译并执行：<br><img src="https://img-blog.csdn.net/2018041717173811?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><strong>多次执行结果：</strong><br><img src="https://img-blog.csdn.net/2018041717255381?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
 <p><img src="https://img-blog.csdn.net/20180417172603319?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
 <p><img src="https://img-blog.csdn.net/20180417172614873?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
@@ -210,7 +211,6 @@
 <p><strong>先看下边cur++的反汇编代码：</strong><br><img src="https://img-blog.csdn.net/20180417193619880?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>可以看到++过程是在寄存器中进行的。到这里可以说问题已经解决了。<br>试想下面一个过程。<br>（1）时间片分给线程A执行代码，当<code>cur</code>在寄存中中累加到了<code>100</code>，此时恰巧时间片被用完了，而存放在寄存器中的中间变量<strong>还没来及</strong>写入实际的物理内存。</p>
 <p>（2）时间片分配给线程B，由于线程A算出来的值<strong>并没有写回内存</strong>，所以实际上此时线程B还是取得 <code>cur == 0</code>  而进行的 <code>++</code> 操作，大概进行了 <code>200次</code> 的<code>++</code> 操作，但这次时间片刚好够用，线程B将得到的 <code>cur == 200</code> 写回了实际的物理内存。</p>
 <p>（3）时间片再度分配给线程A,线程A开始执行它在上一个时间片结束时没有执行完的工作，将 <code>cur == 100</code> 写入实际的物理内存,计算机严格按照代码执行指令，殊不知此时会将由线程B计算出来的 <code>cur == 200</code> 覆盖，这就是为什么在上面的图片当中，三次执行相同的代码，得到的结果完全不一致的原因。</p>
-<p>当然这就牵扯到了线程安全以及线程同步的问题，在后边的文章中会提到，本人理解目前的能力也就只能理解到这里，希望大佬再次留下您的解答，感激不尽。</p>
 
       
 
@@ -219,13 +219,24 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">多线程</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/linux//" class="article-tag-list-link color1">linux</a>
+        			<a href="/categories/Linux-操作系统//" class="article-tag-list-link color1">Linux 操作系统</a>
         		</li>
       		
 		</ul>
@@ -428,15 +439,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color4">1024程序员节</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">动态规划</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">在线笔试题</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">数据结构 算法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">1024程序员节</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -472,15 +487,51 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">leetcode c++</a>
+                <a href="javascript:void(0)" class="js-tag color4">二叉树</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">c++ c++11</a>
+                <a href="javascript:void(0)" class="js-tag color2">堆</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">回溯法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">最短路径</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">单链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">贪心</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">多线程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">tips</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">排序</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">并查集</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -492,7 +543,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">队列</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">计算机组成</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">线性代数</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">c/c++</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">递归</a>
               </li>
             
             <div class="clearfix"></div>
