@@ -526,12 +526,12 @@
         <a id="more"></a>
 
 <p><font size=5 face=consolas color=red>前序遍历：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">struct node &#123;</span><br><span class="line">	int val;</span><br><span class="line">	node *left,*right; </span><br><span class="line">&#125;;</span><br><span class="line">vector&lt;int&gt; preorder(node *root) &#123;</span><br><span class="line">	vector&lt;int&gt; res;</span><br><span class="line">	if (!root) return res;</span><br><span class="line">	stack&lt;node*&gt; st;</span><br><span class="line">	auto p &#x3D; root;</span><br><span class="line">	while (p || st.size()) &#123;</span><br><span class="line">		if (p) &#123;</span><br><span class="line">			st.push(p);</span><br><span class="line">			res.push_back(p-&gt;val);</span><br><span class="line">			p &#x3D; p-&gt;left;</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			auto top &#x3D; st.top(); st.pop();</span><br><span class="line">			p &#x3D; top-&gt;right;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> val;</span><br><span class="line">	node *left,*right; </span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">preorder</span><span class="params">(node *root)</span> </span>&#123;</span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; res;</span><br><span class="line">	<span class="keyword">if</span> (!root) <span class="keyword">return</span> res;</span><br><span class="line">	<span class="built_in">stack</span>&lt;node*&gt; st;</span><br><span class="line">	<span class="keyword">auto</span> p = root;</span><br><span class="line">	<span class="keyword">while</span> (p || st.size()) &#123;</span><br><span class="line">		<span class="keyword">if</span> (p) &#123;</span><br><span class="line">			st.push(p);</span><br><span class="line">			res.push_back(p-&gt;val);</span><br><span class="line">			p = p-&gt;left;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="keyword">auto</span> top = st.top(); st.pop();</span><br><span class="line">			p = top-&gt;right;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p><font size=5 face=consolas color=red>中序遍历：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;int&gt; inorder(node *root) &#123;</span><br><span class="line">	vector&lt;int&gt; res;</span><br><span class="line">	if (!root) return res;</span><br><span class="line">	auto p &#x3D; root;</span><br><span class="line">	stack&lt;node*&gt; st;</span><br><span class="line">	while (p || st.size()) &#123;</span><br><span class="line">		while (p) &#123;</span><br><span class="line">			st.push(p);</span><br><span class="line">			p &#x3D; p-&gt;left;</span><br><span class="line">		&#125;</span><br><span class="line">		p &#x3D; st.top(); st.pop();</span><br><span class="line">		res.push_back(p-&gt;val);</span><br><span class="line">		p &#x3D; p-&gt;right;</span><br><span class="line">	&#125;</span><br><span class="line">	return res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">inorder</span><span class="params">(node *root)</span> </span>&#123;</span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; res;</span><br><span class="line">	<span class="keyword">if</span> (!root) <span class="keyword">return</span> res;</span><br><span class="line">	<span class="keyword">auto</span> p = root;</span><br><span class="line">	<span class="built_in">stack</span>&lt;node*&gt; st;</span><br><span class="line">	<span class="keyword">while</span> (p || st.size()) &#123;</span><br><span class="line">		<span class="keyword">while</span> (p) &#123;</span><br><span class="line">			st.push(p);</span><br><span class="line">			p = p-&gt;left;</span><br><span class="line">		&#125;</span><br><span class="line">		p = st.top(); st.pop();</span><br><span class="line">		res.push_back(p-&gt;val);</span><br><span class="line">		p = p-&gt;right;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><font size=5 face=consolas color=red>后序遍历：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;int&gt; postorder(node *root) &#123;</span><br><span class="line">	vector&lt;int&gt; res;</span><br><span class="line">	if (!root) return res; </span><br><span class="line">	stack&lt;node*&gt; st;</span><br><span class="line">	auto p &#x3D; root;</span><br><span class="line">	node *tag;</span><br><span class="line">	while (p || st.size()) &#123;</span><br><span class="line">		while (p) &#123;</span><br><span class="line">			st.push(p);</span><br><span class="line">			p &#x3D; p-&gt;left;</span><br><span class="line">		&#125;</span><br><span class="line">		p &#x3D; st.top(); st.pop();</span><br><span class="line">		if (!p-&gt;right || p-&gt;right &#x3D;&#x3D; tag) &#123;</span><br><span class="line">			res.push_back(p-&gt;val);</span><br><span class="line">			tag &#x3D; p;</span><br><span class="line">			p &#x3D; NULL; </span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			st.push(p);</span><br><span class="line">			p &#x3D; p-&gt;right;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return res;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">postorder</span><span class="params">(node *root)</span> </span>&#123;</span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; res;</span><br><span class="line">	<span class="keyword">if</span> (!root) <span class="keyword">return</span> res; </span><br><span class="line">	<span class="built_in">stack</span>&lt;node*&gt; st;</span><br><span class="line">	<span class="keyword">auto</span> p = root;</span><br><span class="line">	node *tag;</span><br><span class="line">	<span class="keyword">while</span> (p || st.size()) &#123;</span><br><span class="line">		<span class="keyword">while</span> (p) &#123;</span><br><span class="line">			st.push(p);</span><br><span class="line">			p = p-&gt;left;</span><br><span class="line">		&#125;</span><br><span class="line">		p = st.top(); st.pop();</span><br><span class="line">		<span class="keyword">if</span> (!p-&gt;right || p-&gt;right == tag) &#123;</span><br><span class="line">			res.push_back(p-&gt;val);</span><br><span class="line">			tag = p;</span><br><span class="line">			p = <span class="literal">NULL</span>; </span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			st.push(p);</span><br><span class="line">			p = p-&gt;right;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> res;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
 
       
 
@@ -540,6 +540,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">二叉树</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
@@ -694,7 +705,7 @@
         <a id="more"></a>
 
 <p><font size=5 face=consolas>二叉树遍历的简单应用</font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">struct node &#123;</span><br><span class="line">	int val;</span><br><span class="line">	node *left, *right;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">node *swapSubTree(node *root) &#123;</span><br><span class="line">	if (!root) return NULL;</span><br><span class="line">	else &#123;</span><br><span class="line">		&#x2F;&#x2F;交换的过程</span><br><span class="line">		node *tmp &#x3D; root-&gt;left;</span><br><span class="line">		root-&gt;left &#x3D; root-&gt;right;</span><br><span class="line">		root-&gt;right &#x3D; tmp;</span><br><span class="line">		swapSubTree(root-&gt;left);</span><br><span class="line">		swapSubTree(root-&gt;right);</span><br><span class="line">	&#125;</span><br><span class="line">	return root;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> val;</span><br><span class="line">	node *left, *right;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function">node *<span class="title">swapSubTree</span><span class="params">(node *root)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (!root) <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">	<span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="comment">//交换的过程</span></span><br><span class="line">		node *tmp = root-&gt;left;</span><br><span class="line">		root-&gt;left = root-&gt;right;</span><br><span class="line">		root-&gt;right = tmp;</span><br><span class="line">		swapSubTree(root-&gt;left);</span><br><span class="line">		swapSubTree(root-&gt;right);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> root;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
 
@@ -703,6 +714,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">二叉树</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
@@ -867,7 +889,7 @@
         <a id="more"></a>
 
 <p><font size=5 face=consolas>叶子节点的特征：左右孩子均为NULL</font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">struct node &#123;</span><br><span class="line">	int val;</span><br><span class="line">	node *left, *right;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">int countLeaf(node *root) &#123;</span><br><span class="line">	if (!root)  return 0;</span><br><span class="line">	else &#123;</span><br><span class="line">		if (!root-&gt;left &amp;&amp; !root-&gt;right) return 1;</span><br><span class="line">		return countLeaf(root-&gt;left) + countLeaf(root-&gt;right);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> val;</span><br><span class="line">	node *left, *right;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">countLeaf</span><span class="params">(node *root)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (!root)  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="keyword">if</span> (!root-&gt;left &amp;&amp; !root-&gt;right) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">return</span> countLeaf(root-&gt;left) + countLeaf(root-&gt;right);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
 
@@ -876,6 +898,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">二叉树</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
@@ -961,6 +994,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">二叉树</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
@@ -1100,11 +1144,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">1024程序员节</a>
+                <a href="javascript:void(0)" class="js-tag color5">动态规划</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">动态规划</a>
+                <a href="javascript:void(0)" class="js-tag color4">1024程序员节</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1152,6 +1196,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">堆</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
               </li>
              
@@ -1160,19 +1208,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">堆</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">回溯法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">最短路径</a>
+                <a href="javascript:void(0)" class="js-tag color5">栈和队列</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">单链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">最短路径</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1205,6 +1253,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">队列</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">c++11算法</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -8,18 +8,19 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>二维数组的地址（行地址，具体元素地址） | 乐行僧的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1234int a[][4] &#x3D; &amp;#123;1,2,3,4,5,6,7,8,9,10,11,12&amp;#125;;&#x2F;&#x2F;a：代表第零行的地址&#x2F;&#x2F;如何验证呢？验证其步长printf(&quot;a : %d,a+1: %d&quot;,a,a+1); 数组名加1后得到是比原地址大16，刚好是一行的地址和。可见二维数组名代表第零行的地址。二维数组中第i">
+  <meta name="description" content="1234int a[][4] &#x3D; &amp;#123;1,2,3,4,5,6,7,8,9,10,11,12&amp;#125;;&#x2F;&#x2F;a：代表第零行的地址&#x2F;&#x2F;如何验证呢？验证其步长printf(&quot;a : %d,a+1: %d&quot;,a,a+1); 数组名加1后得到是比原地址大16，刚好是一行的地址和。可见二维数组名代表第零行的地址。二维数组中第i行的地址 123&#x2F;&#x2F;第i行的地址，有两种等价的表达">
 <meta property="og:type" content="article">
 <meta property="og:title" content="二维数组的地址（行地址，具体元素地址）">
 <meta property="og:url" content="http://example.com/2018/04/07/%E4%BA%8C%E7%BB%B4%E6%95%B0%E7%BB%84%E7%9A%84%E5%9C%B0%E5%9D%80%EF%BC%88%E8%A1%8C%E5%9C%B0%E5%9D%80%EF%BC%8C%E5%85%B7%E4%BD%93%E5%85%83%E7%B4%A0%E5%9C%B0%E5%9D%80%EF%BC%89/index.html">
 <meta property="og:site_name" content="乐行僧的博客">
-<meta property="og:description" content="1234int a[][4] &#x3D; &amp;#123;1,2,3,4,5,6,7,8,9,10,11,12&amp;#125;;&#x2F;&#x2F;a：代表第零行的地址&#x2F;&#x2F;如何验证呢？验证其步长printf(&quot;a : %d,a+1: %d&quot;,a,a+1); 数组名加1后得到是比原地址大16，刚好是一行的地址和。可见二维数组名代表第零行的地址。二维数组中第i">
+<meta property="og:description" content="1234int a[][4] &#x3D; &amp;#123;1,2,3,4,5,6,7,8,9,10,11,12&amp;#125;;&#x2F;&#x2F;a：代表第零行的地址&#x2F;&#x2F;如何验证呢？验证其步长printf(&quot;a : %d,a+1: %d&quot;,a,a+1); 数组名加1后得到是比原地址大16，刚好是一行的地址和。可见二维数组名代表第零行的地址。二维数组中第i行的地址 123&#x2F;&#x2F;第i行的地址，有两种等价的表达">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://img-blog.csdn.net/20180407164404805?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
 <meta property="og:image" content="https://img-blog.csdn.net/2018040716524224?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
 <meta property="article:published_time" content="2018-04-07T08:57:03.000Z">
-<meta property="article:modified_time" content="2020-11-29T19:35:28.603Z">
+<meta property="article:modified_time" content="2020-11-30T00:50:22.445Z">
 <meta property="article:author" content="lexingsen">
+<meta property="article:tag" content="c">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://img-blog.csdn.net/20180407164404805?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
   
@@ -187,18 +188,18 @@
       
         <a id="more"></a>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">int a[][4] &#x3D; &#123;1,2,3,4,5,6,7,8,9,10,11,12&#125;;</span><br><span class="line">&#x2F;&#x2F;a：代表第零行的地址</span><br><span class="line">&#x2F;&#x2F;如何验证呢？验证其步长</span><br><span class="line">printf(&quot;a : %d,a+1: %d&quot;,a,a+1);</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a[][<span class="number">4</span>] = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">10</span>,<span class="number">11</span>,<span class="number">12</span>&#125;;</span><br><span class="line"><span class="comment">//a：代表第零行的地址</span></span><br><span class="line"><span class="comment">//如何验证呢？验证其步长</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;a : %d,a+1: %d&quot;</span>,a,a+<span class="number">1</span>);</span><br></pre></td></tr></table></figure>
 <p><img src="https://img-blog.csdn.net/20180407164404805?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>数组名加1后得到是比原地址大16，刚好是一行的地址和。<br>可见二维数组名代表第零行的地址。<br><strong>二维数组中第i行的地址</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;第i行的地址，有两种等价的表达形式</span><br><span class="line">a[i];</span><br><span class="line">a+i;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//第i行的地址，有两种等价的表达形式</span></span><br><span class="line">a[i];</span><br><span class="line">a+i;</span><br></pre></td></tr></table></figure>
 <p><img src="https://img-blog.csdn.net/2018040716524224?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>由上图可见，在一个二维数组中。第零行的地址有三种表达形式。<br>（1）a<br>（2）a[0]<br>（3）a+0</p>
 <p><strong>二维数组某行首元素的地址</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">*(a+i);  &#x2F;&#x2F;第i行首元素的地址</span><br><span class="line">&amp;a[0]+1</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">*(a+i);  <span class="comment">//第i行首元素的地址</span></span><br><span class="line">&amp;a[<span class="number">0</span>]+<span class="number">1</span></span><br></pre></td></tr></table></figure>
 
 <p><strong>二维数组中某元素的地址</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">*(a+i)+j; &#x2F;&#x2F;二维数组中第i行第j列元素的地址</span><br><span class="line">&amp;a[0][0]+1</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">*(a+i)+j; <span class="comment">//二维数组中第i行第j列元素的地址</span></span><br><span class="line">&amp;a[<span class="number">0</span>][<span class="number">0</span>]+<span class="number">1</span></span><br></pre></td></tr></table></figure>
 
 <p><strong>通过指针解引用二维数组中的元素</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*(*(a+i)+j) &#x3D; 10;&#x2F;&#x2F;向二维数组a中的第i行第j列元素赋值为10</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*(*(a+i)+j) = <span class="number">10</span>;<span class="comment">//向二维数组a中的第i行第j列元素赋值为10</span></span><br></pre></td></tr></table></figure>
 
 
       
@@ -208,7 +209,29 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">c</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/c-c//" class="article-tag-list-link color1">c/c++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
       
 
@@ -406,11 +429,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">1024程序员节</a>
+                <a href="javascript:void(0)" class="js-tag color5">动态规划</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">动态规划</a>
+                <a href="javascript:void(0)" class="js-tag color4">1024程序员节</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -458,6 +481,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">堆</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
               </li>
              
@@ -466,19 +493,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">堆</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">回溯法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">最短路径</a>
+                <a href="javascript:void(0)" class="js-tag color5">栈和队列</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">单链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">最短路径</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -511,6 +538,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">队列</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">c++11算法</a>
               </li>
              
               <li class="article-tag-list-item">
