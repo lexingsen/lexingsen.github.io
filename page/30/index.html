@@ -64,7 +64,7 @@
 			</ul>
 			</nav>
 			<nav>
-			总文章数 296
+			总文章数 297
 			</nav>
 		<nav class="header-smart-menu">
     		
@@ -146,6 +146,119 @@
           </div>
           <div id="js-content" class="content-ll">
             
+  
+    <article id="post-举例分析可变参数函数实现的过程" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/12/%E4%B8%BE%E4%BE%8B%E5%88%86%E6%9E%90%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0%E5%87%BD%E6%95%B0%E5%AE%9E%E7%8E%B0%E7%9A%84%E8%BF%87%E7%A8%8B/">举例分析可变参数函数实现的过程</a>
+    </h1>
+  
+
+        <!--显示阅读次数-->
+        
+        <!--显示阅读次数完毕-->
+        
+        <a href="/2018/03/12/%E4%B8%BE%E4%BE%8B%E5%88%86%E6%9E%90%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0%E5%87%BD%E6%95%B0%E5%AE%9E%E7%8E%B0%E7%9A%84%E8%BF%87%E7%A8%8B/" class="archive-article-date">
+  	<time datetime="2018-03-12T13:54:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+      
+        <a id="more"></a>
+
+<p><strong>求总和函数（可变参数形式）</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">average</span><span class="params">(<span class="keyword">int</span> n,...)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> sum;</span><br><span class="line">    va_list args;</span><br><span class="line">    va_start(args,n);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;n;++i)</span><br><span class="line">    &#123;</span><br><span class="line">        sum += va_arg(args,<span class="keyword">int</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    va_end(args);</span><br><span class="line">    <span class="keyword">return</span> sum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">char</span> *  va_list   <span class="comment">//为char* 别名为va_list</span></span><br></pre></td></tr></table></figure>
+<p><strong>函数栈调用</strong><br>对于C语言，其调用遵循_cdecl规则：<br>1.所有参数从右到左依次入栈。<br>2.这些参数由调用者清除，称为手动清除。<br>3.被调用函数不会要求调用者传递多少参数，调用者传递过多或者过少的参数，甚至完全不同的参数都不会产生编译阶段的错误。(简化的将就是调用参数的类型和数量不会产生编译阶段的错误)</p>
+<p><strong>以求和函数举例</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> sum = sum(<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>);</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://img.blog.csdn.net/20180312214534833?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQVNKQkZKU0I=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<p><strong>三个宏宏定义</strong></p>
+<p><strong>（1）va_start</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> va_start        _crt_va_start</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _crt_va_start   va_start(ap,v)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> va_start(ap,v)  (ap = (va_list)&amp;v + _INTSIZEOF(v)) </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _INTSIZEOF(v) ((sizeof(v) + sizeof(int) - 1) &amp; ~(sizeof(int)-1))</span></span><br></pre></td></tr></table></figure>
+<p><strong>va_start宏的作用：</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> va_start(ap,v)  (ap = (va_list)&amp;v + _INTSIZEOF(v)) </span></span><br><span class="line">ap = (<span class="keyword">char</span>*)&amp;v + (<span class="keyword">sizeof</span>(v) + <span class="keyword">sizeof</span>(<span class="keyword">int</span>) - <span class="number">1</span>) &amp; ~(<span class="keyword">sizeof</span>(<span class="keyword">int</span>)<span class="number">-1</span>);</span><br></pre></td></tr></table></figure>
+
+<p><strong>参数类型：</strong> ap为va_list类型指针，即为char *,v是最后一个确定的参数。其含义是它之后的参数均为可变参数。</p>
+<p><strong>功能：</strong>获取可变参数中的第一个参数，并将其地址保存在ap中。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _INTSIZEOF(v) ((sizeof(v) + sizeof(int) - 1) &amp; ~(sizeof(int)-1))</span></span><br></pre></td></tr></table></figure>
+<p>_INTSIZEOF(v)宏函数是为了对齐内存。</p>
+<p><strong>（2）va_arg</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> va_arg(ap,t) (*(t*))(ap += _INTSIZEOF(t) - _INTSIZEOF(t))</span></span><br></pre></td></tr></table></figure>
+<p><strong>va_arg宏的作用：</strong></p>
+<p><strong>参数类型：</strong> ap为va_list类型的指针，即char，它指向当前需要获取的参数。t为当前参数的类型。</p>
+<p><strong>功能：</strong> 获取ap当前所指向参数的指针，并将其强制转化为 *t,并进行解引用 ,然后将ap指向可变参数表的下一个参数。</p>
+<p><strong>（3）va_end</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> va_end(ap)  (ap = (va_list)0)</span></span><br><span class="line">ap = (<span class="keyword">char</span>*)<span class="number">0</span> = <span class="literal">NULL</span>;</span><br></pre></td></tr></table></figure>
+<p><strong>va_end宏的作用：</strong></p>
+<p><strong>参数类型：</strong> ap为va_list类型的指针 。</p>
+<p><strong>功能：</strong> 使指针指向空，不在使用该指针。防止ap成为野指针，进行错误引用。实际上通常va_start与va_end是配对使用。</p>
+<p>了解并掌握以上三个宏的使用方法以及函数栈调用的规则后。</p>
+<p><strong>下面开始分析求和可变参数函数的实现过程：</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">average</span><span class="params">(<span class="keyword">int</span> n,...)</span>    <span class="comment">//...表示参数的类型和数量不确定 n表示传入参数的个数</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> sum;</span><br><span class="line">    va_list args;    <span class="comment">//相当于定义   char *p;</span></span><br><span class="line">    va_start(args,n); <span class="comment">//获取可变参数列表中的第一个参数的地址并保存在p内 va_start（p,n）</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;n;++i)</span><br><span class="line">    &#123;</span><br><span class="line">        sum += va_arg(args,<span class="keyword">int</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    va_end(args);   <span class="comment">// 等价于*p = NULL;</span></span><br><span class="line">    <span class="keyword">return</span> sum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/c-c//" class="article-tag-list-link color1">c/c++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/12/%E4%B8%BE%E4%BE%8B%E5%88%86%E6%9E%90%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0%E5%87%BD%E6%95%B0%E5%AE%9E%E7%8E%B0%E7%9A%84%E8%BF%87%E7%A8%8B/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
     <article id="post-printf函数的返回值" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -962,15 +1075,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">堆栈调用</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">递归</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">c++11算法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">堆栈调用</a>
               </li>
              
               <li class="article-tag-list-item">
