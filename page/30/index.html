@@ -394,14 +394,14 @@
 
 
   
-    <article id="post-printf函数的返回值！" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-printf函数的返回值" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/12/printf%E5%87%BD%E6%95%B0%E7%9A%84%E8%BF%94%E5%9B%9E%E5%80%BC%EF%BC%81/">printf函数的返回值！</a>
+      <a class="article-title" href="/2018/03/12/printf%E5%87%BD%E6%95%B0%E7%9A%84%E8%BF%94%E5%9B%9E%E5%80%BC/">printf函数的返回值！</a>
     </h1>
   
 
@@ -409,7 +409,7 @@
         
         <!--显示阅读次数完毕-->
         
-        <a href="/2018/03/12/printf%E5%87%BD%E6%95%B0%E7%9A%84%E8%BF%94%E5%9B%9E%E5%80%BC%EF%BC%81/" class="archive-article-date">
+        <a href="/2018/03/12/printf%E5%87%BD%E6%95%B0%E7%9A%84%E8%BF%94%E5%9B%9E%E5%80%BC/" class="archive-article-date">
   	<time datetime="2018-03-12T07:41:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-12</time>
 </a>
         
@@ -425,13 +425,13 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int printf(const char * p,...);</span><br></pre></td></tr></table></figure>
 <p><strong>返回值</strong><br>返回值为整型，是输出字符的个数，即格式化字符串中字符的个数。</p>
 <p><strong>举例</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">int main（）</span><br><span class="line">&#123;</span><br><span class="line">	int count &#x3D; printf(&quot;ni hao csdn,%d\n&quot;,111);</span><br><span class="line">	&#x2F;&#x2F;这里的格式化字符串包括逗号、空格、换行符、字母及数字共计16个字符</span><br><span class="line">	printf(&quot;n &#x3D; %d\n&quot;,n);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> main（）</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">int</span> count = <span class="built_in">printf</span>(<span class="string">&quot;ni hao csdn,%d\n&quot;</span>,<span class="number">111</span>);</span><br><span class="line">	<span class="comment">//这里的格式化字符串包括逗号、空格、换行符、字母及数字共计16个字符</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;n = %d\n&quot;</span>,n);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><strong>输出结果</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">n &#x3D; 16;</span><br></pre></td></tr></table></figure>
 <p>来自阿里的一个面试题</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">int main（）</span><br><span class="line">&#123;</span><br><span class="line">	printf(&quot;%d\n&quot;,printf(&quot;%d\n&quot;,printf(&quot;hello!\n&quot;))); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> main（）</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,<span class="built_in">printf</span>(<span class="string">&quot;hello!\n&quot;</span>))); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这样的题目第一眼看上去有一点懵，其实它考的就是printf函数的返回值，及输出字符的个数。<br><strong>输出结果</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;由内而外依次分析</span><br><span class="line">printf(&quot;hello!\n&quot;);</span><br><span class="line">&#x2F;&#x2F;在屏幕上输出hello！并进行换行，其返回值为7。</span><br><span class="line">printf(&quot;%d\n&quot;,printf(&quot;hello!\n&quot;));</span><br><span class="line">&#x2F;*由上一步可以知道其实  printf(&quot;hello!\n&quot;) &#x3D;&#x3D; 7 所以输出7并进行换行*&#x2F;</span><br><span class="line">printf(&quot;%d\n&quot;,printf(&quot;%d\n&quot;,printf(&quot;hello!\n&quot;)));</span><br><span class="line">&#x2F;&#x2F;尽管这一行很长，但是经过简化，他可以这样表示</span><br><span class="line">printf(&quot;%d\n&quot;,2);</span><br><span class="line">&#x2F;&#x2F;因为printf(&quot;%d\n&quot;,printf(&quot;hello!\n&quot;))的返回值为2</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//由内而外依次分析</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;hello!\n&quot;</span>);</span><br><span class="line"><span class="comment">//在屏幕上输出hello！并进行换行，其返回值为7。</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,<span class="built_in">printf</span>(<span class="string">&quot;hello!\n&quot;</span>));</span><br><span class="line"><span class="comment">/*由上一步可以知道其实  printf(&quot;hello!\n&quot;) == 7 所以输出7并进行换行*/</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,<span class="built_in">printf</span>(<span class="string">&quot;hello!\n&quot;</span>)));</span><br><span class="line"><span class="comment">//尽管这一行很长，但是经过简化，他可以这样表示</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,<span class="number">2</span>);</span><br><span class="line"><span class="comment">//因为printf(&quot;%d\n&quot;,printf(&quot;hello!\n&quot;))的返回值为2</span></span><br></pre></td></tr></table></figure>
 
       
 
@@ -441,10 +441,21 @@
       
       
       
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/c-c//" class="article-tag-list-link color1">c/c++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/12/printf%E5%87%BD%E6%95%B0%E7%9A%84%E8%BF%94%E5%9B%9E%E5%80%BC%EF%BC%81/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/03/12/printf%E5%87%BD%E6%95%B0%E7%9A%84%E8%BF%94%E5%9B%9E%E5%80%BC/">展开全文 >></a>
         </p>
       
 
@@ -609,7 +620,29 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">tips</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/操作系统//" class="article-tag-list-link color5">操作系统</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
       
         <p class="article-more-link">
@@ -1128,11 +1161,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">在线笔试题</a>
+                <a href="javascript:void(0)" class="js-tag color3">数据结构 算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">数据结构 算法</a>
+                <a href="javascript:void(0)" class="js-tag color1">在线笔试题</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1160,6 +1193,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">STL源码剖析</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">传输层协议</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">tips</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">c</a>
               </li>
              
@@ -1168,15 +1213,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">protobuf</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">并查集</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">c/c++关键字</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">堆</a>
+                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+                <a href="javascript:void(0)" class="js-tag color2">堆</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1208,15 +1265,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">tips</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">排序</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">并查集</a>
               </li>
              
               <li class="article-tag-list-item">

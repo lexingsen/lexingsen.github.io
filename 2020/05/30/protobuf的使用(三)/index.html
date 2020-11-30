@@ -8,16 +8,17 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>protobuf的使用(三) | 乐行僧的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="rpc方法的序列化和反序列化 rpc标签 在protobuf中定义描述rpc方法的类型 - service 在proto文件中增加rpc服务的选项 12&#x2F;&#x2F; 表示生成service服务类和rpc方法描述，默认是不生成的option cc_generic_services &#x3D; true; 123456789message LoginRequest&amp;#123;&amp;#12">
+  <meta name="description" content="rpc方法的序列化和反序列化 rpc标签 在protobuf中定义描述rpc方法的类型 - service 在proto文件中增加rpc服务的选项 12&#x2F;&#x2F; 表示生成service服务类和rpc方法描述，默认是不生成的option cc_generic_services &#x3D; true; 123456789message LoginRequest&amp;#123;&amp;#125;message Login">
 <meta property="og:type" content="article">
 <meta property="og:title" content="protobuf的使用(三)">
 <meta property="og:url" content="http://example.com/2020/05/30/protobuf%E7%9A%84%E4%BD%BF%E7%94%A8(%E4%B8%89)/index.html">
 <meta property="og:site_name" content="乐行僧的博客">
-<meta property="og:description" content="rpc方法的序列化和反序列化 rpc标签 在protobuf中定义描述rpc方法的类型 - service 在proto文件中增加rpc服务的选项 12&#x2F;&#x2F; 表示生成service服务类和rpc方法描述，默认是不生成的option cc_generic_services &#x3D; true; 123456789message LoginRequest&amp;#123;&amp;#12">
+<meta property="og:description" content="rpc方法的序列化和反序列化 rpc标签 在protobuf中定义描述rpc方法的类型 - service 在proto文件中增加rpc服务的选项 12&#x2F;&#x2F; 表示生成service服务类和rpc方法描述，默认是不生成的option cc_generic_services &#x3D; true; 123456789message LoginRequest&amp;#123;&amp;#125;message Login">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-05-30T03:25:29.000Z">
-<meta property="article:modified_time" content="2020-11-29T19:35:17.755Z">
+<meta property="article:modified_time" content="2020-11-30T01:01:41.647Z">
 <meta property="article:author" content="lexingsen">
+<meta property="article:tag" content="protobuf">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="乐行僧的博客" type="application/atom+xml">
@@ -187,8 +188,8 @@
 <p><font size=6 face=consolas color=black><strong>rpc方法的序列化和反序列化 rpc标签</strong></font></p>
 <p><font size=5 face=consolas>在protobuf中定义描述rpc方法的类型 - service</font></p>
 <p><font size=6 face=consolas color=black><strong>在proto文件中增加rpc服务的选项</strong></font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 表示生成service服务类和rpc方法描述，默认是不生成的</span><br><span class="line">option cc_generic_services &#x3D; true;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">message LoginRequest&#123;&#125;</span><br><span class="line">message LoginResponse&#123;&#125;</span><br><span class="line">message ExitRequest&#123;&#125;</span><br><span class="line">message ExitResponse&#123;&#125;</span><br><span class="line"></span><br><span class="line">service UserServiceRpc &#123;</span><br><span class="line">	rpc Login(LoginRequest) returns(LoginResponse);</span><br><span class="line">	rpc Exit(ExitRequest) returns(ExitResponse);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 表示生成service服务类和rpc方法描述，默认是不生成的</span></span><br><span class="line">option cc_generic_services = <span class="literal">true</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">message LoginRequest&#123;&#125;</span><br><span class="line">message LoginResponse&#123;&#125;</span><br><span class="line">message ExitRequest&#123;&#125;</span><br><span class="line">message ExitResponse&#123;&#125;</span><br><span class="line"></span><br><span class="line">service UserServiceRpc &#123;</span><br><span class="line">	<span class="function">rpc <span class="title">Login</span><span class="params">(LoginRequest)</span> <span class="title">returns</span><span class="params">(LoginResponse)</span></span>;</span><br><span class="line">	<span class="function">rpc <span class="title">Exit</span><span class="params">(ExitRequest)</span> <span class="title">returns</span><span class="params">(ExitResponse)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p><font size=5 face=consolas>** **</font><br><font size=5 face=consolas></font></p>
 
@@ -199,13 +200,24 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">protobuf</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/c-c//" class="article-tag-list-link color1">c/c++</a>
+        			<a href="/categories/rpc//" class="article-tag-list-link color4">rpc</a>
         		</li>
       		
 		</ul>
@@ -416,11 +428,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">在线笔试题</a>
+                <a href="javascript:void(0)" class="js-tag color3">数据结构 算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">数据结构 算法</a>
+                <a href="javascript:void(0)" class="js-tag color1">在线笔试题</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -448,6 +460,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">STL源码剖析</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">传输层协议</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">tips</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">c</a>
               </li>
              
@@ -456,15 +480,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">protobuf</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">并查集</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">c/c++关键字</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">堆</a>
+                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+                <a href="javascript:void(0)" class="js-tag color2">堆</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -496,15 +532,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">tips</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">排序</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">并查集</a>
               </li>
              
               <li class="article-tag-list-item">

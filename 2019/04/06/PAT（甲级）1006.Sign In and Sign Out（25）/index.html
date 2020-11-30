@@ -16,7 +16,7 @@
 <meta property="og:description" content="PAT 1141.PAT Ranking of Institutions （25 分) At the beginning of every day, the first person who signs in the computer room will unlock the door, and the last one who signs out will lock the door. Gi">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-04-06T05:25:03.000Z">
-<meta property="article:modified_time" content="2020-11-29T19:35:22.859Z">
+<meta property="article:modified_time" content="2020-11-30T01:06:16.081Z">
 <meta property="article:author" content="lexingsen">
 <meta name="twitter:card" content="summary">
   
@@ -194,7 +194,7 @@
 <p><font size=5 face="Consolas" color=blue>题目分析：sort的使用，求解最早签到时间和最晚签到离开时间。主要的难度在于签到和签到离开时间的处理，当成字符串处理会比较直接简单。</p>
 <p><font size=5 face="Consolas" font color=red>注意：由于题目可以转化为输出最早签到的人名和最晚签到离开的人，此题也也可以直接在输入时间比较。在一天中按照hh:mm:ss的形式，最早为00：00：00，最晚为23:59:59</font></p>
 <p><font size=5 face="Consolas" color=black>AC代码1：</font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;unordered_map&gt;</span><br><span class="line">#include &lt;string&gt;</span><br><span class="line">#include &lt;vector&gt;</span><br><span class="line">#include &lt;algorithm&gt;</span><br><span class="line">#include &lt;map&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">struct people&#123;</span><br><span class="line">    string id, sign_in, sign_out;</span><br><span class="line">    people(string id, string sign_in, string sign_out)&#123;</span><br><span class="line">        this-&gt;id &#x3D; id;</span><br><span class="line">        this-&gt;sign_in &#x3D; sign_in;</span><br><span class="line">        this-&gt;sign_out &#x3D; sign_out;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">vector&lt;people&gt; v;</span><br><span class="line"></span><br><span class="line">bool cmpin(people a, people b) &#123;return a.sign_in &lt; b.sign_in;&#125;</span><br><span class="line">bool cmpout(people a, people b)&#123;return a.sign_out &gt; b.sign_out;&#125;</span><br><span class="line">void print(people a)&#123;</span><br><span class="line">    cout&lt;&lt;a.id&lt;&lt;&quot; &quot;&lt;&lt;a.sign_in&lt;&lt;&quot; &quot;&lt;&lt;a.sign_out&lt;&lt;endl;</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    &#x2F;&#x2F;freopen(&quot;in.txt&quot;, &quot;r&quot;, stdin);</span><br><span class="line">    int n;</span><br><span class="line">    scanf(&quot;%d&quot;, &amp;n);</span><br><span class="line">    string id,sign_in,sign_out;</span><br><span class="line">    for(int i&#x3D;0; i&lt;n; ++i)&#123;</span><br><span class="line">        cin&gt;&gt;id&gt;&gt;sign_in&gt;&gt;sign_out;</span><br><span class="line">        v.push_back(people(id, sign_in, sign_out));</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F;for_each(v.begin(), v.end(), print);</span><br><span class="line">    sort(v.begin(), v.end(), cmpin);</span><br><span class="line">    cout&lt;&lt;v[0].id&lt;&lt;&quot; &quot;;</span><br><span class="line">    sort(v.begin(), v.end(), cmpout);</span><br><span class="line">    cout&lt;&lt;v[0].id&lt;&lt;endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unordered_map&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;map&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">people</span>&#123;</span></span><br><span class="line">    <span class="built_in">string</span> id, sign_in, sign_out;</span><br><span class="line">    people(<span class="built_in">string</span> id, <span class="built_in">string</span> sign_in, <span class="built_in">string</span> sign_out)&#123;</span><br><span class="line">        <span class="keyword">this</span>-&gt;id = id;</span><br><span class="line">        <span class="keyword">this</span>-&gt;sign_in = sign_in;</span><br><span class="line">        <span class="keyword">this</span>-&gt;sign_out = sign_out;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">vector</span>&lt;people&gt; v;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">cmpin</span><span class="params">(people a, people b)</span> </span>&#123;<span class="keyword">return</span> a.sign_in &lt; b.sign_in;&#125;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">cmpout</span><span class="params">(people a, people b)</span></span>&#123;<span class="keyword">return</span> a.sign_out &gt; b.sign_out;&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">(people a)</span></span>&#123;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;a.id&lt;&lt;<span class="string">&quot; &quot;</span>&lt;&lt;a.sign_in&lt;&lt;<span class="string">&quot; &quot;</span>&lt;&lt;a.sign_out&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//freopen(&quot;in.txt&quot;, &quot;r&quot;, stdin);</span></span><br><span class="line">    <span class="keyword">int</span> n;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;n);</span><br><span class="line">    <span class="built_in">string</span> id,sign_in,sign_out;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;n; ++i)&#123;</span><br><span class="line">        <span class="built_in">cin</span>&gt;&gt;id&gt;&gt;sign_in&gt;&gt;sign_out;</span><br><span class="line">        v.push_back(people(id, sign_in, sign_out));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//for_each(v.begin(), v.end(), print);</span></span><br><span class="line">    sort(v.begin(), v.end(), cmpin);</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;v[<span class="number">0</span>].id&lt;&lt;<span class="string">&quot; &quot;</span>;</span><br><span class="line">    sort(v.begin(), v.end(), cmpout);</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;v[<span class="number">0</span>].id&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><font size=5 face="Consolas" color=black>AC代码2：</font></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;string&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    string earliest &#x3D; &quot;23:59:59&quot;;</span><br><span class="line">    string latest  &#x3D; &quot;00:00:00&quot;;</span><br><span class="line">    string earliestName, latestName;</span><br><span class="line">    int n;</span><br><span class="line">    scanf(&quot;%d&quot;, &amp;n);</span><br><span class="line">    string id, early, finally;</span><br><span class="line">    for(int i&#x3D;0; i&lt;n; ++i)&#123;</span><br><span class="line">        cin&gt;&gt;id&gt;&gt;early&gt;&gt;finally;</span><br><span class="line">        if(early &lt;&#x3D; earliest)&#123;</span><br><span class="line">            earliest &#x3D; early;</span><br><span class="line">            earliestName &#x3D; id;</span><br><span class="line">        &#125;</span><br><span class="line">        if(finally &gt;&#x3D; latest)&#123;</span><br><span class="line">            latest &#x3D; finally;</span><br><span class="line">            latestName &#x3D; id;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cout&lt;&lt;earliestName&lt;&lt;&quot; &quot;&lt;&lt;latestName&lt;&lt;endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -422,11 +422,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">在线笔试题</a>
+                <a href="javascript:void(0)" class="js-tag color3">数据结构 算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">数据结构 算法</a>
+                <a href="javascript:void(0)" class="js-tag color1">在线笔试题</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -454,6 +454,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">STL源码剖析</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">传输层协议</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">tips</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">c</a>
               </li>
              
@@ -462,15 +474,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">protobuf</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">并查集</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">c/c++关键字</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">堆</a>
+                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+                <a href="javascript:void(0)" class="js-tag color2">堆</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -502,15 +526,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">tips</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">排序</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">并查集</a>
               </li>
              
               <li class="article-tag-list-item">

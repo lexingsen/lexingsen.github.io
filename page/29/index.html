@@ -284,6 +284,17 @@
       
       
       
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/c-c//" class="article-tag-list-link color1">c/c++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
       
         <p class="article-more-link">
@@ -891,11 +902,11 @@
 
 <p><strong>strlen函数原型</strong><br>size_t strlen(const char *string)</p>
 <p>size_t 是无符号整数的别名，在vs2008编译器中可以查看其宏定义</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">typedef unsigned int size_t;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">unsigned</span> <span class="keyword">int</span> <span class="keyword">size_t</span>;</span><br></pre></td></tr></table></figure>
 <p>这样定义的原因一方面是字符串的长度不可能是负数，另一方面是不可能为实数。<br><strong>功能</strong><br>其功能是获取字符串的长度。<br><strong>返回值</strong><br>在MSDN文档中查看strlen函数的返回值，叙述如下。</p>
 <p>Each of these functions returns the number of characters in string, excluding the terminal NULL. No return value is reserved to indicate an error.</p>
 <p>每个函数都返回字符串中的字符数，不包括终端NULL。不保留返回值以指示错误。<br><strong>参数</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Null-terminated string</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Null-terminated <span class="built_in">string</span></span><br></pre></td></tr></table></figure>
 <p>空终止字符串， 字符串标准库提供的头文件中包含操作<strong>以空字符结尾</strong>的字符串(null-terminated string)的函数。</p>
 <p><strong>sizeof（）运算符</strong><br>很对人以为sizeof是用来计算数据类型大小的一个函数，这其实是一个误区，它同加减乘除一样是运算符。</p>
 <p>在MSDN文档查阅sizeof得到如下相关信息：<br>sizeof Operator<br>sizeof expression</p>
@@ -905,7 +916,7 @@
 <p>sizeof运算符<br>运算符表达式<br>sizeof关键字提供了与变量或类型(包括聚合类型)相关的存储空间。该关键字返回类型size_t的值。<br>表达式要么是标识符，要么是类型转换表达式(括号中包含的类型说明符)。<br>当应用到结构类型或变量时，sizeof返回实际大小，其中可能包括插入用于对齐的填充字节。当应用到静态尺寸数组时，sizeof返回整个数组的大小。sizeof运算符不能返回动态分配的数组或外部数组的大小。</p>
 <p>了解了以上的相关知识，我们可以总结出两者不同。</p>
 <p>下面用代码验证：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">#include &lt;string.h&gt;</span><br><span class="line">void main()</span><br><span class="line">&#123;</span><br><span class="line">	char str1[10] &#x3D; &#123;&#39;h&#39;,&#39;e&#39;,0,&#39;l&#39;,&#39;l&#39;,&#39;o&#39;&#125;;</span><br><span class="line">	char str2[10] &#x3D; &quot;he0llo&quot;;</span><br><span class="line"></span><br><span class="line">	printf(&quot;%d\n&quot;,sizeof(str1)); &#x2F;&#x2F;6   10</span><br><span class="line">	printf(&quot;%d\n&quot;,sizeof(str2)); &#x2F;&#x2F;10</span><br><span class="line">	printf(&quot;%d\n&quot;,strlen(str1)); &#x2F;&#x2F;6    2</span><br><span class="line">	printf(&quot;%d\n&quot;,strlen(str2)); &#x2F;&#x2F;6</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">char</span> str1[<span class="number">10</span>] = &#123;<span class="string">&#x27;h&#x27;</span>,<span class="string">&#x27;e&#x27;</span>,<span class="number">0</span>,<span class="string">&#x27;l&#x27;</span>,<span class="string">&#x27;l&#x27;</span>,<span class="string">&#x27;o&#x27;</span>&#125;;</span><br><span class="line">	<span class="keyword">char</span> str2[<span class="number">10</span>] = <span class="string">&quot;he0llo&quot;</span>;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,<span class="keyword">sizeof</span>(str1)); <span class="comment">//6   10</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,<span class="keyword">sizeof</span>(str2)); <span class="comment">//10</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,<span class="built_in">strlen</span>(str1)); <span class="comment">//6    2</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,<span class="built_in">strlen</span>(str2)); <span class="comment">//6</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>执行代码得到的结果如下：<br><img src="https://img-blog.csdn.net/20180329193355710?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>分析上图得到的结果，定义两个长度为10个字节的字符数组，由上文可知，sizeof(）运算符是计算整个数组的大小，所以输出均为10</p>
 <p>而经过strlen计算字符串长度，由其函数特性，在str1数组中，当遇到第一个数字0是strlen函数就已经结束。所以输出的结果为2.<br>在str2数组中，在字符串中有0的存在，但实际上这时的0为字符字符0（‘0’），并不是字符串结束的标志，知道遇到结尾的空字符，才进行返回。</p>
 <p>大家也可自行验证。</p>
@@ -918,6 +929,17 @@
       
       
       
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/c-c//" class="article-tag-list-link color1">c/c++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
       
         <p class="article-more-link">
@@ -1053,11 +1075,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">在线笔试题</a>
+                <a href="javascript:void(0)" class="js-tag color3">数据结构 算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">数据结构 算法</a>
+                <a href="javascript:void(0)" class="js-tag color1">在线笔试题</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1085,6 +1107,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">STL源码剖析</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">传输层协议</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">tips</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">c</a>
               </li>
              
@@ -1093,15 +1127,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">protobuf</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">并查集</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">c/c++关键字</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">堆</a>
+                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+                <a href="javascript:void(0)" class="js-tag color2">堆</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1133,15 +1179,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">tips</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">排序</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">并查集</a>
               </li>
              
               <li class="article-tag-list-item">

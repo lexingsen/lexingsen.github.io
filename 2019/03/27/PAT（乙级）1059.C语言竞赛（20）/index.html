@@ -16,7 +16,7 @@
 <meta property="og:description" content="PAT 1059.C语言竞赛（20） C 语言竞赛是浙江大学计算机学院主持的一个欢乐的竞赛。既然竞赛主旨是为了好玩，颁奖规则也就制定得很滑稽：0、冠军将赢得一份“神秘大奖”（比如很巨大的一本学生研究论文集……）。1、排名为素数的学生将赢得最好的奖品 —— 小黄人玩偶！2、其他人将得到巧克力。给定比赛的最终排名以及一系列参赛者的 ID，你要给出这些参赛者应该获得的奖品。 输入格式：输入第一行给出">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-03-27T13:15:11.000Z">
-<meta property="article:modified_time" content="2020-11-29T19:35:23.111Z">
+<meta property="article:modified_time" content="2020-11-30T01:04:19.130Z">
 <meta property="article:author" content="lexingsen">
 <meta name="twitter:card" content="summary">
   
@@ -193,7 +193,7 @@
 <p><font size=5 face="Courier New" color=red>输出样例：</font></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">8888: Minion</span><br><span class="line">0001: Chocolate</span><br><span class="line">1111: Mystery Award</span><br><span class="line">2222: Are you kidding?</span><br><span class="line">8888: Checked</span><br><span class="line">2222: Are you kidding?</span><br></pre></td></tr></table></figure>
 <p><font size=5 face="Courier New" color=blue>题目分析：读取时用map表将学生ID和对应名次作为映射方便后续的查找使用，ID-&gt;名次。查询时，将查询过的ID在查询hash数组中标记为true，这样就可以检测重复查找，如果在map表中未存储此ID的信息，则说明此学生未参加比赛。最后注意输出的格式为%04d。<br></font><br><font size=5 face="Courier New" color=black>AC代码：</font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;cmath&gt;</span><br><span class="line">#include &lt;map&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">map&lt;int, int&gt; mp;</span><br><span class="line">const int max_n &#x3D; 10010;</span><br><span class="line">bool is_appear[max_n] &#x3D; &#123;false&#125;;</span><br><span class="line"></span><br><span class="line">bool is_prime(int n)&#123;</span><br><span class="line">    if(n&lt;&#x3D;1)return false;</span><br><span class="line">    for(int i&#x3D;2; i&lt;&#x3D;sqrt(1.0*n); ++i)&#123;</span><br><span class="line">        if(n%i&#x3D;&#x3D;0)return false;</span><br><span class="line">    &#125;</span><br><span class="line">    return true;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    int n, m, tmp;</span><br><span class="line">    scanf(&quot;%d&quot;, &amp;n);</span><br><span class="line">    for(int i&#x3D;1; i&lt;&#x3D;n; ++i)&#123;</span><br><span class="line">        scanf(&quot;%d&quot;, &amp;tmp);</span><br><span class="line">        mp.insert(make_pair(tmp, i));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    scanf(&quot;%d&quot;, &amp;m);</span><br><span class="line">    for(int query&#x3D;0; query&lt;m; ++query)&#123;</span><br><span class="line">        scanf(&quot;%d&quot;, &amp;tmp);</span><br><span class="line">        if(mp.find(tmp)&#x3D;&#x3D;mp.end())&#123;</span><br><span class="line">            printf(&quot;%04d: Are you kidding?\n&quot;, tmp);</span><br><span class="line">            continue;</span><br><span class="line">        &#125;</span><br><span class="line">        if(is_appear[tmp])&#123;</span><br><span class="line">            printf(&quot;%04d: Checked\n&quot;,tmp);</span><br><span class="line">            continue;</span><br><span class="line">        &#125;</span><br><span class="line">        else if(mp[tmp]&#x3D;&#x3D;1)&#123;</span><br><span class="line">            printf(&quot;%04d: Mystery Award\n&quot;, tmp);</span><br><span class="line">            is_appear[tmp] &#x3D; true;</span><br><span class="line">        &#125;</span><br><span class="line">        else if(is_prime(mp[tmp]))&#123;</span><br><span class="line">            printf(&quot;%04d: Minion\n&quot;, tmp);</span><br><span class="line">            is_appear[tmp] &#x3D; true;</span><br><span class="line">        &#125;</span><br><span class="line">        else&#123;</span><br><span class="line">            printf(&quot;%04d: Chocolate\n&quot;, tmp);</span><br><span class="line">            is_appear[tmp] &#x3D; true; </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;map&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">map</span>&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; mp;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> max_n = <span class="number">10010</span>;</span><br><span class="line"><span class="keyword">bool</span> is_appear[max_n] = &#123;<span class="literal">false</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">is_prime</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(n&lt;=<span class="number">1</span>)<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">2</span>; i&lt;=<span class="built_in">sqrt</span>(<span class="number">1.0</span>*n); ++i)&#123;</span><br><span class="line">        <span class="keyword">if</span>(n%i==<span class="number">0</span>)<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n, m, tmp;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;n);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>; i&lt;=n; ++i)&#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;tmp);</span><br><span class="line">        mp.insert(<span class="built_in">make_pair</span>(tmp, i));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;m);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> query=<span class="number">0</span>; query&lt;m; ++query)&#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;tmp);</span><br><span class="line">        <span class="keyword">if</span>(mp.find(tmp)==mp.end())&#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;%04d: Are you kidding?\n&quot;</span>, tmp);</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(is_appear[tmp])&#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;%04d: Checked\n&quot;</span>,tmp);</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(mp[tmp]==<span class="number">1</span>)&#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;%04d: Mystery Award\n&quot;</span>, tmp);</span><br><span class="line">            is_appear[tmp] = <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(is_prime(mp[tmp]))&#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;%04d: Minion\n&quot;</span>, tmp);</span><br><span class="line">            is_appear[tmp] = <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;%04d: Chocolate\n&quot;</span>, tmp);</span><br><span class="line">            is_appear[tmp] = <span class="literal">true</span>; </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
 
@@ -419,11 +419,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">在线笔试题</a>
+                <a href="javascript:void(0)" class="js-tag color3">数据结构 算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">数据结构 算法</a>
+                <a href="javascript:void(0)" class="js-tag color1">在线笔试题</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -451,6 +451,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">STL源码剖析</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">传输层协议</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">tips</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">c</a>
               </li>
              
@@ -459,15 +471,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">protobuf</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">并查集</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">c/c++关键字</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">堆</a>
+                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+                <a href="javascript:void(0)" class="js-tag color2">堆</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -499,15 +523,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">tips</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">排序</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">并查集</a>
               </li>
              
               <li class="article-tag-list-item">

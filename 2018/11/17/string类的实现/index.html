@@ -8,15 +8,15 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>string类的实现 | 乐行僧的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="12345678910111213141516171819202122232425262728293031323334#include &lt;cstring&gt;class Cstring&amp;#123;private:	char* _data;public:	Cstring(const char* str)&amp;#123;		if(str!&#x3D;NULL)&amp;#123;			_data &amp;#">
+  <meta name="description" content="12345678910111213141516171819202122232425262728293031323334#include &lt;cstring&gt;class Cstring&amp;#123;private:	char* _data;public:	Cstring(const char* str)&amp;#123;		if(str!&#x3D;NULL)&amp;#123;			_data &#x3D; new c">
 <meta property="og:type" content="article">
 <meta property="og:title" content="string类的实现">
 <meta property="og:url" content="http://example.com/2018/11/17/string%E7%B1%BB%E7%9A%84%E5%AE%9E%E7%8E%B0/index.html">
 <meta property="og:site_name" content="乐行僧的博客">
-<meta property="og:description" content="12345678910111213141516171819202122232425262728293031323334#include &lt;cstring&gt;class Cstring&amp;#123;private:	char* _data;public:	Cstring(const char* str)&amp;#123;		if(str!&#x3D;NULL)&amp;#123;			_data &amp;#">
+<meta property="og:description" content="12345678910111213141516171819202122232425262728293031323334#include &lt;cstring&gt;class Cstring&amp;#123;private:	char* _data;public:	Cstring(const char* str)&amp;#123;		if(str!&#x3D;NULL)&amp;#123;			_data &#x3D; new c">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2018-11-17T03:35:15.000Z">
-<meta property="article:modified_time" content="2020-11-29T19:35:24.735Z">
+<meta property="article:modified_time" content="2020-11-30T00:58:25.364Z">
 <meta property="article:author" content="lexingsen">
 <meta name="twitter:card" content="summary">
   
@@ -184,7 +184,7 @@
       
         <a id="more"></a>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;cstring&gt;</span><br><span class="line">class Cstring&#123;</span><br><span class="line">private:</span><br><span class="line">	char* _data;</span><br><span class="line">public:</span><br><span class="line">	Cstring(const char* str)&#123;</span><br><span class="line">		if(str!&#x3D;NULL)&#123;</span><br><span class="line">			_data &#x3D; new char[strlen(str)+1];</span><br><span class="line">			strcpy(_data,str);</span><br><span class="line">		&#125;	</span><br><span class="line">		else&#123;</span><br><span class="line">			_data &#x3D;new char[1];</span><br><span class="line">			*_data &#x3D; &#39;\0&#39;;</span><br><span class="line">			&#x2F;*这样处理的好处是将NULL和非NULL统一处理，Cstring中其他成员函数不需要</span><br><span class="line">			对_data是NULL和非NULL分别进行处理，简化成员函数的逻辑*&#x2F;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	Cstring(const Cstring&amp; src)&#123;</span><br><span class="line">		this-&gt;_data &#x3D; new char[strlen(str)+1];</span><br><span class="line">		strcpy(_data,strc._data);</span><br><span class="line">	&#125;</span><br><span class="line">	Cstring&amp; operator&#x3D;(const Cstring&amp; src)&#123;</span><br><span class="line">		if(this &#x3D;&#x3D; &amp;src)&#123;</span><br><span class="line">			return *this;</span><br><span class="line">		&#125;</span><br><span class="line">		delete[] this-&gt;_data;</span><br><span class="line">		this-&gt;_data &#x3D; new char[strlen(src._data)+1]；</span><br><span class="line">		strcpy(this-&gt;_data,src._data);</span><br><span class="line">		return *this;</span><br><span class="line">	&#125;</span><br><span class="line">	~Cstring()&#123;</span><br><span class="line">		delete[] _data;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Cstring</span>&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="keyword">char</span>* _data;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	Cstring(<span class="keyword">const</span> <span class="keyword">char</span>* str)&#123;</span><br><span class="line">		<span class="keyword">if</span>(str!=<span class="literal">NULL</span>)&#123;</span><br><span class="line">			_data = <span class="keyword">new</span> <span class="keyword">char</span>[<span class="built_in">strlen</span>(str)+<span class="number">1</span>];</span><br><span class="line">			<span class="built_in">strcpy</span>(_data,str);</span><br><span class="line">		&#125;	</span><br><span class="line">		<span class="keyword">else</span>&#123;</span><br><span class="line">			_data =<span class="keyword">new</span> <span class="keyword">char</span>[<span class="number">1</span>];</span><br><span class="line">			*_data = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line">			<span class="comment">/*这样处理的好处是将NULL和非NULL统一处理，Cstring中其他成员函数不需要</span></span><br><span class="line"><span class="comment">			对_data是NULL和非NULL分别进行处理，简化成员函数的逻辑*/</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	Cstring(<span class="keyword">const</span> Cstring&amp; src)&#123;</span><br><span class="line">		<span class="keyword">this</span>-&gt;_data = <span class="keyword">new</span> <span class="keyword">char</span>[<span class="built_in">strlen</span>(str)+<span class="number">1</span>];</span><br><span class="line">		<span class="built_in">strcpy</span>(_data,strc._data);</span><br><span class="line">	&#125;</span><br><span class="line">	Cstring&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> Cstring&amp; src)&#123;</span><br><span class="line">		<span class="keyword">if</span>(<span class="keyword">this</span> == &amp;src)&#123;</span><br><span class="line">			<span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">delete</span>[] <span class="keyword">this</span>-&gt;_data;</span><br><span class="line">		<span class="keyword">this</span>-&gt;_data = <span class="keyword">new</span> <span class="keyword">char</span>[<span class="built_in">strlen</span>(src._data)+<span class="number">1</span>]；</span><br><span class="line">		<span class="built_in">strcpy</span>(<span class="keyword">this</span>-&gt;_data,src._data);</span><br><span class="line">		<span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	~Cstring()&#123;</span><br><span class="line">		<span class="keyword">delete</span>[] _data;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
       
 
@@ -410,11 +410,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">在线笔试题</a>
+                <a href="javascript:void(0)" class="js-tag color3">数据结构 算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">数据结构 算法</a>
+                <a href="javascript:void(0)" class="js-tag color1">在线笔试题</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -442,6 +442,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">STL源码剖析</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">传输层协议</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">tips</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">c</a>
               </li>
              
@@ -450,15 +462,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">protobuf</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">并查集</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">c/c++关键字</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">堆</a>
+                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+                <a href="javascript:void(0)" class="js-tag color2">堆</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -490,15 +514,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">tips</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">排序</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">并查集</a>
               </li>
              
               <li class="article-tag-list-item">

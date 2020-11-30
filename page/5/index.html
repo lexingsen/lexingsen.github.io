@@ -196,7 +196,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">c++</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">protobuf</a>
         		</li>
       		
 		</ul>
@@ -208,7 +208,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/c-c//" class="article-tag-list-link color1">c/c++</a>
+        			<a href="/categories/rpc//" class="article-tag-list-link color4">rpc</a>
         		</li>
       		
 		</ul>
@@ -276,14 +276,14 @@
 <p><font size=6 face=consonlas color=black><strong>一、protobuf简介</strong></font><br><font size=5 face=consonlas>protobuf (protocol buffer)是google公司实现的一种数据交换的格式，由于其是一种二进制的格式，相对于xml,json进行数据交换要快很多，且占用存储空间更小。因此可以把它用于分布式应用之间的数据通信的数据交换格式，作为一种效率和兼容性都非常优秀的二进制数据传输格式。</font></p>
 <p><font size=6 face=consonlas color=black><strong>二、protobuf的基础语法及编译命令</strong></font><br><font size=5 face=consonlas>由于protobuf独立于平台语言，Google为其提供了多种语言的实现，包括Java,C++,Go,Python等，并且为每一种实现都包含了相应语言的编译器和库文件，方便不同语言开发者的使用。</p>
 <p><font size=5 face=consonlas color=black><strong>(1)基础语法</strong></font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">syntax &#x3D; &quot;proto3&quot;;</span><br><span class="line">package testprotobuf;</span><br><span class="line"></span><br><span class="line">message Person &#123;</span><br><span class="line">	string name &#x3D; 1; &#x2F;&#x2F; 字符串类型</span><br><span class="line">	int32 age &#x3D; 2; &#x2F;&#x2F; int32类型</span><br><span class="line">	enum Sex &#123;    &#x2F;&#x2F;枚举类型</span><br><span class="line">		MAN &#x3D; 0;</span><br><span class="line">		WOMAN &#x3D; 1;</span><br><span class="line">	&#125;</span><br><span class="line">	Sex sex &#x3D; 3;</span><br><span class="line">	bool flag &#x3D; 4; &#x2F;&#x2F; bool类型</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">syntax = <span class="string">&quot;proto3&quot;</span>;</span><br><span class="line">package testprotobuf;</span><br><span class="line"></span><br><span class="line">message Person &#123;</span><br><span class="line">	<span class="built_in">string</span> name = <span class="number">1</span>; <span class="comment">// 字符串类型</span></span><br><span class="line">	int32 age = <span class="number">2</span>; <span class="comment">// int32类型</span></span><br><span class="line">	<span class="class"><span class="keyword">enum</span> <span class="title">Sex</span> &#123;</span>    <span class="comment">//枚举类型</span></span><br><span class="line">		MAN = <span class="number">0</span>;</span><br><span class="line">		WOMAN = <span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	Sex sex = <span class="number">3</span>;</span><br><span class="line">	<span class="keyword">bool</span> flag = <span class="number">4</span>; <span class="comment">// bool类型</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><font size=5 face=consonlas color=black><strong>(2)编译</strong></font><br><font size=5 face=consonlas>使用protoc讲proto文件，编译生成C++的源文件和头文件，如对test1.proto进行编译：<br><code>protoc test1.proto --cpp_out=./</code><br>生成test1.pb.cc和test1.pb.h文件</p>
 <p><font size=6 face=consonlas color=black><strong>三、使用proto文件生成的类，对对象进行序列化和反序列化</strong></font></p>
 <p><font size=5 face=consonlas color=black><strong>(1)序列化</strong></font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;test1.pb.h&quot;</span><br><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;string&gt;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line">using namespace testprotobuf;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">  Person p;</span><br><span class="line">  p.set_age(10);</span><br><span class="line">  p.set_name(&quot;zhangsan&quot;);</span><br><span class="line">  p.set_sex(testprotobuf::Person::MAN);</span><br><span class="line">  p.set_flag(false);</span><br><span class="line"></span><br><span class="line">  &#x2F;&#x2F; 序列化</span><br><span class="line">  std::string msg;</span><br><span class="line">  if (p.SerializeToString(&amp;msg)) &#123;</span><br><span class="line">    cout &lt;&lt; msg.c_str() &lt;&lt; endl;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;test1.pb.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> testprotobuf;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  Person p;</span><br><span class="line">  p.set_age(<span class="number">10</span>);</span><br><span class="line">  p.set_name(<span class="string">&quot;zhangsan&quot;</span>);</span><br><span class="line">  p.set_sex(testprotobuf::Person::MAN);</span><br><span class="line">  p.set_flag(<span class="literal">false</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 序列化</span></span><br><span class="line">  <span class="built_in">std</span>::<span class="built_in">string</span> msg;</span><br><span class="line">  <span class="keyword">if</span> (p.SerializeToString(&amp;msg)) &#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; msg.c_str() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><code>g++ main.cc test1.pb.cc -lprotobuf -o main</code></p>
 <p><font size=5 face=consonlas color=black><strong>(2)反序列化</strong></font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;test1.pb.h&quot;</span><br><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;string&gt;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line">using namespace testprotobuf;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">  Person p;</span><br><span class="line">  p.set_age(10);</span><br><span class="line">  p.set_name(&quot;zhangsan&quot;);</span><br><span class="line">  p.set_sex(testprotobuf::Person::MAN);</span><br><span class="line">  p.set_flag(false);</span><br><span class="line"></span><br><span class="line">  &#x2F;&#x2F; 序列化</span><br><span class="line">  std::string msg;</span><br><span class="line">  if (p.SerializeToString(&amp;msg)) &#123;</span><br><span class="line">    cout &lt;&lt; msg.c_str() &lt;&lt; endl;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">	&#x2F;&#x2F; 反序列化</span><br><span class="line">   Person p1;</span><br><span class="line">   if (p1.ParseFromString(msg)) &#123;</span><br><span class="line">     cout &lt;&lt; p1.name() &lt;&lt; endl;</span><br><span class="line">     cout &lt;&lt; p1.age() &lt;&lt; endl;</span><br><span class="line">     cout &lt;&lt; p1.sex() &lt;&lt; endl;</span><br><span class="line">     cout &lt;&lt; p1.flag() &lt;&lt; endl;</span><br><span class="line">  &#125;</span><br><span class="line">  return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;test1.pb.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> testprotobuf;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  Person p;</span><br><span class="line">  p.set_age(<span class="number">10</span>);</span><br><span class="line">  p.set_name(<span class="string">&quot;zhangsan&quot;</span>);</span><br><span class="line">  p.set_sex(testprotobuf::Person::MAN);</span><br><span class="line">  p.set_flag(<span class="literal">false</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 序列化</span></span><br><span class="line">  <span class="built_in">std</span>::<span class="built_in">string</span> msg;</span><br><span class="line">  <span class="keyword">if</span> (p.SerializeToString(&amp;msg)) &#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; msg.c_str() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 反序列化</span></span><br><span class="line">   Person p1;</span><br><span class="line">   <span class="keyword">if</span> (p1.ParseFromString(msg)) &#123;</span><br><span class="line">     <span class="built_in">cout</span> &lt;&lt; p1.name() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">     <span class="built_in">cout</span> &lt;&lt; p1.age() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">     <span class="built_in">cout</span> &lt;&lt; p1.sex() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">     <span class="built_in">cout</span> &lt;&lt; p1.flag() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
 
@@ -297,7 +297,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">c++</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">protobuf</a>
         		</li>
       		
 		</ul>
@@ -309,7 +309,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/c-c//" class="article-tag-list-link color1">c/c++</a>
+        			<a href="/categories/rpc//" class="article-tag-list-link color4">rpc</a>
         		</li>
       		
 		</ul>
@@ -465,7 +465,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">11 176</span><br></pre></td></tr></table></figure>
 <p><font size=5 face="consolas" color=blue>题目分析：数组hash的使用，这个题目队员编号没啥意义，统计成绩。找最大值及其下标即可。</font></p>
 <p><font size=5 face="consolas"  color=black><strong>AC代码：</strong></font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">const int max_n &#x3D; 1000;</span><br><span class="line">int arr[max_n] &#x3D; &#123;0&#125;;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    int n, a, b, score;</span><br><span class="line">    scanf(&quot;%d&quot;, &amp;n);</span><br><span class="line">    for(int i&#x3D;0; i&lt;n; ++i)&#123;</span><br><span class="line">        scanf(&quot;%d-%d %d&quot;, &amp;a, &amp;b, &amp;score);</span><br><span class="line">        arr[a] +&#x3D; score;</span><br><span class="line">    &#125;</span><br><span class="line">    int max_score, index;</span><br><span class="line">    for(int i&#x3D;1; i&lt;&#x3D;1000; ++i)&#123;</span><br><span class="line">        if(arr[i]&gt;max_score)&#123;</span><br><span class="line">            index &#x3D; i;</span><br><span class="line">            max_score &#x3D; arr[i];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cout&lt;&lt;index&lt;&lt;&quot; &quot;&lt;&lt;max_score&lt;&lt;endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> max_n = <span class="number">1000</span>;</span><br><span class="line"><span class="keyword">int</span> arr[max_n] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n, a, b, score;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;n);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;n; ++i)&#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%d-%d %d&quot;</span>, &amp;a, &amp;b, &amp;score);</span><br><span class="line">        arr[a] += score;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> max_score, index;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>; i&lt;=<span class="number">1000</span>; ++i)&#123;</span><br><span class="line">        <span class="keyword">if</span>(arr[i]&gt;max_score)&#123;</span><br><span class="line">            index = i;</span><br><span class="line">            max_score = arr[i];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;index&lt;&lt;<span class="string">&quot; &quot;</span>&lt;&lt;max_score&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
 
@@ -955,13 +955,24 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">操作系统</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/linux//" class="article-tag-list-link color1">linux</a>
+        			<a href="/categories/Linux//" class="article-tag-list-link color1">Linux</a>
         		</li>
       		
 		</ul>
@@ -1038,13 +1049,24 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">操作系统</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/linux//" class="article-tag-list-link color1">linux</a>
+        			<a href="/categories/Linux//" class="article-tag-list-link color1">Linux</a>
         		</li>
       		
 		</ul>
@@ -1185,11 +1207,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">在线笔试题</a>
+                <a href="javascript:void(0)" class="js-tag color3">数据结构 算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">数据结构 算法</a>
+                <a href="javascript:void(0)" class="js-tag color1">在线笔试题</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1217,6 +1239,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">STL源码剖析</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">传输层协议</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">tips</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">c</a>
               </li>
              
@@ -1225,15 +1259,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">protobuf</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">并查集</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">c/c++关键字</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">堆</a>
+                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+                <a href="javascript:void(0)" class="js-tag color2">堆</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1265,15 +1311,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">tips</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">排序</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">并查集</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -16,7 +16,7 @@
 <meta property="og:description" content="PAT 1138.Postorder Traversal（25）Suppose that all the keys in a binary tree are distinct positive integers. Given the preorder and inorder traversal sequences, you are supposed to output the first nu">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-04-06T16:39:57.000Z">
-<meta property="article:modified_time" content="2020-11-29T19:35:22.403Z">
+<meta property="article:modified_time" content="2020-11-30T01:05:32.529Z">
 <meta property="article:author" content="lexingsen">
 <meta name="twitter:card" content="summary">
   
@@ -193,7 +193,7 @@
 <p><font size=5 face="Consolas" color=blue>题目分析：模板题，根据中序遍历和前序遍历求解后序遍历序列的第一个元素。</font></p>
 <p><font size=5 color=red>注意：应该牢牢掌握以下三种二叉树的重构。<br>1.前序+中序<br>2.中序+后序<br>3.中序+层序</p>
 <p><font size=5 face="Consolas" color=black>AC代码：</font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">const int maxn &#x3D; 50010;</span><br><span class="line">int mid[maxn] &#x3D; &#123;0&#125;;</span><br><span class="line">int pre[maxn] &#x3D; &#123;0&#125;;</span><br><span class="line">int post[maxn] &#x3D; &#123;0&#125;;</span><br><span class="line">int n, idx&#x3D;1;</span><br><span class="line"></span><br><span class="line">struct node&#123;</span><br><span class="line">    int data;</span><br><span class="line">    node* lchild;</span><br><span class="line">    node* rchild;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">node* build(int preL, int preR, int inL, int inR)&#123;</span><br><span class="line">    if(preL &gt; preR)return NULL;</span><br><span class="line">    node* root &#x3D; new node;</span><br><span class="line">    root-&gt;data &#x3D; pre[preL];</span><br><span class="line">    int k;</span><br><span class="line">    for(k &#x3D; inL; k&lt;&#x3D;inR; ++k)&#123;</span><br><span class="line">        if(mid[k] &#x3D;&#x3D; pre[preL])</span><br><span class="line">            break;</span><br><span class="line">    &#125;</span><br><span class="line">    int numLeft &#x3D; k - inL;</span><br><span class="line">    root-&gt;lchild &#x3D; build(preL+1, preL+numLeft, inL, k-1);</span><br><span class="line">    root-&gt;rchild &#x3D; build(preL+numLeft+1, preR, k+1, inR);</span><br><span class="line">    return root;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void postorder(node* root)&#123;</span><br><span class="line">    if(root)&#123;</span><br><span class="line">        postorder(root-&gt;lchild);</span><br><span class="line">        postorder(root-&gt;rchild);</span><br><span class="line">        post[idx ++] &#x3D; root-&gt;data;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">int main()&#123;</span><br><span class="line">    scanf(&quot;%d&quot;, &amp;n);</span><br><span class="line">    for(int i&#x3D;1; i&lt;&#x3D;n; ++i)&#123;scanf(&quot;%d&quot;, &amp;pre[i]);&#125;</span><br><span class="line">    for(int i&#x3D;1; i&lt;&#x3D;n; ++i)&#123;scanf(&quot;%d&quot;, &amp;mid[i]);&#125;</span><br><span class="line">    node* root &#x3D; build(1, n, 1, n);</span><br><span class="line">    postorder(root);</span><br><span class="line">    cout&lt;&lt;post[1]&lt;&lt;endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">50010</span>;</span><br><span class="line"><span class="keyword">int</span> mid[maxn] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line"><span class="keyword">int</span> pre[maxn] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line"><span class="keyword">int</span> post[maxn] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line"><span class="keyword">int</span> n, idx=<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span>&#123;</span></span><br><span class="line">    <span class="keyword">int</span> data;</span><br><span class="line">    node* lchild;</span><br><span class="line">    node* rchild;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function">node* <span class="title">build</span><span class="params">(<span class="keyword">int</span> preL, <span class="keyword">int</span> preR, <span class="keyword">int</span> inL, <span class="keyword">int</span> inR)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(preL &gt; preR)<span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    node* root = <span class="keyword">new</span> node;</span><br><span class="line">    root-&gt;data = pre[preL];</span><br><span class="line">    <span class="keyword">int</span> k;</span><br><span class="line">    <span class="keyword">for</span>(k = inL; k&lt;=inR; ++k)&#123;</span><br><span class="line">        <span class="keyword">if</span>(mid[k] == pre[preL])</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> numLeft = k - inL;</span><br><span class="line">    root-&gt;lchild = build(preL+<span class="number">1</span>, preL+numLeft, inL, k<span class="number">-1</span>);</span><br><span class="line">    root-&gt;rchild = build(preL+numLeft+<span class="number">1</span>, preR, k+<span class="number">1</span>, inR);</span><br><span class="line">    <span class="keyword">return</span> root;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">postorder</span><span class="params">(node* root)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(root)&#123;</span><br><span class="line">        postorder(root-&gt;lchild);</span><br><span class="line">        postorder(root-&gt;rchild);</span><br><span class="line">        post[idx ++] = root-&gt;data;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;n);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>; i&lt;=n; ++i)&#123;<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;pre[i]);&#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>; i&lt;=n; ++i)&#123;<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;mid[i]);&#125;</span><br><span class="line">    node* root = build(<span class="number">1</span>, n, <span class="number">1</span>, n);</span><br><span class="line">    postorder(root);</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;post[<span class="number">1</span>]&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
 
@@ -287,7 +287,7 @@
     </a>
   
   
-    <a href="/2019/04/06/PAT%E8%80%83%E8%AF%95%20%E5%B8%B8%E7%94%A8%E6%8A%80%E5%B7%A7%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2019/04/06/PAT%E8%80%83%E8%AF%95%20%E5%B8%B8%E7%94%A8%E6%8A%80%E5%B7%A7/" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-title">PAT考试 常用技巧（持续更新）</div>
       <i class="icon-circle-right"></i>
     </a>
@@ -419,11 +419,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">在线笔试题</a>
+                <a href="javascript:void(0)" class="js-tag color3">数据结构 算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">数据结构 算法</a>
+                <a href="javascript:void(0)" class="js-tag color1">在线笔试题</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -451,6 +451,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">STL源码剖析</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">传输层协议</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">tips</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">c</a>
               </li>
              
@@ -459,15 +471,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">protobuf</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">并查集</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">c/c++关键字</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">堆</a>
+                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+                <a href="javascript:void(0)" class="js-tag color2">堆</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -499,15 +523,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">tips</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">排序</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">并查集</a>
               </li>
              
               <li class="article-tag-list-item">

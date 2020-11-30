@@ -16,7 +16,7 @@
 <meta property="og:description" content="PAT 1004.Counting Leaves（30）A family hierarchy is usually presented by a pedigree tree. Your job is to count those family members who have no child. 输入格式：Each input file contains one test case. Each">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-05-19T14:21:45.000Z">
-<meta property="article:modified_time" content="2020-11-29T19:35:22.139Z">
+<meta property="article:modified_time" content="2020-11-30T01:06:23.273Z">
 <meta property="article:author" content="lexingsen">
 <meta name="twitter:card" content="summary">
   
@@ -195,7 +195,7 @@
 <p><font size=5 face="Consolas" color=blue>题目分析：输出多叉树中每层中叶子节点的数目。可以使用dfs或bfs。由于题目中提示了节点编号，可以使用静态树结构，使用邻接表的方式存储每个节点的孩子节点的编号。其实也是一种hash的思想，hash[parentIndex] = {}，只不过其对应的是一个集合。</font></p>
 <p><font size=4 face="Consolas" color=black>使用bfs时，当前队列中的元素即为当前层上的所有节点，只需要枚举每个节点是否有孩子，如果有就将其所有孩子都继入队列，如果没有在则当前层的叶子节点个数+1。<br></font></p>
 <p><font size=5 face="Consolas" color=black>AC代码（<font color=red>bfs</font>）：</font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;queue&gt;</span><br><span class="line">#include &lt;vector&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">vector&lt;int&gt; tree[100];&#x2F;&#x2F;邻接表存储树</span><br><span class="line">int floor[100];&#x2F;&#x2F;每层叶子节点的个数</span><br><span class="line">int index&#x3D;0;&#x2F;&#x2F;根节点在第0层</span><br><span class="line"></span><br><span class="line">void bfs(int root)&#123;</span><br><span class="line">	queue&lt;int&gt; q;</span><br><span class="line">	q.push()；</span><br><span class="line">	while(!q.empty())&#123;</span><br><span class="line">		int size &#x3D; q.size();</span><br><span class="line">		&#x2F;&#x2F;注意不能写成for(int i&#x3D;0; i&lt;q.size(); ++i)这样q.size()是会改变的</span><br><span class="line">		&#x2F;&#x2F;因为每次枚举一个队首元素  都会出队 所以q.size() -&#x3D; 1;</span><br><span class="line">		for(int i&#x3D;0; i&lt;size; ++i)&#123;</span><br><span class="line">			int front &#x3D; q.front();q.pop();</span><br><span class="line">			if(!tree[front].size())&#123;  &#x2F;&#x2F;没有孩子节点  说明是叶子节点</span><br><span class="line">				floor[index] ++;</span><br><span class="line">			&#125; </span><br><span class="line">			else&#123;</span><br><span class="line">				&#x2F;&#x2F;不是叶子节点  将其所有的孩子节点入队</span><br><span class="line">				for(int j&#x3D;0; j&lt;tree[front].size(); ++j)&#123;</span><br><span class="line">					q.push(tree[front][j]);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		index ++;&#x2F;&#x2F;下一层</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    int n, m, k, p, c;</span><br><span class="line">    scanf(&quot;%d%d&quot;, &amp;n, &amp;m);</span><br><span class="line">    for(int i&#x3D;0; i&lt;m; ++i)&#123;</span><br><span class="line">        scanf(&quot;%d %d&quot;, &amp;p, &amp;k);</span><br><span class="line">        while(k --)&#123;</span><br><span class="line">            scanf(&quot;%d&quot;, &amp;c);</span><br><span class="line">            tree[p].push_back(c);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    bfs(1);</span><br><span class="line">    for(int i&#x3D;0; i&lt;index; ++i)&#123;</span><br><span class="line">        printf(&quot;%d&quot;, floor[i]);</span><br><span class="line">        if(i!&#x3D;index-1)printf(&quot; &quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; tree[<span class="number">100</span>];<span class="comment">//邻接表存储树</span></span><br><span class="line"><span class="keyword">int</span> <span class="built_in">floor</span>[<span class="number">100</span>];<span class="comment">//每层叶子节点的个数</span></span><br><span class="line"><span class="keyword">int</span> index=<span class="number">0</span>;<span class="comment">//根节点在第0层</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">bfs</span><span class="params">(<span class="keyword">int</span> root)</span></span>&#123;</span><br><span class="line">	<span class="built_in">queue</span>&lt;<span class="keyword">int</span>&gt; q;</span><br><span class="line">	q.push()；</span><br><span class="line">	<span class="keyword">while</span>(!q.empty())&#123;</span><br><span class="line">		<span class="keyword">int</span> size = q.size();</span><br><span class="line">		<span class="comment">//注意不能写成for(int i=0; i&lt;q.size(); ++i)这样q.size()是会改变的</span></span><br><span class="line">		<span class="comment">//因为每次枚举一个队首元素  都会出队 所以q.size() -= 1;</span></span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;size; ++i)&#123;</span><br><span class="line">			<span class="keyword">int</span> front = q.front();q.pop();</span><br><span class="line">			<span class="keyword">if</span>(!tree[front].size())&#123;  <span class="comment">//没有孩子节点  说明是叶子节点</span></span><br><span class="line">				<span class="built_in">floor</span>[index] ++;</span><br><span class="line">			&#125; </span><br><span class="line">			<span class="keyword">else</span>&#123;</span><br><span class="line">				<span class="comment">//不是叶子节点  将其所有的孩子节点入队</span></span><br><span class="line">				<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>; j&lt;tree[front].size(); ++j)&#123;</span><br><span class="line">					q.push(tree[front][j]);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		index ++;<span class="comment">//下一层</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n, m, k, p, c;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>, &amp;n, &amp;m);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;m; ++i)&#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%d %d&quot;</span>, &amp;p, &amp;k);</span><br><span class="line">        <span class="keyword">while</span>(k --)&#123;</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;c);</span><br><span class="line">            tree[p].push_back(c);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    bfs(<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;index; ++i)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>, <span class="built_in">floor</span>[i]);</span><br><span class="line">        <span class="keyword">if</span>(i!=index<span class="number">-1</span>)<span class="built_in">printf</span>(<span class="string">&quot; &quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><font size=5 face="Consolas" color=black>AC代码<font color=red>(dfs)</font>：</font></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;int&gt; tree[100];</span><br><span class="line">int floor[100];</span><br><span class="line">int maxDepth&#x3D;-1;&#x2F;&#x2F;这个变量用于确定该树有几层</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;dfs需要传入的参数   当前节点的索引    当前节点所在的深度</span><br><span class="line">void dfs(int p, int depth)&#123;</span><br><span class="line">	&#x2F;&#x2F;递归出口</span><br><span class="line">	&#x2F;&#x2F;没有孩子节点  说明找到一个叶子节点</span><br><span class="line">	if(!tree[p].size())&#123;</span><br><span class="line">		floor[depth] ++;&#x2F;&#x2F;当前层叶子节点个数+1</span><br><span class="line">		&#x2F;&#x2F;更新最大的深度</span><br><span class="line">		maxDepth &#x3D; max(depth, maxDepth);</span><br><span class="line">		return ;</span><br><span class="line">	&#125;</span><br><span class="line">	else&#123;</span><br><span class="line">		&#x2F;&#x2F;不是叶子节点，枚举其所有孩子节点是否为叶子节点</span><br><span class="line">		for(int i&#x3D;0; i&lt;tree[p].size(); ++i)</span><br><span class="line">			dfs(tree[p][i], depth+1); &#x2F;&#x2F;孩子节点的深度比当前节点的深度大1</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    int n, m, k, p, c;</span><br><span class="line">    scanf(&quot;%d%d&quot;, &amp;n, &amp;m);</span><br><span class="line">    for(int i&#x3D;0; i&lt;m; ++i)&#123;</span><br><span class="line">        scanf(&quot;%d %d&quot;, &amp;p, &amp;k);</span><br><span class="line">        while(k --)&#123;</span><br><span class="line">            scanf(&quot;%d&quot;, &amp;c);</span><br><span class="line">            tree[p].push_back(c);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  	dfs(1, 0);&#x2F;&#x2F;根节点的索引为1   根节点所在层为0</span><br><span class="line">    for(int i&#x3D;0; i&lt;&#x3D;maxDepth; ++i)&#123;</span><br><span class="line">        printf(&quot;%d&quot;, floor[i]);</span><br><span class="line">        if(i!&#x3D;maxDepth)printf(&quot; &quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -424,11 +424,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">在线笔试题</a>
+                <a href="javascript:void(0)" class="js-tag color3">数据结构 算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">数据结构 算法</a>
+                <a href="javascript:void(0)" class="js-tag color1">在线笔试题</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -456,6 +456,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">STL源码剖析</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">传输层协议</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">tips</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">c</a>
               </li>
              
@@ -464,15 +476,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">protobuf</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">并查集</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">c/c++关键字</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">堆</a>
+                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+                <a href="javascript:void(0)" class="js-tag color2">堆</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -504,15 +528,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">tips</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">排序</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">并查集</a>
               </li>
              
               <li class="article-tag-list-item">

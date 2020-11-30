@@ -8,15 +8,15 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>PAT考试 常用技巧（持续更新） | 乐行僧的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1.字符串中的大小写转换 1s[i] ^&#x3D; 32;&#x2F;&#x2F;位运算，速度快   2.排名的实现（有并列的情况）,一般将排名的对象存放在容器中。 123456789101112131415struct peo&amp;#123;	int score;&amp;#125;;vector&lt;peo&gt; v;int main()&amp;#123;	....省略部分	int rank &amp;#x3">
+  <meta name="description" content="1.字符串中的大小写转换 1s[i] ^&#x3D; 32;&#x2F;&#x2F;位运算，速度快   2.排名的实现（有并列的情况）,一般将排名的对象存放在容器中。 123456789101112131415struct peo&amp;#123;	int score;&amp;#125;;vector&lt;peo&gt; v;int main()&amp;#123;	....省略部分	int rank &#x3D; 0, pre &#x3D; -1;    f">
 <meta property="og:type" content="article">
 <meta property="og:title" content="PAT考试 常用技巧（持续更新）">
-<meta property="og:url" content="http://example.com/2019/04/06/PAT%E8%80%83%E8%AF%95%20%E5%B8%B8%E7%94%A8%E6%8A%80%E5%B7%A7%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/index.html">
+<meta property="og:url" content="http://example.com/2019/04/06/PAT%E8%80%83%E8%AF%95%20%E5%B8%B8%E7%94%A8%E6%8A%80%E5%B7%A7/index.html">
 <meta property="og:site_name" content="乐行僧的博客">
-<meta property="og:description" content="1.字符串中的大小写转换 1s[i] ^&#x3D; 32;&#x2F;&#x2F;位运算，速度快   2.排名的实现（有并列的情况）,一般将排名的对象存放在容器中。 123456789101112131415struct peo&amp;#123;	int score;&amp;#125;;vector&lt;peo&gt; v;int main()&amp;#123;	....省略部分	int rank &amp;#x3">
+<meta property="og:description" content="1.字符串中的大小写转换 1s[i] ^&#x3D; 32;&#x2F;&#x2F;位运算，速度快   2.排名的实现（有并列的情况）,一般将排名的对象存放在容器中。 123456789101112131415struct peo&amp;#123;	int score;&amp;#125;;vector&lt;peo&gt; v;int main()&amp;#123;	....省略部分	int rank &#x3D; 0, pre &#x3D; -1;    f">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-04-06T15:26:34.000Z">
-<meta property="article:modified_time" content="2020-11-29T19:35:22.411Z">
+<meta property="article:modified_time" content="2020-11-30T01:02:54.430Z">
 <meta property="article:author" content="lexingsen">
 <meta name="twitter:card" content="summary">
   
@@ -149,7 +149,7 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-PAT考试 常用技巧（持续更新）" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-PAT考试 常用技巧" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
@@ -172,7 +172,7 @@
         
         <!--显示阅读次数完毕-->
         
-        <a href="/2019/04/06/PAT%E8%80%83%E8%AF%95%20%E5%B8%B8%E7%94%A8%E6%8A%80%E5%B7%A7%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/" class="archive-article-date">
+        <a href="/2019/04/06/PAT%E8%80%83%E8%AF%95%20%E5%B8%B8%E7%94%A8%E6%8A%80%E5%B7%A7/" class="archive-article-date">
   	<time datetime="2019-04-06T15:26:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-06</time>
 </a>
         
@@ -185,17 +185,17 @@
         <a id="more"></a>
 
 <p><font size=4 face="Consolas" color=blue>1.字符串中的大小写转换</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s[i] ^&#x3D; 32;&#x2F;&#x2F;位运算，速度快</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s[i] ^= <span class="number">32</span>;<span class="comment">//位运算，速度快</span></span><br></pre></td></tr></table></figure>
 
 
 <p><font size=4 face="Consolas" color=blue>2.排名的实现（有并列的情况）,一般将排名的对象存放在容器中。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">struct peo&#123;</span><br><span class="line">	int score;</span><br><span class="line">&#125;;</span><br><span class="line">vector&lt;peo&gt; v;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">	....省略部分</span><br><span class="line">	int rank &#x3D; 0, pre &#x3D; -1;</span><br><span class="line">    for(int i&#x3D;0; i&lt;v.size(); i++)&#123;</span><br><span class="line">        if (pre !&#x3D; v[i].score) rank &#x3D; i + 1;</span><br><span class="line">        pre &#x3D; v[i].score;</span><br><span class="line">        printf(&quot;%d &quot;, rank);</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">peo</span>&#123;</span></span><br><span class="line">	<span class="keyword">int</span> score;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">vector</span>&lt;peo&gt; v;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	....省略部分</span><br><span class="line">	<span class="keyword">int</span> rank = <span class="number">0</span>, pre = <span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;v.size(); i++)&#123;</span><br><span class="line">        <span class="keyword">if</span> (pre != v[i].score) rank = i + <span class="number">1</span>;</span><br><span class="line">        pre = v[i].score;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>, rank);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><font size=4 face="Consolas" color=blue>3.不想写C/C++头文件，直接写下边一个就可以</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;bits&#x2F;stdc++.h&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br></pre></td></tr></table></figure>
 <p><font size=4 face="Consolas" color=blue>4.使cin,cout与printf,scanf效率一致。在默认的情况下cin绑定的是cout，每次执行 &lt;&lt; 操作符的时候都要调用flush，这样会增加IO负担。可以通过tie(0)（0表示NULL）来解除cin与cout的绑定，进一步加快执行效率。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ios::sync_with_stdio(false); </span><br><span class="line">cin.tie(0);</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ios::sync_with_stdio(<span class="literal">false</span>); </span><br><span class="line"><span class="built_in">cin</span>.tie(<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
 <p><font size=4 face="Consolas" color=blue>5.时间的处理， PAT表示时间的一般形式为”hh:mm:ss”,因此可以统一转换为秒方便计算。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hh:mm:ss   time(秒) &#x3D; hh*3600 + mm*60 + ss</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hh:mm:<span class="function">ss   <span class="title">time</span><span class="params">(秒)</span> </span>= hh*<span class="number">3600</span> + mm*<span class="number">60</span> + ss</span><br></pre></td></tr></table></figure>
 
       
 
@@ -265,7 +265,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2019/04/06/PAT%E8%80%83%E8%AF%95%20%E5%B8%B8%E7%94%A8%E6%8A%80%E5%B7%A7%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2019/04/06/PAT%E8%80%83%E8%AF%95%20%E5%B8%B8%E7%94%A8%E6%8A%80%E5%B7%A7/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -421,11 +421,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">在线笔试题</a>
+                <a href="javascript:void(0)" class="js-tag color3">数据结构 算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">数据结构 算法</a>
+                <a href="javascript:void(0)" class="js-tag color1">在线笔试题</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -453,6 +453,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">STL源码剖析</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">传输层协议</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">tips</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">c</a>
               </li>
              
@@ -461,15 +473,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">protobuf</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">并查集</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">c/c++关键字</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">堆</a>
+                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+                <a href="javascript:void(0)" class="js-tag color2">堆</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -501,15 +525,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">tips</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">排序</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">并查集</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -8,15 +8,15 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>python 记录欧几里得算法 | 乐行僧的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="一、递归法 1234567#保证a&gt;bdef gcd(a,b):		if b&#x3D;&#x3D;0:		return a	else:		return gcd(b, a%b)  一、递推法 12345678910def gcd(a, b)	if a&lt;b:		a,b &#x3D; b,a	else:		while(b &gt; 0):			r &#x3D; a%b			a &amp;#x3">
+  <meta name="description" content="一、递归法 1234567#保证a&gt;bdef gcd(a,b):		if b&#x3D;&#x3D;0:		return a	else:		return gcd(b, a%b)  一、递推法 12345678910def gcd(a, b)	if a&lt;b:		a,b &#x3D; b,a	else:		while(b &gt; 0):			r &#x3D; a%b			a &#x3D; b			b &#x3D; r	return a">
 <meta property="og:type" content="article">
 <meta property="og:title" content="python 记录欧几里得算法">
 <meta property="og:url" content="http://example.com/2019/02/22/python%20%E8%AE%B0%E5%BD%95%E6%AC%A7%E5%87%A0%E9%87%8C%E5%BE%97%E7%AE%97%E6%B3%95/index.html">
 <meta property="og:site_name" content="乐行僧的博客">
-<meta property="og:description" content="一、递归法 1234567#保证a&gt;bdef gcd(a,b):		if b&#x3D;&#x3D;0:		return a	else:		return gcd(b, a%b)  一、递推法 12345678910def gcd(a, b)	if a&lt;b:		a,b &#x3D; b,a	else:		while(b &gt; 0):			r &#x3D; a%b			a &amp;#x3">
+<meta property="og:description" content="一、递归法 1234567#保证a&gt;bdef gcd(a,b):		if b&#x3D;&#x3D;0:		return a	else:		return gcd(b, a%b)  一、递推法 12345678910def gcd(a, b)	if a&lt;b:		a,b &#x3D; b,a	else:		while(b &gt; 0):			r &#x3D; a%b			a &#x3D; b			b &#x3D; r	return a">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-02-22T01:38:31.000Z">
-<meta property="article:modified_time" content="2020-11-29T19:35:24.191Z">
+<meta property="article:modified_time" content="2020-11-30T01:00:51.167Z">
 <meta property="article:author" content="lexingsen">
 <meta name="twitter:card" content="summary">
   
@@ -185,10 +185,10 @@
         <a id="more"></a>
 
 <p><font size=4 face="Course New">一、递归法</font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#保证a&gt;b</span><br><span class="line"></span><br><span class="line">def gcd(a,b):	</span><br><span class="line">	if b&#x3D;&#x3D;0:</span><br><span class="line">		return a</span><br><span class="line">	else:</span><br><span class="line">		return gcd(b, a%b)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#保证a&gt;b</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span>(<span class="params">a,b</span>):</span>	</span><br><span class="line">	<span class="keyword">if</span> b==<span class="number">0</span>:</span><br><span class="line">		<span class="keyword">return</span> a</span><br><span class="line">	<span class="keyword">else</span>:</span><br><span class="line">		<span class="keyword">return</span> gcd(b, a%b)</span><br></pre></td></tr></table></figure>
 
 <p><font size=4 face="Course New">一、递推法</font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">def gcd(a, b)</span><br><span class="line">	if a&lt;b:</span><br><span class="line">		a,b &#x3D; b,a</span><br><span class="line">	else:</span><br><span class="line">		while(b &gt; 0):</span><br><span class="line">			r &#x3D; a%b</span><br><span class="line">			a &#x3D; b</span><br><span class="line">			b &#x3D; r</span><br><span class="line">	return a</span><br><span class="line">			</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span>(<span class="params">a, b</span>)</span></span><br><span class="line"><span class="function">	<span class="title">if</span> <span class="title">a</span>&lt;<span class="title">b</span>:</span></span><br><span class="line">		a,b = b,a</span><br><span class="line">	<span class="keyword">else</span>:</span><br><span class="line">		<span class="keyword">while</span>(b &gt; <span class="number">0</span>):</span><br><span class="line">			r = a%b</span><br><span class="line">			a = b</span><br><span class="line">			b = r</span><br><span class="line">	<span class="keyword">return</span> a</span><br><span class="line">			</span><br></pre></td></tr></table></figure>
 
       
 
@@ -203,7 +203,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/python//" class="article-tag-list-link color2">python</a>
+        			<a href="/categories/python-算法基础//" class="article-tag-list-link color2">python 算法基础</a>
         		</li>
       		
 		</ul>
@@ -414,11 +414,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">在线笔试题</a>
+                <a href="javascript:void(0)" class="js-tag color3">数据结构 算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">数据结构 算法</a>
+                <a href="javascript:void(0)" class="js-tag color1">在线笔试题</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -446,6 +446,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">STL源码剖析</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">传输层协议</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">tips</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">c</a>
               </li>
              
@@ -454,15 +466,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">protobuf</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">并查集</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">c/c++关键字</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">堆</a>
+                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+                <a href="javascript:void(0)" class="js-tag color2">堆</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -494,15 +518,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">tips</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">排序</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">并查集</a>
               </li>
              
               <li class="article-tag-list-item">

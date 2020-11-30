@@ -16,7 +16,7 @@
 <meta property="og:description" content="PAT 1105 Spiral Matrix（25）This time your job is to fill a sequence of N positive integers into a spiral matrix in non-increasing order. A spiral matrix is filled in from the first element at the upp">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-04-08T14:10:09.000Z">
-<meta property="article:modified_time" content="2020-11-29T19:35:22.159Z">
+<meta property="article:modified_time" content="2020-11-30T01:05:45.729Z">
 <meta property="article:author" content="lexingsen">
 <meta name="twitter:card" content="summary">
   
@@ -194,7 +194,7 @@
 
 <p><font size=5 face="Consolas" color=blue>题目分析：模拟题。</font></p>
 <p><font size=5 face="Consolas" color=black>AC代码：</font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;vector&gt;</span><br><span class="line">#include &lt;algorithm&gt;</span><br><span class="line">#include &lt;cmath&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">vector&lt;int&gt; v;</span><br><span class="line"></span><br><span class="line">int main(void)&#123;</span><br><span class="line">    int k, tmp;</span><br><span class="line">    scanf(&quot;%d&quot;, &amp;k);</span><br><span class="line">    for(int i&#x3D;0; i&lt;k; ++i)&#123;</span><br><span class="line">        scanf(&quot;%d&quot;, &amp;tmp);</span><br><span class="line">        v.push_back(tmp);</span><br><span class="line">    &#125;</span><br><span class="line">    sort(v.begin(), v.end(), [](int a, int b)&#123;return a&gt;b;&#125;);</span><br><span class="line">    int n &#x3D; floor(sqrt(1.0*k));</span><br><span class="line">    while(k % n!&#x3D;0)n--;</span><br><span class="line">    int m &#x3D; k &#x2F; n;</span><br><span class="line"></span><br><span class="line">    int arr[m][n];</span><br><span class="line">    bool st[m][n];</span><br><span class="line">    fill(st[0],st[0]+n*m,false);</span><br><span class="line">    fill(arr[0],arr[0]+n*m,0);</span><br><span class="line"></span><br><span class="line">    int idx &#x3D; 0;</span><br><span class="line">    int dx[4] &#x3D; &#123;-1,0,1,0&#125;,dy[4] &#x3D; &#123;0,1,0,-1&#125;;</span><br><span class="line">    int x&#x3D;0,y&#x3D;0,d&#x3D;1;</span><br><span class="line"></span><br><span class="line">    for(int i&#x3D;0; i&lt;n*m; ++i)&#123;</span><br><span class="line">        arr[x][y] &#x3D; v[idx ++];</span><br><span class="line">        st[x][y] &#x3D; true;</span><br><span class="line">        int a&#x3D;x+dx[d], b&#x3D;y+dy[d];</span><br><span class="line"></span><br><span class="line">        if(a&lt;0 || a&gt;&#x3D;m || b&lt;0 || b&gt;&#x3D;n || st[a][b])&#123;</span><br><span class="line">            d &#x3D; (d+1)%4;</span><br><span class="line">            a &#x3D; x+dx[d],b&#x3D;y+dy[d];</span><br><span class="line">        &#125;</span><br><span class="line">        x&#x3D;a,y&#x3D;b;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    for(int i&#x3D;0; i&lt;m; ++i)&#123;</span><br><span class="line">        for(int j&#x3D;0; j&lt;n; ++j)&#123;</span><br><span class="line">            printf(&quot;%d&quot;,arr[i][j]);</span><br><span class="line">            if(j!&#x3D;n-1)printf(&quot; &quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        printf(&quot;\n&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> k, tmp;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;k);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;k; ++i)&#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;tmp);</span><br><span class="line">        v.push_back(tmp);</span><br><span class="line">    &#125;</span><br><span class="line">    sort(v.begin(), v.end(), [](<span class="keyword">int</span> a, <span class="keyword">int</span> b)&#123;<span class="keyword">return</span> a&gt;b;&#125;);</span><br><span class="line">    <span class="keyword">int</span> n = <span class="built_in">floor</span>(<span class="built_in">sqrt</span>(<span class="number">1.0</span>*k));</span><br><span class="line">    <span class="keyword">while</span>(k % n!=<span class="number">0</span>)n--;</span><br><span class="line">    <span class="keyword">int</span> m = k / n;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> arr[m][n];</span><br><span class="line">    <span class="keyword">bool</span> st[m][n];</span><br><span class="line">    fill(st[<span class="number">0</span>],st[<span class="number">0</span>]+n*m,<span class="literal">false</span>);</span><br><span class="line">    fill(arr[<span class="number">0</span>],arr[<span class="number">0</span>]+n*m,<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> idx = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> dx[<span class="number">4</span>] = &#123;<span class="number">-1</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>&#125;,dy[<span class="number">4</span>] = &#123;<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">-1</span>&#125;;</span><br><span class="line">    <span class="keyword">int</span> x=<span class="number">0</span>,y=<span class="number">0</span>,d=<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;n*m; ++i)&#123;</span><br><span class="line">        arr[x][y] = v[idx ++];</span><br><span class="line">        st[x][y] = <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">int</span> a=x+dx[d], b=y+dy[d];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(a&lt;<span class="number">0</span> || a&gt;=m || b&lt;<span class="number">0</span> || b&gt;=n || st[a][b])&#123;</span><br><span class="line">            d = (d+<span class="number">1</span>)%<span class="number">4</span>;</span><br><span class="line">            a = x+dx[d],b=y+dy[d];</span><br><span class="line">        &#125;</span><br><span class="line">        x=a,y=b;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;m; ++i)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>; j&lt;n; ++j)&#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>,arr[i][j]);</span><br><span class="line">            <span class="keyword">if</span>(j!=n<span class="number">-1</span>)<span class="built_in">printf</span>(<span class="string">&quot; &quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
 
@@ -420,11 +420,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">在线笔试题</a>
+                <a href="javascript:void(0)" class="js-tag color3">数据结构 算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">数据结构 算法</a>
+                <a href="javascript:void(0)" class="js-tag color1">在线笔试题</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -452,6 +452,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">STL源码剖析</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">传输层协议</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">tips</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">c</a>
               </li>
              
@@ -460,15 +472,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">protobuf</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">并查集</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">c/c++关键字</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">堆</a>
+                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+                <a href="javascript:void(0)" class="js-tag color2">堆</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -500,15 +524,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">tips</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">排序</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">并查集</a>
               </li>
              
               <li class="article-tag-list-item">

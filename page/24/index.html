@@ -991,11 +991,11 @@
         <a id="more"></a>
 
 <p><font size=5 color=black>MSDN手册中对volatile关键字的解释：</font><br><img src="https://img-blog.csdn.net/20180803232242803?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><font size=5 color=red>大概的翻译：</font><br><font size=5 color=black>volatile关键字是一个类型限定符，用于声明一个对象可以通过其他语句(例如操作系统、硬件或并发执行的线程)在程序中进行修改。<br></font><br><font size=5 color=black>volatile关键字的两个功能：</font><br><font size=4>（1）防止编译器对汇编指令做顺序上的优化。<br>（2）防止寄存器存储变量的副本值。   应用在多线程中</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">int gdata&#x3D;10;&#x2F;&#x2F;全局变量</span><br><span class="line">int fun()&#123;</span><br><span class="line">	gdata&#x3D;20;</span><br><span class="line">&#125;</span><br><span class="line">thread1线程1&#123;</span><br><span class="line">	fun();</span><br><span class="line">&#125;</span><br><span class="line">thread2线程2&#123;</span><br><span class="line">	int a&#x3D;gdata;</span><br><span class="line">	&#x2F;&#x2F;mov eax,dword ptr[gdata]</span><br><span class="line">	&#x2F;&#x2F;mov dword ptr[c],eax</span><br><span class="line">	int c&#x3D;gdata;&#x2F;&#x2F;mov dword ptr[c],eax</span><br><span class="line">	&#x2F;&#x2F;为了优化指令，编译器认为两次赋值中间没有对gdata进行赋值</span><br><span class="line">	&#x2F;&#x2F;第二次对c赋值使用gdata存储在寄存器eax的副本值	</span><br><span class="line"></span><br><span class="line">	&#x2F;*实际上会存在这样的情况，由于时间片轮转技术。当分配给线程2时间</span><br><span class="line">	片用完时，恰巧将mov dword ptr[c],eax执行完毕。此时，时间片分</span><br><span class="line">	线程1，当线程1执行完毕后，gdata&#x3D;20。时间片再次分配给线程1，现场</span><br><span class="line">	恢复后，int c&#x3D;gdata用的暂存在eax寄存器中的gadta&#x3D;10,而此时</span><br><span class="line">	gdata&#x3D;20,显然时错误的*&#x2F;</span><br><span class="line">	&#x2F;&#x2F;因此，为了防止类似这样的错误，可以加volatile关键字，防止寄存器</span><br><span class="line">	&#x2F;&#x2F;存储变量的副本值</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> gdata=<span class="number">10</span>;<span class="comment">//全局变量</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">fun</span><span class="params">()</span></span>&#123;</span><br><span class="line">	gdata=<span class="number">20</span>;</span><br><span class="line">&#125;</span><br><span class="line">thread1线程<span class="number">1</span>&#123;</span><br><span class="line">	fun();</span><br><span class="line">&#125;</span><br><span class="line">thread2线程<span class="number">2</span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a=gdata;</span><br><span class="line">	<span class="comment">//mov eax,dword ptr[gdata]</span></span><br><span class="line">	<span class="comment">//mov dword ptr[c],eax</span></span><br><span class="line">	<span class="keyword">int</span> c=gdata;<span class="comment">//mov dword ptr[c],eax</span></span><br><span class="line">	<span class="comment">//为了优化指令，编译器认为两次赋值中间没有对gdata进行赋值</span></span><br><span class="line">	<span class="comment">//第二次对c赋值使用gdata存储在寄存器eax的副本值	</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">/*实际上会存在这样的情况，由于时间片轮转技术。当分配给线程2时间</span></span><br><span class="line"><span class="comment">	片用完时，恰巧将mov dword ptr[c],eax执行完毕。此时，时间片分</span></span><br><span class="line"><span class="comment">	线程1，当线程1执行完毕后，gdata=20。时间片再次分配给线程1，现场</span></span><br><span class="line"><span class="comment">	恢复后，int c=gdata用的暂存在eax寄存器中的gadta=10,而此时</span></span><br><span class="line"><span class="comment">	gdata=20,显然时错误的*/</span></span><br><span class="line">	<span class="comment">//因此，为了防止类似这样的错误，可以加volatile关键字，防止寄存器</span></span><br><span class="line">	<span class="comment">//存储变量的副本值</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </font>
 
 <p><font size=5 color=black>指令的调优</font><br><font size=4>1.编译器对指令的调优      使用<code> volatile</code>关键字</font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">void fun(int *a)&#123;*a&#x3D;10;int b&#x3D;*a;&#125;</span><br><span class="line">&#x2F;&#x2F;上述的代码，进过汇编编译器可能优化汇编指令为：</span><br><span class="line">void fun(int *a)&#123;int b&#x3D;*a;*a&#x3D;10;&#125;</span><br><span class="line">&#x2F;&#x2F;如果不需要或防止编译器对汇编指令作顺序的优化，添加volatile关键字限定</span><br><span class="line">void fun(volatile int* a)&#123;*a&#x3D;10;int b&#x3D;*a&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fun</span><span class="params">(<span class="keyword">int</span> *a)</span></span>&#123;*a=<span class="number">10</span>;<span class="keyword">int</span> b=*a;&#125;</span><br><span class="line"><span class="comment">//上述的代码，进过汇编编译器可能优化汇编指令为：</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fun</span><span class="params">(<span class="keyword">int</span> *a)</span></span>&#123;<span class="keyword">int</span> b=*a;*a=<span class="number">10</span>;&#125;</span><br><span class="line"><span class="comment">//如果不需要或防止编译器对汇编指令作顺序的优化，添加volatile关键字限定</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fun</span><span class="params">(<span class="keyword">volatile</span> <span class="keyword">int</span>* a)</span></span>&#123;*a=<span class="number">10</span>;<span class="keyword">int</span> b=*a&#125;</span><br></pre></td></tr></table></figure>
 <p><font size=4>2.程序执行时cpu对指令的调优     barrier()</font><br>当程序开始执行时，由于CPU的流水线技术，可能会对指令进行顺序上的调优。以达到指令级并行，提高指令执行的速度。但是如果程序员不希望发生顺序的调优，则可在可能发生调优的上下程序段之间添加<code>barrier();</code>以防止CPU对指令的调优。</p>
 
       
@@ -1005,6 +1005,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">c/c++关键字</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
@@ -1152,11 +1163,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">在线笔试题</a>
+                <a href="javascript:void(0)" class="js-tag color3">数据结构 算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">数据结构 算法</a>
+                <a href="javascript:void(0)" class="js-tag color1">在线笔试题</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1184,6 +1195,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">STL源码剖析</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">传输层协议</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">tips</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">c</a>
               </li>
              
@@ -1192,15 +1215,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">protobuf</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">并查集</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">c/c++关键字</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">堆</a>
+                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+                <a href="javascript:void(0)" class="js-tag color2">堆</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1232,15 +1267,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">tips</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">排序</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">并查集</a>
               </li>
              
               <li class="article-tag-list-item">

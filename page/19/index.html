@@ -180,7 +180,7 @@
 <p><font size=5 face="Courier New" color=red>输出格式：</font><br><font size=4 face="Courier New">输出冠军和菜鸟的编号，中间空 1 格。题目保证他们是唯一的。</p>
 <p><font size=6 face="Courier New" color=blue>题目分析：距离求解+排序</font></p>
 <p><font size=4 face="Courier New">代码实现：</font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;cstdio&gt;</span><br><span class="line">#include &lt;cmath&gt;</span><br><span class="line">#include &lt;string&gt;</span><br><span class="line">#include &lt;vector&gt;</span><br><span class="line">#include &lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">struct Person&#123;</span><br><span class="line">    string name;</span><br><span class="line">    double distance;</span><br><span class="line"></span><br><span class="line">    Person(string name, double distance)&#123;</span><br><span class="line">        this-&gt;name &#x3D; name;</span><br><span class="line">        this-&gt;distance &#x3D; distance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">double dis(int x, int y)&#123;</span><br><span class="line">    double d &#x3D; sqrt(x*x+y*y);</span><br><span class="line">    return d;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">vector&lt;Person&gt; vec;</span><br><span class="line"></span><br><span class="line">bool cmp(Person a, Person b)&#123;</span><br><span class="line">    return a.distance &lt;  b.distance;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">   &#x2F;&#x2F; freopen(&quot;in.txt&quot;, &quot;r&quot;, stdin);</span><br><span class="line">    int n, x, y;</span><br><span class="line">    scanf(&quot;%d&quot;, &amp;n);</span><br><span class="line">    string name;</span><br><span class="line">    for(int i&#x3D;0; i&lt;n; ++i)&#123;</span><br><span class="line">        cin&gt;&gt;name&gt;&gt;x&gt;&gt;y;</span><br><span class="line">        vec.push_back(Person(name, dis(x,y)));</span><br><span class="line">    &#125;</span><br><span class="line">    sort(vec.begin(), vec.end(), cmp);</span><br><span class="line"></span><br><span class="line">    printf(&quot;%s %s\n&quot;, vec[0].name.c_str(), vec[vec.size()-1].name.c_str());</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Person</span>&#123;</span></span><br><span class="line">    <span class="built_in">string</span> name;</span><br><span class="line">    <span class="keyword">double</span> distance;</span><br><span class="line"></span><br><span class="line">    Person(<span class="built_in">string</span> name, <span class="keyword">double</span> distance)&#123;</span><br><span class="line">        <span class="keyword">this</span>-&gt;name = name;</span><br><span class="line">        <span class="keyword">this</span>-&gt;distance = distance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">dis</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span></span>&#123;</span><br><span class="line">    <span class="keyword">double</span> d = <span class="built_in">sqrt</span>(x*x+y*y);</span><br><span class="line">    <span class="keyword">return</span> d;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">vector</span>&lt;Person&gt; vec;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">cmp</span><span class="params">(Person a, Person b)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a.distance &lt;  b.distance;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">   <span class="comment">// freopen(&quot;in.txt&quot;, &quot;r&quot;, stdin);</span></span><br><span class="line">    <span class="keyword">int</span> n, x, y;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;n);</span><br><span class="line">    <span class="built_in">string</span> name;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;n; ++i)&#123;</span><br><span class="line">        <span class="built_in">cin</span>&gt;&gt;name&gt;&gt;x&gt;&gt;y;</span><br><span class="line">        vec.push_back(Person(name, dis(x,y)));</span><br><span class="line">    &#125;</span><br><span class="line">    sort(vec.begin(), vec.end(), cmp);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%s %s\n&quot;</span>, vec[<span class="number">0</span>].name.c_str(), vec[vec.size()<span class="number">-1</span>].name.c_str());</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
       
@@ -346,10 +346,10 @@
         <a id="more"></a>
 
 <p><font size=4 face="Course New">一、递归法</font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#保证a&gt;b</span><br><span class="line"></span><br><span class="line">def gcd(a,b):	</span><br><span class="line">	if b&#x3D;&#x3D;0:</span><br><span class="line">		return a</span><br><span class="line">	else:</span><br><span class="line">		return gcd(b, a%b)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#保证a&gt;b</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span>(<span class="params">a,b</span>):</span>	</span><br><span class="line">	<span class="keyword">if</span> b==<span class="number">0</span>:</span><br><span class="line">		<span class="keyword">return</span> a</span><br><span class="line">	<span class="keyword">else</span>:</span><br><span class="line">		<span class="keyword">return</span> gcd(b, a%b)</span><br></pre></td></tr></table></figure>
 
 <p><font size=4 face="Course New">一、递推法</font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">def gcd(a, b)</span><br><span class="line">	if a&lt;b:</span><br><span class="line">		a,b &#x3D; b,a</span><br><span class="line">	else:</span><br><span class="line">		while(b &gt; 0):</span><br><span class="line">			r &#x3D; a%b</span><br><span class="line">			a &#x3D; b</span><br><span class="line">			b &#x3D; r</span><br><span class="line">	return a</span><br><span class="line">			</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span>(<span class="params">a, b</span>)</span></span><br><span class="line"><span class="function">	<span class="title">if</span> <span class="title">a</span>&lt;<span class="title">b</span>:</span></span><br><span class="line">		a,b = b,a</span><br><span class="line">	<span class="keyword">else</span>:</span><br><span class="line">		<span class="keyword">while</span>(b &gt; <span class="number">0</span>):</span><br><span class="line">			r = a%b</span><br><span class="line">			a = b</span><br><span class="line">			b = r</span><br><span class="line">	<span class="keyword">return</span> a</span><br><span class="line">			</span><br></pre></td></tr></table></figure>
 
       
 
@@ -364,7 +364,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/python//" class="article-tag-list-link color2">python</a>
+        			<a href="/categories/python-算法基础//" class="article-tag-list-link color2">python 算法基础</a>
         		</li>
       		
 		</ul>
@@ -734,7 +734,7 @@
         <a id="more"></a>
 
 <p><font size=5 face="Courier New">代码部分：</font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">class UnionFind():</span><br><span class="line">	is_root &#x3D; []  #是否为根</span><br><span class="line">	father &#x3D; []   #father[k] &#x3D; value   保存k的父亲节点</span><br><span class="line">	def __init__(self， n):</span><br><span class="line">		#为方便编写，数组下标从1开始，占用列表的零下标</span><br><span class="line">		self.isRoot.append(0)</span><br><span class="line">		self.father.append(True)</span><br><span class="line">		for i in range(1, n+1):</span><br><span class="line">			self.is_root.append(False) #初始化不为其他节点的根节点</span><br><span class="line">			self.father.append(i) #初始自己为自己的父亲</span><br><span class="line">		</span><br><span class="line">	#递归查找n的父亲节点</span><br><span class="line">	def find(self, n):</span><br><span class="line">		if self.father[n]&#x3D;&#x3D;n:</span><br><span class="line">			return n</span><br><span class="line">		else:</span><br><span class="line">			return self.find(self.father[n])</span><br><span class="line"></span><br><span class="line">	#合并操作   优化可以使用：路径压缩</span><br><span class="line">	def union(self, a, b):</span><br><span class="line">		Fa &#x3D; self.find(a)</span><br><span class="line">		Fb &#x3D; self.find(b)</span><br><span class="line">		if Fa!&#x3D;Fb:</span><br><span class="line">			self.father[Fa] &#x3D; Fb</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UnionFind</span>():</span></span><br><span class="line">	is_root = []  <span class="comment">#是否为根</span></span><br><span class="line">	father = []   <span class="comment">#father[k] = value   保存k的父亲节点</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self， n</span>):</span></span><br><span class="line">		<span class="comment">#为方便编写，数组下标从1开始，占用列表的零下标</span></span><br><span class="line">		self.isRoot.append(<span class="number">0</span>)</span><br><span class="line">		self.father.append(<span class="literal">True</span>)</span><br><span class="line">		<span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, n+<span class="number">1</span>):</span><br><span class="line">			self.is_root.append(<span class="literal">False</span>) <span class="comment">#初始化不为其他节点的根节点</span></span><br><span class="line">			self.father.append(i) <span class="comment">#初始自己为自己的父亲</span></span><br><span class="line">		</span><br><span class="line">	<span class="comment">#递归查找n的父亲节点</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">find</span>(<span class="params">self, n</span>):</span></span><br><span class="line">		<span class="keyword">if</span> self.father[n]==n:</span><br><span class="line">			<span class="keyword">return</span> n</span><br><span class="line">		<span class="keyword">else</span>:</span><br><span class="line">			<span class="keyword">return</span> self.find(self.father[n])</span><br><span class="line"></span><br><span class="line">	<span class="comment">#合并操作   优化可以使用：路径压缩</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">union</span>(<span class="params">self, a, b</span>):</span></span><br><span class="line">		Fa = self.find(a)</span><br><span class="line">		Fb = self.find(b)</span><br><span class="line">		<span class="keyword">if</span> Fa!=Fb:</span><br><span class="line">			self.father[Fa] = Fb</span><br></pre></td></tr></table></figure>
 
       
 
@@ -743,13 +743,24 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">并查集</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/python//" class="article-tag-list-link color2">python</a>
+        			<a href="/categories/python-算法基础//" class="article-tag-list-link color2">python 算法基础</a>
         		</li>
       		
 		</ul>
@@ -815,7 +826,7 @@
         <a id="more"></a>
 
 <p><font size=5 face="Courier New"><strong>代码部分：<font color=red>prime.py</font></strong></font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;时间复杂度为O(n)</span><br><span class="line">def is_prime(num):</span><br><span class="line">	if num&lt;&#x3D;1:</span><br><span class="line">		return False</span><br><span class="line">	for i in range(2,num):</span><br><span class="line">		if num%i&#x3D;&#x3D;0:</span><br><span class="line">			return False</span><br><span class="line">	return True</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;arr为列表类型，求出1-100之间的素数</span><br><span class="line">def find_prime(arr):</span><br><span class="line">	for i in range(1,101)：</span><br><span class="line">		if is_prime(i)&#x3D;&#x3D;True:</span><br><span class="line">			arr.append(i)</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;调用函数执行</span><br><span class="line">arr &#x3D; []</span><br><span class="line">find_prime(arr)</span><br><span class="line">for i in arr:</span><br><span class="line">	print(i,end&#x3D;&#39; &#39;)</span><br><span class="line">print(end&#x3D;&#39;\n&#39;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">//时间复杂度为O(n)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">is_prime</span>(<span class="params">num</span>):</span></span><br><span class="line">	<span class="keyword">if</span> num&lt;=<span class="number">1</span>:</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>,num):</span><br><span class="line">		<span class="keyword">if</span> num%i==<span class="number">0</span>:</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">	<span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"></span><br><span class="line">//arr为列表类型，求出<span class="number">1</span>-<span class="number">100</span>之间的素数</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">find_prime</span>(<span class="params">arr</span>):</span></span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">101</span>)：</span><br><span class="line">		<span class="keyword">if</span> is_prime(i)==<span class="literal">True</span>:</span><br><span class="line">			arr.append(i)</span><br><span class="line"></span><br><span class="line">//调用函数执行</span><br><span class="line">arr = []</span><br><span class="line">find_prime(arr)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> arr:</span><br><span class="line">	print(i,end=<span class="string">&#x27; &#x27;</span>)</span><br><span class="line">print(end=<span class="string">&#x27;\n&#x27;</span>)</span><br></pre></td></tr></table></figure>
 
 <p><font size=5 face="Courier New"><strong>执行结果：</strong></font><br><img src="https://img-blog.csdnimg.cn/20190104212338306.png" alt="1-100所有素数"></p>
 
@@ -832,7 +843,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/python//" class="article-tag-list-link color2">python</a>
+        			<a href="/categories/python-算法基础//" class="article-tag-list-link color2">python 算法基础</a>
         		</li>
       		
 		</ul>
@@ -897,7 +908,7 @@
       
         <a id="more"></a>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">def count_bit(num):</span><br><span class="line">	cnt &#x3D; 0</span><br><span class="line">	while num&gt;0:</span><br><span class="line">		if num&amp;1&#x3D;&#x3D;1:</span><br><span class="line">			cnt +&#x3D; 1</span><br><span class="line">		num &gt;&gt;&#x3D; 1</span><br><span class="line">	return cnt</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">def <span class="title">count_bit</span><span class="params">(num)</span>:</span></span><br><span class="line"><span class="function">	cnt </span>= <span class="number">0</span></span><br><span class="line">	<span class="keyword">while</span> num&gt;<span class="number">0</span>:</span><br><span class="line">		<span class="keyword">if</span> num&amp;<span class="number">1</span>==<span class="number">1</span>:</span><br><span class="line">			cnt += <span class="number">1</span></span><br><span class="line">		num &gt;&gt;= <span class="number">1</span></span><br><span class="line">	<span class="keyword">return</span> cnt</span><br></pre></td></tr></table></figure>
 
       
 
@@ -912,7 +923,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/python//" class="article-tag-list-link color2">python</a>
+        			<a href="/categories/python-算法基础//" class="article-tag-list-link color2">python 算法基础</a>
         		</li>
       		
 		</ul>
@@ -978,7 +989,7 @@
         <a id="more"></a>
 
 <p><font size=5 face="Courier New"><strong>代码部分</strong>：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">#test.py</span><br><span class="line"></span><br><span class="line">def swap(arr, i, j):</span><br><span class="line">	tmp &#x3D; arr[i]</span><br><span class="line">	arr[i] &#x3D; arr[j]</span><br><span class="line">	arr[j] &#x3D; tmp</span><br><span class="line"></span><br><span class="line">def show(arr,n):</span><br><span class="line">	for i in rang(0,n):</span><br><span class="line">		print(arr[i],&#39;\t&#39;,end&#x3D;&#39; &#39;)</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;全排列部分</span><br><span class="line">def perm(arr, p, q):</span><br><span class="line">	if p&#x3D;&#x3D;q:</span><br><span class="line">		show(arr,q+1)</span><br><span class="line">		print(&#39;\n&#39;)</span><br><span class="line">	for i in range(p, q+1):</span><br><span class="line">		swap(arr, p, i)</span><br><span class="line">		perm(arr, p, q+1)</span><br><span class="line">		swap(arr, p, i)</span><br><span class="line"></span><br><span class="line">arr &#x3D; [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;]</span><br><span class="line">perm(arr, 0, 2)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#test.py</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">swap</span>(<span class="params">arr, i, j</span>):</span></span><br><span class="line">	tmp = arr[i]</span><br><span class="line">	arr[i] = arr[j]</span><br><span class="line">	arr[j] = tmp</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">show</span>(<span class="params">arr,n</span>):</span></span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> rang(<span class="number">0</span>,n):</span><br><span class="line">		print(arr[i],<span class="string">&#x27;\t&#x27;</span>,end=<span class="string">&#x27; &#x27;</span>)</span><br><span class="line"></span><br><span class="line">//全排列部分</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">perm</span>(<span class="params">arr, p, q</span>):</span></span><br><span class="line">	<span class="keyword">if</span> p==q:</span><br><span class="line">		show(arr,q+<span class="number">1</span>)</span><br><span class="line">		print(<span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(p, q+<span class="number">1</span>):</span><br><span class="line">		swap(arr, p, i)</span><br><span class="line">		perm(arr, p, q+<span class="number">1</span>)</span><br><span class="line">		swap(arr, p, i)</span><br><span class="line"></span><br><span class="line">arr = [<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;c&#x27;</span>]</span><br><span class="line">perm(arr, <span class="number">0</span>, <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
 
 <p><font size=5 face="Courier New"><strong>执行结果：</strong><br><img src="https://img-blog.csdnimg.cn/20190103184159294.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="全排列结果"></p>
 
@@ -995,7 +1006,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/python//" class="article-tag-list-link color2">python</a>
+        			<a href="/categories/python-算法基础//" class="article-tag-list-link color2">python 算法基础</a>
         		</li>
       		
 		</ul>
@@ -1136,11 +1147,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">在线笔试题</a>
+                <a href="javascript:void(0)" class="js-tag color3">数据结构 算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">数据结构 算法</a>
+                <a href="javascript:void(0)" class="js-tag color1">在线笔试题</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1168,6 +1179,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">STL源码剖析</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">传输层协议</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">tips</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">c</a>
               </li>
              
@@ -1176,15 +1199,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">protobuf</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">并查集</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">c/c++关键字</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">堆</a>
+                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+                <a href="javascript:void(0)" class="js-tag color2">堆</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1216,15 +1251,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">tips</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">排序</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">并查集</a>
               </li>
              
               <li class="article-tag-list-item">
