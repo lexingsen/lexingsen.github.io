@@ -64,7 +64,7 @@
 			</ul>
 			</nav>
 			<nav>
-			总文章数 297
+			总文章数 299
 			</nav>
 		<nav class="header-smart-menu">
     		
@@ -146,6 +146,187 @@
           </div>
           <div id="js-content" class="content-ll">
             
+  
+    <article id="post-C++11-lambda表达式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/12/31/C++11-lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/">C++11-lambda表达式</a>
+    </h1>
+  
+
+        <!--显示阅读次数-->
+        
+        <!--显示阅读次数完毕-->
+        
+        <a href="/2018/12/31/C++11-lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="archive-article-date">
+  	<time datetime="2018-12-31T02:52:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-31</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+      
+        <a id="more"></a>
+
+<p><font size=5 face="Courier New">在C++11以后，形如这样的语法。<br><font color=red size=4>[capture]</font><font color=red size=4>(parameters)mutable -&gt;return-type</font><font color=red size=4>{statment}</font>称为一个lambda表达式，表达一个匿名函数。从编程的角度上看，lambda是一种函数式编程。</font></p>
+<p><font size=5 face="Courier New"><strong>分析语法:</strong><br>1.capture,可以通过值传递或者引用传递的方式给匿名函数提供访问父作用域上下文的变量。特殊的两种情况：<font color=red>[=]和[&amp;]</font>分别表示，以值传递的形式捕捉所有父作用域的变量和以引用传递的形式捕捉所有父作用域的变量。<br>2.（）参数列表形如一般的函数的参数列表。没有参数时可以忽略不写。<br>3.<font color=blue>可选择项,mutable,-&gt;return type</font>,分别表示去除匿名函数的常量性，-&gt;return type是匿名函数的返回值类型，可以忽略由编译器自动推导。添加可选项必须在此之前增加()。<br>4.{statment}函数本体。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;thread&gt;</span><br><span class="line">#include &lt;iostream&gt;</span><br><span class="line">int main()&#123;</span><br><span class="line">	[]&#123;&#125;；&#x2F;&#x2F;最简单的表达方式</span><br><span class="line">	int a&#x3D;2,b&#x3D;2;</span><br><span class="line">	[&#x3D;]()-&gt;int&#123;return a+b;&#125;;</span><br><span class="line">	[a]()&#123;cout&lt;&lt;a&lt;&lt;endl;&#125;; &#x2F;&#x2F;[var]  以传值的方式捕获</span><br><span class="line">	[&amp;b]()&#123;++b;cout&lt;&lt;b&lt;&lt;endl;&#125;&#x2F;&#x2F; [&amp;b]  以传递引用的方式捕获</span><br><span class="line"></span><br><span class="line">	&#x2F;&#x2F;可以使用匿名函数与线程结合起来</span><br><span class="line">	thread t1([]&#123;cout&lt;&lt;&quot;hello world!&quot;&lt;&lt;endl;&#125;);</span><br><span class="line">	t1.join();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier New">使用mutable关键字的区别</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int main()&#123;</span><br><span class="line">	int id &#x3D; 10;</span><br><span class="line">	auto f &#x3D; [id]()mutable&#123;</span><br><span class="line">		++ id;</span><br><span class="line">		cout&lt;&lt;&quot;id:&quot;&lt;&lt;id&lt;&lt;endl;</span><br><span class="line">	&#125;;</span><br><span class="line">	f();</span><br><span class="line">	cout&lt;&lt;&quot;main id:&quot;&lt;&lt;id&lt;&lt;endl;</span><br><span class="line">	f();</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>（1）增加mutable关键字<br><img src="https://img-blog.csdnimg.cn/20181230191217275.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>（2）不增加mutable关键字</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int main()&#123;</span><br><span class="line">	int id &#x3D; 10;</span><br><span class="line">	auto f &#x3D; [id]&#123;++id;cout&lt;&lt;&quot;id:&quot;&lt;&lt;id&lt;&lt;endl;&#125;;</span><br><span class="line">	f();</span><br><span class="line">	cout&lt;&lt;&quot;main id:&quot;&lt;&lt;id&lt;&lt;endl;</span><br><span class="line">	f();</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/20181230191545497.png" alt="在这里插入图片描述"><br><font size=5 face="Courier New">匿名函数与仿函数有着本质的相似处</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">&#x2F;&#x2F;对(）进行重载的函数，在调用()时与调用函数有着相似之处，但是是通过对象名称调用的</span><br><span class="line">class Functor&#123;</span><br><span class="line">public:</span><br><span class="line">	Functor(int a&#x3D;0,int b&#x3D;0):_a(a),_b(b)&#123;&#125;</span><br><span class="line">	void operato()()&#123;cout&lt;&lt;_a+_b&lt;&lt;endl;&#125;</span><br><span class="line">private:</span><br><span class="line">	int _a;</span><br><span class="line">	int _b;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">	Functor sum(10,20);</span><br><span class="line">	sum();</span><br><span class="line"></span><br><span class="line">	auto sum1 &#x3D; [](int a,int b)&#123;cout&lt;&lt;a+b&lt;&lt;endl;&#125;;</span><br><span class="line">	sum1(20,20);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier New">通过上述例子，除去在语法层面上的不同，仿函数和lambda表达式都是通过捕捉一些变量作为初始值，之后进行传递参数并进行计算。在形式上，仿函数通过构造函数构造进行初始化，而lambda表达通过捕捉列表[capture]获取初始值。仿函数通过对operator()重载函数的参数列表进行传参，而lambda表达式通过(parameters)参数列表进行传递参数。最后，仿函数的执行体在operator()函数体中进行运算，而lambda表达式在{}进行运算。<br><font size=5     ></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/c-c-c-11//" class="article-tag-list-link color2">c/c++ c++11</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/12/31/C++11-lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+    <article id="post-linux下检测内存泄漏" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/12/27/linux%E4%B8%8B%E6%A3%80%E6%B5%8B%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/">linux下检测内存泄漏</a>
+    </h1>
+  
+
+        <!--显示阅读次数-->
+        
+        <!--显示阅读次数完毕-->
+        
+        <a href="/2018/12/27/linux%E4%B8%8B%E6%A3%80%E6%B5%8B%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/" class="archive-article-date">
+  	<time datetime="2018-12-27T09:28:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-27</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+      
+        <a id="more"></a>
+
+<p><font size=5 face="Courier New">使用开源工具<font color=red>valgrind</font></font><br><a target="_blank" rel="noopener" href="http://valgrind.org/downloads/old.html">下载请点击，发行版本链接</a></p>
+<p><font size=5 face="Courier New">安装步骤：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1.解压文件  tar -jxvf valgrind-x.x.x.tar.bz2</span><br><span class="line">2.进入文件目录  cd  valgrind-x.x.x</span><br><span class="line">3.在目录下执行 .&#x2F;configure</span><br><span class="line">4.使用make进行自动化编译  make</span><br><span class="line">5.安装 make install</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier new"><font color=purple>ubuntu</font>用户可以使用：<code>sudo apt-get install valgrind</code>进行安装</p>
+<p><font size=5 face="Courier new">在C/C++程序中，使用指针虽然是非常高效的，但是伴随而来的一旦使用方法不得当就会造成大量的内存碎片。而C++程序对（heap memory）的申请和释放都由程序员手工完成的。但是在大型程序中，一旦出现内存泄漏的问题也难以通过一行一行的逻辑判断进行查找，这是十分痛苦的。当然智能指针(smart pointer)的出现方便管理堆内存，有兴趣的朋友们可以下载boost库的源码学习智能指针是怎么管理堆内存的以及它的特性，但是今天我们讨论的重点是如何使用开源工具检测内存泄漏。<br><a target="_blank" rel="noopener" href="https://www.boost.org/">boost c++库链接</a></p>
+<p><font size=5 face="Courier new">下面使用valgrind检测常见的内存错误，首先对常见的内存错误进行分类</font><br><font size=4 face="Courier new" color=red>1.使用野指针<br>2.重复释放同一块内存<br>3.new和delete或malloc和free没有配对使用，造成内存泄漏<br>4.使用未进行初始化的对内存</font></p>
+<p><font size=5 face="Courier New">1.使用野指针</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">test.cpp</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> *pint = <span class="keyword">new</span> <span class="keyword">int</span>;<span class="comment">//动态申请内存</span></span><br><span class="line">	*pint = <span class="number">30</span>;</span><br><span class="line">	<span class="keyword">delete</span> pint;<span class="comment">//释放内存</span></span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;*pint&lt;&lt;<span class="built_in">endl</span>;<span class="comment">//使用野指针</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">g++ test.cpp -g -o test</span><br><span class="line">valgrind --tool=memcheck ./test进行检测</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/20181227171105788.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><font size=5 face="Courier New">2.重复释放内存</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span>* pint = <span class="keyword">new</span> <span class="keyword">int</span>;</span><br><span class="line">	<span class="keyword">delete</span> pint;</span><br><span class="line">	<span class="keyword">delete</span> pint;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">g++ test.cpp -g -o test</span><br><span class="line">valgrind --tool=memcheck ./test进行检测</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/20181227171748324.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><font size=5 face="Courier New">3.new和delete或malloc和free没有配对使用，造成内存泄漏</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">test.cpp</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span>* pint = <span class="keyword">new</span> <span class="keyword">int</span>;</span><br><span class="line">	*pint = <span class="number">30</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">g++ test.cpp -o test -g</span><br><span class="line">valgrind --tool=memcheck ./test</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/20181227172330516.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><font size=5 face="Courier New">4.使用未进行初始化的对内存</font><br><img src="https://img-blog.csdnimg.cn/20181227172743656.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Linux//" class="article-tag-list-link color1">Linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/12/27/linux%E4%B8%8B%E6%A3%80%E6%B5%8B%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
     <article id="post-C++11-智能指针" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -857,183 +1038,6 @@
 
 
   
-    <article id="post-CVTE笔试题目--删除链表中的重复元素" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/16/CVTE%E7%AC%94%E8%AF%95%E9%A2%98%E7%9B%AE--%E5%88%A0%E9%99%A4%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%9A%84%E9%87%8D%E5%A4%8D%E5%85%83%E7%B4%A0/">CVTE笔试题目--删除链表中的重复元素</a>
-    </h1>
-  
-
-        <!--显示阅读次数-->
-        
-        <!--显示阅读次数完毕-->
-        
-        <a href="/2018/11/16/CVTE%E7%AC%94%E8%AF%95%E9%A2%98%E7%9B%AE--%E5%88%A0%E9%99%A4%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%9A%84%E9%87%8D%E5%A4%8D%E5%85%83%E7%B4%A0/" class="archive-article-date">
-  	<time datetime="2018-11-16T12:41:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-16</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-      
-      
-        <a id="more"></a>
-
-<p><font size=5 face="Courier New" color=black>题目描述：有时候列表中的重复元素占用空间但是并没有什么作用，请实现下列函数帮忙删除有序链表中的重复元素。只保留第一个出现的元素。</font></p>
-<p><font size=5 face="Courier New" color=black>输入样例：1-&gt;2-&gt;2-&gt;4-&gt;4-&gt;4-&gt;5-&gt;6-&gt;6-&gt;7</font><br><font size=5 face="Courier New" color=black>输出样例：1-&gt;2-&gt;4-&gt;5-&gt;6-&gt;7</font></p>
-<p><font size=5 face="Courier New" color=red>解题思路：使用一个hash数组来标记链表中元素是否出现，这样即使出现重复元素，标记的是该元素是否出现，这样就将重复的元素过滤掉。之后清空链表，因为是顺序链表，从0索引开遍历整个hash数组。将hash数组中标记为true所对应的索引push_back到链表中即可。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">RemoveRedundant</span><span class="params">(<span class="built_in">list</span>&lt;<span class="keyword">int</span>&gt;&amp; l)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> len = l.size();</span><br><span class="line">	<span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">bool</span>&gt; <span class="title">arr</span><span class="params">(len,<span class="literal">false</span>)</span></span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">auto</span> it=l.begin();it!=l.end();++it)&#123;</span><br><span class="line">		arr[*it] = <span class="literal">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	l.clear();</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;arr.size();++i)&#123;</span><br><span class="line">		<span class="keyword">if</span>(arr[i]==<span class="literal">true</span>)&#123;</span><br><span class="line">			l.push_back(i);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/笔试面试//" class="article-tag-list-link color5">笔试面试</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/11/16/CVTE%E7%AC%94%E8%AF%95%E9%A2%98%E7%9B%AE--%E5%88%A0%E9%99%A4%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%9A%84%E9%87%8D%E5%A4%8D%E5%85%83%E7%B4%A0/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
-    <article id="post-使用优先级队列实现堆排序" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/12/%E4%BD%BF%E7%94%A8%E4%BC%98%E5%85%88%E7%BA%A7%E9%98%9F%E5%88%97%E5%AE%9E%E7%8E%B0%E5%A0%86%E6%8E%92%E5%BA%8F/">使用优先级队列实现堆排序</a>
-    </h1>
-  
-
-        <!--显示阅读次数-->
-        
-        <!--显示阅读次数完毕-->
-        
-        <a href="/2018/11/12/%E4%BD%BF%E7%94%A8%E4%BC%98%E5%85%88%E7%BA%A7%E9%98%9F%E5%88%97%E5%AE%9E%E7%8E%B0%E5%A0%86%E6%8E%92%E5%BA%8F/" class="archive-article-date">
-  	<time datetime="2018-11-12T09:20:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-      
-      
-        <a id="more"></a>
-
-<p><font size=5 face="Courier New" color=black>代码实现：</font></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">heapSort</span><span class="params">(T arr[],<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="comment">//构建大根堆</span></span><br><span class="line">	<span class="comment">//如果T类型不是基本类型，是class/struct，则需要重载小于号运算符</span></span><br><span class="line">	<span class="built_in">priority_queue</span>&lt;T,<span class="built_in">vector</span>&lt;T&gt;&gt; q;<span class="comment">//缺省的情况下使用小于号，越小的优先级越高</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;++i)&#123;</span><br><span class="line">		q.push(arr[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=n<span class="number">-1</span>;i&gt;=<span class="number">0</span>;--i)&#123;</span><br><span class="line">		arr[i] = q.top();</span><br><span class="line">		q.pop();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">show</span><span class="params">(T arr[],<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;++i)&#123;</span><br><span class="line">		<span class="built_in">cout</span>&lt;&lt;arr[i]&lt;&lt;<span class="string">&quot; &quot;</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> arr[] = &#123;<span class="number">5</span>,<span class="number">3</span>,<span class="number">1</span>,<span class="number">4</span>,<span class="number">2</span>&#125;;</span><br><span class="line">	<span class="keyword">int</span> n = <span class="keyword">sizeof</span>(arr)/<span class="keyword">sizeof</span>(<span class="keyword">int</span>);</span><br><span class="line">	heapSort(arr,n);</span><br><span class="line">	show(arr,n);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><font size=5 face="Courier New" color=black>执行结果：</font><br><img src="https://img-blog.csdnimg.cn/2018111217202370.png" alt="在这里插入图片描述"></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">排序</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/数据结构//" class="article-tag-list-link color5">数据结构</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/11/12/%E4%BD%BF%E7%94%A8%E4%BC%98%E5%85%88%E7%BA%A7%E9%98%9F%E5%88%97%E5%AE%9E%E7%8E%B0%E5%A0%86%E6%8E%92%E5%BA%8F/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/19/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="page-number" href="/page/19/">19</a><span class="page-number current">20</span><a class="page-number" href="/page/21/">21</a><a class="page-number" href="/page/22/">22</a><span class="space">&hellip;</span><a class="page-number" href="/page/30/">30</a><a class="extend next" rel="next" href="/page/21/">下一页</a>
@@ -1129,11 +1133,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">在线笔试题</a>
+                <a href="javascript:void(0)" class="js-tag color3">dp</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">dp</a>
+                <a href="javascript:void(0)" class="js-tag color1">在线笔试题</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1153,11 +1157,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color5">操作系统</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">操作系统</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1289,15 +1293,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">递归</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">堆栈调用</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">c++11算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">递归</a>
               </li>
              
               <li class="article-tag-list-item">

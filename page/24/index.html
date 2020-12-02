@@ -64,7 +64,7 @@
 			</ul>
 			</nav>
 			<nav>
-			总文章数 297
+			总文章数 299
 			</nav>
 		<nav class="header-smart-menu">
     		
@@ -146,6 +146,184 @@
           </div>
           <div id="js-content" class="content-ll">
             
+  
+    <article id="post-二分查找的递归和非递归" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/14/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE%E7%9A%84%E9%80%92%E5%BD%92%E5%92%8C%E9%9D%9E%E9%80%92%E5%BD%92/">二分查找的递归和非递归</a>
+    </h1>
+  
+
+        <!--显示阅读次数-->
+        
+        <!--显示阅读次数完毕-->
+        
+        <a href="/2018/08/14/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE%E7%9A%84%E9%80%92%E5%BD%92%E5%92%8C%E9%9D%9E%E9%80%92%E5%BD%92/" class="archive-article-date">
+  	<time datetime="2018-08-14T15:08:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-14</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+      
+        <a id="more"></a>
+
+<p>二分查找的前提是数据有序，二分查找的性能十分优秀。时间复杂度为<font face="Courier New">O(log2n)</font><br><font color=red size = 4.5 face="Courier New">非递归</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">binsearch</span><span class="params">(<span class="keyword">int</span> arr[],<span class="keyword">int</span> len,<span class="keyword">int</span> value)</span></span>&#123;</span><br><span class="line">	<span class="comment">//low和high指向当前查找区间的两端,value为查找的关键字</span></span><br><span class="line">	<span class="keyword">int</span> low=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> high=len<span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">int</span> mid;<span class="comment">//当前区间的中间</span></span><br><span class="line">	<span class="keyword">while</span>(low &lt;= high)&#123;</span><br><span class="line">		mid = low + (high-low)/<span class="number">2</span>;</span><br><span class="line">		<span class="comment">//mid = (low+high)/2;这样的写法会有整型相加溢出的bug</span></span><br><span class="line">		<span class="keyword">if</span>(arr[mid] == value)&#123;</span><br><span class="line">			<span class="keyword">return</span> mid;<span class="comment">//返回下标</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(value &lt; arr[mid])&#123;</span><br><span class="line">			high = mid<span class="number">-1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span>&#123;</span><br><span class="line">			low = mid+<span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">-1</span>;<span class="comment">//未查找到返回-1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><font color=red size = 4.5 face="Courier New">递归</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">binsearch</span><span class="params">(<span class="keyword">int</span> arr[],<span class="keyword">int</span> left,<span class="keyword">int</span> right,<span class="keyword">int</span> value)</span></span>&#123;</span><br><span class="line">	<span class="comment">//递归出口</span></span><br><span class="line">	<span class="keyword">if</span>(left &gt; right)&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	mid = low + (high-low)/<span class="number">2</span>;</span><br><span class="line">	<span class="keyword">if</span>(arr[mid] == value)&#123;</span><br><span class="line">		<span class="keyword">return</span> mid;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(arr[mid] &gt; value)&#123;</span><br><span class="line">		<span class="keyword">return</span> binsearch(arr,left,mid<span class="number">-1</span>,value);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> binsearch(arr,mid+<span class="number">1</span>，right,value);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>顺序查找的时间复杂度为<font face="Courier New">O(n)，相对于二分查找性能较差</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">int seqsearch(int arr[],int len,int value)&#123;</span><br><span class="line">	for(int i&#x3D;0;i &lt; len;++i)&#123;</span><br><span class="line">		if(arr[i] &#x3D;&#x3D; value)&#123;</span><br><span class="line">			return i;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return -1;&#x2F;&#x2F;未查找到返回-1</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">二分</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/算法基础//" class="article-tag-list-link color5">算法基础</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/08/14/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE%E7%9A%84%E9%80%92%E5%BD%92%E5%92%8C%E9%9D%9E%E9%80%92%E5%BD%92/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+    <article id="post-使用vs2008编译器自带的命令行工具查看类的内存布局" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/14/%E4%BD%BF%E7%94%A8vs2008%E7%BC%96%E8%AF%91%E5%99%A8%E8%87%AA%E5%B8%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7%E6%9F%A5%E7%9C%8B%E7%B1%BB%E7%9A%84%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80/">使用vs2008编译器自带的命令行工具查看类的内存布局</a>
+    </h1>
+  
+
+        <!--显示阅读次数-->
+        
+        <!--显示阅读次数完毕-->
+        
+        <a href="/2018/08/14/%E4%BD%BF%E7%94%A8vs2008%E7%BC%96%E8%AF%91%E5%99%A8%E8%87%AA%E5%B8%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7%E6%9F%A5%E7%9C%8B%E7%B1%BB%E7%9A%84%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80/" class="archive-article-date">
+  	<time datetime="2018-08-14T11:58:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-14</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+      
+        <a id="more"></a>
+
+<p><font size=4 face="Courier New">测试代码:</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Base</span>&#123;</span></span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">	<span class="keyword">int</span> _a;</span><br><span class="line">&#125;;	</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Derive</span>:</span><span class="keyword">public</span> Base&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">int</span> _b;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=4 face="Courier New">1.打开命令行工具</font><br><img src="https://img-blog.csdn.net/2018081419421694?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><font size=4 face="Courier New">2.输入源文件路径</font><br><img src="https://img-blog.csdn.net/20180814194656692?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><font size=4 face="Courier New">3.输入<code>cl main.cpp /d1reportSingleClassLayout</code>  <code>Derivr(类名)</code>，最后加类名。<br><img src="https://img-blog.csdn.net/20180814195721805?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/c-c//" class="article-tag-list-link color1">c/c++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/08/14/%E4%BD%BF%E7%94%A8vs2008%E7%BC%96%E8%AF%91%E5%99%A8%E8%87%AA%E5%B8%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7%E6%9F%A5%E7%9C%8B%E7%B1%BB%E7%9A%84%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
     <article id="post-随机点名程序实现" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -894,187 +1072,6 @@
 
 
   
-    <article id="post-C和C++中的const修饰符的全面对比" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/02/C%E5%92%8CC++%E4%B8%AD%E7%9A%84const%E4%BF%AE%E9%A5%B0%E7%AC%A6%E7%9A%84%E5%85%A8%E9%9D%A2%E5%AF%B9%E6%AF%94/">C和C++中的const修饰符的全面对比</a>
-    </h1>
-  
-
-        <!--显示阅读次数-->
-        
-        <!--显示阅读次数完毕-->
-        
-        <a href="/2018/08/02/C%E5%92%8CC++%E4%B8%AD%E7%9A%84const%E4%BF%AE%E9%A5%B0%E7%AC%A6%E7%9A%84%E5%85%A8%E9%9D%A2%E5%AF%B9%E6%AF%94/" class="archive-article-date">
-  	<time datetime="2018-08-01T16:59:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-02</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-      
-      
-        <a id="more"></a>
-
-<p><font color=red size=5>C和C++中的const</font></p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">main.c</span><br><span class="line"><span class="comment">/*C中的const</span></span><br><span class="line"><span class="comment">const修饰的变量可以不初始化</span></span><br><span class="line"><span class="comment">const修饰的量叫常变量，不是常量</span></span><br><span class="line"><span class="comment">绝对的常量就是一个立即数，可以作为数组的下标</span></span><br><span class="line"><span class="comment">const修饰的常变量和普通变量的唯一区别是：常变量定义以后不能作为左值存在</span></span><br><span class="line"><span class="comment">常变量和普通变量的编译方式一模一样</span></span><br><span class="line"><span class="comment">同一工程下，可以引用其他文件中定义的被const修饰的全局变量</span></span><br><span class="line"><span class="comment">a.c  const int gdata = 10;//生成的符号是global属性的</span></span><br><span class="line"><span class="comment">b.c  extern const int gdata;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">const</span> <span class="keyword">int</span> a;<span class="comment">//可以不初始化，如果不初始化，以后没有办法给其一个合适的值</span></span><br><span class="line">	<span class="keyword">const</span> <span class="keyword">int</span> b = <span class="number">10</span>;</span><br><span class="line">	<span class="comment">//b = 20;//错误，不能进行赋值，常变量不能作为左值存在</span></span><br><span class="line">	<span class="comment">//int array[a] = &#123;0&#125;;//不能做为数组的下标</span></span><br><span class="line">	</span><br><span class="line">	<span class="keyword">int</span> *p = (<span class="keyword">int</span>*)&amp;b;</span><br><span class="line">	*p = <span class="number">30</span>;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;*p = %d \n&quot;</span>,*p);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;b = %d \n&quot;</span>,b);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdn.net/20180802000013997?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><img src="https://img-blog.csdn.net/20180802004308558?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">main.cpp</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">c++中的const的必须初始化</span></span><br><span class="line"><span class="comment">const修饰的量是真正的常量，可以作为数组的下标</span></span><br><span class="line"><span class="comment">（c++中const的编译规则 所有使用常量名字的地方全部替换为常量的初始值）</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">const</span> <span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line">	<span class="keyword">int</span> arr[a] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="keyword">int</span> *p = (<span class="keyword">int</span>*)&amp;a;<span class="comment">//这里引用的是a的地址，不是a的值</span></span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;p = &quot;</span>&lt;&lt;p&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;&amp;a = &quot;</span>&lt;&lt;&amp;a&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	*p = <span class="number">30</span>;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;a = &quot;</span>&lt;&lt;a&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;*p = &quot;</span>&lt;&lt;*p&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdn.net/20180802002748148?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><font size=5 color=red>什么时候const修饰的常量会退化为常变量？</font><br><font size=4.5 color=black>当const所修饰的量引用一个编译阶段不明确的值的时候，const会退化为常变量。</font></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">test.cpp</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a = <span class="number">20</span>;<span class="comment">//是指令，执行的时候才能确定下来</span></span><br><span class="line">	<span class="keyword">const</span> <span class="keyword">int</span> b = a;</span><br><span class="line">	<span class="keyword">int</span> arr[b] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdn.net/20180802003627566?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><font color=red size=5>从汇编的角度看const</font></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a = <span class="number">10</span>;<span class="comment">//mov  dword ptr[ebp-4],0Ah</span></span><br><span class="line">	<span class="keyword">const</span> <span class="keyword">int</span> b = a;<span class="comment">//退化成常变量</span></span><br><span class="line">	<span class="comment">//eax,dword ptr[ebp-4]</span></span><br><span class="line">	<span class="comment">//mov dword ptr[ebp-8],eax</span></span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;b&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">const</span> <span class="keyword">int</span> c = <span class="number">10</span>;<span class="comment">//真正的常量</span></span><br><span class="line">	<span class="comment">//mov dword ptr[ebp-0Ch],0Ah</span></span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;c&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdn.net/20180802124144678?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><font size=5 color=red>c++中const生成的符号</font><br>在c++中，定义的被const修饰的全局变量所生成的符号是local。若在其他*.cpp文件引用该全局变量，则会出现<font color=red>链接错误</font>。因为链接器只处理属性为<code>global</code>的符号，不处理属性为<code>local</code>的符号。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a.cpp</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> gdata = <span class="number">20</span>;</span><br></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdn.net/20180802004929391?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>为了使得在 <code>*.cpp</code>文件定义的被const所修饰的全局变量可以在其他 <code>*.cpp</code>文件所能引用，则需在定义就加<code>extern</code>关键字，使其生成属性为global的符号。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a.cpp</span><br><span class="line"><span class="keyword">extern</span> <span class="keyword">const</span> <span class="keyword">int</span> gdata = <span class="number">20</span>;</span><br></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdn.net/20180802005339867?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>由图可以看到，此时被const修饰的全局变量gdata所生成的符号其属性为global。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c-c//" class="article-tag-list-link color1">c/c++</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/02/C%E5%92%8CC++%E4%B8%AD%E7%9A%84const%E4%BF%AE%E9%A5%B0%E7%AC%A6%E7%9A%84%E5%85%A8%E9%9D%A2%E5%AF%B9%E6%AF%94/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
-    <article id="post-C++默认类型的转换" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/01/C++%E9%BB%98%E8%AE%A4%E7%B1%BB%E5%9E%8B%E7%9A%84%E8%BD%AC%E6%8D%A2/">c++ 默认类型的转换</a>
-    </h1>
-  
-
-        <!--显示阅读次数-->
-        
-        <!--显示阅读次数完毕-->
-        
-        <a href="/2018/08/01/C++%E9%BB%98%E8%AE%A4%E7%B1%BB%E5%9E%8B%E7%9A%84%E8%BD%AC%E6%8D%A2/" class="archive-article-date">
-  	<time datetime="2018-08-01T14:12:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-      
-      
-        <a id="more"></a>
-
-<p><font color=black>对于C/C++语言来说，在通常情况下语句和表达式的操作通常只使用一种类型的变量和常量。但在实际的开发中，往往会有不同类型的变量之间进行运算，为了满足这样的代码需求，通常在编译器中会设置不同类型自动类型转换，以完成相应的运算。但是如果我们对这样的自动类型转换不熟悉，往往会写出错误的代码，令人摸不清头脑，这种错误往往也是严重的。</font></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//测试代码一：</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> a = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">char</span> b = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">return</span> a&gt;b?<span class="string">&#x27;a&#x27;</span>:<span class="string">&#x27;b&#x27;</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><font size=4.5>对于上边的代码，表观看上去变量<code>a</code>为<code>1</code>，变量<code>b</code>为<code>-1</code>。所以上述代码的<font color=red>执行结果为a</font>,但实际上执行结果却是b，如下图。</font><br><img src="https://img-blog.csdn.net/20180801212513599?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><font color=red size=5>为什么会出现这种情况？-1难道比1大吗？</font></p>
-<p><font color=black size=4>实际上当不同类型的变量做运算时，编译器为了提高计算的精度，会进行数据的类型自动转换，按照下图的方式进行转换。</font><br><img src="https://img-blog.csdn.net/20180801214741782?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><font size=5 color=red>自动数据类型转换的规则：</font></p>
-<p><font color=black size=4>1.横向红色的箭头表示的是无条件转换，float类型数据运算时，将其转换为double类型进行运算，运算结果再转换为float；short和char类型数据在做运算时，首先转换为int，再将运算结果转换为short、char类型。</font><br><font color=black size=4>2.纵向的蓝色箭头，当不同数据类型之间进行运算时，位于箭头下方的数据类型会转换为箭头上方的数据类型。</font></p>
-<p>借助上述的规则，分析一下上述代码的执行结果为什么是b。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> a = <span class="number">1</span>;<span class="comment">//0x00000001</span></span><br><span class="line">	<span class="keyword">char</span> b = <span class="number">-1</span>;<span class="comment">//会自动转换为int类型</span></span><br><span class="line">	<span class="keyword">return</span> a&gt;b?<span class="string">&#x27;a&#x27;</span>:<span class="string">&#x27;b&#x27;</span>;</span><br><span class="line">	<span class="comment">//a &gt; b,unsigned int和int进行比较时，int会转换为unsigned int</span></span><br><span class="line">	<span class="comment">//unsigned int b = -1;//十六进制表达为  0xffffffff</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>因此，输出为b。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//测试代码二:</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">compare</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> b)</span></span>&#123;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;compare(int,int)&quot;</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> a&gt;b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">compare</span><span class="params">(<span class="keyword">float</span> a,<span class="keyword">float</span> b)</span></span>&#123;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;compare(float,float)&quot;</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> a&gt;b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	compare(<span class="number">10</span>,<span class="number">20</span>);</span><br><span class="line">	compare(<span class="number">10.1</span>,<span class="number">20.2</span>);	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>显然，上述的代码是编译不通过的。<br><img src="https://img-blog.csdn.net/20180801220549834?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>函数重载会进行类型推演，但是对于<code>compare(10.1,20.2)</code>参数首先会自动转换为<code>double</code>类型，但是进行重载时，如上图类型转换图中没有一个规定对于<code>double</code>的数据到底转换为<code>int</code>还是<code>float</code>，出现了二义性因此会出现编译错误。<br><img src="https://img-blog.csdn.net/20180801221125617?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>以上两个例子比较鲜明，对于这样编译器这样的自动类型转换，程序员需要熟稔于心，才不会写出错误的代码。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c-c//" class="article-tag-list-link color1">c/c++</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/01/C++%E9%BB%98%E8%AE%A4%E7%B1%BB%E5%9E%8B%E7%9A%84%E8%BD%AC%E6%8D%A2/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/23/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="page-number" href="/page/23/">23</a><span class="page-number current">24</span><a class="page-number" href="/page/25/">25</a><a class="page-number" href="/page/26/">26</a><span class="space">&hellip;</span><a class="page-number" href="/page/30/">30</a><a class="extend next" rel="next" href="/page/25/">下一页</a>
@@ -1170,11 +1167,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">在线笔试题</a>
+                <a href="javascript:void(0)" class="js-tag color3">dp</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">dp</a>
+                <a href="javascript:void(0)" class="js-tag color1">在线笔试题</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1194,11 +1191,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color5">操作系统</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">操作系统</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1330,15 +1327,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">递归</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">堆栈调用</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">c++11算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">递归</a>
               </li>
              
               <li class="article-tag-list-item">

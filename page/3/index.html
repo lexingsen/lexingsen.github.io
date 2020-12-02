@@ -64,7 +64,7 @@
 			</ul>
 			</nav>
 			<nav>
-			总文章数 297
+			总文章数 299
 			</nav>
 		<nav class="header-smart-menu">
     		
@@ -146,6 +146,191 @@
           </div>
           <div id="js-content" class="content-ll">
             
+  
+    <article id="post-最近公共祖先lca" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/10/24/%E6%9C%80%E8%BF%91%E5%85%AC%E5%85%B1%E7%A5%96%E5%85%88lca/">最近公共祖先lca</a>
+    </h1>
+  
+
+        <!--显示阅读次数-->
+        
+        <!--显示阅读次数完毕-->
+        
+        <a href="/2020/10/24/%E6%9C%80%E8%BF%91%E5%85%AC%E5%85%B1%E7%A5%96%E5%85%88lca/" class="archive-article-date">
+  	<time datetime="2020-10-24T10:38:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+      
+        <a id="more"></a>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> val;</span><br><span class="line">	node *left, *right;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function">node *<span class="title">lca</span><span class="params">(node *root, node *p, node *q)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (!root || root==q || root==q) <span class="keyword">return</span> root;</span><br><span class="line">	<span class="keyword">auto</span> left = lca(root-&gt;left, p, q);</span><br><span class="line">	<span class="keyword">auto</span> right = lca(root-&gt;right, p, q);</span><br><span class="line">	<span class="keyword">if</span> (!left) <span class="keyword">return</span> right;</span><br><span class="line">	<span class="keyword">if</span> (!right) <span class="keyword">return</span> left;</span><br><span class="line">	<span class="keyword">return</span> root;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">树 图</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/数据结构//" class="article-tag-list-link color5">数据结构</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/10/24/%E6%9C%80%E8%BF%91%E5%85%AC%E5%85%B1%E7%A5%96%E5%85%88lca/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+    <article id="post-二叉树的宽度" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/10/14/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%AE%BD%E5%BA%A6/">二叉树的宽度</a>
+    </h1>
+  
+
+        <!--显示阅读次数-->
+        
+        <!--显示阅读次数完毕-->
+        
+        <a href="/2020/10/14/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%AE%BD%E5%BA%A6/" class="archive-article-date">
+  	<time datetime="2020-10-13T18:10:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-14</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+      
+        <a id="more"></a>
+
+<p><font size=5 face='Lucida Sans Typewriter'>算法思想：用一个w维护当前二叉树的宽度，使用层序遍历的方式，每次入队后更新w的值。</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bit/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">TreeNode</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> val;</span><br><span class="line">	TreeNode *left, *right;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">width</span><span class="params">(TreeNode *root)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (!root) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="built_in">queue</span>&lt;TreeNode*&gt; q;</span><br><span class="line">	q.push(root);</span><br><span class="line">	<span class="keyword">int</span> w = <span class="number">1</span>;<span class="comment">// 当前二叉树的宽度为1</span></span><br><span class="line">	<span class="keyword">while</span> (!q.empty()) &#123;</span><br><span class="line">		<span class="keyword">int</span> size = q.size();</span><br><span class="line">		<span class="keyword">while</span> (size &gt; <span class="number">0</span>) &#123;</span><br><span class="line">			<span class="keyword">auto</span> f = q.front();q.pop();</span><br><span class="line">			size --;</span><br><span class="line">			<span class="keyword">if</span> (f-&gt;left) q.push(f-&gt;left);</span><br><span class="line">			<span class="keyword">if</span> (f-&gt;right) q.push(f-&gt;right);</span><br><span class="line">		&#125;</span><br><span class="line">		w = max(w, (<span class="keyword">int</span>)q.size());</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> w;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/数据结构-算法基础//" class="article-tag-list-link color5">数据结构 算法基础</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/10/14/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%AE%BD%E5%BA%A6/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
     <article id="post-平衡二叉树(AVL)C++实现" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -901,195 +1086,6 @@
 
 
   
-    <article id="post-Spooling技术" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/09/16/Spooling%E6%8A%80%E6%9C%AF/">Spooling技术</a>
-    </h1>
-  
-
-        <!--显示阅读次数-->
-        
-        <!--显示阅读次数完毕-->
-        
-        <a href="/2020/09/16/Spooling%E6%8A%80%E6%9C%AF/" class="archive-article-date">
-  	<time datetime="2020-09-16T13:30:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-16</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-      
-      
-        <a id="more"></a>
-
-<p><img src="https://img-blog.csdnimg.cn/20200916202711658.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br>输入设备将数据输入到输入缓冲区中，然后由sp in(输入进程）将输入缓冲区的数据送到位于磁盘的输入井中，当cpu需要使用输入数据时，再由磁盘的输入井读入内存。</p>
-<p>输出进程首先将输出缓冲区中的数据送到位于磁盘的输出井中，当需要输出数据时，由输出进程将输出井的数据先搬运到位于内存的输出缓冲区中，然后再将输出缓冲区中的数据送往IO设备。</p>
-<p>空间换时间</p>
-<p>何为虚拟设备？Spooling系统如何实现虚拟设备的？<br>试说明Spooling系统的组成？<br>为什么要在设备管理中引入缓冲技术？<br>spooling系统的含义是什么？<br>为什么要引入spooling系统？spooling系统可以带来的好处有哪些？<br>为什么要引入缓冲区？unix系统如何管理缓冲区？<br>举例说明什么是Spooling系统（也称之为伪脱机技术）？<br>为什么要引入spooling系统？请说明spooling系统的作用？<br>spooling技术是如何实现的？</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">操作系统</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/操作系统//" class="article-tag-list-link color5">操作系统</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/09/16/Spooling%E6%8A%80%E6%9C%AF/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
-    <article id="post-01背包问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/09/16/01%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/">01背包问题</a>
-    </h1>
-  
-
-        <!--显示阅读次数-->
-        
-        <!--显示阅读次数完毕-->
-        
-        <a href="/2020/09/16/01%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/" class="archive-article-date">
-  	<time datetime="2020-09-16T12:03:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-16</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-      
-      
-        <a id="more"></a>
-
-<p><strong>有N件物品和一个容量为V的背包。放入第i件物品耗费的空间是vi，得到的价值是wi。求解将哪些物品装入背包可以使得价值之和最大。</strong></p>
-<p><strong>二维数组的暴力解法，未涉及空间优化。</strong><br>首先用子问题来定义状态，f[i][j]表示前i个物品放到容量为j的空间总价值最大。f[i][j]这个状态是由i-1推过来的，这里有两种考虑：第i中物品选择还是不选择，如果不选择f[i][j]==f[i-1][j]，如果选择f[i][j] = max(f[i-1][j], f[i-1][j-v[i]]+w[i])。<br><strong>max(f[i-1][j], f[i-1][j-v[i]]+w[i])的解释：</strong><br>第i件物品选择，第i件物品占据的空间是v[i]，价值为w[i]。那么前i-1件物品所占据的空间为j-v[i]，价值为f[i-1][j-v[i]]。而f[i][j]是f[i-1][j]和f[i-1][j-v[i]]+w[i]其中较大的一个。</p>
-<p><strong>代码部分：</strong></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn=<span class="number">1010</span>;</span><br><span class="line"><span class="keyword">int</span> v[maxn], w[maxn];</span><br><span class="line"><span class="keyword">int</span> f[maxn][maxn];</span><br><span class="line"><span class="keyword">int</span> n, m; <span class="comment">//分别表示物品总数为n 背包容量为m</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; n &gt;&gt; m;</span><br><span class="line">	f[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">1</span>; i&lt;=n; ++i) <span class="built_in">cin</span> &gt;&gt; v[i] &gt;&gt; w[i];</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">1</span>; i&lt;=n; ++i) &#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j=<span class="number">1</span>; j&lt;=m; ++j) &#123;</span><br><span class="line">			f[i][j] = f[i<span class="number">-1</span>][j];</span><br><span class="line">			<span class="keyword">if</span> (j &gt;= v[i]) &#123;</span><br><span class="line">				f[i][j] = max(f[i][j], f[i<span class="number">-1</span>][j-v[i]]+w[i]);				</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;=m; ++i) &#123;</span><br><span class="line">		res = max(res, f[n][i]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">dp</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/算法基础//" class="article-tag-list-link color5">算法基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/09/16/01%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/2/">上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/30/">30</a><a class="extend next" rel="next" href="/page/4/">下一页</a>
@@ -1185,11 +1181,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">在线笔试题</a>
+                <a href="javascript:void(0)" class="js-tag color3">dp</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">dp</a>
+                <a href="javascript:void(0)" class="js-tag color1">在线笔试题</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1209,11 +1205,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color5">操作系统</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">操作系统</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1345,15 +1341,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">递归</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">堆栈调用</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">c++11算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">递归</a>
               </li>
              
               <li class="article-tag-list-item">

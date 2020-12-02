@@ -64,7 +64,7 @@
 			</ul>
 			</nav>
 			<nav>
-			总文章数 297
+			总文章数 299
 			</nav>
 		<nav class="header-smart-menu">
     		
@@ -146,6 +146,195 @@
           </div>
           <div id="js-content" class="content-ll">
             
+  
+    <article id="post-Spooling技术" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/09/16/Spooling%E6%8A%80%E6%9C%AF/">Spooling技术</a>
+    </h1>
+  
+
+        <!--显示阅读次数-->
+        
+        <!--显示阅读次数完毕-->
+        
+        <a href="/2020/09/16/Spooling%E6%8A%80%E6%9C%AF/" class="archive-article-date">
+  	<time datetime="2020-09-16T13:30:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-16</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+      
+        <a id="more"></a>
+
+<p><img src="https://img-blog.csdnimg.cn/20200916202711658.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br>输入设备将数据输入到输入缓冲区中，然后由sp in(输入进程）将输入缓冲区的数据送到位于磁盘的输入井中，当cpu需要使用输入数据时，再由磁盘的输入井读入内存。</p>
+<p>输出进程首先将输出缓冲区中的数据送到位于磁盘的输出井中，当需要输出数据时，由输出进程将输出井的数据先搬运到位于内存的输出缓冲区中，然后再将输出缓冲区中的数据送往IO设备。</p>
+<p>空间换时间</p>
+<p>何为虚拟设备？Spooling系统如何实现虚拟设备的？<br>试说明Spooling系统的组成？<br>为什么要在设备管理中引入缓冲技术？<br>spooling系统的含义是什么？<br>为什么要引入spooling系统？spooling系统可以带来的好处有哪些？<br>为什么要引入缓冲区？unix系统如何管理缓冲区？<br>举例说明什么是Spooling系统（也称之为伪脱机技术）？<br>为什么要引入spooling系统？请说明spooling系统的作用？<br>spooling技术是如何实现的？</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">操作系统</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/操作系统//" class="article-tag-list-link color5">操作系统</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/09/16/Spooling%E6%8A%80%E6%9C%AF/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+    <article id="post-01背包问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/09/16/01%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/">01背包问题</a>
+    </h1>
+  
+
+        <!--显示阅读次数-->
+        
+        <!--显示阅读次数完毕-->
+        
+        <a href="/2020/09/16/01%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/" class="archive-article-date">
+  	<time datetime="2020-09-16T12:03:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-16</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+      
+        <a id="more"></a>
+
+<p><strong>有N件物品和一个容量为V的背包。放入第i件物品耗费的空间是vi，得到的价值是wi。求解将哪些物品装入背包可以使得价值之和最大。</strong></p>
+<p><strong>二维数组的暴力解法，未涉及空间优化。</strong><br>首先用子问题来定义状态，f[i][j]表示前i个物品放到容量为j的空间总价值最大。f[i][j]这个状态是由i-1推过来的，这里有两种考虑：第i中物品选择还是不选择，如果不选择f[i][j]==f[i-1][j]，如果选择f[i][j] = max(f[i-1][j], f[i-1][j-v[i]]+w[i])。<br><strong>max(f[i-1][j], f[i-1][j-v[i]]+w[i])的解释：</strong><br>第i件物品选择，第i件物品占据的空间是v[i]，价值为w[i]。那么前i-1件物品所占据的空间为j-v[i]，价值为f[i-1][j-v[i]]。而f[i][j]是f[i-1][j]和f[i-1][j-v[i]]+w[i]其中较大的一个。</p>
+<p><strong>代码部分：</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn=<span class="number">1010</span>;</span><br><span class="line"><span class="keyword">int</span> v[maxn], w[maxn];</span><br><span class="line"><span class="keyword">int</span> f[maxn][maxn];</span><br><span class="line"><span class="keyword">int</span> n, m; <span class="comment">//分别表示物品总数为n 背包容量为m</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; n &gt;&gt; m;</span><br><span class="line">	f[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">1</span>; i&lt;=n; ++i) <span class="built_in">cin</span> &gt;&gt; v[i] &gt;&gt; w[i];</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">1</span>; i&lt;=n; ++i) &#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j=<span class="number">1</span>; j&lt;=m; ++j) &#123;</span><br><span class="line">			f[i][j] = f[i<span class="number">-1</span>][j];</span><br><span class="line">			<span class="keyword">if</span> (j &gt;= v[i]) &#123;</span><br><span class="line">				f[i][j] = max(f[i][j], f[i<span class="number">-1</span>][j-v[i]]+w[i]);				</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;=m; ++i) &#123;</span><br><span class="line">		res = max(res, f[n][i]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">dp</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/算法基础//" class="article-tag-list-link color5">算法基础</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/09/16/01%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
     <article id="post-IO控制方式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -886,202 +1075,6 @@
 
 
   
-    <article id="post-protobuf的使用(三)" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/30/protobuf%E7%9A%84%E4%BD%BF%E7%94%A8(%E4%B8%89)/">protobuf的使用(三)</a>
-    </h1>
-  
-
-        <!--显示阅读次数-->
-        
-        <!--显示阅读次数完毕-->
-        
-        <a href="/2020/05/30/protobuf%E7%9A%84%E4%BD%BF%E7%94%A8(%E4%B8%89)/" class="archive-article-date">
-  	<time datetime="2020-05-30T03:25:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-30</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-      
-      
-        <a id="more"></a>
-
-<p><font size=6 face=consolas color=black><strong>rpc方法的序列化和反序列化 rpc标签</strong></font></p>
-<p><font size=5 face=consolas>在protobuf中定义描述rpc方法的类型 - service</font></p>
-<p><font size=6 face=consolas color=black><strong>在proto文件中增加rpc服务的选项</strong></font></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 表示生成service服务类和rpc方法描述，默认是不生成的</span></span><br><span class="line">option cc_generic_services = <span class="literal">true</span>;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">message LoginRequest&#123;&#125;</span><br><span class="line">message LoginResponse&#123;&#125;</span><br><span class="line">message ExitRequest&#123;&#125;</span><br><span class="line">message ExitResponse&#123;&#125;</span><br><span class="line"></span><br><span class="line">service UserServiceRpc &#123;</span><br><span class="line">	<span class="function">rpc <span class="title">Login</span><span class="params">(LoginRequest)</span> <span class="title">returns</span><span class="params">(LoginResponse)</span></span>;</span><br><span class="line">	<span class="function">rpc <span class="title">Exit</span><span class="params">(ExitRequest)</span> <span class="title">returns</span><span class="params">(ExitResponse)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><font size=5 face=consolas>** **</font><br><font size=5 face=consolas></font></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">protobuf</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/rpc//" class="article-tag-list-link color4">rpc</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/30/protobuf%E7%9A%84%E4%BD%BF%E7%94%A8(%E4%B8%89)/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
-    <article id="post-protobuf的使用(二)" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/30/protobuf%E7%9A%84%E4%BD%BF%E7%94%A8(%E4%BA%8C)/">protobuf的使用(二)</a>
-    </h1>
-  
-
-        <!--显示阅读次数-->
-        
-        <!--显示阅读次数完毕-->
-        
-        <a href="/2020/05/30/protobuf%E7%9A%84%E4%BD%BF%E7%94%A8(%E4%BA%8C)/" class="archive-article-date">
-  	<time datetime="2020-05-30T02:35:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-30</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-      
-      
-        <a id="more"></a>
-
-<p><font size=5 face=consolas>1.定义字符串一般不使用string,使用bytes来代替string。若定义为string,proto底层还是会把string-&gt;bytes，虽然不会影响结果，但是在一定程度上还是会浪费效率。</font></p>
-<p><font size=5 face=consolas>2.其他的数据类型，基本数据，列表，映射表</font></p>
-<p><font size=5 face=consolas>3.为成员变量设置值</font></p>
-<p>test.proto</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">message Error &#123;</span><br><span class="line">  int32 errorCode = <span class="number">1</span>;</span><br><span class="line">  bytes errorMsg = <span class="number">2</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">message User &#123;</span><br><span class="line">  bytes name = <span class="number">1</span>;</span><br><span class="line">  int32 age = <span class="number">2</span>;</span><br><span class="line">  <span class="class"><span class="keyword">enum</span> <span class="title">Sex</span> &#123;</span></span><br><span class="line">    MAN = <span class="number">0</span>;</span><br><span class="line">    WOMAN = <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  Sex sex = <span class="number">3</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">message GetUserList &#123;</span><br><span class="line">  Error error = <span class="number">1</span>;</span><br><span class="line">  repeated User <span class="built_in">list</span> = <span class="number">2</span>;<span class="comment">// repeated表示列表</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><font size=5 face=consolas>main.cc</font></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  GetUserList p;</span><br><span class="line">  Error* err = p.mutable_error();</span><br><span class="line">  err-&gt;set_errorcode(<span class="number">1</span>);</span><br><span class="line">  err-&gt;set_errormsg(<span class="string">&quot;xxx&quot;</span>);</span><br><span class="line"></span><br><span class="line">  User* user = p.add_list();</span><br><span class="line">  user-&gt;set_age(<span class="number">10</span>);</span><br><span class="line">  user-&gt;set_name(<span class="string">&quot;zhangsan&quot;</span>);</span><br><span class="line">  user-&gt;set_sex(User::MAN);</span><br><span class="line"></span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; p.list_size() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">protobuf</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/rpc//" class="article-tag-list-link color4">rpc</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/30/protobuf%E7%9A%84%E4%BD%BF%E7%94%A8(%E4%BA%8C)/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/3/">上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/30/">30</a><a class="extend next" rel="next" href="/page/5/">下一页</a>
@@ -1177,11 +1170,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">在线笔试题</a>
+                <a href="javascript:void(0)" class="js-tag color3">dp</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">dp</a>
+                <a href="javascript:void(0)" class="js-tag color1">在线笔试题</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1201,11 +1194,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color5">操作系统</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">操作系统</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1337,15 +1330,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">递归</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">堆栈调用</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">c++11算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">递归</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -64,7 +64,7 @@
 			</ul>
 			</nav>
 			<nav>
-			总文章数 297
+			总文章数 299
 			</nav>
 		<nav class="header-smart-menu">
     		
@@ -146,6 +146,164 @@
           </div>
           <div id="js-content" class="content-ll">
             
+  
+    <article id="post-将N阶二维数组的右上三角部分的数字乘以m(整数)" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/06/19/%E5%B0%86N%E9%98%B6%E4%BA%8C%E7%BB%B4%E6%95%B0%E7%BB%84%E7%9A%84%E5%8F%B3%E4%B8%8A%E4%B8%89%E8%A7%92%E9%83%A8%E5%88%86%E7%9A%84%E6%95%B0%E5%AD%97%E4%B9%98%E4%BB%A5m(%E6%95%B4%E6%95%B0)/">将N阶二维数组的右上三角部分的数字乘以m(整数)</a>
+    </h1>
+  
+
+        <!--显示阅读次数-->
+        
+        <!--显示阅读次数完毕-->
+        
+        <a href="/2018/06/19/%E5%B0%86N%E9%98%B6%E4%BA%8C%E7%BB%B4%E6%95%B0%E7%BB%84%E7%9A%84%E5%8F%B3%E4%B8%8A%E4%B8%89%E8%A7%92%E9%83%A8%E5%88%86%E7%9A%84%E6%95%B0%E5%AD%97%E4%B9%98%E4%BB%A5m(%E6%95%B4%E6%95%B0)/" class="archive-article-date">
+  	<time datetime="2018-06-19T02:34:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-19</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+      
+        <a id="more"></a>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> N 3</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fun</span><span class="params">(<span class="keyword">int</span> arr[][N],<span class="keyword">int</span> m)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; N;++i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>;j &lt;= i;++j)</span><br><span class="line">		&#123;</span><br><span class="line">			arr[j][i] *= m;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">show</span><span class="params">(<span class="keyword">int</span> arr[][N],<span class="keyword">int</span> len)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; len;++i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>;j &lt; len;++j)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>,arr[i][j]);</span><br><span class="line">			<span class="keyword">if</span>(j == len<span class="number">-1</span>)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> arr[][N] = &#123;&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;,&#123;<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>&#125;,&#123;<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>&#125;&#125;;</span><br><span class="line">	<span class="keyword">int</span> len = <span class="keyword">sizeof</span>(arr)/<span class="keyword">sizeof</span>(arr[<span class="number">0</span>]);</span><br><span class="line">	show(arr,len);</span><br><span class="line">	fun(arr,<span class="number">2</span>);<span class="comment">//乘以2</span></span><br><span class="line">	show(arr,len);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/编程练习//" class="article-tag-list-link color5">编程练习</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/06/19/%E5%B0%86N%E9%98%B6%E4%BA%8C%E7%BB%B4%E6%95%B0%E7%BB%84%E7%9A%84%E5%8F%B3%E4%B8%8A%E4%B8%89%E8%A7%92%E9%83%A8%E5%88%86%E7%9A%84%E6%95%B0%E5%AD%97%E4%B9%98%E4%BB%A5m(%E6%95%B4%E6%95%B0)/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+    <article id="post-统计文章中单词个数" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/06/17/%E7%BB%9F%E8%AE%A1%E6%96%87%E7%AB%A0%E4%B8%AD%E5%8D%95%E8%AF%8D%E4%B8%AA%E6%95%B0/">统计文章中单词个数</a>
+    </h1>
+  
+
+        <!--显示阅读次数-->
+        
+        <!--显示阅读次数完毕-->
+        
+        <a href="/2018/06/17/%E7%BB%9F%E8%AE%A1%E6%96%87%E7%AB%A0%E4%B8%AD%E5%8D%95%E8%AF%8D%E4%B8%AA%E6%95%B0/" class="archive-article-date">
+  	<time datetime="2018-06-17T15:44:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-17</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+      
+        <a id="more"></a>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;assert.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">fun</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* str)</span></span></span><br><span class="line"><span class="function"></span>&#123;	</span><br><span class="line">	assert(str != <span class="literal">NULL</span>);</span><br><span class="line">	<span class="keyword">const</span> <span class="keyword">char</span>* p = str;</span><br><span class="line">	<span class="keyword">int</span> count = <span class="number">0</span>;<span class="comment">//计数器</span></span><br><span class="line">	<span class="keyword">while</span>(*p != <span class="string">&#x27;\0&#x27;</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>(*p != <span class="string">&#x27; &#x27;</span> &amp;&amp; (*(p+<span class="number">1</span>) == <span class="string">&#x27; &#x27;</span> || *(p+<span class="number">1</span>) == <span class="string">&#x27;\0&#x27;</span>))</span><br><span class="line">		&#123;</span><br><span class="line">			count ++;</span><br><span class="line">		&#125;</span><br><span class="line">		p++;</span><br><span class="line">	&#125;</span><br><span class="line">	retrun count;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/算法基础//" class="article-tag-list-link color5">算法基础</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/06/17/%E7%BB%9F%E8%AE%A1%E6%96%87%E7%AB%A0%E4%B8%AD%E5%8D%95%E8%AF%8D%E4%B8%AA%E6%95%B0/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
     <article id="post-位运算练习题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -912,194 +1070,6 @@
 
 
   
-    <article id="post-opendir!readdir!closedir 目录遍历相关函数" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/14/opendir!readdir!closedir%20%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0/">opendir/readdir/closedir 目录遍历相关函数</a>
-    </h1>
-  
-
-        <!--显示阅读次数-->
-        
-        <!--显示阅读次数完毕-->
-        
-        <a href="/2018/05/14/opendir!readdir!closedir%20%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0/" class="archive-article-date">
-  	<time datetime="2018-05-14T13:25:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-14</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-      
-      
-        <a id="more"></a>
-
-<p><strong>1.打开目录</strong><br>所需头文件：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;dirent.h&gt;</span></span></span><br></pre></td></tr></table></figure>
-<p><code>opendir</code>是一个C库函数，可以通过<code>man 3 opendir</code>查看函数相关的详细内容。</p>
-<p>函数原型：<code>DIR *opendir(const char *name) </code><br>参数：name为目录名。<br>返回值：成功返回一个指向目录的指针，失败返回<code>NULL</code>,同时errno会被设置为一个合适的值。</p>
-<p><strong>2.读目录</strong><br>所需头文件：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;dirent.h&gt;</span></span></span><br></pre></td></tr></table></figure>
-<p>函数原型：<code>struct dirent *readdir(DIR *dirp)</code><br>参数：<code>opendir</code>函数的返回值。<br>返回值：指向目录项结构体的指针。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">dirent</span>&#123;</span></span><br><span class="line">	<span class="keyword">ino_t</span> d_ino;    <span class="comment">//此目录进入点的inode</span></span><br><span class="line">	<span class="keyword">off_t</span> d_off;     <span class="comment">//目录文件开头至此目录进入点的偏移</span></span><br><span class="line">	<span class="keyword">signed</span> <span class="keyword">short</span> <span class="keyword">int</span> d_reclen;      <span class="comment">//d_name的长度,不包括NULL字符</span></span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">char</span> d_type;           <span class="comment">//d_name所指文件的类型</span></span><br><span class="line">	<span class="keyword">char</span> d_name[<span class="number">256</span>];     <span class="comment">//文件名</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//类型声明</span></span><br><span class="line"><span class="keyword">ino_t</span> 为  <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">int</span></span><br><span class="line"><span class="keyword">off_t</span> 为  <span class="keyword">long</span> <span class="keyword">int</span></span><br></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdn.net/20180514193917575?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
-<p>实例应用：<br>在当前目录下有一个dir目录文件：<br><img src="https://img-blog.csdn.net/20180514204753830?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;dirent.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;assert.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;sting.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc,<span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	DIR *drip = opendir(argv[<span class="number">1</span>]);</span><br><span class="line">	<span class="keyword">if</span>(drip == <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		perror(<span class="string">&quot;opendir&quot;</span>);</span><br><span class="line">		<span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">dirent</span>* <span class="title">dir</span> =</span> <span class="literal">NULL</span>;</span><br><span class="line">	dir = readdir(drip);</span><br><span class="line">	assert(dir != <span class="literal">NULL</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;Inode = %lu\n&quot;</span>,dir-&gt;d_ino);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;目录文件至此目录进入点的偏移 = %ld\n&quot;</span>,dir-&gt;d_off);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p><strong>3.关闭目录</strong><br>所需头文件：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;dirent.h&gt;</span></span></span><br></pre></td></tr></table></figure>
-<p>函数原型：<code>int close(DIR *drip)</code><br>参数：opendir函数的返回值。<br>返回值：成功关闭返回0，失败返回-1，同时errno被设置为一个合适的值。</p>
-<p><strong>注意：</strong><code>closedir与opendir</code>搭配使用。大家可以与C语言中的fopen和fclose函数联系，其作用是相同的。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/linux//" class="article-tag-list-link color1">linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/05/14/opendir!readdir!closedir%20%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
-    <article id="post-linux系统调用函数 rename!getcwd!chdir!mkdir!rmdir--目录操作相关函数" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/14/linux%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%87%BD%E6%95%B0%20rename!getcwd!chdir!mkdir!rmdir--%E7%9B%AE%E5%BD%95%E6%93%8D%E4%BD%9C%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0/">linux系统调用函数 rename/getcwd/chdir/mkdir/rmdir--目录操作相关函数</a>
-    </h1>
-  
-
-        <!--显示阅读次数-->
-        
-        <!--显示阅读次数完毕-->
-        
-        <a href="/2018/05/14/linux%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%87%BD%E6%95%B0%20rename!getcwd!chdir!mkdir!rmdir--%E7%9B%AE%E5%BD%95%E6%93%8D%E4%BD%9C%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0/" class="archive-article-date">
-  	<time datetime="2018-05-14T10:33:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-14</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-      
-      
-        <a id="more"></a>
-
-<p><strong>1.文件重命名</strong><br>在linux的shell解释器中输入<code>mv 原文件名 新文件名</code>即可进行重命名，实际上C库函数提供了具有相同功能的系统调用函数<code>rename</code>。</p>
-<p>所需头文件：<code>#include&lt;stdio.h&gt;</code><br>函数原型： <code>int rename(const char *oldpath,const char *newpath)</code><br>参数：  oldpath原文件名,newpath为新文件名。<br>返回值：成功返回0，失败返回-1，同时errno被设置为合适的值。</p>
-<p>该函数用法比较简单，不做实例验证，大家可以自行验证。</p>
-<p><strong>2.修改当前进行（应用程序）的路径  cd。</strong><br>所需头文件： <code>#include&lt;unistd.h&gt;</code><br>函数原型： <code>int chdir(const char *path)</code><br>参数： path即为要切换的路径。<br>返回值： 成功返回0，失败返回-1,同时errno会被设置为合适的值。</p>
-<p><strong>3.获取当前进程的工作目录 pwd</strong><br>函数原型：<code>char* getcwd(char *buf,size_t size)</code><br>参数：buf,缓冲区，存储当前的工作目录。size，缓冲区的大小。<br>返回值：成功返回当前的工作目录，失败返回<code>NULL</code>。</p>
-<p>实例验证：<br>（1）输入<code>pwd</code>获取当前工作目录。<br><img src="https://img-blog.csdn.net/20180514181213102?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>（2）函数验证</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">char</span> buff[<span class="number">128</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="keyword">char</span>* s = getcwd(buff,<span class="keyword">sizeof</span>(buff));</span><br><span class="line">	<span class="keyword">if</span>(<span class="literal">NULL</span> == s)</span><br><span class="line">	&#123;</span><br><span class="line">		perror(<span class="string">&quot;getcwd&quot;</span>);</span><br><span class="line">		<span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>,buff);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdn.net/20180514182224623?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>观察上图结果和我们用<code>pwd</code>获取到的当前工作目录是一致的。</p>
-<p><strong>4.创建目录 mkdir</strong><br>所需头文件：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br></pre></td></tr></table></figure>
-<p>函数原型：<code>int mkdir(const char *pathname,mode_t mode)</code><br>参数：pathname为目录名   mode是目录权限，是一个八进制的数字，实际权限：<code>mode &amp; ~umask</code><br>返回值：成功返回0，失败返回-1，同时errno会被设置成一个合适的值。</p>
-<p><strong>5.删除一个空目录 rmdir</strong><br>所需头文件：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd&gt;</span></span></span><br></pre></td></tr></table></figure>
-<p>函数原型：<code>int rmdir(const char* pathname)</code><br>参数：空目录的名字。<br>返回值：成功返回0，失败返回-1，同时errno会被设置为一个合适的值。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Linux//" class="article-tag-list-link color1">Linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/05/14/linux%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%87%BD%E6%95%B0%20rename!getcwd!chdir!mkdir!rmdir--%E7%9B%AE%E5%BD%95%E6%93%8D%E4%BD%9C%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/25/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/24/">24</a><a class="page-number" href="/page/25/">25</a><span class="page-number current">26</span><a class="page-number" href="/page/27/">27</a><a class="page-number" href="/page/28/">28</a><span class="space">&hellip;</span><a class="page-number" href="/page/30/">30</a><a class="extend next" rel="next" href="/page/27/">下一页</a>
@@ -1195,11 +1165,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">在线笔试题</a>
+                <a href="javascript:void(0)" class="js-tag color3">dp</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">dp</a>
+                <a href="javascript:void(0)" class="js-tag color1">在线笔试题</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1219,11 +1189,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color5">操作系统</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">操作系统</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1355,15 +1325,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">递归</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">堆栈调用</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">c++11算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">递归</a>
               </li>
              
               <li class="article-tag-list-item">

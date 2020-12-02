@@ -64,7 +64,7 @@
 			</ul>
 			</nav>
 			<nav>
-			总文章数 297
+			总文章数 299
 			</nav>
 		<nav class="header-smart-menu">
     		
@@ -146,6 +146,183 @@
           </div>
           <div id="js-content" class="content-ll">
             
+  
+    <article id="post-CVTE笔试题目--删除链表中的重复元素" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/16/CVTE%E7%AC%94%E8%AF%95%E9%A2%98%E7%9B%AE--%E5%88%A0%E9%99%A4%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%9A%84%E9%87%8D%E5%A4%8D%E5%85%83%E7%B4%A0/">CVTE笔试题目--删除链表中的重复元素</a>
+    </h1>
+  
+
+        <!--显示阅读次数-->
+        
+        <!--显示阅读次数完毕-->
+        
+        <a href="/2018/11/16/CVTE%E7%AC%94%E8%AF%95%E9%A2%98%E7%9B%AE--%E5%88%A0%E9%99%A4%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%9A%84%E9%87%8D%E5%A4%8D%E5%85%83%E7%B4%A0/" class="archive-article-date">
+  	<time datetime="2018-11-16T12:41:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-16</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+      
+        <a id="more"></a>
+
+<p><font size=5 face="Courier New" color=black>题目描述：有时候列表中的重复元素占用空间但是并没有什么作用，请实现下列函数帮忙删除有序链表中的重复元素。只保留第一个出现的元素。</font></p>
+<p><font size=5 face="Courier New" color=black>输入样例：1-&gt;2-&gt;2-&gt;4-&gt;4-&gt;4-&gt;5-&gt;6-&gt;6-&gt;7</font><br><font size=5 face="Courier New" color=black>输出样例：1-&gt;2-&gt;4-&gt;5-&gt;6-&gt;7</font></p>
+<p><font size=5 face="Courier New" color=red>解题思路：使用一个hash数组来标记链表中元素是否出现，这样即使出现重复元素，标记的是该元素是否出现，这样就将重复的元素过滤掉。之后清空链表，因为是顺序链表，从0索引开遍历整个hash数组。将hash数组中标记为true所对应的索引push_back到链表中即可。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">RemoveRedundant</span><span class="params">(<span class="built_in">list</span>&lt;<span class="keyword">int</span>&gt;&amp; l)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> len = l.size();</span><br><span class="line">	<span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">bool</span>&gt; <span class="title">arr</span><span class="params">(len,<span class="literal">false</span>)</span></span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">auto</span> it=l.begin();it!=l.end();++it)&#123;</span><br><span class="line">		arr[*it] = <span class="literal">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	l.clear();</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;arr.size();++i)&#123;</span><br><span class="line">		<span class="keyword">if</span>(arr[i]==<span class="literal">true</span>)&#123;</span><br><span class="line">			l.push_back(i);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/笔试面试//" class="article-tag-list-link color5">笔试面试</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/11/16/CVTE%E7%AC%94%E8%AF%95%E9%A2%98%E7%9B%AE--%E5%88%A0%E9%99%A4%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%9A%84%E9%87%8D%E5%A4%8D%E5%85%83%E7%B4%A0/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+    <article id="post-使用优先级队列实现堆排序" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/12/%E4%BD%BF%E7%94%A8%E4%BC%98%E5%85%88%E7%BA%A7%E9%98%9F%E5%88%97%E5%AE%9E%E7%8E%B0%E5%A0%86%E6%8E%92%E5%BA%8F/">使用优先级队列实现堆排序</a>
+    </h1>
+  
+
+        <!--显示阅读次数-->
+        
+        <!--显示阅读次数完毕-->
+        
+        <a href="/2018/11/12/%E4%BD%BF%E7%94%A8%E4%BC%98%E5%85%88%E7%BA%A7%E9%98%9F%E5%88%97%E5%AE%9E%E7%8E%B0%E5%A0%86%E6%8E%92%E5%BA%8F/" class="archive-article-date">
+  	<time datetime="2018-11-12T09:20:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+      
+        <a id="more"></a>
+
+<p><font size=5 face="Courier New" color=black>代码实现：</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">heapSort</span><span class="params">(T arr[],<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="comment">//构建大根堆</span></span><br><span class="line">	<span class="comment">//如果T类型不是基本类型，是class/struct，则需要重载小于号运算符</span></span><br><span class="line">	<span class="built_in">priority_queue</span>&lt;T,<span class="built_in">vector</span>&lt;T&gt;&gt; q;<span class="comment">//缺省的情况下使用小于号，越小的优先级越高</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;++i)&#123;</span><br><span class="line">		q.push(arr[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=n<span class="number">-1</span>;i&gt;=<span class="number">0</span>;--i)&#123;</span><br><span class="line">		arr[i] = q.top();</span><br><span class="line">		q.pop();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">show</span><span class="params">(T arr[],<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;++i)&#123;</span><br><span class="line">		<span class="built_in">cout</span>&lt;&lt;arr[i]&lt;&lt;<span class="string">&quot; &quot;</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> arr[] = &#123;<span class="number">5</span>,<span class="number">3</span>,<span class="number">1</span>,<span class="number">4</span>,<span class="number">2</span>&#125;;</span><br><span class="line">	<span class="keyword">int</span> n = <span class="keyword">sizeof</span>(arr)/<span class="keyword">sizeof</span>(<span class="keyword">int</span>);</span><br><span class="line">	heapSort(arr,n);</span><br><span class="line">	show(arr,n);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier New" color=black>执行结果：</font><br><img src="https://img-blog.csdnimg.cn/2018111217202370.png" alt="在这里插入图片描述"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">排序</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/数据结构//" class="article-tag-list-link color5">数据结构</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/11/12/%E4%BD%BF%E7%94%A8%E4%BC%98%E5%85%88%E7%BA%A7%E9%98%9F%E5%88%97%E5%AE%9E%E7%8E%B0%E5%A0%86%E6%8E%92%E5%BA%8F/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
     <article id="post-java中Iterable接口的使用，实现一个单链表的迭代器" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -847,188 +1024,6 @@
 
 
   
-    <article id="post-java中的异常" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/09/17/java%E4%B8%AD%E7%9A%84%E5%BC%82%E5%B8%B8/">java中的异常</a>
-    </h1>
-  
-
-        <!--显示阅读次数-->
-        
-        <!--显示阅读次数完毕-->
-        
-        <a href="/2018/09/17/java%E4%B8%AD%E7%9A%84%E5%BC%82%E5%B8%B8/" class="archive-article-date">
-  	<time datetime="2018-09-17T12:13:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-17</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-      
-      
-        <a id="more"></a>
-
-<p><font size=5 color=red>Java中的异常</font></p>
-<p><font size=4>异常：直观的理解就是不正常，不完全正确，可能存在某些问题。在实际编写程序的过程中，往往可能出于疏忽而导致程序出现bug。典型的有数组越界，除0等，在c语言中由于考虑到程序实际的效率而未考虑数组下标越界引起的程序错误，如果在编写程序涉及到数组的边界问题而未考虑，几乎100%会发生如下的bug。合理的处理异常，会使得程序的健壮性，可读性以及可维护性得到大大的提高。</p>
-<font size=4>
-在java中，提供了优秀的异常机制，当程序出现在运行时期的异常和编译阶段的异常，提供解决错误的方法。
-
-<p><font size=4 color=red >错误：</font><font size=4 color=blue face="Courier New">是指系统出现错误或运行环境出现的错误，此类错误非常严重。即使捕捉到也不能够有效的处理，由java虚拟机生成并抛出，通常这类型的错误是由系统错误引起的。<br><font size=4 color=red >运行时期异常：</font><font size=4 color=blue face="Courier New">是在运行时期可以被捕获的异常并能够做有效的处理，如果程序当中没有对这些可能存在的异常做处理，这些异常的处理通常由默认的异常处理程序进行处理。<br><font size=4 color=red face="Courier New">非运行时期异常：</font><font size=4 color=blue face="Courier New">通常是一些语法、语义错误，此类错误通常在编写代码时，由集成开发环境(IDE)提示错误。<br><font size=4 color=red><br>下图是java中异常的层次结构：</font></p>
-<p><img src="https://img-blog.csdn.net/20180917190804433?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="在这里插入图片描述"><br><font size=5 color=red>在程序中显式的进行异常的处理</font></p>
-<p><font size=4.5 face="Courier New" color=red>1.捕获可能存在的异常。</font><font size=4.5 face="Courier New">通过<code>try&#123;&#125;</code>和<code>catch(形式参数)&#123;&#125;</code>代码块，其中<code>catch(形式参数)&#123;&#125;</code>代码块可以有多个，但是<code>try&#123;&#125;</code>代码块只有一个。也就是说一个try代码块可以搭配多个catch代码块，因为在可能存在异常的代码块中，可能存在各种不同类型的异常，但是每个catch代码块只能够捕捉到特定类型的异常，所以为了去处理每种类型的异常，就需要增加相应的catch块。<font color=red>注意：catch代码块的参数列表需要写对应类型的异常。</font>当我们忘记可能发生异常的具体类型时间，可以使用Exception基类，因为在java中所有肯能出现的异常都继承Exception类，当然基类的引用是可以指向子类的方法的。(向上造型)，<font color=blue>注意：在实际的编程中，并不推荐使用Exception的对象作为catch的实参，当有多个catch块时，只能有一个catch块可以使用Exception,否则若所有的catch块都使用Exception,当程序中有多个异常时，根本找不多异常到底是哪一个，正如前边所说的，一个catch块只处理对应的异常。如果所有的catch都想用Exception，那岂不是所有的问题都可以由一个catch来处理了，这显然是矛盾的。</font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">try&#123;</span><br><span class="line">	&#x2F;&#x2F;书写可能出些异常的代码块</span><br><span class="line">&#125;</span><br><span class="line">catch(某种类型的异常)&#123;</span><br><span class="line">	&#x2F;&#x2F;当出现异常时，对异常进行处理的代码块</span><br><span class="line">&#125;</span><br><span class="line">catch(另外一种类型的异常)&#123;</span><br><span class="line">&#125;</span><br><span class="line">finally&#123;&#125;</span><br></pre></td></tr></table></figure>
-<p><font size=4 face="Courier New">在catch代码块中，异常对象可以使用的两个比较有用的方法。<br>(1)getMassage()方法，是Throwable类提供的一个方法，通过该方法的调用，可以得到有关异常的信息。<br><img src="https://img-blog.csdn.net/20180917200615394?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="在这里插入图片描述"><br>(2)printStackTrace()方法，也是由Throwable提供的一个重载的方法，用于输跟踪异常事件发生时堆栈的内容。<br><img src="https://img-blog.csdn.net/20180917201031472?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="在这里插入图片描述"><br>由于异常类都是直接或间接的继承Throwable类，因此子类中都是可以调用这两个方法的。<br><font size=4 face="Courier New">值得一提的是<code>finally</code>代码块也是非常重要，尤其是在<code>finally</code>代码块中释放资源。<code>finally</code>代码块中的内容，无论之前的·catch·块是否对一场进行了处理，它都一定会执行。如对数据库的连接，若将数据库关闭的操作写在catch块中，但是并没有出现catch所能处理的异常。此时，数据库的连接并没有关闭，而数据库的连接是由上限的，当到达一定数量时，就不允许创建新的连接了。此时，如果将关闭数据库的代码在finally代码块中，就可以解决上边存在的问题。<br><font size=4.5 face="Courier New" color=red>2.声明异常 <font size=4.5 face="Courier New"  color=black><br>（1）<code>throws</code>关键字，将方法执行时可能会出现的异常写在方法的头部，throws关键字后边声明多个异常，它们之间使用逗号隔开，这样调用该方法时就知道应该写什么样的代码来处理这些可能存在的异常，<font color=red>如果调用了声明的异常的方法，却并没有相应的catch块，这样的代码是不能编译通过的。</font>一旦在编写代码的过程中调用了声明异常的方法，调用方就必须做相应的处理，否则编译是不能通过的。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">class Test&#123;</span><br><span class="line">	void fun() throws Exception&#123;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Main&#123;</span><br><span class="line">	public static void main(String[] args)&#123;</span><br><span class="line">		Test t &#x3D; new Test();</span><br><span class="line">		t.fun();&#x2F;&#x2F;不能编译通过</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><font size=4.5 face="Courier New" color=black>（2）并不是所有可能出现的异常的方法对所有的异常进行异常的声明，如运行时异常RuntimeException异常，它和它的子类不需要进行异常声明。在处理的异常的过程中，如果当前调用方不对异常进行处理，那么由它的上一级调用者处理，沿着调用的层次向上传递。</p>
-<p><font size=5 color=red>使用自定义的异常</font><br><font size=4.5 face="Courier New">有时候，系统的提高的异常并不能完全够实际的开发使用，由于java的继承机制，可以很好的提高代码复用。可以通过继承基类Exception,编译自己的异常，以处理这些实际开发中可能存在的异常。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">class MyException extends Exception&#123;</span><br><span class="line">	MyException(String str)&#123;</span><br><span class="line">		System.out.println(str);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Salary&#123;</span><br><span class="line">	void fun(int n) throws MyException&#123;</span><br><span class="line">		if(n &gt; 100000)&#123;</span><br><span class="line">			  throw new MyException(&quot;工资大于10000!&quot;)</span><br><span class="line">			  &#x2F;&#x2F;MyException e &#x3D; new MyException(&quot;工资大于10000!&quot;);</span><br><span class="line">			  &#x2F;&#x2F;throw e;</span><br><span class="line">			  &#x2F;&#x2F;以上的两种写法是等价的</span><br><span class="line">		 &#125;		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Main&#123;</span><br><span class="line">	public static void main(String[] args)&#123;</span><br><span class="line">		Salary  s &#x3D; new Salary;</span><br><span class="line">		try&#123;</span><br><span class="line">			s.fun(10010);</span><br><span class="line">		&#125;</span><br><span class="line">		catch(MyException e)&#123;</span><br><span class="line">			e.printStackTrace;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdn.net/20180918103802313?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="在这里插入图片描述"></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/java//" class="article-tag-list-link color5">java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/09/17/java%E4%B8%AD%E7%9A%84%E5%BC%82%E5%B8%B8/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
-    <article id="post-素数筛选法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/09/13/%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/">素数筛选法</a>
-    </h1>
-  
-
-        <!--显示阅读次数-->
-        
-        <!--显示阅读次数完毕-->
-        
-        <a href="/2018/09/13/%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2018-09-13T09:30:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-13</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-      
-      
-        <a id="more"></a>
-
-<p><font size=5 color=red face="Courier New">判断是否为素数</font><br><font size=4.5>对于一个任意一个正整数，如果它只能被自身或1整除，称其为素数，否则为合数。1比较特殊，既不是质数也不是合数。</p>
-<p><font size=4.5 >基于素数的定义，很快就可以直观的想到代码，对于任意一个正整数，只需要在（1，n）也就是[2,n-1]之间进行遍历，如果n可以被区间中的任何一个数字整除，它就不是质数。否则，如果对整个区间遍历完毕，还未找到一个数字可以整除n，那么这个数字就是质数。</font></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> Test&#123;</span><br><span class="line">	<span class="comment">//类方法</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> bool <span class="title">isPrime</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">2</span>;i&lt;=n-<span class="number">1</span>;++i)&#123;</span><br><span class="line">			<span class="keyword">if</span>(n%i==<span class="number">0</span>)&#123;</span><br><span class="line">				<span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><font size=4.5 color=red face="Courier New">算法时间复杂度分析：</font><font size=4.5 face="Courier New">对于上边穷举遍历暴力的方法，判断一个正整数是否为素数。所需的时间复杂度是O(n),然而在实际应用中，判断某一个数字是否为为素数只是整个程序当中的一小部分，这样的时间复杂度相对而言还是比较高的。</font><br><font size=4.5 color=red face="Courier New">下面将一种时间复杂度为O(n^(1/2))时间复杂的判断素数的算法。</font></p>
-<p><font size=4.5 face="Courier New">数学背景：对于任意一个正整数N,可以将其分解为两个因数。特殊情况下N^(1/2)相等，即N=N^(1/2)*N^(1/2)。此外若存在两个因数，则其中一个必然大于N^(1/2)，而另外一个必然小于N^(1/2)。<font size=4.5 color=red>因此，只需要在区间[2,N^(1/2)]区间遍历即可，若在此区间存在一个正整数使得N被整除，则其为合数<font color=blue>（此时这个因数小于N^(1/2)，而另外一个因数必然大于N^(1/2)）</font>，否则其为质数。进过这样的 处理可以显著的降低判断是否为质数算法的时间复杂度，达到O(n^(1/2))。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public Test&#123;</span><br><span class="line">		public static bool isPrime(int n)&#123;</span><br><span class="line">		for(int i&#x3D;2;i&lt;&#x3D;Math.sqrt(n*1.0);++i)&#123;</span><br><span class="line">			if(n%i &#x3D;&#x3D; 0)&#123;</span><br><span class="line">				return false;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		return true;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><font size=5 color=red face="Courier New">素数筛选法：</font><font size=4.5>从小到大遍历每一个数字，将其倍数筛去，剩下的即为素数。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">class Test&#123;</span><br><span class="line">	private boolean[] p;&#x2F;&#x2F;用于标记对应下标的数字是否为素数</span><br><span class="line">	private int[] prime;</span><br><span class="line">	private int len&#x3D;0;</span><br><span class="line">	</span><br><span class="line">	&#x2F;&#x2F;构造方法</span><br><span class="line">	Test(int n)&#123;</span><br><span class="line">		p &#x3D; new boolean[n];</span><br><span class="line">		prime &#x3D; new int[n];</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	public void prime(int n)&#123;</span><br><span class="line">		for(int i&#x3D;2;i&lt;n;++i)&#123;</span><br><span class="line">			if(p[i]&#x3D;&#x3D;false)&#123;</span><br><span class="line">				prime[len++] &#x3D; i;&#x2F;&#x2F;false表示对应下标为素数</span><br><span class="line">				&#x2F;&#x2F;进行筛选</span><br><span class="line">				for(int j&#x3D;i+i;j&lt;n;j+&#x3D;i)&#123;</span><br><span class="line">					p[j] &#x3D; true;&#x2F;&#x2F;标记不是素数</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; </span><br><span class="line">	</span><br><span class="line">	public void show(int n)&#123;</span><br><span class="line">		for(int i&#x3D;0;i&lt;n;++i)&#123;</span><br><span class="line">			System.out.print(prime[i]+&quot; &quot;);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Main&#123;</span><br><span class="line">	public static void main(String[] args)&#123;</span><br><span class="line">		Test t &#x3D; new Test(100);</span><br><span class="line">		t.prime(100);</span><br><span class="line">		t.show(100);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><font size=4.5 color=red>输出100范围内的素数：</font><br><img src="https://img-blog.csdn.net/20180913172942945?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/java-算法基础//" class="article-tag-list-link color5">java 算法基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/09/13/%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/20/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><a class="page-number" href="/page/20/">20</a><span class="page-number current">21</span><a class="page-number" href="/page/22/">22</a><a class="page-number" href="/page/23/">23</a><span class="space">&hellip;</span><a class="page-number" href="/page/30/">30</a><a class="extend next" rel="next" href="/page/22/">下一页</a>
@@ -1124,11 +1119,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">在线笔试题</a>
+                <a href="javascript:void(0)" class="js-tag color3">dp</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">dp</a>
+                <a href="javascript:void(0)" class="js-tag color1">在线笔试题</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1148,11 +1143,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color5">操作系统</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">操作系统</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1284,15 +1279,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">递归</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">堆栈调用</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">c++11算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">递归</a>
               </li>
              
               <li class="article-tag-list-item">

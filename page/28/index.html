@@ -64,7 +64,7 @@
 			</ul>
 			</nav>
 			<nav>
-			总文章数 297
+			总文章数 299
 			</nav>
 		<nav class="header-smart-menu">
     		
@@ -146,6 +146,195 @@
           </div>
           <div id="js-content" class="content-ll">
             
+  
+    <article id="post-子进程继承父进程的锁" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/20/%E5%AD%90%E8%BF%9B%E7%A8%8B%E7%BB%A7%E6%89%BF%E7%88%B6%E8%BF%9B%E7%A8%8B%E7%9A%84%E9%94%81/">子进程继承父进程的锁</a>
+    </h1>
+  
+
+        <!--显示阅读次数-->
+        
+        <!--显示阅读次数完毕-->
+        
+        <a href="/2018/04/20/%E5%AD%90%E8%BF%9B%E7%A8%8B%E7%BB%A7%E6%89%BF%E7%88%B6%E8%BF%9B%E7%A8%8B%E7%9A%84%E9%94%81/" class="archive-article-date">
+  	<time datetime="2018-04-20T12:47:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-20</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+      
+        <a id="more"></a>
+
+<p>fork函数调用会创建子进程，子进程的地址空间是在调用fork时父进程地址空间的拷贝。因为子进程地址空间跟父进程一样，所以调用fork时，子进程继承了父进程中的所有互斥锁、读写锁和条件变量（包括它们的状态）。<br>    但在多线程环境中，调用fork时，子进程中只有一个线程存在，这个线程是调用fork函数的那个线程，其他线程都没有被拷贝。<br>    根据上述两点，子进程中的锁可能被不存在的线程所拥有，这样子进程将没法获取或释放这些锁。针对这个问题有一个解决办法，即在调用fork之前，线程先获取进程中所有锁，在调用fork后分别在父子进程中释放这些锁，从而可以重新利用这些资源。因为fork之前，当前线程拥有所有的锁，所以fork之后，当前线程继续存在，子进程可以安全的释放这些锁。<br>    当然，在调用fork后，子进程马上调用exec，就无需考虑这些问题了，因为子进程地址空间被完全更换了。<br>    函数pthread_atfork专门用来解决这种问题：<br>    int pthread_atfork ( void (*prepare)(void), void (*parent)(void), void (*child)(void) );<br>    pthread_atfork安装一些在fork调用时的回调函数。prepare函数将在fork创建子进程之前被调用，通常可以用来获取进程中的所有锁；parent在fork创建子进程后返回前在父进程中被调用，可以用来释放父进程中的锁；child在fork创建子进程后fork返回前在子进程中被调用，可以用来释放子进程中的锁。给这三个参数传递NULL，表示不调用该函数。<br>    可以调用pthread_atfork多次注册多组回调函数，这时，回调函数调用的顺序规定如下：<br>      ①prepare函数调用顺序与它们的注册顺序相反；<br>      ②parent和child函数的调用顺序与注册顺序相同。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Linux系统编程//" class="article-tag-list-link color5">Linux系统编程</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/04/20/%E5%AD%90%E8%BF%9B%E7%A8%8B%E7%BB%A7%E6%89%BF%E7%88%B6%E8%BF%9B%E7%A8%8B%E7%9A%84%E9%94%81/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+    <article id="post-多线程访问共享的全局变量引发的数据混乱" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/17/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E8%AE%BF%E9%97%AE%E5%85%B1%E4%BA%AB%E7%9A%84%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F%E5%BC%95%E5%8F%91%E7%9A%84%E6%95%B0%E6%8D%AE%E6%B7%B7%E4%B9%B1/">多线程访问共享的全局变量引发的数据混乱</a>
+    </h1>
+  
+
+        <!--显示阅读次数-->
+        
+        <!--显示阅读次数完毕-->
+        
+        <a href="/2018/04/17/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E8%AE%BF%E9%97%AE%E5%85%B1%E4%BA%AB%E7%9A%84%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F%E5%BC%95%E5%8F%91%E7%9A%84%E6%95%B0%E6%8D%AE%E6%B7%B7%E4%B9%B1/" class="archive-article-date">
+  	<time datetime="2018-04-17T11:55:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-17</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+      
+        <a id="more"></a>
+
+<p>1.<strong>线程共享全局变量</strong></p>
+<p>在学习线程的相关概念之后，想探究在进程的虚拟地址空间当中的哪些区域是进程中多个线程共享的。<br>探究发现，全局变量在不同的线程当中访问全局变量是共享的。举例如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;assert.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;pthread.h&gt;//线程库</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">char</span> *str;<span class="comment">//定义指向字符串的全局变量str</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//线程函数</span></span><br><span class="line"><span class="function"><span class="keyword">void</span>* <span class="title">my_fun</span><span class="params">(<span class="keyword">void</span> *arg)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;函数线程：str = %s\n&quot;</span>,str);</span><br><span class="line">	<span class="comment">//若共享，输出为主线程修改指向后指向的字符串，否则会出现段错误。</span></span><br><span class="line">	<span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">pthread_t</span> id;<span class="comment">//传出参数，用于保存成功创建线程后对应线程的id</span></span><br><span class="line">	<span class="keyword">int</span> res = pthread_create(&amp;id,<span class="literal">NULL</span>,my_fun,<span class="literal">NULL</span>);</span><br><span class="line">	<span class="comment">//成功创建返回值为0</span></span><br><span class="line">	assert(<span class="number">0</span> == res);</span><br><span class="line">	str = <span class="string">&quot;hello&quot;</span>;<span class="comment">//修改全局指针变量的指向</span></span><br><span class="line">	pthread_exit(<span class="literal">NULL</span>);<span class="comment">//退出当前线程</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>测试结果</strong><br><img src="https://img-blog.csdn.net/20180417170110584?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>可见，全局变量在多个线程中是共享的。</p>
+<p><strong>2.多线访问共享变量引发的数据混乱。</strong></p>
+<p>虽然线程共享全局变量相对于进程通信会给线程通信带来巨大的方便，但是探究以下问题时发现不做控制的进行访问全局变量也是致命的，带来巨大程序bug，并且难以发现，首先请看一下代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;assert.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;pthread.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAX 10000</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> count = <span class="number">0</span>;<span class="comment">//定义全局count并初始化为0</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//函数线程A</span></span><br><span class="line"><span class="function"><span class="keyword">void</span>* <span class="title">my_funa</span><span class="params">(<span class="keyword">void</span> *arg)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(;i &lt; MAX;++i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> cur = count;</span><br><span class="line">		cur++;</span><br><span class="line">		count = cur;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;线程A:id = %lu,count = %d\n&quot;</span>,pthread_self(),count);</span><br><span class="line">		usleep(<span class="number">10</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//函数线程B</span></span><br><span class="line"><span class="function"><span class="keyword">void</span>* <span class="title">my_funb</span><span class="params">(<span class="keyword">void</span> *arg)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(;i &lt; MAX;++i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> cur = count;</span><br><span class="line">		cur++;</span><br><span class="line">		count = cur;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;线程B:id = %lu,count = %d\n&quot;</span>,pthread_self(),count);</span><br><span class="line">		usleep(<span class="number">10</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//解释：定义全局变量count并初始化为0作为计数器</span></span><br><span class="line"><span class="comment">//在函数线程A和函数线程B分别进行10000次的++操作</span></span><br><span class="line"><span class="comment">//那么在两个线程执行完毕之后此时计数器count的值为20000</span></span><br><span class="line"><span class="comment">//usleep(10)，是为了模仿交替执行的过程，主动放弃cpu的执行权。</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span>  <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//创建两个线程</span></span><br><span class="line">	<span class="keyword">pthread_t</span> pthid1,pthid2;</span><br><span class="line">	<span class="keyword">int</span> res1 = pthread_create(&amp;pthid1,<span class="literal">NULL</span>,my_funa,<span class="literal">NULL</span>);</span><br><span class="line">	<span class="keyword">int</span> res2 = pthread_create(&amp;pthid2,<span class="literal">NULL</span>,my_funb,<span class="literal">NULL</span>);</span><br><span class="line">	assert(<span class="number">0</span> == res1);</span><br><span class="line">	assert(<span class="number">0</span> == res2);</span><br><span class="line"></span><br><span class="line">	<span class="comment">//阻塞，回收函数线程资源</span></span><br><span class="line">	pthread_join(pthid1,<span class="literal">NULL</span>);</span><br><span class="line">	pthread_join(pthid2,<span class="literal">NULL</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用gcc编译并执行：<br><img src="https://img-blog.csdn.net/2018041717173811?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><strong>多次执行结果：</strong><br><img src="https://img-blog.csdn.net/2018041717255381?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<p><img src="https://img-blog.csdn.net/20180417172603319?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<p><img src="https://img-blog.csdn.net/20180417172614873?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<p>这里结果就令我感到非常疑惑，按照我们预期的结果。在两个线程中，都访问了全局变量并且同样进行了一万次的++操作，结果应该是20000。但是在这里我们看到多次执行结果每次的输出并不一致，存在结果为20000的情况，但是更多的是小于20000的情况。<br>试想一下，这样的程序应用在实际的软件当中，必然会带来巨大的漏洞和危害，造成一定的经济损失。</p>
+<p><strong>下面就开始探索如何这样的问题是如何出现的？为什么执行同一个可执行程序不能得到相同的计算结果？该如何解决这样的问题？</strong></p>
+<p>通过查阅相关的资料，得到了一下的信息。<br>（1）时间片轮转技术<br>（2）cur++的反汇编代码</p>
+<p><strong>时间片轮转技术</strong><br>什么是时间片轮转技术？在计算机发展的早期，CPU的价格昂贵，如果执行一个程序时但其输入输出需要的时间比较长，此时CPU就必须等到数据的到来才能进行运算。对于这样的时间浪费，在那个时期简直就是暴殄天物。聪明的计算机前辈很快就意识到这个问题，于是提出了监控CPU状态的程序。当发现CPU处于等待IO时，切换到等待获取CPU执行的程序，使得CPU被充分利用起来，这就是最早期的多道程序设计的思想。但是这样的调度策略显得太过粗糙，不分程序之间的优先级。随后就提出了分时系统的调度策略，即每个程序执行一小段时间之后将CPU的控制权交给其他就绪的程序。使得每个程序都有得到使用CPU执行的机会。这大概就是时间轮转技术的雏形吧。</p>
+<p><strong>现代计算机的时间片轮转技术是这样定义的：</strong><br>在早期的时间片轮转法中，系统将所有的就绪进程按先来先服务的原则，排成一个队列，每次调度时，把CPU分配给队首进程，并令其执行一个时间片。时间片的大小从几ms到几百ms。当执行的时间片用完时，由一个计时器发出时钟中断请求，调度程序便据此信号来停止该进程的执行，并将它送往就绪队列的末尾;然后，再把处理机分配给就绪队列中新的队首进程，同时也让它执行一个时间片。这样就可以保证就绪队列中的所有进程，在一给定的时间内，均能获得一时间片的处理机执行时间。<br>如果在时间片结束时进程还在运行，则CPU将被剥夺并分配给另一个进程。如果进程在时间片结束前阻塞或结束，则CPU当即进行切换。调度程序所要做的就是维护一张就绪进程列表，当进程用完它的时间片后，它被移到队列的末尾。</p>
+<p>在这里为什么要提时间片轮转技术呢？针对我们上边的线程访问全局变量时，分配给单个线程执行时间是有限的，而且为了模仿交替执行的过程，程序中还使用了usleep(10)系统调用函数，主动交出CPU的控制权。但其实在拥有CPU控制权的那段时间内线程只能执行有限的指令条数，但这与输出结果不一致有什么关系呢？</p>
+<p><strong>先看下边cur++的反汇编代码：</strong><br><img src="https://img-blog.csdn.net/20180417193619880?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>可以看到++过程是在寄存器中进行的。到这里可以说问题已经解决了。<br>试想下面一个过程。<br>（1）时间片分给线程A执行代码，当<code>cur</code>在寄存中中累加到了<code>100</code>，此时恰巧时间片被用完了，而存放在寄存器中的中间变量<strong>还没来及</strong>写入实际的物理内存。</p>
+<p>（2）时间片分配给线程B，由于线程A算出来的值<strong>并没有写回内存</strong>，所以实际上此时线程B还是取得 <code>cur == 0</code>  而进行的 <code>++</code> 操作，大概进行了 <code>200次</code> 的<code>++</code> 操作，但这次时间片刚好够用，线程B将得到的 <code>cur == 200</code> 写回了实际的物理内存。</p>
+<p>（3）时间片再度分配给线程A,线程A开始执行它在上一个时间片结束时没有执行完的工作，将 <code>cur == 100</code> 写入实际的物理内存,计算机严格按照代码执行指令，殊不知此时会将由线程B计算出来的 <code>cur == 200</code> 覆盖，这就是为什么在上面的图片当中，三次执行相同的代码，得到的结果完全不一致的原因。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">多线程</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Linux-操作系统//" class="article-tag-list-link color1">Linux 操作系统</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/04/17/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E8%AE%BF%E9%97%AE%E5%85%B1%E4%BA%AB%E7%9A%84%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F%E5%BC%95%E5%8F%91%E7%9A%84%E6%95%B0%E6%8D%AE%E6%B7%B7%E4%B9%B1/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
     <article id="post-求二进制数中一的个数的三种方法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -929,197 +1118,6 @@
 
 
   
-    <article id="post-const修饰符的使用（修饰结构体指针，引用外部的const 变量）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/05/const%E4%BF%AE%E9%A5%B0%E7%AC%A6%E7%9A%84%E4%BD%BF%E7%94%A8%EF%BC%88%E4%BF%AE%E9%A5%B0%E7%BB%93%E6%9E%84%E4%BD%93%E6%8C%87%E9%92%88%EF%BC%8C%E5%BC%95%E7%94%A8%E5%A4%96%E9%83%A8%E7%9A%84const%20%E5%8F%98%E9%87%8F%EF%BC%89/">const修饰符的使用（修饰结构体指针，引用外部的const 变量）</a>
-    </h1>
-  
-
-        <!--显示阅读次数-->
-        
-        <!--显示阅读次数完毕-->
-        
-        <a href="/2018/04/05/const%E4%BF%AE%E9%A5%B0%E7%AC%A6%E7%9A%84%E4%BD%BF%E7%94%A8%EF%BC%88%E4%BF%AE%E9%A5%B0%E7%BB%93%E6%9E%84%E4%BD%93%E6%8C%87%E9%92%88%EF%BC%8C%E5%BC%95%E7%94%A8%E5%A4%96%E9%83%A8%E7%9A%84const%20%E5%8F%98%E9%87%8F%EF%BC%89/" class="archive-article-date">
-  	<time datetime="2018-04-05T07:55:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-      
-      
-        <a id="more"></a>
-
-<p><strong>const修饰符的使用</strong></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//const修饰变量为只读</span></span><br><span class="line"><span class="keyword">const</span>  <span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line">a = <span class="number">20</span>;<span class="comment">//是错误的赋值</span></span><br><span class="line"><span class="comment">//指针变量   指针指向的内存  两个不同的概念</span></span><br><span class="line"><span class="keyword">char</span> buf[] = <span class="string">&quot;helloworld&quot;</span>;</span><br><span class="line"><span class="comment">//从左往右看，跳过类型，看修饰那个字符</span></span><br><span class="line"><span class="comment">//如果是*,说明指针指向的内存不能改变</span></span><br><span class="line"><span class="comment">//如果是指针变量，说明指针的指向不能改变，指针的值不能修改</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">char</span> *p = buf;</span><br><span class="line"><span class="keyword">char</span> <span class="keyword">const</span> *p1 = buf;</span><br><span class="line"><span class="comment">//以上两条语句是等价的，都是修饰指针指向的内存不能改变。是对指针指向的内存空间的内容进行封锁。</span></span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span>封锁的是指针变量，不能修改其指向，但是可以修改指针指向内存当中的内容。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">char</span>* <span class="keyword">const</span> p2 = buf;</span><br><span class="line">p2[<span class="number">1</span>] = <span class="string">&#x27;3&#x27;</span>;<span class="comment">//可以进行赋值</span></span><br><span class="line">p2 = <span class="string">&quot;hello&quot;</span>;是错误的</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">char</span> * <span class="keyword">const</span> p2 = buf;</span><br><span class="line"><span class="comment">//进行双重封锁，即既不能修改指针的指向，也不能修改指针指向内存当中的内容。</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>const修饰结构体指针</strong></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//对结构体进行封锁</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> </span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">int</span> a;</span><br><span class="line">	<span class="keyword">int</span> b;</span><br><span class="line">&#125;my_struct;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fun1</span><span class="params">(my_struct *p)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//结构体指针可以修改</span></span><br><span class="line">	<span class="comment">//结构体指针指向的内存也可以改变	</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fun2</span><span class="params">(my_struct <span class="keyword">const</span> *p)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//结构体指针可以修改    //如 p = NULL;   是可以修改的</span></span><br><span class="line">	<span class="comment">//结构体指针指向的内容不能修改	//p-&gt;a = 10    是错误的</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fun3</span><span class="params">(my_struct * <span class="keyword">const</span> p)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//结构体指针的指向不可以修改   p = NULL是错误的</span></span><br><span class="line">	<span class="comment">//结构体指针指向的内容可以修改  p-&gt;a = 10是可以修改的</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fun4</span><span class="params">(<span class="keyword">const</span> my_struct * <span class="keyword">const</span> p)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//结构体指针的指向不可以修改</span></span><br><span class="line">	<span class="comment">//结构体指针指向内存当中的内容也不可以修改</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>如何引用其他.c文件中的const变量</strong></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">extern</span> <span class="keyword">const</span> <span class="keyword">int</span> a;<span class="comment">//注意，不能再进行赋值，只能声明</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;a = %d\n&quot;</span>,a);</span><br></pre></td></tr></table></figure>
-
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c-c//" class="article-tag-list-link color1">c/c++</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/05/const%E4%BF%AE%E9%A5%B0%E7%AC%A6%E7%9A%84%E4%BD%BF%E7%94%A8%EF%BC%88%E4%BF%AE%E9%A5%B0%E7%BB%93%E6%9E%84%E4%BD%93%E6%8C%87%E9%92%88%EF%BC%8C%E5%BC%95%E7%94%A8%E5%A4%96%E9%83%A8%E7%9A%84const%20%E5%8F%98%E9%87%8F%EF%BC%89/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
-    <article id="post-strcmp函数的分析及实现" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/04/strcmp%E5%87%BD%E6%95%B0%E7%9A%84%E5%88%86%E6%9E%90%E5%8F%8A%E5%AE%9E%E7%8E%B0/">strcmp函数的分析及实现</a>
-    </h1>
-  
-
-        <!--显示阅读次数-->
-        
-        <!--显示阅读次数完毕-->
-        
-        <a href="/2018/04/04/strcmp%E5%87%BD%E6%95%B0%E7%9A%84%E5%88%86%E6%9E%90%E5%8F%8A%E5%AE%9E%E7%8E%B0/" class="archive-article-date">
-  	<time datetime="2018-04-04T11:40:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-04</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-      
-      
-        <a id="more"></a>
-
-<p><strong>函数原型：</strong>   <code>int strcmp(const char *string1,const char *string2)</code></p>
-<p><strong>所在库文件：</strong> <code>#include&lt;string.h&gt;</code></p>
-<p><strong>参数：</strong>  以<code>null</code>结尾的字符串   <code>const</code>修饰防止字符串被修改，进行保护。</p>
-<p><strong>返回值：</strong><br><img src="https://img-blog.csdn.net/20180404184226445?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>上图在MSDN文档中截取，返回值表明了<strong>字符串1</strong>和<strong>字符串2</strong>的字典序关系。<br>什么是字典序关系呢？</p>
-<p>度娘的回答是</p>
-<p>在数学中，字典或词典顺序（也称为词汇顺序，字典顺序，字母顺序或词典顺序）是基于字母顺序排列的单词按字母顺序排列的方法。 这种泛化主要在于定义有序完全有序集合（通常称为字母表）的元素的序列（通常称为计算机科学中的单词）的总顺序。</p>
-<p>其实讲了这么多，我们只需要明白，这里的字典序是一种按顺序排列的法则，但它排列的根据是什么呢？其根据是ascii码表。</p>
-<p>这时就应该联想到在计算机科学中ASCII码表，<code>strcmp</code>函数的返回值是两个字符串的字典序关系，其实也就是在ascii表中的先后排列关系。<br>所以<code>strcmp</code>函数真正比较的是字符串中<strong>每个字符的ascii</strong>码值大小。</p>
-<p>在上图中，请一定注意。返回值的三种情况分别为     0     &gt;0     &lt;0。并没说其返回值为 0    -1      1，所以我们在使用的时候千万不能将返回值与-1或1进行比较的。如果进行了比较，很有可能给程序带来许多潜藏的bug，难以发现。</p>
-<p><strong>ASCII表</strong><br><img src="https://img-blog.csdn.net/20180404190440557?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
-<p><strong>函数功能描述</strong><br>当s1 &lt; s2时，返回负值。<br>当s1 &gt; s2时，返回正值。<br>当s1 == s2，返回0。<br>两个字符串的每个字符从左到右依此按照对应的ascii码值大小进行比较，若两字符对应的ascii码值相等，继续比较直到出现不同的字符或者遇到串尾标志符<code>&#39;\0&#39;</code>为止。</p>
-<p>下面实现<code>strcmp</code>函数：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">#include&lt;assert.h&gt;</span><br><span class="line"></span><br><span class="line">int my_strcmp(const char *string1,const char *string2)</span><br><span class="line">&#123;</span><br><span class="line">	assert(NULL !&#x3D; string1);</span><br><span class="line">	assert(NULL !&#x3D; string2);&#x2F;&#x2F;防御性编程</span><br><span class="line">	const char *p &#x3D; string1;</span><br><span class="line">	const char *q &#x3D; string2;</span><br><span class="line">	while(*p &#x3D;&#x3D; *q)</span><br><span class="line">	&#123;</span><br><span class="line">		if(*p &#x3D;&#x3D; &#39;\0&#39;)&#x2F;&#x2F;此时*p &#x3D;&#x3D; *q &#x3D;&#x3D; &#39;\0&#39;即两字符串完全相同</span><br><span class="line">		&#123;</span><br><span class="line">			return 0;</span><br><span class="line">		&#125;</span><br><span class="line">		p++;</span><br><span class="line">		q++;</span><br><span class="line">	&#125;</span><br><span class="line">	&#x2F;&#x2F;跳出while循环，即此时的*p与*q不相同</span><br><span class="line">	&#x2F;&#x2F;按照返回值       *string1 &gt; *string2      返回值大于0</span><br><span class="line">	&#x2F;&#x2F;               *string1 &lt; *string2      返回值小于0</span><br><span class="line">	&#x2F;&#x2F;ascii码值共有256个  无符号字符型指针进行解引用 0 - 2^8-1 共256</span><br><span class="line">	return *(unsigned char*)p - *(unsigned char*)q;	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>测试用例：</strong><br>char *p1 = “ABCDE”;<br>char *p2 = “ABCDE”;</p>
-<p>char *p1 = “ABCDE”;<br>char *p2 = “ABCD”;</p>
-<p>char *p1 = “ABCD”;<br>char *p2 = “ABCDE”;</p>
-<p>char *p = “hhha”;<br>char *q = “hhhh”;</p>
-<p>char string1[] = “The quick brown dog jumps over the lazy fox”;<br>char string2[] = “The QUICK brown dog jumps over the lazy fox”;</p>
-<p>更多的测试用例大家可以进行规定，观察结果与预期的结果是否相同。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c-c//" class="article-tag-list-link color1">c/c++</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/04/strcmp%E5%87%BD%E6%95%B0%E7%9A%84%E5%88%86%E6%9E%90%E5%8F%8A%E5%AE%9E%E7%8E%B0/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/27/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/26/">26</a><a class="page-number" href="/page/27/">27</a><span class="page-number current">28</span><a class="page-number" href="/page/29/">29</a><a class="page-number" href="/page/30/">30</a><a class="extend next" rel="next" href="/page/29/">下一页</a>
@@ -1215,11 +1213,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">在线笔试题</a>
+                <a href="javascript:void(0)" class="js-tag color3">dp</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">dp</a>
+                <a href="javascript:void(0)" class="js-tag color1">在线笔试题</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1239,11 +1237,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color5">操作系统</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">操作系统</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1375,15 +1373,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">递归</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">堆栈调用</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">c++11算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">递归</a>
               </li>
              
               <li class="article-tag-list-item">

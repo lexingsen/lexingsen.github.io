@@ -64,7 +64,7 @@
 			</ul>
 			</nav>
 			<nav>
-			总文章数 297
+			总文章数 299
 			</nav>
 		<nav class="header-smart-menu">
     		
@@ -146,6 +146,188 @@
           </div>
           <div id="js-content" class="content-ll">
             
+  
+    <article id="post-使用C++优先级队列求解Huffman树带权路径长度" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/10/30/%E4%BD%BF%E7%94%A8C++%E4%BC%98%E5%85%88%E7%BA%A7%E9%98%9F%E5%88%97%E6%B1%82%E8%A7%A3Huffman%E6%A0%91%E5%B8%A6%E6%9D%83%E8%B7%AF%E5%BE%84%E9%95%BF%E5%BA%A6/">使用C++优先级队列求解Huffman树带权路径长度</a>
+    </h1>
+  
+
+        <!--显示阅读次数-->
+        
+        <!--显示阅读次数完毕-->
+        
+        <a href="/2019/10/30/%E4%BD%BF%E7%94%A8C++%E4%BC%98%E5%85%88%E7%BA%A7%E9%98%9F%E5%88%97%E6%B1%82%E8%A7%A3Huffman%E6%A0%91%E5%B8%A6%E6%9D%83%E8%B7%AF%E5%BE%84%E9%95%BF%E5%BA%A6/" class="archive-article-date">
+  	<time datetime="2019-10-30T07:58:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-30</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+      
+        <a id="more"></a>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="built_in">priority_queue</span>&lt;<span class="keyword">int</span>, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;, greater&lt;<span class="keyword">int</span>&gt; &gt; pq;</span><br><span class="line">	<span class="keyword">int</span> a[] = &#123;<span class="number">2</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">7</span>,<span class="number">9</span>&#125;;</span><br><span class="line">	<span class="keyword">int</span> n = <span class="keyword">sizeof</span>(a)/<span class="keyword">sizeof</span>(<span class="keyword">int</span>);</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;n; ++i)  pq.push(a[i]);</span><br><span class="line">	<span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span> (pq.size() &gt; <span class="number">1</span>) &#123;</span><br><span class="line">		<span class="keyword">int</span> a = pq.top();pq.pop();</span><br><span class="line">		<span class="keyword">int</span> b = pq.top();pq.pop();</span><br><span class="line">		res += (a+b);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; res &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">二叉树</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/数据结构//" class="article-tag-list-link color5">数据结构</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/10/30/%E4%BD%BF%E7%94%A8C++%E4%BC%98%E5%85%88%E7%BA%A7%E9%98%9F%E5%88%97%E6%B1%82%E8%A7%A3Huffman%E6%A0%91%E5%B8%A6%E6%9D%83%E8%B7%AF%E5%BE%84%E9%95%BF%E5%BA%A6/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+    <article id="post-数据结构：带头节点双向循环链表的实现（考研）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/10/29/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%9A%E5%B8%A6%E5%A4%B4%E8%8A%82%E7%82%B9%E5%8F%8C%E5%90%91%E5%BE%AA%E7%8E%AF%E9%93%BE%E8%A1%A8%E7%9A%84%E5%AE%9E%E7%8E%B0%EF%BC%88%E8%80%83%E7%A0%94%EF%BC%89/">数据结构：带头节点双向循环链表的实现（考研）</a>
+    </h1>
+  
+
+        <!--显示阅读次数-->
+        
+        <!--显示阅读次数完毕-->
+        
+        <a href="/2019/10/29/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%9A%E5%B8%A6%E5%A4%B4%E8%8A%82%E7%82%B9%E5%8F%8C%E5%90%91%E5%BE%AA%E7%8E%AF%E9%93%BE%E8%A1%A8%E7%9A%84%E5%AE%9E%E7%8E%B0%EF%BC%88%E8%80%83%E7%A0%94%EF%BC%89/" class="archive-article-date">
+  	<time datetime="2019-10-29T02:30:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-29</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+      
+        <a id="more"></a>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DoubleLinkedCircleList</span>&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">node</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> val;</span><br><span class="line">    node *next, *prev;</span><br><span class="line"></span><br><span class="line">    node (<span class="keyword">int</span> x) &#123;<span class="keyword">this</span>-&gt;val = x;&#125;</span><br><span class="line">    node () &#123;&#125;</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  node *head;</span><br><span class="line">  <span class="keyword">int</span> size;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  DoubleLinkedCircleList() &#123;</span><br><span class="line">    head = <span class="keyword">new</span> node();</span><br><span class="line">    head-&gt;next = head-&gt;prev = head;</span><br><span class="line">    size = <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  ~DoubleLinkedCircleList() &#123;</span><br><span class="line">    <span class="keyword">while</span> (head-&gt;next!=head &amp;&amp; head-&gt;prev!=head) delTail();</span><br><span class="line">    <span class="keyword">delete</span> head;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">insert</span><span class="params">(<span class="keyword">int</span> index, <span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (index&lt;<span class="number">0</span> || index&gt;size) &#123;</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;the index is invalid!&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">		&#125; </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// p是待删除节点的前去节点</span></span><br><span class="line">    node *p = head;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;index; ++i) p = p-&gt;next;</span><br><span class="line">    node *q = <span class="keyword">new</span> node(x);</span><br><span class="line">    q-&gt;next = p-&gt;next;</span><br><span class="line">    <span class="keyword">if</span> (p-&gt;next) p-&gt;next-&gt;prev = q;</span><br><span class="line">    q-&gt;prev = p;</span><br><span class="line">    p-&gt;next = q;</span><br><span class="line">    size ++;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">insertHead</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;insert(<span class="number">0</span>, x);&#125;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">insertTail</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;insert(size, x);&#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">int</span> <span class="title">del</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (index&lt;<span class="number">0</span> || index&gt;=size) &#123;</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;the index is invalid!&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">			<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	</span><br><span class="line">		<span class="keyword">if</span> (isEmpty()) &#123;</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;the DoubleLinkedCircleList is null!&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">			<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">		&#125; </span><br><span class="line"></span><br><span class="line">    node *p = head;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;index; ++i) p = p-&gt;next;</span><br><span class="line">    node *q = p-&gt;next;</span><br><span class="line">    <span class="keyword">int</span> res = q-&gt;val;</span><br><span class="line">    q-&gt;next-&gt;prev = p;</span><br><span class="line">    p-&gt;next = q-&gt;next;</span><br><span class="line">    <span class="keyword">delete</span> q;</span><br><span class="line">    q = <span class="literal">NULL</span>;</span><br><span class="line">    size --;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">int</span> <span class="title">delHead</span><span class="params">()</span> </span>&#123;<span class="keyword">return</span> del(<span class="number">0</span>);&#125;</span><br><span class="line">  <span class="function"><span class="keyword">int</span> <span class="title">delTail</span><span class="params">()</span> </span>&#123;<span class="keyword">return</span> del(size<span class="number">-1</span>);&#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">int</span> <span class="title">search</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (index&lt;<span class="number">0</span> || index&gt;=size) &#123;</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;the index is invalid!&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">			<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">if</span> (head-&gt;next == head &amp;&amp; head-&gt;prev == head) &#123;</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;the DoubleLinkedCircleList is null!&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">			<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">    node *p = head-&gt;next;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;index; ++i) p = p-&gt;next;</span><br><span class="line">    <span class="keyword">return</span> p-&gt;val;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">int</span> <span class="title">searchHead</span><span class="params">()</span> </span>&#123;<span class="keyword">return</span> search(<span class="number">0</span>);&#125;</span><br><span class="line">  <span class="function"><span class="keyword">int</span> <span class="title">searchTail</span><span class="params">()</span> </span>&#123;<span class="keyword">return</span> search(size<span class="number">-1</span>);&#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">show</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    node *p = head-&gt;next;</span><br><span class="line">    <span class="keyword">while</span> (p &amp;&amp; p!=head) &#123;</span><br><span class="line">      <span class="built_in">cout</span> &lt;&lt; p-&gt;val &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">      p = p-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">isEmpty</span><span class="params">()</span> </span>&#123;<span class="keyword">return</span> head-&gt;next==head &amp;&amp; head-&gt;prev==head;&#125;</span><br><span class="line">  <span class="function"><span class="keyword">int</span> <span class="title">getSize</span><span class="params">()</span> </span>&#123;<span class="keyword">return</span> size;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> a[] = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;;</span><br><span class="line">  <span class="keyword">int</span> n = <span class="keyword">sizeof</span>(a)/<span class="keyword">sizeof</span>(<span class="keyword">int</span>);</span><br><span class="line">  DoubleLinkedCircleList <span class="built_in">list</span> = DoubleLinkedCircleList();</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;n; ++i) <span class="built_in">list</span>.insertTail(a[i]);</span><br><span class="line">  <span class="built_in">list</span>.show();</span><br><span class="line">  <span class="built_in">list</span>.delHead();</span><br><span class="line">  <span class="built_in">list</span>.show();</span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;size:&quot;</span> &lt;&lt; <span class="built_in">list</span>.getSize() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  <span class="built_in">list</span>.delTail();</span><br><span class="line">  <span class="built_in">list</span>.show();</span><br><span class="line">  <span class="built_in">list</span>.del(<span class="number">2</span>);</span><br><span class="line">  <span class="built_in">list</span>.show();</span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; <span class="built_in">list</span>.searchHead() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; <span class="built_in">list</span>.searchTail() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;======================&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; <span class="built_in">list</span>.search(<span class="number">2</span>) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; <span class="built_in">list</span>.search(<span class="number">0</span>) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;======================&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; <span class="built_in">list</span>.search(<span class="number">1</span>) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  <span class="built_in">list</span>.show();</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">双链表</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/数据结构//" class="article-tag-list-link color5">数据结构</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/10/29/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%9A%E5%B8%A6%E5%A4%B4%E8%8A%82%E7%82%B9%E5%8F%8C%E5%90%91%E5%BE%AA%E7%8E%AF%E9%93%BE%E8%A1%A8%E7%9A%84%E5%AE%9E%E7%8E%B0%EF%BC%88%E8%80%83%E7%A0%94%EF%BC%89/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
     <article id="post-数据结构：带头结点双向链表的实现（考研）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -868,190 +1050,6 @@
 
 
   
-    <article id="post-栈的应用：进制转换" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/09/06/%E6%A0%88%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%9A%E8%BF%9B%E5%88%B6%E8%BD%AC%E6%8D%A2/">栈的应用：进制转换</a>
-    </h1>
-  
-
-        <!--显示阅读次数-->
-        
-        <!--显示阅读次数完毕-->
-        
-        <a href="/2019/09/06/%E6%A0%88%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%9A%E8%BF%9B%E5%88%B6%E8%BD%AC%E6%8D%A2/" class="archive-article-date">
-  	<time datetime="2019-09-06T06:15:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-      
-      
-        <a id="more"></a>
-
-<p><font size=5 face=consolas>代码实现：</font></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;map&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> N 100</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> type int</span></span><br><span class="line"></span><br><span class="line">type st[N];</span><br><span class="line"><span class="keyword">int</span> top = <span class="number">-1</span>;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">isEmpty</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> top == <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">isFull</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> top == N - <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">push</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (!isFull()) st[++ top] = x;</span><br><span class="line">	<span class="keyword">else</span> <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;full&quot;</span> &lt;&lt; <span class="built_in">endl</span>; </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">pop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (!isEmpty()) -- top;</span><br><span class="line">	<span class="keyword">else</span> <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;empty&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">peek</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (!isEmpty()) <span class="keyword">return</span> st[top];</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;empty&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">map</span>&lt;<span class="keyword">int</span>, <span class="keyword">char</span>&gt; mp&#123; &#123;<span class="number">10</span>,<span class="string">&#x27;A&#x27;</span>&#125;,&#123;<span class="number">11</span>,<span class="string">&#x27;B&#x27;</span>&#125;,&#123;<span class="number">12</span>,<span class="string">&#x27;C&#x27;</span>&#125;,&#123;<span class="number">13</span>,<span class="string">&#x27;D&#x27;</span>&#125;,&#123;<span class="number">14</span>,<span class="string">&#x27;E&#x27;</span>&#125;,&#123;<span class="number">15</span>,<span class="string">&#x27;F&#x27;</span>&#125; &#125;; </span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">conversion</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> base)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">while</span> (x) &#123;</span><br><span class="line">		push(x % base);</span><br><span class="line">		x /= base;</span><br><span class="line">	&#125; </span><br><span class="line">	<span class="keyword">while</span> (!isEmpty()) &#123;</span><br><span class="line">		<span class="keyword">int</span> res = peek();pop();</span><br><span class="line">		<span class="keyword">if</span> (res &gt;= <span class="number">10</span>) <span class="built_in">cout</span> &lt;&lt; mp[res] &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">		<span class="keyword">else</span> <span class="built_in">cout</span> &lt;&lt; res &lt;&lt; <span class="string">&quot; &quot;</span>; </span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a = <span class="number">1000</span>;</span><br><span class="line">	conversion(a, <span class="number">16</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">栈</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/数据结构//" class="article-tag-list-link color5">数据结构</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/09/06/%E6%A0%88%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%9A%E8%BF%9B%E5%88%B6%E8%BD%AC%E6%8D%A2/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
-    <article id="post-栈的应用：括号匹配" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/09/06/%E6%A0%88%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%9A%E6%8B%AC%E5%8F%B7%E5%8C%B9%E9%85%8D/">栈的应用：括号匹配</a>
-    </h1>
-  
-
-        <!--显示阅读次数-->
-        
-        <!--显示阅读次数完毕-->
-        
-        <a href="/2019/09/06/%E6%A0%88%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%9A%E6%8B%AC%E5%8F%B7%E5%8C%B9%E9%85%8D/" class="archive-article-date">
-  	<time datetime="2019-09-06T05:34:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-      
-      
-        <a id="more"></a>
-
-<p><font size=5 face=consonlas>一.要点<font><br><font size=4 face=consonlas>（1）利用栈先进后出的特点，当遇到左括号”[“,”{“,””(“时，直接入栈。<br>（2）当遇到右括号”)”,”}”,”]”时，如果此时空的，那么成对的括号一定不能进行匹配，直接返回false即可。<br>（3）可以出栈的情况，当栈顶的左括号与当前的右括号匹配时，出栈。<br>（4）遍历过程中出现的其他情况都是错误的。比如栈顶为左括号，当前遍历到也是左括号。<br>（5）当遍历完成时，如果栈不空，说明还有未进行匹配的左括号，也就意味括号匹配失败，直接返回false即可。<br><font size=5 face=consonlas>二.代码实现<font></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stack&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">isValid</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">stack</span>&lt;<span class="keyword">char</span>&gt; st;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> x : s) &#123;</span><br><span class="line">        <span class="keyword">if</span> (x == <span class="string">&#x27;[&#x27;</span> || x == <span class="string">&#x27;(&#x27;</span> || x == <span class="string">&#x27;&#123;&#x27;</span>)</span><br><span class="line">            st.push(x);</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (st.empty())</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>; </span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> ( (st.top() == <span class="string">&#x27;(&#x27;</span> &amp;&amp; x == <span class="string">&#x27;)&#x27;</span>) || (st.top () == <span class="string">&#x27;[&#x27;</span> &amp;&amp; x == <span class="string">&#x27;]&#x27;</span>) || (st.top() == <span class="string">&#x27;&#123;&#x27;</span> &amp;&amp; x == <span class="string">&#x27;&#125;&#x27;</span>) )</span><br><span class="line">            st.pop();</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> st.empty();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">string</span> s;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; s;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; isValid(s) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">栈</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/数据结构//" class="article-tag-list-link color5">数据结构</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/09/06/%E6%A0%88%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%9A%E6%8B%AC%E5%8F%B7%E5%8C%B9%E9%85%8D/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/10/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/30/">30</a><a class="extend next" rel="next" href="/page/12/">下一页</a>
@@ -1147,11 +1145,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">在线笔试题</a>
+                <a href="javascript:void(0)" class="js-tag color3">dp</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">dp</a>
+                <a href="javascript:void(0)" class="js-tag color1">在线笔试题</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1171,11 +1169,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color5">操作系统</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">操作系统</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1307,15 +1305,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">递归</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">堆栈调用</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">c++11算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">递归</a>
               </li>
              
               <li class="article-tag-list-item">

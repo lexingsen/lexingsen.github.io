@@ -64,7 +64,7 @@
 			</ul>
 			</nav>
 			<nav>
-			总文章数 297
+			总文章数 299
 			</nav>
 		<nav class="header-smart-menu">
     		
@@ -146,6 +146,161 @@
           </div>
           <div id="js-content" class="content-ll">
             
+  
+    <article id="post-C语言不做数组下标安全性检查" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/29/C%E8%AF%AD%E8%A8%80%E4%B8%8D%E5%81%9A%E6%95%B0%E7%BB%84%E4%B8%8B%E6%A0%87%E5%AE%89%E5%85%A8%E6%80%A7%E6%A3%80%E6%9F%A5/">C语言不做数组下标安全性检查</a>
+    </h1>
+  
+
+        <!--显示阅读次数-->
+        
+        <!--显示阅读次数完毕-->
+        
+        <a href="/2018/03/29/C%E8%AF%AD%E8%A8%80%E4%B8%8D%E5%81%9A%E6%95%B0%E7%BB%84%E4%B8%8B%E6%A0%87%E5%AE%89%E5%85%A8%E6%80%A7%E6%A3%80%E6%9F%A5/" class="archive-article-date">
+  	<time datetime="2018-03-29T11:04:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-29</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+      
+        <a id="more"></a>
+
+<p>Ｃ语言的编译器是不检查下标越界的,以前知道这个问题,可是没有想过是什么原因?</p>
+<p> 总结如下:<br>　　１,不检查下标是否越界可以有效提高程序运行的效率，因为如果你检查，那么编译器必须在生成的目标代码中加入额外的代码用于程序运行时检测下标是否越界，这就会导致程序的运行速度下降，所以为了程序的运行效率，C/C++才不检查下标是否越界。<br>　　２,不检查下标是为了给程序员更大的空间，也为指针操作带来更多的方便。如果有这个检查的话指针的功能将会大大被削弱，C的数组标识符，里面并没有包含该数组长度的信息，只包含地址信息，所以语言本身无法检查，只能通过编译器检查，而早期的C语言编译器也不对数组越界进行检查，只能由程序员自己检查确保。以及在早期的CRT函数中也不对字符串指针或数组进行越界检查，都是要求程序员确保空间足够，因此也才也才有了在VS2005之后微软提供的安全的CRT函数版本。　　</p>
+<p>　　自己写了一段检测程序测试这个问题，发现如果数组下标越界了，那么它会自动接着那块内存往后写。想了一下明白了，以前说不允许数组下标越界，并不是因为界外没有存储空间，而是因为界外的内容是未知的。也就是说如果界外的空间暂时没有被利用，那么我们可以占用那块内存，但是如果之前界外的内存已经存放了东西，那么我们越界过去就会覆盖那块内存，导致错误的产生。<br>通用数组长度的计算</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">char</span> p[] = &#123;<span class="string">&#x27;a&#x27;</span>,<span class="string">&#x27;b&#x27;</span>,<span class="string">&#x27;c&#x27;</span>,<span class="string">&#x27;d&#x27;</span>,<span class="string">&#x27;e&#x27;</span>&#125;;</span><br><span class="line">	<span class="keyword">int</span> arr[] = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;;</span><br><span class="line">	<span class="keyword">char</span> *str[] = &#123;<span class="string">&quot;hello&quot;</span>,<span class="string">&quot;nihao&quot;</span>,<span class="string">&quot;hehe&quot;</span>&#125;;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">int</span> len1 = <span class="keyword">sizeof</span>(p)/<span class="keyword">sizeof</span>(p[<span class="number">0</span>]);</span><br><span class="line">	<span class="keyword">int</span> len2 = <span class="keyword">sizeof</span>(arr)/<span class="keyword">sizeof</span>(arr[<span class="number">0</span>]);</span><br><span class="line">	<span class="keyword">int</span> len3 = <span class="keyword">sizeof</span>(str)/<span class="keyword">sizeof</span>(str[<span class="number">0</span>]);</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;len1 = %d,len2 = %d,len3 = %d\n&quot;</span>,len1,len2,len3);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdn.net/20180329190336220?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<p>通过这种办法，就可以计算出任意类型数组的长度，是一种通用的计算数组长度的方法。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/29/C%E8%AF%AD%E8%A8%80%E4%B8%8D%E5%81%9A%E6%95%B0%E7%BB%84%E4%B8%8B%E6%A0%87%E5%AE%89%E5%85%A8%E6%80%A7%E6%A3%80%E6%9F%A5/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+    <article id="post-数组作为形参退化为指针" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/29/%E6%95%B0%E7%BB%84%E4%BD%9C%E4%B8%BA%E5%BD%A2%E5%8F%82%E9%80%80%E5%8C%96%E4%B8%BA%E6%8C%87%E9%92%88/">数组作为形参退化为指针</a>
+    </h1>
+  
+
+        <!--显示阅读次数-->
+        
+        <!--显示阅读次数完毕-->
+        
+        <a href="/2018/03/29/%E6%95%B0%E7%BB%84%E4%BD%9C%E4%B8%BA%E5%BD%A2%E5%8F%82%E9%80%80%E5%8C%96%E4%B8%BA%E6%8C%87%E9%92%88/" class="archive-article-date">
+  	<time datetime="2018-03-29T10:26:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-29</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+      
+        <a id="more"></a>
+
+<h3 id="一个小程序进行验证"><a href="#一个小程序进行验证" class="headerlink" title="一个小程序进行验证"></a>一个小程序进行验证</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Sizeof</span><span class="params">(<span class="keyword">int</span> arr[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,<span class="keyword">sizeof</span>(arr));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> arr[] = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;传入Sizeof()函数进行计算:\n&quot;</span>);</span><br><span class="line">	Sizeof(arr);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;为传入Sizeof()函数直接在主函数中进行计算:\n&quot;</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,<span class="keyword">sizeof</span>(arr));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在代码中可以看到，主函数与Sizeof函数执行了同样的计算。即计算数组的大小，但是结果却是始料未及的。<br><img src="https://img-blog.csdn.net/20180329182317200?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>出现这样的结果其原因就是在函数中，当数组作为形式参数进行传参时，其意义发生了变化。将其解析为一个指针，而指针的大小为四个字节。此时将数组作为一个指针类型进行计算。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/c-c//" class="article-tag-list-link color1">c/c++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/29/%E6%95%B0%E7%BB%84%E4%BD%9C%E4%B8%BA%E5%BD%A2%E5%8F%82%E9%80%80%E5%8C%96%E4%B8%BA%E6%8C%87%E9%92%88/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
   
     <article id="post-举例分析可变参数函数实现的过程" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -915,11 +1070,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">在线笔试题</a>
+                <a href="javascript:void(0)" class="js-tag color3">dp</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">dp</a>
+                <a href="javascript:void(0)" class="js-tag color1">在线笔试题</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -939,11 +1094,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color5">操作系统</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">操作系统</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1075,15 +1230,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">递归</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">堆栈调用</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">c++11算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">递归</a>
               </li>
              
               <li class="article-tag-list-item">
