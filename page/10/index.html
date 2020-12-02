@@ -246,7 +246,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/10/30/%E5%88%A4%E6%96%AD%E4%BA%8C%E5%8F%89%E6%A0%91%E6%98%AF%E5%90%A6%E4%B8%BA%E6%BB%A1%E4%BA%8C%E5%8F%89%E6%A0%91/">判断二叉树是否为满二叉树</a>
+      <a class="article-title" href="/2019/10/30/%E5%88%A4%E6%96%AD%E4%BA%8C%E5%8F%89%E6%A0%91%E6%98%AF%E5%90%A6%E4%B8%BA%E6%BB%A1%E4%BA%8C%E5%8F%89%E6%A0%91/">二叉树：判断二叉树是否为满二叉树</a>
     </h1>
   
 
@@ -266,10 +266,10 @@
       
         <a id="more"></a>
 
-<p><font size=5 face=consolas>满二叉树的定义：一个高度为h，并且含有2^h - 1个节点的二叉树称为满二叉树，下文称呼满二叉树为FBT。</p>
-<p><font size=5 face=consolas color=blue>根据满二叉树的高度与节点个数之间的关系，很容易判断一棵树是否为FBT，只需要求树其树高和节点个数即可。</p>
+<p><font size=5 face=consolas>满二叉树的定义：一个高度为h，并且含有2^h - 1个节点的二叉树称为满二叉树，下文称呼满二叉树为FBT。</font></p>
+<p><font size=5 face=consolas color=blue>根据满二叉树的高度与节点个数之间的关系，很容易判断一棵树是否为FBT，只需要求树其树高和节点个数即可。</font></p>
 <p><font size=5 face=consolas color=red>代码实现：</font></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> val;</span><br><span class="line">	node *left, *right;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">height</span><span class="params">(node *root)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (!root) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> left  = height(root-&gt;left);</span><br><span class="line">	<span class="keyword">int</span> right = height(root-&gt;right);</span><br><span class="line">	<span class="keyword">return</span> max(left, right) + <span class="number">1</span>; </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">count</span><span class="params">(node *root, <span class="keyword">int</span> &amp;sum)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (root) &#123;</span><br><span class="line">		sum += <span class="number">1</span>;</span><br><span class="line">		count(root-&gt;left);</span><br><span class="line">		count(root-&gt;right);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">isFBT</span><span class="params">(node *root)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (!root) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> h = height(root);</span><br><span class="line">	count(root, sum);</span><br><span class="line">	<span class="keyword">return</span> sum == <span class="built_in">pow</span>(<span class="number">2</span>, h) - <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span> &#123;</span></span><br><span class="line">  <span class="keyword">int</span> val; </span><br><span class="line">  node *left, *right;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 计算高度</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">height</span><span class="params">(node *root)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!root) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> left  = height(root-&gt;left);</span><br><span class="line">  <span class="keyword">int</span> right = height(root-&gt;right);</span><br><span class="line">  <span class="keyword">return</span> max(left, right) + <span class="number">1</span>; </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 计算节点个数</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">count</span><span class="params">(node *root, <span class="keyword">int</span> &amp;sum)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (root) &#123;</span><br><span class="line">		sum += <span class="number">1</span>;</span><br><span class="line">		count(root-&gt;left);</span><br><span class="line">		count(root-&gt;right);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">isFBT</span><span class="params">(node *root)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!root) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> h = height(root);</span><br><span class="line">  count(root, sum);</span><br><span class="line">  <span class="keyword">return</span> sum == <span class="built_in">pow</span>(<span class="number">2</span>, h) - <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
 
@@ -340,7 +340,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/10/30/%E5%88%A4%E6%96%AD%E4%BA%8C%E5%8F%89%E6%A0%91%E6%98%AF%E5%90%A6%E4%B8%BA%E5%AE%8C%E5%85%A8%E4%BA%8C%E5%8F%89%E6%A0%91/">判断二叉树是否为完全二叉树</a>
+      <a class="article-title" href="/2019/10/30/%E5%88%A4%E6%96%AD%E4%BA%8C%E5%8F%89%E6%A0%91%E6%98%AF%E5%90%A6%E4%B8%BA%E5%AE%8C%E5%85%A8%E4%BA%8C%E5%8F%89%E6%A0%91/">二叉树：判断二叉树是否为完全二叉树</a>
     </h1>
   
 
@@ -360,10 +360,10 @@
       
         <a id="more"></a>
 
-<p><font size=5 face=consolas>完全二叉树的定义（王道）：设一棵高度为h,有n个节点的二叉树，当且仅当其中每一个节点都与高度为h的满二叉树编号为1~n的节点一一对应时，称为完全二叉树。下文称呼完全二叉树为CBT。</font></p>
+<p><font size=5 face=consolas>完全二叉树的定义：设一棵高度为h,有n个节点的二叉树，当且仅当其中每一个节点都与高度为h的满二叉树编号为1~n的节点一一对应时，称为完全二叉树。下文称呼完全二叉树为CBT。</font></p>
 <p><font size=5 face=consolas color=blue>由定义可知，CBT可以不是满树，但其叶子节点只能出现在最后两层。利用这个性质来判断完全二叉树，使用层序遍历，我们依次将节点入队，而不考虑当前节点的左右孩子节点是否为空而直接入队，这样当我们在出队时发现有空节点，此时判断队列中是否还有非空节点，如果有，则说明此树是CBT。</font></p>
 <p><font size=5 face=consolas color=red>代码实现：</font></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> val;</span><br><span class="line">	node *next;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">isCBT</span><span class="params">(node *root)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (!root) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	<span class="built_in">queue</span>&lt;node*&gt; q;</span><br><span class="line">	q,push(root);</span><br><span class="line">	<span class="keyword">while</span> (!q.empty()) &#123;</span><br><span class="line">		node *top = q.top();q.pop();</span><br><span class="line">		<span class="keyword">if</span> (top) &#123;</span><br><span class="line">			q.push(top-&gt;left);</span><br><span class="line">			q.push(top-&gt;right);</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="comment">//说明取出的top节点是空节点，此时看队列中是否还有非空节点</span></span><br><span class="line">			<span class="keyword">while</span> (!q.empty()) &#123;</span><br><span class="line">				top = q.top();q.pop();</span><br><span class="line">				<span class="keyword">if</span> (top) <span class="keyword">return</span> <span class="literal">false</span>; </span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> val;</span><br><span class="line">	node *next;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">isCBT</span><span class="params">(node *root)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!root) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">  <span class="built_in">queue</span>&lt;node*&gt; q;</span><br><span class="line">  q,push(root);</span><br><span class="line">  <span class="keyword">while</span> (!q.empty()) &#123;</span><br><span class="line">    node *top = q.top();q.pop();</span><br><span class="line">    <span class="keyword">if</span> (top) &#123;</span><br><span class="line">      q.push(top-&gt;left);</span><br><span class="line">      q.push(top-&gt;right);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">//说明取出的top节点是空节点，此时看队列中是否还有非空节点</span></span><br><span class="line">      <span class="keyword">while</span> (!q.empty()) &#123;</span><br><span class="line">        top = q.top();q.pop();</span><br><span class="line">        <span class="keyword">if</span> (top) <span class="keyword">return</span> <span class="literal">false</span>; </span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
 
@@ -434,7 +434,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/10/30/%E5%88%A4%E6%96%AD%E4%BA%8C%E5%8F%89%E6%A0%91%E6%98%AF%E5%90%A6%E4%B8%BA%E6%8E%92%E5%BA%8F%E4%BA%8C%E5%8F%89%E6%A0%91/">判断二叉树是否为排序二叉树</a>
+      <a class="article-title" href="/2019/10/30/%E5%88%A4%E6%96%AD%E4%BA%8C%E5%8F%89%E6%A0%91%E6%98%AF%E5%90%A6%E4%B8%BA%E6%8E%92%E5%BA%8F%E4%BA%8C%E5%8F%89%E6%A0%91/">二叉树：判断二叉树是否为排序二叉树</a>
     </h1>
   
 
@@ -457,7 +457,7 @@
 <p><font size=5 face=consolas>排序二叉树的递归定义：<br>（1）空树。<br>（2）是由根节点、左子树和右子树组成。满足左子树上的所有节点的值都小于根节点的值，右子树上的所有节点的值都大于根节点的值。同时左子树和右子树都是排序二叉树（递归定义）。</font></p>
 <p><font size=5 face=consolas color=blue>老套路，还是根据定义来判断。首先如果一个树是空树，其必是一棵BST。如果不为空树，看是否满足条件二，如果满足则递归的看其两棵子树是否满足BST的定义。</font></p>
 <p><font size=5 face=consolas color=red>代码实现：</font></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isValidBST</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (!root) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">      TreeNode *left = root-&gt;left;</span><br><span class="line">      TreeNode *right = root-&gt;right;</span><br><span class="line">      <span class="keyword">while</span> (left) &#123;</span><br><span class="line">        <span class="keyword">if</span> (root-&gt;val  &lt;= left-&gt;val) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        left = left-&gt;right;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">while</span> (right) &#123;</span><br><span class="line">        <span class="keyword">if</span> (root-&gt;val &gt;= right-&gt;val) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        right = right-&gt;left;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> isValidBST(root-&gt;left) &amp;&amp; isValidBST(root-&gt;right);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">isValidBST</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!root) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    TreeNode *left = root-&gt;left;</span><br><span class="line">    TreeNode *right = root-&gt;right;</span><br><span class="line">    <span class="keyword">while</span> (left) &#123;</span><br><span class="line">      <span class="keyword">if</span> (root-&gt;val &lt;= left-&gt;val) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">      left = left-&gt;right;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (right) &#123;</span><br><span class="line">      <span class="keyword">if</span> (root-&gt;val &gt;= right-&gt;val) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">      right = right-&gt;left;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> isValidBST(root-&gt;left) &amp;&amp; isValidBST(root-&gt;right);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 
       
@@ -529,7 +529,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/10/30/%E5%88%A4%E6%96%AD%E4%BA%8C%E5%8F%89%E6%A0%91%E6%98%AF%E5%90%A6%E4%B8%BA%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91/">判断二叉树是否为平衡二叉树</a>
+      <a class="article-title" href="/2019/10/30/%E5%88%A4%E6%96%AD%E4%BA%8C%E5%8F%89%E6%A0%91%E6%98%AF%E5%90%A6%E4%B8%BA%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91/">二叉树：判断二叉树是否为平衡二叉树</a>
     </h1>
   
 
@@ -549,10 +549,10 @@
       
         <a id="more"></a>
 
-<p><font size=5 face="consolas">平衡二叉树的递归定义:<br>(1)空树。<br>(2)他的左子树和右子树都是平衡二叉树，并且左子树和右子树的高度差的绝对值不会超过1(&lt;=1)。</font></p>
+<p><font size=5 face="consolas">平衡二叉树的递归定义:<br>(1)空树。<br>(2)它的左子树和右子树都是平衡二叉树，并且左子树和右子树的高度差的绝对值不会超过1(&lt;=1)。</font></p>
 <p><font size=5 color=blue face="consolas">根据平衡二叉树的定义，可以很容易的判断一棵二叉树是否为平衡二叉树，首先是空树，满足条件。如果不是空树，需要检验它的两棵子树高度差的绝对值，这里需要一个辅助程序，求解一棵二叉树的高度。如果不满足条件(2)即不是平衡二叉树，如果满足，递归的判断其左右子树是否同时满足为平衡二叉树的条件。</font></p>
 <p><font size=5 color=red face="consolas">代码实现:</font></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> val;</span><br><span class="line">	node *left, *right;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">height</span><span class="params">(node *root)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (!root) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> left  = height(root-&gt;left);</span><br><span class="line">	<span class="keyword">int</span> right = height(root-&gt;right);</span><br><span class="line">	<span class="keyword">return</span> max(left, right) +<span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">isAVL</span><span class="params">(node *root)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (!root) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">if</span> (<span class="built_in">abs</span>(height(root-&gt;left)-height(root-&gt;right)) &gt;<span class="number">1</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">return</span> isAVL(root-&gt;left) &amp;&amp; isAVL(root-&gt;right);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span> &#123;</span></span><br><span class="line">  <span class="keyword">int</span> val;</span><br><span class="line">  node *left, *right;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">height</span><span class="params">(node *root)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!root) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> left  = height(root-&gt;left);</span><br><span class="line">  <span class="keyword">int</span> right = height(root-&gt;right);</span><br><span class="line">  <span class="keyword">return</span> max(left, right) +<span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">isAVL</span><span class="params">(node *root)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!root) <span class="keyword">return</span> <span class="number">1</span>;i</span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">abs</span>(height(root-&gt;left)-height(root-&gt;right)) &gt;<span class="number">1</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">return</span> isAVL(root-&gt;left) &amp;&amp; isAVL(root-&gt;right);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
 
@@ -1177,11 +1177,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">在线笔试题</a>
+                <a href="javascript:void(0)" class="js-tag color3">查找</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">查找</a>
+                <a href="javascript:void(0)" class="js-tag color1">在线笔试题</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1197,11 +1197,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color5">操作系统</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">操作系统</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1249,11 +1249,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">堆</a>
+                <a href="javascript:void(0)" class="js-tag color4">二叉树</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">二叉树</a>
+                <a href="javascript:void(0)" class="js-tag color2">堆</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1281,11 +1281,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">计算机组成</a>
+                <a href="javascript:void(0)" class="js-tag color5">最短路径</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">最短路径</a>
+                <a href="javascript:void(0)" class="js-tag color1">计算机组成</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1357,11 +1357,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">图的存储结构</a>
+                <a href="javascript:void(0)" class="js-tag color3">哈希</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">哈希</a>
+                <a href="javascript:void(0)" class="js-tag color2">图的存储结构</a>
               </li>
              
               <li class="article-tag-list-item">
