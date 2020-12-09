@@ -6,24 +6,28 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>linux下检测内存泄漏 | 乐行僧的博客</title>
+  <title>Linux下使用core文件对程序进行debug | 乐行僧的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="使用开源工具valgrind下载请点击，发行版本链接 安装步骤： 123451.解压文件  tar -jxvf valgrind-x.x.x.tar.bz22.进入文件目录  cd  valgrind-x.x.x3.在目录下执行 .&#x2F;configure4.使用make进行自动化编译  make5.安装 make install ubuntu用户可以使用：sudo apt-get in">
+  <meta name="description" content="一.简单介绍什么是core文件以及他的作用在linux编写的C&#x2F;C++可执行程序往往会出现如下图的错误，一个core dumped。由于刚开始对linux的认识不足，就忽略了这样一个重要的调试信息。随着学习的深入，其实core文件在linux下是一种ELF格式的文件，有关于什么是ELF格式大家可以自行查阅相关的内容。实际上core文件就是可执行文件执行时的映像，也可以叫做内存的快照。保存下来可">
 <meta property="og:type" content="article">
-<meta property="og:title" content="linux下检测内存泄漏">
-<meta property="og:url" content="http://example.com/2018/12/27/linux%E4%B8%8B%E6%A3%80%E6%B5%8B%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/index.html">
+<meta property="og:title" content="Linux下使用core文件对程序进行debug">
+<meta property="og:url" content="http://example.com/2019/01/13/Linux%E4%B8%8B%E4%BD%BF%E7%94%A8core%E6%96%87%E4%BB%B6%E5%AF%B9%E7%A8%8B%E5%BA%8F%E8%BF%9B%E8%A1%8Cdebug/index.html">
 <meta property="og:site_name" content="乐行僧的博客">
-<meta property="og:description" content="使用开源工具valgrind下载请点击，发行版本链接 安装步骤： 123451.解压文件  tar -jxvf valgrind-x.x.x.tar.bz22.进入文件目录  cd  valgrind-x.x.x3.在目录下执行 .&#x2F;configure4.使用make进行自动化编译  make5.安装 make install ubuntu用户可以使用：sudo apt-get in">
+<meta property="og:description" content="一.简单介绍什么是core文件以及他的作用在linux编写的C&#x2F;C++可执行程序往往会出现如下图的错误，一个core dumped。由于刚开始对linux的认识不足，就忽略了这样一个重要的调试信息。随着学习的深入，其实core文件在linux下是一种ELF格式的文件，有关于什么是ELF格式大家可以自行查阅相关的内容。实际上core文件就是可执行文件执行时的映像，也可以叫做内存的快照。保存下来可">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20181227171105788.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20181227171748324.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20181227172330516.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20181227172743656.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70">
-<meta property="article:published_time" content="2018-12-27T09:28:02.000Z">
-<meta property="article:modified_time" content="2020-11-30T16:39:04.647Z">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190113202529396.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190113202828274.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190113204019677.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2019011320495625.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190113210449965.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190113211011935.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190113211334676.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190113211630821.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70">
+<meta property="article:published_time" content="2019-01-13T13:16:50.000Z">
+<meta property="article:modified_time" content="2020-12-03T01:22:05.015Z">
 <meta property="article:author" content="lexingsen">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20181227171105788.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190113202529396.png">
   
     <link rel="alternative" href="/atom.xml" title="乐行僧的博客" type="application/atom+xml">
   
@@ -154,14 +158,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-linux下检测内存泄漏" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-Linux下使用core文件对程序进行debug" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      linux下检测内存泄漏
+      Linux下使用core文件对程序进行debug
     </h1>
   
 
@@ -177,8 +181,8 @@
         
         <!--显示阅读次数完毕-->
         
-        <a href="/2018/12/27/linux%E4%B8%8B%E6%A3%80%E6%B5%8B%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/" class="archive-article-date">
-  	<time datetime="2018-12-27T09:28:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-27</time>
+        <a href="/2019/01/13/Linux%E4%B8%8B%E4%BD%BF%E7%94%A8core%E6%96%87%E4%BB%B6%E5%AF%B9%E7%A8%8B%E5%BA%8F%E8%BF%9B%E8%A1%8Cdebug/" class="archive-article-date">
+  	<time datetime="2019-01-13T13:16:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-13</time>
 </a>
         
       </header>
@@ -189,19 +193,25 @@
       
         <a id="more"></a>
 
-<p><font size=5 face="Courier New">使用开源工具<font color=red>valgrind</font></font><br><a target="_blank" rel="noopener" href="http://valgrind.org/downloads/old.html">下载请点击，发行版本链接</a></p>
-<p><font size=5 face="Courier New">安装步骤：</font></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1.解压文件  tar -jxvf valgrind-x.x.x.tar.bz2</span><br><span class="line">2.进入文件目录  cd  valgrind-x.x.x</span><br><span class="line">3.在目录下执行 .&#x2F;configure</span><br><span class="line">4.使用make进行自动化编译  make</span><br><span class="line">5.安装 make install</span><br></pre></td></tr></table></figure>
-<p><font size=5 face="Courier new"><font color=purple>ubuntu</font>用户可以使用：<code>sudo apt-get install valgrind</code>进行安装</p>
-<p><font size=5 face="Courier new">在C/C++程序中，使用指针虽然是非常高效的，但是伴随而来的一旦使用方法不得当就会造成大量的内存碎片。而C++程序对（heap memory）的申请和释放都由程序员手工完成的。但是在大型程序中，一旦出现内存泄漏的问题也难以通过一行一行的逻辑判断进行查找，这是十分痛苦的。当然智能指针(smart pointer)的出现方便管理堆内存，有兴趣的朋友们可以下载boost库的源码学习智能指针是怎么管理堆内存的以及它的特性，但是今天我们讨论的重点是如何使用开源工具检测内存泄漏。<br><a target="_blank" rel="noopener" href="https://www.boost.org/">boost c++库链接</a></p>
-<p><font size=5 face="Courier new">下面使用valgrind检测常见的内存错误，首先对常见的内存错误进行分类</font><br><font size=4 face="Courier new" color=red>1.使用野指针<br>2.重复释放同一块内存<br>3.new和delete或malloc和free没有配对使用，造成内存泄漏<br>4.使用未进行初始化的对内存</font></p>
-<p><font size=5 face="Courier New">1.使用野指针</font></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">test.cpp</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> *pint = <span class="keyword">new</span> <span class="keyword">int</span>;<span class="comment">//动态申请内存</span></span><br><span class="line">	*pint = <span class="number">30</span>;</span><br><span class="line">	<span class="keyword">delete</span> pint;<span class="comment">//释放内存</span></span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;*pint&lt;&lt;<span class="built_in">endl</span>;<span class="comment">//使用野指针</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">g++ test.cpp -g -o test</span><br><span class="line">valgrind --tool=memcheck ./test进行检测</span><br></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdnimg.cn/20181227171105788.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><font size=5 face="Courier New">2.重复释放内存</font></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span>* pint = <span class="keyword">new</span> <span class="keyword">int</span>;</span><br><span class="line">	<span class="keyword">delete</span> pint;</span><br><span class="line">	<span class="keyword">delete</span> pint;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">g++ test.cpp -g -o test</span><br><span class="line">valgrind --tool=memcheck ./test进行检测</span><br></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdnimg.cn/20181227171748324.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><font size=5 face="Courier New">3.new和delete或malloc和free没有配对使用，造成内存泄漏</font></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">test.cpp</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span>* pint = <span class="keyword">new</span> <span class="keyword">int</span>;</span><br><span class="line">	*pint = <span class="number">30</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">g++ test.cpp -o test -g</span><br><span class="line">valgrind --tool=memcheck ./test</span><br></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdnimg.cn/20181227172330516.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><font size=5 face="Courier New">4.使用未进行初始化的对内存</font><br><img src="https://img-blog.csdnimg.cn/20181227172743656.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p><font size=5 face="Courier New" color=blue>一.简单介绍什么是core文件以及他的作用</font><br><font size=4 face="Courier New">在linux编写的C/C++可执行程序往往会出现如下图的错误，一个<font color=red>core dumped</font>。由于刚开始对linux的认识不足，就忽略了这样一个重要的调试信息。<br><img src="https://img-blog.csdnimg.cn/20190113202529396.png" alt="core dumped"><br>随着学习的深入，其实core文件在linux下是一种ELF格式的文件，有关于什么是ELF格式大家可以自行查阅相关的内容。<br><img src="https://img-blog.csdnimg.cn/20190113202828274.png" alt="在这里插入图片描述"><br>实际上core文件就是可执行文件执行时的映像，也可以叫做内存的快照。保存下来可执行程序在执行过程的点点滴滴。除了内存信息之外，还有些关键的程序运行状态也会同时dump下来，例如寄存器信息（包括程序指针、栈指针等）、内存管理信息、其他处理器和操作系统状态和信息。core文件对于程序员诊断和调试程序是非常有帮助的，因为对于有些程序错误是很难重现的，例如指针异常，而core文件可以再现程序出错时的情景。结合gdb的调试命令可以对core文件进行调试。</p>
+<p><font size=5 face="Courier New" color=blue>二.如何保存core文件。</font><br><font size=4 face="Courier New">在linux下，默认的情况是core dumped并不产生core文件，因为此项功能默认是被关闭。使用<code>ulimit -c</code>命令可以查看是否启动core文件。执行上述命令后会有如下的三种可能分别代表着不同的意义：<br><img src="https://img-blog.csdnimg.cn/20190113204019677.png" alt="在这里插入图片描述"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1.0      		不能产生core文件</span><br><span class="line">2.unlimited     产生的core文件没有字节限制</span><br><span class="line">3.一个确定数字    当超过这个字节数时不能产生core文件，小于等于时可以产生core文件</span><br></pre></td></tr></table></figure>
+<font size=4 face="Courier New">
+综上，只需要使用<font color=red>ulimit -c unlimited</font>就可打开core文件了，注意需要在root用户下执行此命令，否则权限不足执行失败。而且这样的设置是一次性的，下次重启后就需要重新设置。一劳永逸的办法就是在配置文件写入上述的设置。此步设置好之后，当你的可执行程序再次出现core dumped的情况时，就会在当前目录下出现一个core文件。如下：
+
+<p><img src="https://img-blog.csdnimg.cn/2019011320495625.png" alt="在这里插入图片描述"><br><font size=5 face="Courier New" color=blue>三.设置core文件的生成路径以及core文件的名称格式。</font><font size=4 face="Courier New" ><br>（1）设置进程的pid作为core文件扩展名，这样的好处是当core文有很多时，可以区分是哪一个可执行程序产生的core文件，方便查找。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>:添加pid作为扩展名，生成的core文件名称为core.pid</span><br><span class="line"><span class="number">0</span>:不添加pid作为扩展名，生成的core文件名称为core</span><br><span class="line">	</span><br><span class="line"><span class="comment">//修改方法</span></span><br><span class="line"><span class="number">1.</span>修改 /proc/sys/kernel/core_uses_pid 文件内容为: <span class="number">1</span></span><br><span class="line"><span class="number">2.</span>在终端执行如下两条命令的任意一条</span><br><span class="line">echo <span class="string">&quot;1&quot;</span> &gt; /proc/sys/kernel/core_uses_pid</span><br><span class="line">sysctl -w kernel.core_uses_pid=<span class="number">1</span> kernel.core_uses_pid = <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p><font size=4 face="Courier New" >(2)修改core文件的文件格式以及保存路径</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">执行如下两条命令中的一条即可</span><br><span class="line">1.echo &quot;&#x2F;corefile&#x2F;core-%e-%p-%t&quot; &gt; &#x2F;proc&#x2F;sys&#x2F;kernel&#x2F;core_pattern</span><br><span class="line">标识生成的core文件名格式是 core-%e-%p-%t，保存路径为&#x2F;corefile</span><br><span class="line">sysctl -w kernel.core_pattern&#x3D;&#x2F;corefile&#x2F;core-%e-%p-%t kernel.core_pattern &#x3D; &#x2F;corefile&#x2F;core-%e-%p-%t</span><br></pre></td></tr></table></figure>
+<p><font size=4 face="Courier New" >以下是参数列表:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">%p - insert pid into filename 添加pid(进程id)</span><br><span class="line">%u - insert current uid into filename 添加当前uid(用户id)</span><br><span class="line">%g - insert current gid into filename 添加当前gid(用户组id)</span><br><span class="line">%s - insert signal that caused the coredump into the filename 添加导致产生core的信号</span><br><span class="line">%t - insert UNIX time that the coredump occurred into filename 添加core文件生成时的unix时间</span><br><span class="line">%h - insert hostname where the coredump happened into filename 添加主机名</span><br><span class="line">%e - insert coredumping executable name into filename 添加导致产生core的命令名</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier New" color=blue>三.使用core文件进行简单debug。</font><br><font size=4 face="Courier New">测试程序一：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> *p;</span><br><span class="line">	*p = <span class="number">20</span>;<span class="comment">//使用野指针</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<font size=4 face="Courier New">
+
+<p><img src="https://img-blog.csdnimg.cn/20190113210449965.png" alt="在这里插入图片描述"><br><font size=4 face="Courier New">对于上述这样的一个小程序很容易定位到错误的源头，但是对于一个成百上千行的代码来说定位一个错误就不容易了尤其是在运行之后发生的bug，但是使用core文件却很容易定位。<br>调试上述文件生成的core文件:<br><img src="https://img-blog.csdnimg.cn/20190113211011935.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><font size=4 face="Courier New">通过core文件可以清楚的定位到错误的根源，可见core文件的强大之处。</font><br><font size=4 face="Courier New">测试程序二：</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">test1.cpp</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iosreram&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;(<span class="number">10</span> / <span class="number">0</span>)&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/20190113211334676.png" alt="在这里插入图片描述"><br><font size=4 face="Courier New">使用test1生成的core文件定位错误：<br><img src="https://img-blog.csdnimg.cn/20190113211630821.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
 
       
 
@@ -271,7 +281,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2018/12/27/linux%E4%B8%8B%E6%A3%80%E6%B5%8B%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2019/01/13/Linux%E4%B8%8B%E4%BD%BF%E7%94%A8core%E6%96%87%E4%BB%B6%E5%AF%B9%E7%A8%8B%E5%BA%8F%E8%BF%9B%E8%A1%8Cdebug/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -285,18 +295,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/12/31/C++11-lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2019/02/21/2019%E6%98%A5%E6%8B%9B%20CVTE%20C!C++%E5%BC%80%E5%8F%91%E5%B2%97%E7%AC%94%E8%AF%95%E7%BC%96%E7%A8%8B%E9%A2%98%E4%B8%A4%E9%81%93/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          C++11-lambda表达式
+          2019春招 CVTE C/C++开发岗笔试编程题两道
         
       </div>
     </a>
   
   
-    <a href="/2018/12/02/C++11-%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">C++11-智能指针</div>
+    <a href="/2019/01/06/%E6%B3%9B%E5%9E%8B%E7%AE%97%E6%B3%95%EF%BC%9A%E5%A0%86%E7%AE%97%E6%B3%95/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">泛型算法：堆算法</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -487,15 +497,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">二分</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">堆</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -539,11 +549,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">贪心</a>
+                <a href="javascript:void(0)" class="js-tag color4">多线程</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">多线程</a>
+                <a href="javascript:void(0)" class="js-tag color3">贪心</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -551,11 +561,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">c++11</a>
+                <a href="javascript:void(0)" class="js-tag color5">而擦函数</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">而擦函数</a>
+                <a href="javascript:void(0)" class="js-tag color1">c++11</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -583,11 +593,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">c++11算法</a>
+                <a href="javascript:void(0)" class="js-tag color3">递归</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">递归</a>
+                <a href="javascript:void(0)" class="js-tag color3">c++11算法</a>
               </li>
              
               <li class="article-tag-list-item">

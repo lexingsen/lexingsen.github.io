@@ -6,22 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>linux系统调用函数 rename/getcwd/chdir/mkdir/rmdir--目录操作相关函数 | 乐行僧的博客</title>
+  <title>Linux下检测内存泄漏 | 乐行僧的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1.文件重命名在linux的shell解释器中输入mv 原文件名 新文件名即可进行重命名，实际上C库函数提供了具有相同功能的系统调用函数rename。 所需头文件：#include&lt;stdio.h&gt;函数原型： int rename(const char *oldpath,const char *newpath)参数：  oldpath原文件名,newpath为新文件名。返回值：成功">
+  <meta name="description" content="使用开源工具valgrind下载请点击，发行版本链接 安装步骤： 123451.解压文件  tar -jxvf valgrind-x.x.x.tar.bz22.进入文件目录  cd  valgrind-x.x.x3.在目录下执行 .&#x2F;configure4.使用make进行自动化编译  make5.安装 make install ubuntu用户可以使用：sudo apt-get in">
 <meta property="og:type" content="article">
-<meta property="og:title" content="linux系统调用函数 rename&#x2F;getcwd&#x2F;chdir&#x2F;mkdir&#x2F;rmdir--目录操作相关函数">
-<meta property="og:url" content="http://example.com/2018/05/14/linux%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%87%BD%E6%95%B0%20rename!getcwd!chdir!mkdir!rmdir--%E7%9B%AE%E5%BD%95%E6%93%8D%E4%BD%9C%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0/index.html">
+<meta property="og:title" content="Linux下检测内存泄漏">
+<meta property="og:url" content="http://example.com/2018/12/27/Linux%E4%B8%8B%E6%A3%80%E6%B5%8B%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/index.html">
 <meta property="og:site_name" content="乐行僧的博客">
-<meta property="og:description" content="1.文件重命名在linux的shell解释器中输入mv 原文件名 新文件名即可进行重命名，实际上C库函数提供了具有相同功能的系统调用函数rename。 所需头文件：#include&lt;stdio.h&gt;函数原型： int rename(const char *oldpath,const char *newpath)参数：  oldpath原文件名,newpath为新文件名。返回值：成功">
+<meta property="og:description" content="使用开源工具valgrind下载请点击，发行版本链接 安装步骤： 123451.解压文件  tar -jxvf valgrind-x.x.x.tar.bz22.进入文件目录  cd  valgrind-x.x.x3.在目录下执行 .&#x2F;configure4.使用make进行自动化编译  make5.安装 make install ubuntu用户可以使用：sudo apt-get in">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://img-blog.csdn.net/20180514181213102?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
-<meta property="og:image" content="https://img-blog.csdn.net/20180514182224623?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
-<meta property="article:published_time" content="2018-05-14T10:33:04.000Z">
-<meta property="article:modified_time" content="2020-11-30T16:38:35.287Z">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20181227171105788.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20181227171748324.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20181227172330516.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20181227172743656.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70">
+<meta property="article:published_time" content="2018-12-27T09:28:02.000Z">
+<meta property="article:modified_time" content="2020-12-03T01:22:00.819Z">
 <meta property="article:author" content="lexingsen">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://img-blog.csdn.net/20180514181213102?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20181227171105788.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70">
   
     <link rel="alternative" href="/atom.xml" title="乐行僧的博客" type="application/atom+xml">
   
@@ -152,14 +154,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-linux系统调用函数 rename!getcwd!chdir!mkdir!rmdir--目录操作相关函数" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-Linux下检测内存泄漏" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      linux系统调用函数 rename/getcwd/chdir/mkdir/rmdir--目录操作相关函数
+      Linux下检测内存泄漏
     </h1>
   
 
@@ -175,8 +177,8 @@
         
         <!--显示阅读次数完毕-->
         
-        <a href="/2018/05/14/linux%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%87%BD%E6%95%B0%20rename!getcwd!chdir!mkdir!rmdir--%E7%9B%AE%E5%BD%95%E6%93%8D%E4%BD%9C%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0/" class="archive-article-date">
-  	<time datetime="2018-05-14T10:33:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-14</time>
+        <a href="/2018/12/27/Linux%E4%B8%8B%E6%A3%80%E6%B5%8B%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/" class="archive-article-date">
+  	<time datetime="2018-12-27T09:28:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-27</time>
 </a>
         
       </header>
@@ -187,20 +189,19 @@
       
         <a id="more"></a>
 
-<p><strong>1.文件重命名</strong><br>在linux的shell解释器中输入<code>mv 原文件名 新文件名</code>即可进行重命名，实际上C库函数提供了具有相同功能的系统调用函数<code>rename</code>。</p>
-<p>所需头文件：<code>#include&lt;stdio.h&gt;</code><br>函数原型： <code>int rename(const char *oldpath,const char *newpath)</code><br>参数：  oldpath原文件名,newpath为新文件名。<br>返回值：成功返回0，失败返回-1，同时errno被设置为合适的值。</p>
-<p>该函数用法比较简单，不做实例验证，大家可以自行验证。</p>
-<p><strong>2.修改当前进行（应用程序）的路径  cd。</strong><br>所需头文件： <code>#include&lt;unistd.h&gt;</code><br>函数原型： <code>int chdir(const char *path)</code><br>参数： path即为要切换的路径。<br>返回值： 成功返回0，失败返回-1,同时errno会被设置为合适的值。</p>
-<p><strong>3.获取当前进程的工作目录 pwd</strong><br>函数原型：<code>char* getcwd(char *buf,size_t size)</code><br>参数：buf,缓冲区，存储当前的工作目录。size，缓冲区的大小。<br>返回值：成功返回当前的工作目录，失败返回<code>NULL</code>。</p>
-<p>实例验证：<br>（1）输入<code>pwd</code>获取当前工作目录。<br><img src="https://img-blog.csdn.net/20180514181213102?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>（2）函数验证</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">char</span> buff[<span class="number">128</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="keyword">char</span>* s = getcwd(buff,<span class="keyword">sizeof</span>(buff));</span><br><span class="line">	<span class="keyword">if</span>(<span class="literal">NULL</span> == s)</span><br><span class="line">	&#123;</span><br><span class="line">		perror(<span class="string">&quot;getcwd&quot;</span>);</span><br><span class="line">		<span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>,buff);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdn.net/20180514182224623?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>观察上图结果和我们用<code>pwd</code>获取到的当前工作目录是一致的。</p>
-<p><strong>4.创建目录 mkdir</strong><br>所需头文件：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br></pre></td></tr></table></figure>
-<p>函数原型：<code>int mkdir(const char *pathname,mode_t mode)</code><br>参数：pathname为目录名   mode是目录权限，是一个八进制的数字，实际权限：<code>mode &amp; ~umask</code><br>返回值：成功返回0，失败返回-1，同时errno会被设置成一个合适的值。</p>
-<p><strong>5.删除一个空目录 rmdir</strong><br>所需头文件：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd&gt;</span></span></span><br></pre></td></tr></table></figure>
-<p>函数原型：<code>int rmdir(const char* pathname)</code><br>参数：空目录的名字。<br>返回值：成功返回0，失败返回-1，同时errno会被设置为一个合适的值。</p>
+<p><font size=5 face="Courier New">使用开源工具<font color=red>valgrind</font></font><br><a target="_blank" rel="noopener" href="http://valgrind.org/downloads/old.html">下载请点击，发行版本链接</a></p>
+<p><font size=5 face="Courier New">安装步骤：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1.解压文件  tar -jxvf valgrind-x.x.x.tar.bz2</span><br><span class="line">2.进入文件目录  cd  valgrind-x.x.x</span><br><span class="line">3.在目录下执行 .&#x2F;configure</span><br><span class="line">4.使用make进行自动化编译  make</span><br><span class="line">5.安装 make install</span><br></pre></td></tr></table></figure>
+<p><font size=5 face="Courier new"><font color=purple>ubuntu</font>用户可以使用：<code>sudo apt-get install valgrind</code>进行安装</p>
+<p><font size=5 face="Courier new">在C/C++程序中，使用指针虽然是非常高效的，但是伴随而来的一旦使用方法不得当就会造成大量的内存碎片。而C++程序对（heap memory）的申请和释放都由程序员手工完成的。但是在大型程序中，一旦出现内存泄漏的问题也难以通过一行一行的逻辑判断进行查找，这是十分痛苦的。当然智能指针(smart pointer)的出现方便管理堆内存，有兴趣的朋友们可以下载boost库的源码学习智能指针是怎么管理堆内存的以及它的特性，但是今天我们讨论的重点是如何使用开源工具检测内存泄漏。<br><a target="_blank" rel="noopener" href="https://www.boost.org/">boost c++库链接</a></p>
+<p><font size=5 face="Courier new">下面使用valgrind检测常见的内存错误，首先对常见的内存错误进行分类</font><br><font size=4 face="Courier new" color=red>1.使用野指针<br>2.重复释放同一块内存<br>3.new和delete或malloc和free没有配对使用，造成内存泄漏<br>4.使用未进行初始化的对内存</font></p>
+<p><font size=5 face="Courier New">1.使用野指针</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">test.cpp</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> *pint = <span class="keyword">new</span> <span class="keyword">int</span>;<span class="comment">//动态申请内存</span></span><br><span class="line">	*pint = <span class="number">30</span>;</span><br><span class="line">	<span class="keyword">delete</span> pint;<span class="comment">//释放内存</span></span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;*pint&lt;&lt;<span class="built_in">endl</span>;<span class="comment">//使用野指针</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">g++ test.cpp -g -o test</span><br><span class="line">valgrind --tool=memcheck ./test进行检测</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/20181227171105788.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><font size=5 face="Courier New">2.重复释放内存</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span>* pint = <span class="keyword">new</span> <span class="keyword">int</span>;</span><br><span class="line">	<span class="keyword">delete</span> pint;</span><br><span class="line">	<span class="keyword">delete</span> pint;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">g++ test.cpp -g -o test</span><br><span class="line">valgrind --tool=memcheck ./test进行检测</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/20181227171748324.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><font size=5 face="Courier New">3.new和delete或malloc和free没有配对使用，造成内存泄漏</font></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">test.cpp</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span>* pint = <span class="keyword">new</span> <span class="keyword">int</span>;</span><br><span class="line">	*pint = <span class="number">30</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">g++ test.cpp -o test -g</span><br><span class="line">valgrind --tool=memcheck ./test</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/20181227172330516.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><font size=5 face="Courier New">4.使用未进行初始化的对内存</font><br><img src="https://img-blog.csdnimg.cn/20181227172743656.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FTSkJGSlNC,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
 
       
 
@@ -270,7 +271,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2018/05/14/linux%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%87%BD%E6%95%B0%20rename!getcwd!chdir!mkdir!rmdir--%E7%9B%AE%E5%BD%95%E6%93%8D%E4%BD%9C%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2018/12/27/Linux%E4%B8%8B%E6%A3%80%E6%B5%8B%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -284,18 +285,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/05/14/opendir!readdir!closedir%20%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2018/12/31/C++11-lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          opendir/readdir/closedir 目录遍历相关函数
+          C++11-lambda表达式
         
       </div>
     </a>
   
   
-    <a href="/2018/05/14/linux%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%87%BD%E6%95%B0%20chmod!chown!truncate--%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E5%B1%9E%E6%80%A7/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">linux系统调用函数 chmod/chown/truncate--修改文件属性</div>
+    <a href="/2018/12/02/C++11-%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">C++11-智能指针</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -486,15 +487,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">二分</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">堆</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -538,11 +539,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">贪心</a>
+                <a href="javascript:void(0)" class="js-tag color4">多线程</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">多线程</a>
+                <a href="javascript:void(0)" class="js-tag color3">贪心</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -550,11 +551,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">c++11</a>
+                <a href="javascript:void(0)" class="js-tag color5">而擦函数</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">而擦函数</a>
+                <a href="javascript:void(0)" class="js-tag color1">c++11</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -582,11 +583,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">c++11算法</a>
+                <a href="javascript:void(0)" class="js-tag color3">递归</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">递归</a>
+                <a href="javascript:void(0)" class="js-tag color3">c++11算法</a>
               </li>
              
               <li class="article-tag-list-item">
